@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:batch="http://www.springframework.org/schema/batch"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+	<context:component-scan base-package="com.finalproject.web" />
+	
+	<!-- viewResolver -->
+	<mvc:view-resolvers>
+		<mvc:jsp prefix="/WEB-INF/views/" suffix=".jsp"/>
+	</mvc:view-resolvers>
+	
+	<!-- 
+	 MultipartResolver
+		- 파일 업로드 요청과 같은 멀티파트요청을 처리한다. *<form method="post" enctype="multipart/form-data" >
+		- CommonsMultipartresolver는 Apache commons-fileupload 라이브러리를 사용해서 파일(멀티파트 요청)처리를 지원한다.
+	  -->
+	 <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+	 	<property name="maxUploadSize" value="10485760" /> <!-- 10M -->
+	 </bean>
+	
+	<!-- interceptor -->
+	<!-- <mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/*.do/"/>
+			<mvc:exclude-mapping path=""/>
+			
+			<bean class="com.finalproject.web.interceptor.LoginCheckInterceptor"></bean>
+		</mvc:interceptor>
+	</mvc:interceptors>
+	
+	<mvc:annotation-driven>
+		<mvc:argument-resolvers>
+			<bean class="com.finalproject.web.argumentResolver.LoginUserHandlerMethodArgumentResolver" />
+		</mvc:argument-resolvers>
+	</mvc:annotation-driven> -->
+</beans>
