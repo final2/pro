@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class CompController {
 
 	// 회사 메인
-	@RequestMapping("compmain.do")
+	@RequestMapping("notice.do")
 	public String main() {
-		return "compmain";
+		return "companynotice/notice";
 	}
 }

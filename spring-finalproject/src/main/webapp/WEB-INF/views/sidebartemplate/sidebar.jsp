@@ -22,6 +22,7 @@ $(function() {
 })
 </script>
 <style type="text/css">
+#imgdiv {margin-top:10px; margin-bottom:10px;}
 </style>
 </head>
 <body>
@@ -32,8 +33,8 @@ $(function() {
         <div id="sidebar-wrapper">
             <ul class="sidebar-nav">
             	<li>
-            		<div>
-            			<p>로고 이미지</p>
+            		<div id="imgdiv">
+            			<img alt="logo" src="resources/image/logo1.png" width="200px" height="150px"/>
             		</div>
             	</li>
             	<li>
@@ -88,46 +89,8 @@ $(function() {
         </div>
 		<!-- /#sidebar-wrapper -->
 
-        <!-- Page Content -->
+     	<!--   Page Content -->
         <div id="page-content-wrapper">
-            <div class="container">
-            	<div class="col-sm-1">
-            		<h3>분할</h3>
-            	</div>
-            	<div class="col-sm-1">
-            		<h3>분할</h3>
-            	</div>
-            	<div class="col-sm-1">
-            		<h3>분할</h3>
-            	</div>
-            	<div class="col-sm-1">
-            		<h3>분할</h3>
-            	</div>
-            	<div class="col-sm-1">
-            		<h3>분할</h3>
-            	</div>
-            	<div class="col-sm-1">
-            		<h3>분할</h3>
-            	</div>
-            	<div class="col-sm-1">
-            		<h3>분할</h3>
-            	</div>
-            	<div class="col-sm-1">
-            		<h3>분할</h3>
-            	</div>
-            	<div class="col-sm-1">
-            		<h3>분할</h3>
-            	</div>
-            	<div class="col-sm-1">
-            		<h3>분할</h3>
-            	</div>
-            	<div class="col-sm-1">
-            		<h3>분할</h3>
-            	</div>
-            	<div class="col-sm-1">
-            		<h3>분할</h3>
-            	</div>
-            </div>
         </div>
 		<!-- /#page-content-wrapper -->
 
