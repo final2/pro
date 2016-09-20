@@ -9,7 +9,7 @@
 	<!-- oracle connect -->
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource"
 		p:driverClassName="oracle.jdbc.OracleDriver" 
-		p:url="jdbc:oracle:thin:@localhost:1521:xe"
+		p:url="jdbc:oracle:thin:@192.168.10.117:1521:xe"
 		p:username="jhta"
 		p:password="zxcv1234"/>
 
