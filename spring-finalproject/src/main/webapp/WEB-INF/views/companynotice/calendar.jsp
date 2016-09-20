@@ -4,128 +4,73 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" type="text/css" href="resources/bootstrap/css/bootstrap.css">
-<script type="text/javascript" src="resources/jquery/jquery.js"></script>
-<script src="https://apis.google.com/js/api.js"></script>
+<!-- calendar css -->
+<link rel="stylesheet" href="resources/fullcalendar/fullcalendar.css">
+<script type="text/javascript" src="resources/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="resources/jquery/moment.min.js"></script>
+<script type="text/javascript" src="resources/fullcalendar/fullcalendar.js"></script>
+<script type="text/javascript" src="resources/fullcalendar/locale-all.js"></script>
 <script type="text/javascript">
-      // Your Client ID can be retrieved from your project in the Google
-      // Developer Console, https://console.developers.google.com
-      var CLIENT_ID = '212531844219-je1mhafq2u5rv5d9nurj5ret71n1nuk9.apps.googleusercontent.com';
-
-      var SCOPES = ["https://www.googleapis.com/auth/calendar"];
-
-      /**
-       * Check if current user has authorized this application.
-       */
-      function checkAuth() {
-        gapi.auth.authorize(
-          {
-            'client_id': CLIENT_ID,
-            'scope': SCOPES.join(' '),
-            'immediate': true
-          }, handleAuthResult);
-      }
-
-      /**
-       * Handle response from authorization server.
-       *
-       * @param {Object} authResult Authorization result.
-       */
-      function handleAuthResult(authResult) {
-        var authorizeDiv = document.getElementById('authorize-div');
-        if (authResult && !authResult.error) {
-          // Hide auth UI, then load client library.
-          authorizeDiv.style.display = 'none';
-          loadCalendarApi();
-        } else {
-          // Show auth UI, allowing the user to initiate authorization by
-          // clicking authorize button.
-          authorizeDiv.style.display = 'inline';
-        }
-      }
-
-      /**
-       * Initiate auth flow in response to user clicking authorize button.
-       *
-       * @param {Event} event Button click event.
-       */
-      function handleAuthClick(event) {
-        gapi.auth.authorize(
-          {client_id: CLIENT_ID, scope: SCOPES, immediate: false},
-          handleAuthResult);
-        return false;
-      }
-
-      /**
-       * Load Google Calendar client library. List upcoming events
-       * once client library is loaded.
-       */
-      function loadCalendarApi() {
-        gapi.client.load('calendar', 'v3', listUpcomingEvents);
-      }
-
-      /**
-       * Print the summary and start datetime/date of the next ten events in
-       * the authorized user's calendar. If no events are found an
-       * appropriate message is printed.
-       */
-      function listUpcomingEvents() {
-        var request = gapi.client.calendar.events.list({
-          'calendarId': 'primary',
-          'timeMin': (new Date()).toISOString(),
-          'showDeleted': false,
-          'singleEvents': true,
-          'maxResults': 10,
-          'orderBy': 'startTime'
-        });
-
-        request.execute(function(resp) {
-          var events = resp.items;
-          appendPre('Upcoming events:');
-
-          if (events.length > 0) {
-            for (i = 0; i < events.length; i++) {
-              var event = events[i];
-              var when = event.start.dateTime;
-              if (!when) {
-                when = event.start.date;
-              }
-              appendPre(event.summary + ' (' + when + ')')
+$(function() {
+	$("#calendar").fullCalendar({
+		
+		locale: 'ko',
+		
+		header: {
+			left: 'prev,next today',
+			center: 'title',
+			right: 'month,listYear',
+		},
+		
+		defaultDate: '2016-09-12',
+		/* navLinks: true, // can click day/week names to navigate views */
+		selectable: true,
+		selectHelper: true,
+		select: function(start, end) {
+			var title = prompt('Event Title:');
+			var eventData;
+			if (title) {
+				eventData = {
+					title: title,
+					start: start,
+					end: end
+				};
+				$('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
+			}
+			$('#calendar').fullCalendar('unselect');
+		},
+		editable: true,
+		eventLimit: true, // allow "more" link when too many events
+		eventMouseover: function(event, jsEvent, view) {
+            if (view.name !== 'agendaDay') {
+                $(jsEvent.target).attr('title', event.title);
             }
-          } else {
-            appendPre('No upcoming events found.');
-          }
+        },
+        /* eventDestroy: function(event, element, view)
+        {
+            alert("removing stuff");
+        },*/
+        eventClick: function(calEvent, jsEvent, view)
+        {
+            var r=confirm("Delete " + calEvent.title);
+            if (r===true)
+              {
+                  $('#calendar').fullCalendar('removeEvents', calEvent._id);
+              }
+        },
 
-        });
-      }
-
-      /**
-       * Append a pre element to the body containing the given message
-       * as its text node.
-       *
-       * @param {string} message Text to be placed in pre element.
-       */
-      function appendPre(message) {
-        var pre = document.getElementById('output');
-        var textContent = document.createTextNode(message + '\n');
-        pre.appendChild(textContent);
-      }
-
+	});
+	
+});
 </script>
-<script src="https://apis.google.com/js/client.js?onload=checkAuth"></script>
-<title>Calendar</title>
+<style type="text/css">
+#calendar .fc-sun {color:red;}
+#calendar .fc-sat {color:blue;}
+#calendar .holiday {color: red;}
+</style>
+<title>Insert title here</title>
 </head>
 <body>
-<div id="authorize-div" style="display: none">
-  <span>Authorize access to Google Calendar API</span>
-  <!--Button for the user to click to initiate auth sequence -->
-  <button id="authorize-button" onclick="handleAuthClick(event)">
-    Authorize
-  </button>
-</div>
-<pre id="output"></pre>
-
-<iframe src="https://calendar.google.com/calendar/embed?src=c.y.roked%40gmail.com&ctz=Asia/Seoul" style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
-
+	<div id="calendar"></div>
 </body>
 </html>

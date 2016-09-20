@@ -10,6 +10,9 @@
 <!-- Bootstrap Core JavaScript -->
 <link href="resources/bootstrap/css/simple-sidebar.css" rel="stylesheet">
 <script src="resources/bootstrap/js/bootstrap.min.js"></script>
+<style type="text/css">
+table {width:100%}
+</style>
 <title>Insert title here</title>
 </head>
 <body>
@@ -62,7 +65,7 @@
 		</div>
 		<div class="row" style="margin-top:10px">
 			<div class="col-sm-6" style="border:thin solid black">
-				<table class="table table-hover">
+				<table>
 					<colgroup>
 						<col width="60%">
 						<col width="40%">
@@ -74,6 +77,9 @@
 						</tr>
 					</thead>
 				</table>
+				<div>
+					<%@ include file="calendar.jsp" %>
+				</div>
 			</div>
 			<div class="col-sm-6" style="border:thin solid black">
 				<table class="table table-hover">
