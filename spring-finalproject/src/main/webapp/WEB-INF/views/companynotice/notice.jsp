@@ -15,8 +15,86 @@
 <body>
 <div id="wrapper">
 	<div id="page-content-wrapper">
-		<div class="container">
+		<div class="row" style="border: thin solid black">
 		    	<h1>Notice</h1>
+		</div>
+		<div class="row" style="margin-top:10px">
+			<div class="col-sm-6" style="border: thin solid black">
+				<table class="table table-hover">
+					<colgroup>
+						<col width="60%">
+						<col width="40%">
+					</colgroup>
+					<thead>
+						<tr>
+							<td><h3>공지사항</h3></td>
+							<td><a href="" class="pull-right">더보기</a></td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>제목</td>
+							<td>날짜</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="col-sm-6" style="border: thin solid black">
+				<table class="table table-hover">
+					<colgroup>
+						<col width="60%">
+						<col width="40%">
+					</colgroup>
+					<thead>
+						<tr>
+							<td><h3>오늘의 일정</h3></td>
+							<td><a href="" class="pull-right">더보기</a></td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>제목</td>
+							<td>날짜</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="row" style="margin-top:10px">
+			<div class="col-sm-6" style="border:thin solid black">
+				<table class="table table-hover">
+					<colgroup>
+						<col width="60%">
+						<col width="40%">
+					</colgroup>
+					<thead>
+						<tr>
+							<td><h3>회사 일정</h3></td>
+							<td><a href="" class="pull-right">더보기</a></td>
+						</tr>
+					</thead>
+				</table>
+			</div>
+			<div class="col-sm-6" style="border:thin solid black">
+				<table class="table table-hover">
+					<colgroup>
+						<col width="60%">
+						<col width="40%">
+					</colgroup>
+					<thead>
+						<tr>
+							<td><h3>쪽지함</h3></td>
+							<td><a href="" class="pull-right">더보기</a></td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>제목</td>
+							<td>날짜</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 		</div>
 	</div>
 </div>

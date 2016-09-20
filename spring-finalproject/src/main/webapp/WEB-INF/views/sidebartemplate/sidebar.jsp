@@ -27,14 +27,12 @@ $(function() {
 </head>
 <body>
 
-    <div id="wrapper">
-
         <!-- Sidebar -->
         <div id="sidebar-wrapper">
             <ul class="sidebar-nav">
             	<li>
             		<div id="imgdiv">
-            			<img alt="logo" src="resources/image/logo1.png" width="200px" height="150px"/>
+            			<img alt="logo" src="resources/image/logo2.png" width="200px" height="150px"/>
             		</div>
             	</li>
             	<li>
@@ -71,7 +69,7 @@ $(function() {
                		<ul class="bar">
                			<li><a href="">사원 조회</a></li>
                			<li><a href="">사원 등록</a></li>
-               			<li><a href="">공지 사항</a></li>
+               			<li><a href="notice.do">공지 사항</a></li>
                			<li><a href="">회사 일정</a></li>
                		</ul>			
                </li>
@@ -88,13 +86,5 @@ $(function() {
             </ul>
         </div>
 		<!-- /#sidebar-wrapper -->
-
-     	<!--   Page Content -->
-        <div id="page-content-wrapper">
-        </div>
-		<!-- /#page-content-wrapper -->
-
-
-    </div>
 </body>
 </html>
