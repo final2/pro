@@ -1,12 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html lang="ko">
-<head>
+
 <meta charset="UTF-8">
 <!-- calendar css -->
 <link rel="stylesheet" href="resources/fullcalendar/fullcalendar.css">
-<script type="text/javascript" src="resources/jquery/jquery.min.js"></script>
 <script type="text/javascript" src="resources/jquery/moment.min.js"></script>
 <script type="text/javascript" src="resources/fullcalendar/fullcalendar.js"></script>
 <script type="text/javascript" src="resources/fullcalendar/locale-all.js"></script>
@@ -58,6 +55,15 @@ $(function() {
                   $('#calendar').fullCalendar('removeEvents', calEvent._id);
               }
         },
+        resources: 'resources/json/events.json',
+        /* eventRecive: function(event) {
+        	var title = event.title;
+        	var start = event.start.format("YYYY-MM-DD");
+        	var end = event.end.format("YYYY-MM-DD");
+        	$.ajax({
+        		
+        	});
+        } */
 
 	});
 	
