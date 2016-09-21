@@ -94,9 +94,7 @@ $(function() {
 	    e.preventDefault();
 	    $("#wrapper").toggleClass("toggled");
 	});
-	
-	var session =
-	
+
 });
 </script>
 
