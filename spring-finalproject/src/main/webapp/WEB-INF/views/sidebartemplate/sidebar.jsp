@@ -71,8 +71,6 @@
     </ul>
     <div class="sidebar-nav-btn"></div>
 </div>
-<!-- /#sidebar-wrapper -->
-<!-- Menu Toggle Script -->
 <script type="text/javascript">
 $(function() {
 	
@@ -99,4 +97,4 @@ $(function() {
 	
 });
 </script>
-
+

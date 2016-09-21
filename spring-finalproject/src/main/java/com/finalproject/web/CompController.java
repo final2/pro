@@ -17,4 +17,13 @@ public class CompController {
 	public String main() {
 		return "companynotice/notice";
 	}
+	
+	@RequestMapping("calendar.do")
+	public String Calendar() {
+		return "companynotice/calendar";
+	}
+	@RequestMapping("calendar2.do")
+	public String Calendar2() {
+		return "companynotice/calendar2";
+	}
 }
