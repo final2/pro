@@ -1,0 +1,28 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.finalproject.dao.BranchDao">
+	<select id="getAllLargeCats" resultType="LC">
+		select 
+			no, name
+		from
+			largecategory
+	</select>
+	
+	<select id="getSmallCatsByLargeNo" parameterType="int" resultType="SC">
+		select
+			no, name, largecategory_no as largeCat
+		from
+			smallcategory
+		where largecategory_no = #{value}
+	</select>
+	
+	<select id="getProductsBySmallNo" parameterType="int" resultType="Product">
+		select
+			no, name, maker, price, smallcategory_no as smallCat
+		from
+			product
+		where smallcategory_no = #{value}
+	</select>
+</mapper>
