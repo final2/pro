@@ -39,4 +39,24 @@
    <listener>
       <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
    </listener> 
+   
+   
+   <!-- 
+      /json/* 요청을 받아서 JSON 응답데이타를 제공하는 컨트롤러들을 실행시키는 DispatcherServlet
+   -->
+   <servlet>
+      <servlet-name>json</servlet-name>
+      <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+      <init-param>
+         <param-name>contextConfigLocation</param-name>
+         <param-value>WEB-INF/spring/servlet-json-context.xml</param-value>
+      </init-param>
+      <load-on-startup>1</load-on-startup>
+   </servlet>
+   <servlet-mapping>
+      <servlet-name>json</servlet-name>
+      <url-pattern>/json/*</url-pattern>
+   </servlet-mapping>
+   
+   
 </web-app>
