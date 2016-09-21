@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+	<!-- 
+		중요!!!
+		@RestController 어노테이션이 부착된 컨트롤러의 핸들러 메소드들이 반환하는 데이타가
+		JSON이나 XML 형식의 컨텐츠로 제공되려면 반드시 <mvc:annotation-driven /> 태그를 추가해야 한다.
+	-->
+	<mvc:annotation-driven />
+	
+	<context:component-scan base-package="com.finalproject.json" />
+</beans>
