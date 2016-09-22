@@ -12,6 +12,7 @@
       	<typeAlias type="com.finalproject.model.WebBoard" alias="Wboard" />
       	<typeAlias type="com.finalproject.model.PageNo" alias="PN"/>
       	<typeAlias type="com.finalproject.model.Client" alias="Client"/>
+      	<typeAlias type="com.finalproject.model.Employee" alias="Employee"/>
 	</typeAliases>
 
 	<mappers> 
@@ -19,5 +20,6 @@
        <mapper resource="mybatis/mapper/branch.xml"/>
        <mapper resource="mybatis/mapper/website.xml"/>
        <mapper resource="mybatis/mapper/distribution.xml"/>
+       <mapper resource="mybatis/mapper/employee.xml"/>
    </mappers>
 </configuration>

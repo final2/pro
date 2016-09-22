@@ -1,0 +1,11 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.finalproject.dao.EmployeeDao">
+	<insert id="insertEmployee">
+		insert into employee (no, name, phone, email, address, birth, department, position, salary, photo, hiredate, password, retiredate )
+		values (myemp_seq.nextval, #{name}, #{phone}, #{email}, #{address}, '19881010', 'ff', 'dd', 22, 'ff', '1111-11-11', '33', sysdate)
+	</insert>
+
+</mapper>
