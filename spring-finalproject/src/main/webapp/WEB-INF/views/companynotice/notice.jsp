@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -11,6 +13,7 @@
 <script src="resources/bootstrap/js/bootstrap.min.js"></script>
 <style type="text/css">
 table {width:100%}
+td{text-align: center;}
 </style>
 <title>Insert title here</title>
 </head>
@@ -32,15 +35,20 @@ table {width:100%}
 						</colgroup>
 						<thead>
 							<tr>
-								<td><h3>공지사항</h3></td>
-								<td><a href="" class="pull-right">더보기</a></td>
+								<th><h3>공지사항</h3></th>
+								<td><a href="boardList.do" class="pull-right">더보기</a></td>
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td>제목</td>
-								<td>날짜</td>
-							</tr>
+							<c:forEach var="board" items="${boardList }">
+								<c:url var="detailURL" value="boardDetail.do">
+									<c:param name="no" value="${board.no }" />
+								</c:url>
+								<tr>
+									<td><a href="">${board.title }</a></td>
+									<td><fmt:formatDate value="${board.regdate }" pattern="yyyy.MM.dd hh:mm"/></td>
+								</tr>
+							</c:forEach>
 						</tbody>
 					</table>
 				</div>
@@ -54,7 +62,7 @@ table {width:100%}
 						</colgroup>
 						<thead>
 							<tr>
-								<td><h3>오늘의 일정</h3></td>
+								<th><h3>오늘의 일정</h3></th>
 								<td><a href="" class="pull-right">더보기</a></td>
 							</tr>
 						</thead>
@@ -78,8 +86,8 @@ table {width:100%}
 						</colgroup>
 						<thead>
 							<tr>
-								<td><h3>회사 일정</h3></td>
-								<td><a href="" class="pull-right">더보기</a></td>
+								<th><h3 style="margin-left:10px">회사 일정</h3></th>
+								<td style="text-align:right;"><a href="" style="margin-right:10px;">더보기</a></td>
 							</tr>
 						</thead>
 					</table>
@@ -97,7 +105,7 @@ table {width:100%}
 						</colgroup>
 						<thead>
 							<tr>
-								<td><h3>쪽지함</h3></td>
+								<th><h3>쪽지함</h3></th>
 								<td><a href="" class="pull-right">더보기</a></td>
 							</tr>
 						</thead>

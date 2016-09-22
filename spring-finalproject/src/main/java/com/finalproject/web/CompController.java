@@ -11,19 +11,6 @@ public class CompController {
 	public String compLogin() {
 		return "companylogin";
 	}
-	
-	// 회사 메인
-	@RequestMapping("notice.do")
-	public String main() {
-		return "companynotice/notice";
-	}
-	
-	@RequestMapping("calendar.do")
-	public String Calendar() {
-		return "companynotice/calendar";
-	}
-	@RequestMapping("calendar2.do")
-	public String Calendar2() {
-		return "companynotice/calendar2";
-	}
+
+
 }

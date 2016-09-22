@@ -10,7 +10,9 @@
     <ul class="sidebar-nav">
     	<li>
     		<div id="imgdiv">
-    			<img alt="logo" src="resources/image/logo2.png" width="200px" height="150px"/>
+    			<a href="notice.do">
+    				<img alt="logo" src="resources/image/logo2.png" width="200px" height="150px"/>
+    			</a>
     		</div>
     	</li>
     	<li>
