@@ -1,0 +1,103 @@
+@CHARSET "UTF-8";
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+
+/*  
+ * @ RESET CSS
+ * -------------------------------
+ */
+
+ul, ol, li {list-style: none;}
+em, address {font-style: normal;}
+img {border: 0 none; font-size: 0;line-height: 0;}
+sup {position: relative;top: 2px;font-size: 11px;line-height: 100%;}
+
+table {border-collapse: collapse; border-spacing:0; }
+caption {overflow: hidden;width: 0;height: 0;font-size: 0; line-height: 0;}
+th, td { vertical-align: middle;/* white-space: nowrap */}
+
+a {color: #333; text-decoration: none; line-height: 1;}
+a:hover, a:focus, a:active {text-decoration: underline;}
+*, html {box-sizing: border-box; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; }
+*, *:before, *:after {box-sizing: border-box;-webkit-box-sizing: border-box; -moz-box-sizing: border-box;}
+
+/* 공통 */
+body { font-family: 'Nanum Gothic', sans-serif; }
+.wrapper { width:1000px; margin:0 auto; padding:0; }
+.btn-purple { color:#fff; background-color:#bf6bfa; border-color:#af6bfa; }
+
+/* 로그인 */
+.login-box { margin-top:300px; }
+
+/* 메인 */
+.main-left img { width:100%; }
+.main-user { margin-bottom:50px; padding:30px 0; border-bottom:solid 1px #c2c2c2; }
+.main-user p { text-align:right; margin:10px 15px 0 15px; font-size:25px; }
+.main-btn { margin-top:20px; }
+.main-btn div { margin:20px 0; }
+.main-btn a { height:100%; }
+.main-btn .btn-lg { padding:40px 16px; }
+.main-logo { text-align:center; margin-top:80px; }
+.main-logo img { width:200px; }
+
+/* 상단 메뉴*/
+
+.navbar-branch { 
+	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#64b6e3+0,4dace3+21,4dace3+68,3d93d9+100 */
+	background: #64b6e3; /* Old browsers */
+	background: -moz-linear-gradient(top,  #64b6e3 0%, #4dace3 21%, #4dace3 68%, #3d93d9 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top,  #64b6e3 0%,#4dace3 21%,#4dace3 68%,#3d93d9 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom,  #64b6e3 0%,#4dace3 21%,#4dace3 68%,#3d93d9 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#64b6e3', endColorstr='#3d93d9',GradientType=0 ); /* IE6-9 */	
+}
+.navbar-branch .container-fluid { padding-right:0; }
+.navbar-branch .navbar-brand img { display:inline-block; width:65px; }
+.navbar-branch .navbar-time { float:left; margin-top:12px; color:#e2e2e2; text-align:center; }
+.navbar-branch .navbar-time p { margin-top:8px; }
+.navbar-branch li a { color:#fff; border-left:solid 1px #90cee8; border-right:solid 3px #49a4e6; padding:25px; font-size:15px; }
+.navbar-branch li a:hover { background-color:#3d93d9; color:#fff; }
+.navbar-branch li.active a { background-color:#3d93d9; color:#fff; }
+
+/* 판매 */
+.sales-left table { margin:5px; }
+.sales-left table th,td { text-align:center; }
+.sales-left table td input { width:100%; text-align:right; padding-right:3px; }
+.sales-left table .glyphicon { top:4px; }
+.sales-sum { text-align:right; padding:20px 0; font-size:18px; font-weight:bold; }
+.sales-search-btn { display:inline-block; }
+.sales-right { float:left; padding:0 15px 0 0; }
+#sales-lc { width:100%; padding:0; margin:5px 0 0 0; overflow:hidden; }
+#sales-lc li { width:16.6%; float:left; padding:10px 0; cursor:pointer; border:solid 1px #fff; background-color:#326894; text-align:center; color:#fff; font-size:15px; }
+#sales-lc li.active { background-color:#3285c9; }
+#sales-sc { width:100%; padding:0; margin-bottom:0; overflow:hidden; }
+#sales-sc li { width:25%; float:left; padding:10px 0; cursor:pointer; border:solid 1px #fff; background-color:#568aa8; text-align:center; color:#fff; font-size:15px; }
+#sales-sc li.active { background-color:#60aedb; }
+#sales-pt { width:100%; padding:0; margin-bottom:0; height:500px; overflow:auto; }
+#sales-pt li { position:relative; width:20%; height:100px; float:left; padding:10px; cursor:pointer; border:solid 1px #fff; background-color:#76b547; color:#000; font-size:14px;}
+#sales-pt li:hover { background-color:#69a339; }
+#sales-pt .sales-pt-price { position:absolute; bottom:0; right:10px; }
+#sales-btn-list { width:100%; padding:0; margin-bottom:0; overflow:hidden; }
+#sales-btn-list li { position:relative; width:20%; float:left; padding:10px; cursor:pointer; border:solid 1px #fff; background-color:#808080; text-align:center; color:#fff; font-size:14px;}
+#sales-btn-list li:hover { background-color:#707070; }
+
+
+/* 재고 */
+.inven-search { margin-top:20px; }
+.inven-keyword { padding:0; }
+.form-inline .inven-keyword input { width:100%; }
+.inven-list { margin-top:20px; }
+.inven-list table th { background-color:#8f8f8f; color:#fff; }
+.inven-list table th,td { text-align:center; }
+.inven-list table td input { width:100%; text-align:right; }
+
+
+/* 발주 */
+.order-con { padding:20px; }
+#order-tabmenu { overflow:hidden; padding:0; margin:0; }
+#order-tabmenu li { float:left; padding:10px 15px; cursor:pointer; border:solid 1px #ddd; border-bottom:0; border-top-left-radius:5px; border-top-right-radius:5px; }
+#order-tabmenu li.active { background-color:#999; color:#fff; text-shadow:#000 1px 1px 2px; }
+.tab-con { border:solid 1px #ddd; text-align:center; padding:20px; }
+#tab-1 table { width:80%; margin:0 auto; }
+#tab-1 form { margin-bottom:20px; }
+#tab-2 .order-btn { text-align:right; }
+#tab-2 table { margin-top:20px; }
+#tab-2 table th { text-align:center; }
