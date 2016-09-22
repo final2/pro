@@ -15,6 +15,7 @@
       	<typeAlias type="com.finalproject.model.Employee" alias="Employee"/>
       	<typeAlias type="com.finalproject.model.BranchOrder" alias="BrOrder"/>
       	<typeAlias type="com.finalproject.model.Message" alias="Message"/>
+      	<typeAlias type="com.finalproject.model.Branch" alias="Branch"/>
 	</typeAliases>
 
 	<mappers> 
