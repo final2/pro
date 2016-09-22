@@ -10,6 +10,7 @@
      	<typeAlias type="com.finalproject.model.LargeCategory" alias="LC" />
       	<typeAlias type="com.finalproject.model.SmallCategory" alias="SC" />
       	<typeAlias type="com.finalproject.model.WebBoard" alias="Wboard" />
+      	<typeAlias type="com.finalproject.model.PageNo" alias="PN"/>
 	</typeAliases>
 
 	<mappers> 
