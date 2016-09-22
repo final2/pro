@@ -63,7 +63,7 @@
 		from (select row_number() OVER(order by regdate desc) as rank, no, title, content, regdate
 			  from hq_board
 			  order by rank)
-		where rank >= #{beginNo} and rank &lt;= #{endNo}
+		where rank >= #{beginBoardNo} and rank &lt;= #{endBoardNo}
 	</select>
 
 	<!-- 게시글 번호로 공지사항 불러오기 -->

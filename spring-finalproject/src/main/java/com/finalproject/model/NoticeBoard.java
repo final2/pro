@@ -2,9 +2,6 @@ package com.finalproject.model;
 
 import java.util.Date;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonFormat.Shape;
-
 public class NoticeBoard {
 
 	private int no;

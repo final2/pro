@@ -84,7 +84,6 @@ public class NoticeServiceImpl implements NoticeService {
 		pageNo.setBeginBoardNo(beginBoardNo);
 		pageNo.setEndBoardNo(endBoardNo);
 		
-		
 		map.put("PageNo", pageNo);
 		map.put("BeginEndBoardList", noticeDao.getBeginEndBoard(pageNo));
 		

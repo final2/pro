@@ -46,6 +46,7 @@ td{text-align: center;}
 							<c:forEach var="board" items="${boardList }">
 								<c:url var="detailURL" value="boardDetail.do">
 									<c:param name="no" value="${board.no }" />
+									<c:param name="pn" value="1" />
 								</c:url>
 								<tr>
 									<td><a href="${detailURL }">${board.title }</a></td>

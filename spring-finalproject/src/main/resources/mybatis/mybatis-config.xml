@@ -6,11 +6,12 @@
 
 	<typeAliases>
 		<typeAlias type="com.finalproject.model.NoticeBoard" alias="Notice"/>
+      	<typeAlias type="com.finalproject.model.PageNo" alias="PN"/>
+      	<typeAlias type="com.finalproject.model.TodayPlan" alias="TP"/>
 	    <typeAlias type="com.finalproject.model.Product" alias="Product" />
      	<typeAlias type="com.finalproject.model.LargeCategory" alias="LC" />
       	<typeAlias type="com.finalproject.model.SmallCategory" alias="SC" />
       	<typeAlias type="com.finalproject.model.WebBoard" alias="Wboard" />
-      	<typeAlias type="com.finalproject.model.PageNo" alias="PN"/>
       	<typeAlias type="com.finalproject.model.Client" alias="Client"/>
       	<typeAlias type="com.finalproject.model.Employee" alias="Employee"/>
       	<typeAlias type="com.finalproject.model.BranchOrder" alias="BrOrder"/>
@@ -20,6 +21,7 @@
 
 	<mappers> 
 	   <mapper resource="mybatis/mapper/notice.xml"/>
+	   <mapper resource="mybatis/mapper/todayplan" />
        <mapper resource="mybatis/mapper/branch.xml"/>
        <mapper resource="mybatis/mapper/website.xml"/>
        <mapper resource="mybatis/mapper/distribution.xml"/>

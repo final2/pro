@@ -67,8 +67,4 @@ public class PageNo {
 	public void setEndBoardNo(int endBoardNo) {
 		this.endBoardNo = endBoardNo;
 	}
-	
-	
-	
-	
 }
