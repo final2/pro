@@ -21,7 +21,7 @@
 
 	<mappers> 
 	   <mapper resource="mybatis/mapper/notice.xml"/>
-	   <mapper resource="mybatis/mapper/todayplan" />
+	   <mapper resource="mybatis/mapper/todayplan.xml" />
        <mapper resource="mybatis/mapper/branch.xml"/>
        <mapper resource="mybatis/mapper/website.xml"/>
        <mapper resource="mybatis/mapper/distribution.xml"/>
