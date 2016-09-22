@@ -4,5 +4,32 @@
 
 <mapper namespace="com.finalproject.dao.DistributionDao">
 
+	<!-- 거래처 등록 -->
+	<insert id="insertClient" parameterType="Client">
+		insert into client
+		(no, name, isAdmit)
+		values
+		(myclient_seq.nextval, #{name}, #{isAdmit})
+	</insert>
 	
+	<!-- 거래처 리스트 -->
+	<select id="getClients" resultType="Client">
+		select
+			no		as no,
+			name	as name,
+			isAdmit as isAdmit
+		from
+			client
+		order by 
+			no asc
+	</select>
+	
+	<!-- 거래처 수정 -->
+	<update id="updateClient" parameterType="Client">
+		update client
+			set
+				name = #{name},
+				isAdmit = #{isAdmit}
+		where no = #{no}
+	</update> 
 </mapper>
