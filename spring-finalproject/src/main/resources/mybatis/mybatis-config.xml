@@ -11,11 +11,13 @@
       	<typeAlias type="com.finalproject.model.SmallCategory" alias="SC" />
       	<typeAlias type="com.finalproject.model.WebBoard" alias="Wboard" />
       	<typeAlias type="com.finalproject.model.PageNo" alias="PN"/>
+      	<typeAlias type="com.finalproject.model.Client" alias="Client"/>
 	</typeAliases>
 
 	<mappers> 
 	   <mapper resource="mybatis/mapper/notice.xml"/>
        <mapper resource="mybatis/mapper/branch.xml"/>
        <mapper resource="mybatis/mapper/website.xml"/>
+       <mapper resource="mybatis/mapper/distribution.xml"/>
    </mappers>
 </configuration>
