@@ -37,15 +37,50 @@
 		from 
 			hq_board
 	</select>
+	
+	<!-- 최신 공지사항 불러오기 -->
+	<select id="getNoticeToLatestBoard" resultType="Notice">
+		select 
+			rank,
+			no		as no,
+			title 	as title,
+			content as content,
+			regdate as regdate
+		from (select row_number() OVER(order by regdate desc) as rank, no, title, content, regdate
+			  from hq_board
+			  order by rank)
+		where rank &lt;= 5
+	</select>
+	
+	<!-- 페이지당 공지사항 불러오기 -->
+	<select id="getBeginEndBoard" parameterType="PN" resultType="Notice">
+		select 
+			rank,
+			no		as no,
+			title 	as title,
+			content as content,
+			regdate as regdate
+		from (select row_number() OVER(order by regdate desc) as rank, no, title, content, regdate
+			  from hq_board
+			  order by rank)
+		where rank >= #{beginNo} and rank &lt;= #{endNo}
+	</select>
 
 	<!-- 게시글 번호로 공지사항 불러오기 -->
 	<select id="getNoticeBoardByNo" parameterType="int" resultType="Notice">
 		select
-			no	as 'no',
-			title as 'title',
-			content as 'content',
-			regdate as 'regdate'
+			no		as no,
+			title 	as title,
+			content as content,
+			regdate as regdate
 		from hq_board
 		where no = #{value}
+	</select>
+	
+	<!-- 게시글 총 수 불러오기 -->
+	<select id="getTotalBoard" resultType="PN">
+		select 
+			count(*) as boardTotalNo  
+		from hq_board
 	</select>
 </mapper>

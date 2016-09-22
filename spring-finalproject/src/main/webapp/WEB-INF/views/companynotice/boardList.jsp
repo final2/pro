@@ -12,6 +12,38 @@
 <script src="resources/bootstrap/js/bootstrap.min.js"></script>
 <style>
 th,td {text-align:center;}
+ul.pagination {
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+}
+
+ul.pagination li {display: inline;}
+
+ul.pagination li a {
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+ul.pagination li a.active {
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 5px;
+    pointer-events: none;
+    cursor: default;
+}
+
+ul.pagination li a:hover:not(.active) {background-color: #ddd;}
+
+ .disabled {
+        pointer-events: none;
+        cursor: default;
+        opacity: 0.6;
+    }
+
 </style>
 </head>
 <body>
@@ -36,21 +68,61 @@ th,td {text-align:center;}
 				</thead>
 				<tbody>
 					<!-- 반복 -->
-					<c:forEach var="board" items="${boardList}">
+					<c:forEach begin="${pageNo.beginBoardNo }" end="${pageNO.endBoardNo }" var="board" items="${boardList}">
 						<!-- detail 들어갈때 보내는 전송값 -->
 						<c:url var="detailURL" value="boardDetail.do">
 							<c:param name="no" value="${board.no }" />
+							<c:param name="pn" value="${param.pn }" />
 						</c:url>
 						<tr>
 							<td>${board.no }</td>
 							<td><a href="${detailURL }">${board.title }</a></td>
-							<td><fmt:formatDate value="${board.regdate }" pattern="yyyy.MM.dd hh:mm"/></td>
+							<td><fmt:formatDate value="${board.regdate }" pattern="yyyy.MM.dd / hh:mm:ss"/></td>
 						</tr>
 					</c:forEach>
 				</tbody>
 			</table>
-			<div class="pull-right">
+			<div class="text-right">
 				<a href="boardForm.do" class="btn btn-default">글쓰기</a>
+			</div>
+			<div class="text-center"> 
+				<ul class="pagination">
+				<c:choose>
+					<c:when test="${param.pn == pageNo.beginPageNo}">				
+						<li><a class="disabled">❮</a></li>
+					</c:when>
+					<c:otherwise>
+						<c:url var="nextBoardListURL" value="boardList.do">
+							<c:param name="pn" value="${param.pn + 1 }" />
+						</c:url>
+						<li><a href="${nextBoardListURL }">❮</a></li>					
+					</c:otherwise>				
+				</c:choose>
+				<c:forEach begin="${pageNo.beginPageNo }" end="${pageNo.endPageNo }" varStatus="status">
+					<c:url var="boardListURL" value="boardList.do">
+						<c:param name="pn" value="${status.count }" />
+					</c:url>
+					<c:choose>
+						<c:when test="${param.pn == status.count }">
+							<li><a href="${boardListURL }" class="active">${status.count }</a></li>				
+						</c:when>
+						<c:otherwise>
+							<li><a href="${boardListURL }" >${status.count }</a></li>										
+						</c:otherwise>
+					</c:choose>
+				</c:forEach>
+				<c:choose>
+					<c:when test="${param.pn == pageNo.endPageNo}">
+						<li><a class="disabled">❯</a></li>
+					</c:when>
+					<c:otherwise>
+						<c:url var="preBoardList" value="boardList.do">
+							<c:param name="pn" value="${param.pn - 1}" />
+						</c:url>
+						<li><a href="${preBoardList }">❯</a></li>
+					</c:otherwise>
+				</c:choose>
+				</ul>
 			</div>
 		</div>
 	</div>

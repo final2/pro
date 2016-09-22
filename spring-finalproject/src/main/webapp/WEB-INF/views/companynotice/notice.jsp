@@ -36,7 +36,10 @@ td{text-align: center;}
 						<thead>
 							<tr>
 								<th><h3>공지사항</h3></th>
-								<td><a href="boardList.do" class="pull-right">더보기</a></td>
+								<c:url var="boardListURL" value="boardList.do">
+									<c:param name="pn" value="1" />
+								</c:url>
+								<td><a href="${boardListURL }" class="pull-right">더보기</a></td>
 							</tr>
 						</thead>
 						<tbody>
@@ -45,8 +48,8 @@ td{text-align: center;}
 									<c:param name="no" value="${board.no }" />
 								</c:url>
 								<tr>
-									<td><a href="">${board.title }</a></td>
-									<td><fmt:formatDate value="${board.regdate }" pattern="yyyy.MM.dd hh:mm"/></td>
+									<td><a href="${detailURL }">${board.title }</a></td>
+									<td><fmt:formatDate value="${board.regdate }" pattern="yyyy.MM.dd / hh:mm:ss"/></td>
 								</tr>
 							</c:forEach>
 						</tbody>

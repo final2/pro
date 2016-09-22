@@ -27,8 +27,7 @@
 				</div>
 				<div>
 					<label>날짜</label>
-					<input type="text" name="regdate" class="form-control" readonly="readonly" 
-						value="<fmt:formatDate value="${board.regdate }" pattern="yyyy.MM.dd hh:mm"/>">
+					<input type="text" class="form-control" readonly="readonly" value='<fmt:formatDate value="${board.regdate }" pattern="yyyy.MM.dd / hh:mm:ss"/>'>
 				</div>
 				<div>
 					<label>제목</label>
@@ -36,7 +35,7 @@
 				</div>
 				<div>
 					<label>내용</label>
-					<textarea rows="20" cols="100" class="ckeditor">${board.content }</textarea>
+					<textarea name="content" class="ckeditor">${board.content }</textarea>
 				</div>
 				<div class="pull-right">
 					<c:url var="detailURL" value="boardDetail.do">

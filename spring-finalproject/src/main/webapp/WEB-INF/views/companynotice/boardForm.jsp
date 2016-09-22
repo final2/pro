@@ -34,7 +34,7 @@ $(function() {
 				</div>
 				<div class="form-group">
 					<label>내용</label>
-					<textarea class="ckeditor" cols="100" rows="20" name="content"></textarea>
+					<textarea class="ckeditor" name="content"></textarea>
 				</div>
 				<div class="pull-right">
 					<a href="boardList.do" class="btn btn-default">취소</a>
