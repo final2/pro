@@ -38,15 +38,17 @@
 			userboard
 	</select>
 
-	<!-- 게시글 번호로 공지사항 불러오기
-	<select id="getNoticeBoardByNo" parameterType="int" resultType="Notice">
+	<!-- 게시글 번호로 공지사항 불러오기 -->
+	<select id="getWBoardByNo" parameterType="int" resultType="WBoard">
 		select
-			no	as 'no',
-			title as 'title',
-			content as 'content',
-			regdate as 'regdate'
-		from hq_board
+			no		as no,
+			title	as title,
+			content	as content,
+			regdate	as regdate
+		from 
+			userboard
+	
 		where no = #{value}
 	</select>
-	 -->
+	
 </mapper>
