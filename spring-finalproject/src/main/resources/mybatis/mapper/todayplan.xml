@@ -6,4 +6,34 @@
     
 <mapper namespace="com.finalproject.TodayPlanDao">
 
+	<insert id="addTodayPlan" parameterType="TP">
+		insert into todaywork(no, todaywork_title, todaywork_contents, regdate, employee_no)
+		values(my_seq.nextval, #{title}, #{contents}, sysdate, '90000006')
+	</insert>
+	
+	<delete id="removeTodayPlan" parameterType="TP">
+		delete from todaywork where employee_no = #{empNo} and no = #{no}
+	</delete>
+
+	<select id="getTodayPlanList" resultType="TP">
+		select 
+			no					as no,
+			todaywork_title		as title,
+			todaywork_contents	as contents,
+			regdate				as regdate,
+			employee_no			as empNo
+		from todaywork
+	</select>
+	
+	<select id="getTodayPlanListByEmpNo" parameterType="int">
+		select 
+			no					as no,
+			todaywork_title		as title,
+			todaywork_contents	as contents,
+			regdate				as regdate,
+			employee_no			as empNo
+		from todaywork
+		where employee_no = #{empNo}
+			
+	</select>
 </mapper>    
