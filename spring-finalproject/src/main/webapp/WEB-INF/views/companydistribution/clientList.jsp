@@ -10,7 +10,10 @@
 <script type="text/javascript" src="resources/jquery/jquery.js"></script>
 <link href="resources/bootstrap/css/simple-sidebar.css" rel="stylesheet">
 <script src="resources/bootstrap/js/bootstrap.min.js"></script>
-<title>Insert title here</title>
+<style>
+th,td {text-align:center;}
+</style>
+<title>Big Store</title>
 </head>
 <body>
 <div id="wrapper">
@@ -20,6 +23,7 @@
 		
 		<div class="container" style="margin-top:10px">
 			<h1>거래처 리스트</h1>
+			<hr>
 		<table class="table table-bordered" >
 			<colgroup>
 				<col width="25%">
@@ -34,10 +38,13 @@
 				</tr>
 			</thead>
 			<tbody>
-			<c:forEach var="client" items="${clientList}">
+			<c:forEach var="client" items="${List}">
+			<c:url var="detailURL" value="clientDetail.do">
+				<c:param name="no" value="${client.no}" />
+			</c:url>
 				<tr>
 					<td>${client.no}</td>
-					<td><a href="updateClient.do">${client.name}</a></td>
+					<td><a href="${detailURL}">${client.name}</a></td>
 					<td>${client.isAdmit}</td>
 				</tr>
 			</c:forEach>

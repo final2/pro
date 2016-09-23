@@ -18,9 +18,7 @@
 		
 		<div class="container" style="margin-top:10px">
 			<h1>거래처 수정</h1>
-			
 			<hr>
-		
 			<form action="updateClient.do" method="post" role="form">
 				<div class="form-group">
 					<label>거래처 번호</label>

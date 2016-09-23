@@ -24,6 +24,22 @@
 			no asc
 	</select>
 	
+	<!-- 번호로 거래처 조회 -->
+	<select id="getClientByNo" parameterType="int" resultType="Client">
+		select 
+			c.no		as no,
+			c.name		as name,
+			c.isAdmit	as isAdmit,
+			p.name		as product,
+			d.qty		as qty
+		from 
+			client c, product p, client_detail d
+		where 
+			c.no = d.client_no 
+		and p.no = d.product_no
+		and c.no = #{value}
+	</select>
+	
 	<!-- 거래처 수정 -->
 	<update id="updateClient" parameterType="Client">
 		update client

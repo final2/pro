@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.finalproject.dao.DistributionDao;
 import com.finalproject.model.Client;
+import com.finalproject.model.ClientDetail;
 
 @Service
 public class DistributionServiceImpl implements DistributionService{
@@ -30,5 +31,11 @@ public class DistributionServiceImpl implements DistributionService{
 	@Override
 	public void updateClient(Client client) {
 		distributionDao.updateClient(client);
+	}
+	
+	// 번호로 거래처 조회
+	@Override
+	public List<ClientDetail> getClientByNo(int no) {
+		return distributionDao.getClientByNo(no);
 	}
 }
