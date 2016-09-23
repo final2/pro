@@ -1,6 +1,7 @@
 package com.finalproject.model;
 
 import java.util.Date;
+import java.util.List;
 
 public class Employee {
 
@@ -12,7 +13,6 @@ public class Employee {
 	private Date birth;
 	private String dept;
 	private String position;
-	private String branchPoint;
 	private int salary;
 	private String photo;
 	private Date hireDate;
@@ -67,12 +67,6 @@ public class Employee {
 	}
 	public void setPosition(String position) {
 		this.position = position;
-	}
-	public String getBranchPoint() {
-		return branchPoint;
-	}
-	public void setBranchPoint(String branchPoint) {
-		this.branchPoint = branchPoint;
 	}
 	public int getSalary() {
 		return salary;
