@@ -3,9 +3,37 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.finalproject.dao.EmployeeDao">
-	<insert id="insertEmployee">
-		insert into employee (no, name, phone, email, address, birth, department, position, salary, photo, hiredate, password, retiredate )
-		values (myemp_seq.nextval, #{name}, #{phone}, #{email}, #{address}, '19881010', 'ff', 'dd', 22, 'ff', '1111-11-11', '33', sysdate)
+	<!-- 사원등록 -->
+	<insert id="insertEmployee" parameterType="Employee">
+		insert into employee (no, name, phone, email, address, birth, department, position, salary, photo, hiredate, password, retiredate, remarks )
+		values (myemp_seq.nextval, #{name}, #{phone}, #{email}, #{address}, #{birth}, #{dept}, #{position}, 0, #{photo}, sysdate, #{password}, null, '-')
 	</insert>
+	
+	<!-- 모든 근무지점 -->
+	<select id="getAllBranch" resultType="Branch">
+		select name
+		from branch		
+	</select>
+	
+	<!-- 사원번호로 사원 조회하기 -->
+	<select id="chechByNo" parameterType="int" resultType="branch">
+		select 
+			E.no				as "emp.no", 
+			E.name				as "emp.name", 
+			E.phone				as "emp.phone", 
+			E.email				as "emp.email", 
+			E.address			as "emp.address", 
+			E.birth				as "emp.birth", 
+			E.position			as "emp.position", 
+			B.name,
+			E.department		as "emp.dept",
+			E.retiredate		as "emp.retireDate",
+			E.remarks
+		from employee E, branch B
+		where E.no = B.employee_no
+		and E.no = #{no}
+	</select>
 
+
+	
 </mapper>
