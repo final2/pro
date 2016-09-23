@@ -6,27 +6,6 @@
     
 <mapper namespace="com.finalproject.dao.WebsiteDao">
 
-	<!-- 공지사항 추가
-	<insert id="insertBoard" parameterType="Notice">
-		insert into hq_board(no, title, content, regdate)
-		values(my_seq.nextval, #{title}, #{content}, sysdate )
-	</insert>
-	 -->
-	<!-- 공지사항 삭제
-	<delete id="delteBoard" parameterType="int">
-		delte from hq_board where no = #{value}
-	</delete>
-	 -->
-	<!-- 공지사항 업데이트
-	<update id="updateBoard" parameterType="Notice">
-		update hq_board
-			set
-				title = #{title},
-				content = #{content},
-				regdate = sysdate
-		where no = #{no}
-	</update>
-	 -->
 	<!-- 전체 공지사항 불러오기 -->
 	<select id="getAllBoard" resultType="WBoard">
 		select
@@ -51,4 +30,80 @@
 		where no = #{value}
 	</select>
 	
+	<!-- 이벤트 제품 불러오기 -->
+	<select id="getProductByEvent" parameterType="int" resultType="Product">
+		select
+			no			as no,
+			name		as name,
+			maker		as maker,
+			price		as price,
+			memo 		as memo,
+		    limiteage 	as limiteAge,
+		    eventcode 	as event,
+		    smallcategory_no as smallCat,
+		    image 		as image
+		from 
+			product
+		where eventcode = #{value}
+	</select>
+	
+	<!-- 편의점 LOTTO 검색 -->
+	<select id="getBranchByLotto" parameterType="String" resultType="Branch">
+		select 
+			NO 				as no,
+			NAME 			as name,
+			PHONE			as phone,
+			ADDRESS 		as address,
+			ATM 			as atm, 
+			FRESHFOOD 		as freshFood,
+			IMAGE 			as img, 
+			LOTTO 			as lotto,
+			PARCELSERVICE 	as parcelService,
+			LIFESERVICE 	as lifeService,
+			EMPLOYEE_NO 	as emp
+		from 
+			BRANCH 
+		where
+			LOTTO = 'Y'
+	</select>
+	
+	<!-- 편의점 ATM 검색 -->
+ 	<select id="getBranchByATM" parameterType="String" resultType="Branch">
+		select 
+			NO 				as no,
+			NAME 			as name,
+			PHONE			as phone,
+			ADDRESS 		as address,
+			ATM 			as atm, 
+			FRESHFOOD 		as freshFood,
+			IMAGE 			as img, 
+			LOTTO 			as lotto,
+			PARCELSERVICE 	as parcelService,
+			LIFESERVICE 	as lifeService,
+			EMPLOYEE_NO 	as emp
+		from 
+			BRANCH 
+		where
+			ATM = 'Y'
+	</select> 
+	
+	<!-- 편의점 PARCELSERVICE 검색 -->
+	<select id="getBranchByPARCELSERVICE" parameterType="String" resultType="Branch">
+		select 
+			NO 				as no,
+			NAME 			as name,
+			PHONE			as phone,
+			ADDRESS 		as address,
+			ATM 			as atm, 
+			FRESHFOOD 		as freshFood,
+			IMAGE 			as img, 
+			LOTTO 			as lotto,
+			PARCELSERVICE 	as parcelService,
+			LIFESERVICE 	as lifeService,
+			EMPLOYEE_NO 	as emp
+		from 
+			BRANCH 
+		where
+			PARCELSERVICE = 'Y'
+	</select>
 </mapper>

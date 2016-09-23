@@ -42,12 +42,36 @@
       <li class="w3-dropdown-hover">
         <a href="#" title="Notifications">상품안내 <i class="fa fa-caret-down"></i></a>
         <div class="w3-dropdown-content w3-light-grey w3-card-4">
-          <a href="oneplus.jsp">1+1상품</a>
-          <a href="twoplus.jsp">2+1상품</a>
-          <a href="event.jsp">덤증정상품</a>
-          <a href="event.jsp">선물추첨상품</a>
+          <a href="oneplus.do?no=1">1+1상품</a>
+          <a href="twoplus.do">2+1상품</a>
+          <a href="event.do">덤증정상품</a>
+          <a href="event.do">선물추첨상품</a>
         </div>
       </li>
   </ul>
 </div>
 </nav>
+<script>
+
+function w3_open() {
+    var x = document.getElementById("mySidenav");
+    x.style.width = "300px";
+    x.style.textAlign = "center";
+    x.style.fontSize = "40px";
+    x.style.paddingTop = "10%";
+    x.style.display = "block";
+}
+function w3_close() {
+    document.getElementById("mySidenav").style.display = "none";
+}
+
+// Used to toggle the menu on smaller screens when clicking on the menu button
+function openNav() {
+    var x = document.getElementById("navDemo");
+    if (x.className.indexOf("w3-show") == -1) {
+        x.className += " w3-show";
+    } else {
+        x.className = x.className.replace(" w3-show", "");
+    }
+}
+</script>

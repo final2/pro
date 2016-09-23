@@ -10,32 +10,38 @@
 </head>
 <body>
 <div class="container" style="w3-center">
-<div class="w3-display-container" style="max-width:1080px;">
-	<%@ include file="navbar.jsp" %>
-	<div class="w3-container w3-padding-10  w3-margin-bottom" style="height:520px;">
-		<h4>회사소개</h4>
-		<div class="w3-half w3-center" style="height:250px;">
-			<img src="resources/image/song.jpg" style="height:480px;"/>
+	<div class="w3-display-container" style="max-width:1080px;">
+		<%@ include file="navbar.jsp" %>
+		
+		<div class="w3-container w3-padding-10 w3-margin-top w3-margin-bottom" style="min-height:530px;">
+			<div class="w3-container w3-teal">
+		  			<h1>회사소개</h1>
+			</div>
+			<div class="w3-container w3-margin-top">
+				<div class="w3-half w3-center" >
+					<img src="resources/image/song.jpg" style="height:480px;"/>
+				</div>
+				
+				<div class="w3-half w3-center w3-margin-top">
+					<p>
+					대한민국 구멍가게의 자존심</p>
+					<p>
+					First No1 Store
+					</p>
+					<p>
+					BigStore~
+					</p>
+					<p>
+					엄마랑 손잡고 아빠랑 손잡고 친구 손잡고 
+					너도 나도 열심히 오세요^^
+					
+					</p>
+				</div>
+			</div>
 		</div>
-		<div class="w3-half w3-center">
-			<p>
-			대한민국 구멍가게의 자존심</p>
-			<p>
-			First No1 Store
-			</p>
-			<p>
-			BigStore~
-			</p>
-			<p>
-			엄마랑 손잡고 아빠랑 손잡고 친구 손잡고 
-			너도 나도 열심히 오세요^^
-			
-			</p>
-		</div>
+		<!-- Footer -->
+		<%@ include file="footer.jsp" %>
 	</div>
-	<!-- Footer -->
-	<%@ include file="footer.jsp" %>
-</div>
 </div>
 </body>
 </html>

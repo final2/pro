@@ -24,9 +24,11 @@ th,td {text-align:center;}
 	<div class="w3-display-container" style="max-width:1080px;">
 		<%@ include file="navbar.jsp" %>
 	
-		<div class="w3-container w3-padding-10  w3-margin-bottom">
+		<div class="w3-container w3-padding-10 w3-margin-top w3-margin-bottom">
 			<!-- 공지테이블 -->
-			<h3>공지사항</h3>
+			<div class="w3-container w3-teal">
+	  			<h1>공지사항</h1>
+			</div>
 			<table class="w3-table w3-striped w3-bordered w3-border">
 				<colgroup>
 					<col width="20%">

@@ -6,8 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.finalproject.dao.WebsiteDao;
+import com.finalproject.model.Branch;
+import com.finalproject.model.NoticeBoard;
+import com.finalproject.model.Product;
 import com.finalproject.model.WebBoard;
 import com.finalproject.service.WebService;
 
@@ -34,12 +39,26 @@ public class WebController {
 		model.addAttribute("announcementList", boardList);
 		return "website/announcement";
 	}
+	//로또판매점조회
+	@RequestMapping("lotto.do")
+	public String lotto(Model model){
+		List<Branch> branchList = webservice.getBranchByLotto();
+		model.addAttribute("brList",branchList);
+		return "website/lotto";
+	}
 	//공지사항세부
 	@RequestMapping("webBoardDetail.do")
 	public String webBoardDetail(@RequestParam(name="no") int no,Model model){
 		WebBoard board= webservice.getBoardByNo(no);
 		model.addAttribute("boardDetail",board);
 		return "website/webboarddetail";
+	}
+	//이벤트상품조회
+	@RequestMapping("oneplus.do")
+	public String oneplus(@RequestParam(name="no") int no,Model model){
+		List<Product> eventList=webservice.getProductByEvent(no);
+		model.addAttribute("eventList",eventList);
+		return "website/oneplus";
 	}
 	//문의사항
 	@RequestMapping("qnamail.do")
@@ -55,11 +74,6 @@ public class WebController {
 	@RequestMapping("searchtype.do")
 	public String searchtype(){
 		return "website/searchtype";
-	}
-	//로또판매점
-	@RequestMapping("lotto.do")
-	public String lotto(){
-		return "website/lotto";
 	}
 	//atm설치점
 	@RequestMapping("atm.do")

@@ -18,10 +18,10 @@
 	<!-- 메뉴쪽-->
 	    <div class="w3-col" style="width:200px;min-height:300px;max-height:600px;">
 	         <nav class="w3-sidenav w3-teal w3-card-2 w3-xlarge" id="leftMenu" style="width:200px;height:300px;position:static!important">
-	              <a href="oneplus.jsp" style="margin-top:10px;">1+1상품</a>
-	              <a href="twoplus.jsp" style="margin-top:10px;">2+1상품</a>
-	              <a href="event.jsp" style="margin-top:10px;">덤증정상품</a>
-	              <a href="event.jsp" style="margin-top:10px;">선물추첨상품</a>
+	              <a href="#" style="margin-top:10px;">1+1상품</a>
+	              <a href="#" style="margin-top:10px;">2+1상품</a>
+	              <a href="#" style="margin-top:10px;">덤증정상품</a>
+	              <a href="#" style="margin-top:10px;">선물추첨상품</a>
 	         </nav>
 	    </div>
 	<!-- 좌측메뉴바 끝-->
@@ -41,7 +41,7 @@
 	              <p><!--상품명가격-->1,500원</p>
 	            </div>
 	           <div class="w3-quarter">
-	              <img src="resources/image/mccol.jpg"" alt="감자깡" style="width:45%" class="w3-circle w3-hover-opacity">
+	              <img src="resources/image/mccol.jpg" alt="감자깡" style="width:45%" class="w3-circle w3-hover-opacity">
 	              <h3><!--상품명-->감자깡</h3>
 	              <p><!--상품명가격-->1,500원</p>
 	            </div>
@@ -50,6 +50,46 @@
 	              <h3><!--상품명-->감자깡</h3>
 	              <p><!--상품명가격-->1,500원</p>
 	            </div>
+	          <div class="w3-quarter">
+	              <img src="resources/image/ohgamja.jpg" alt="감자깡" style="width:45%" class="w3-circle w3-hover-opacity">
+	              <h3><!--상품명-->감자깡</h3>
+	              <p><!--상품명가격-->1,500원</p>
+	           </div>
+	           <div class="w3-quarter">
+	              <img src="resources/image/drinkyo.jpg" alt="감자깡" style="width:45%" class="w3-circle w3-hover-opacity">
+	              <h3><!--상품명-->감자깡</h3>
+	              <p><!--상품명가격-->1,500원</p>
+	            </div>
+	           <div class="w3-quarter">
+	              <img src="resources/image/mccol.jpg" alt="감자깡" style="width:45%" class="w3-circle w3-hover-opacity">
+	              <h3><!--상품명-->감자깡</h3>
+	              <p><!--상품명가격-->1,500원</p>
+	            </div>
+	            <div class="w3-quarter">
+	              <img src="resources/image/came.jpg" alt="감자깡" style="width:45%;" class="w3-circle w3-hover-opacity">
+	              <h3><!--상품명-->감자깡</h3>
+	              <p><!--상품명가격-->1,500원</p>
+	            </div>
+	              <div class="w3-quarter">
+	              <img src="resources/image/ohgamja.jpg" alt="감자깡" style="width:45%" class="w3-circle w3-hover-opacity">
+	              <h3><!--상품명-->감자깡</h3>
+	              <p><!--상품명가격-->1,500원</p>
+	           </div>
+	           <div class="w3-quarter">
+	              <img src="resources/image/drinkyo.jpg" alt="감자깡" style="width:45%" class="w3-circle w3-hover-opacity">
+	              <h3><!--상품명-->감자깡</h3>
+	              <p><!--상품명가격-->1,500원</p>
+	            </div>
+	           <div class="w3-quarter">
+	              <img src="resources/image/mccol.jpg" alt="감자깡" style="width:45%" class="w3-circle w3-hover-opacity">
+	              <h3><!--상품명-->감자깡</h3>
+	              <p><!--상품명가격-->1,500원</p>
+	            </div>
+	            <div class="w3-quarter">
+	              <img src="resources/image/came.jpg" alt="감자깡" style="width:45%;" class="w3-circle w3-hover-opacity">
+	              <h3><!--상품명-->감자깡</h3>
+	              <p><!--상품명가격-->1,500원</p>
+	            </div>   
 	        </div>
 	    </div>
 	</div>
@@ -61,7 +101,8 @@
 		        <li class="w3-theme">
 		          <p class="w3-xlarge">지점검색</p>
 		        </li>
-		       <li class="w3-padding-16"><input class="w3-input w3-border w3-round-large" type="text" /></li><li><button class="w3-btn w3-teal w3-padding-large"><i class="fa fa-check"></i> 검색</button></li>
+		       <li class="w3-padding-16"><input class="w3-input w3-border w3-round-large" type="text" /></li>
+		       <li><button class="w3-btn w3-teal w3-padding-large" ><i class="fa fa-check"></i> 검색</button></li>
 		      </ul>
 		    </div>
 		
@@ -84,30 +125,5 @@
 		<%@ include file="footer.jsp" %>	
 	</div>
 </div>
-<script>
-
-function w3_open() {
-    var x = document.getElementById("mySidenav");
-    x.style.width = "300px";
-    x.style.textAlign = "center";
-    x.style.fontSize = "40px";
-    x.style.paddingTop = "10%";
-    x.style.display = "block";
-}
-function w3_close() {
-    document.getElementById("mySidenav").style.display = "none";
-}
-
-// Used to toggle the menu on smaller screens when clicking on the menu button
-function openNav() {
-    var x = document.getElementById("navDemo");
-    if (x.className.indexOf("w3-show") == -1) {
-        x.className += " w3-show";
-    } else {
-        x.className = x.className.replace(" w3-show", "");
-    }
-}
-</script>
-
 </body>
 </html>

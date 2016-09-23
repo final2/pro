@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.finalproject.dao.WebsiteDao;
+import com.finalproject.model.Branch;
+import com.finalproject.model.Product;
 import com.finalproject.model.WebBoard;
 
 @Service
@@ -24,5 +26,15 @@ public class WebServiceImpl implements WebService{
 		return websiteDao.getWBoardByNo(no);
 	}
 
-	
+	@Override
+	public List<Product> getProductByEvent(int no) {
+		
+		return websiteDao.getProductByEvent(no);
+	}
+
+	@Override
+	public List<Branch> getBranchByLotto() {
+		return websiteDao.getBranchByLotto();
+	}
+
 }
