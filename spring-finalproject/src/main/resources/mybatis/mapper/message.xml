@@ -3,10 +3,16 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.finalproject.dao.MessageDao">
-	<select id="getAllMessages" resultType="Message">
+	<select id="getReceiveMessages" resultType="Message">
 		select
-			no,
-			
+			no, 
+			from_name	as	"from", 
+			to_name		as	"to", 
+			contents, 
+			receiving, 
+			regdate
+		from
+			messenger
 	</select>
 </mapper>
 
