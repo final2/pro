@@ -12,11 +12,13 @@ public class Employee {
 	private Date birth;
 	private String dept;
 	private String position;
+	private String branchPoint;
 	private int salary;
 	private String photo;
 	private Date hireDate;
 	private String password;
 	private Date retireDate;
+	private String remarks;
 	
 	public int getNo() {
 		return no;
@@ -66,6 +68,12 @@ public class Employee {
 	public void setPosition(String position) {
 		this.position = position;
 	}
+	public String getBranchPoint() {
+		return branchPoint;
+	}
+	public void setBranchPoint(String branchPoint) {
+		this.branchPoint = branchPoint;
+	}
 	public int getSalary() {
 		return salary;
 	}
@@ -95,6 +103,12 @@ public class Employee {
 	}
 	public void setRetireDate(Date retireDate) {
 		this.retireDate = retireDate;
+	}
+	public String getRemarks() {
+		return remarks;
+	}
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
 	}
 	
 	
