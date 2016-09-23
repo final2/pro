@@ -9,7 +9,6 @@ public class MessageController {
 	@RequestMapping("message.do")
 	public String message() {
 		return "message/message";
-		
 	}
 
 }

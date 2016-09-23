@@ -14,6 +14,25 @@
 		from
 			messenger
 	</select>
+	<select id="getEmployeeList" resultType="Employee">
+		select 
+			no, 
+			name, 
+			phone, 
+			email, 
+			address, 
+			birth, 
+			department	as	"dept", 
+			position, 
+			salary, 
+			photo, 
+			hiredate, 
+			password, 
+			retiredate, 
+			remarks 
+		from 
+			Employee
+	</select>
 </mapper>
 
 
