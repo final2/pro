@@ -6,6 +6,7 @@
 
 	<typeAliases>
 		<typeAlias type="com.finalproject.model.NoticeBoard" alias="Notice"/>
+		<typeAlias type="com.finalproject.model.TodayPlan" alias="TP"/>		
 	    <typeAlias type="com.finalproject.model.Product" alias="Product" />
      	<typeAlias type="com.finalproject.model.LargeCategory" alias="LC" />
       	<typeAlias type="com.finalproject.model.SmallCategory" alias="SC" />
@@ -20,6 +21,7 @@
 
 	<mappers> 
 	   <mapper resource="mybatis/mapper/notice.xml"/>
+	   <mapper resource="mybatis/mapper/todayplan.xml"/>
        <mapper resource="mybatis/mapper/branch.xml"/>
        <mapper resource="mybatis/mapper/website.xml"/>
        <mapper resource="mybatis/mapper/distribution.xml"/>
