@@ -25,7 +25,7 @@ public class NoticeController {
 	}*/
 	
 	//Notice메인, 최신 공지사항 불러오기
-	@RequestMapping(value="notice.do", method=RequestMethod.GET)
+	@RequestMapping(value="/notice.do", method=RequestMethod.GET)
 	public String main(Model model) {
 		List<NoticeBoard> noticeBoardList = noticeService.getLatestBoard();
 		model.addAttribute("boardList", noticeBoardList);
@@ -34,19 +34,19 @@ public class NoticeController {
 	}
 	
 	// 공지사항 작성폼 들어가기
-	@RequestMapping(value="boardForm.do", method=RequestMethod.GET)
+	@RequestMapping(value="/boardForm.do", method=RequestMethod.GET)
 	public String boardForm() {
 		return "companynotice/boardForm";
 	}
 	
 	// 공지사항 작성후 전송값 받기
-	@RequestMapping(value="boardForm.do", method=RequestMethod.POST)
+	@RequestMapping(value="/boardForm.do", method=RequestMethod.POST)
 	public String writeBoard(NoticeBoard noticeBoard) {
 		noticeService.addNoticeBoard(noticeBoard);
 		return "redirect:/boardList.do";
 	}
 	// 공지사항 페이지당 게시글 불러오기
-	@RequestMapping(value="boardList.do", method=RequestMethod.GET)
+	@RequestMapping(value="/boardList.do", method=RequestMethod.GET)
 	public String getBeginEndBoard(int pn, Model model) {
 		
 		Map<String, Object> map = noticeService.getBeginEndboard(pn);
@@ -66,7 +66,7 @@ public class NoticeController {
 	}*/
 	
 	// 공지사항 디테일
-	@RequestMapping("boardDetail.do")
+	@RequestMapping("/boardDetail.do")
 	public String getBoardDetail(@RequestParam(name="no") int no, Model model) {
 		NoticeBoard noticeBoard = noticeService.getNoticeBoardByNo(no);
 		model.addAttribute("board", noticeBoard);
@@ -75,7 +75,7 @@ public class NoticeController {
 	}
 	
 	//공지사항 업데이트 폼
-	@RequestMapping(value="boardUpdateForm.do", method=RequestMethod.GET)
+	@RequestMapping(value="/boardUpdateForm.do", method=RequestMethod.GET)
 	public String getBoardUpdate(int no, Model model) {
 		NoticeBoard noticeBoard = noticeService.getNoticeBoardByNo(no);
 		model.addAttribute("board", noticeBoard);
@@ -84,10 +84,16 @@ public class NoticeController {
 	}
 	
 	//공지사항 업데이트
-	@RequestMapping(value="boardUpdateForm.do", method=RequestMethod.POST)
+	@RequestMapping(value="/boardUpdateForm.do", method=RequestMethod.POST)
 	public String updateBoard(NoticeBoard noticeBoard) {
 		noticeService.updateBoard(noticeBoard);
 		return "redirect:/boardDetail.do?no="+noticeBoard.getNo();
+	}
+	
+	//TodayPlan 페이지 이동 
+	@RequestMapping(value="/todayplan.do", method=RequestMethod.GET)
+	public String todayPlan() {
+		return "companynotice/todayPlanList";
 	}
 
 	

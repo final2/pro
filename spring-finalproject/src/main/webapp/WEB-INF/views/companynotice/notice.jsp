@@ -21,6 +21,10 @@ td{text-align: center;}
 <div id="wrapper">
 	<%@ include file="/WEB-INF/views/sidebartemplate/sidebar.jsp" %>
 	<a href="#menu-toggle" class="btn btn-default btn-xs" id="menu-toggle">side bar</a>
+	<!-- modal창 -->
+	<div class="modal fade" id="messenger" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+		<%@ include file="../message/messagebutton.jsp" %>
+	</div>
 	
 	<div id="page-content-wrapper">
 		<h1>Notice</h1>
@@ -67,7 +71,7 @@ td{text-align: center;}
 						<thead>
 							<tr>
 								<th><h3>오늘의 일정</h3></th>
-								<td><a href="" class="pull-right">더보기</a></td>
+								<td><a href="todayplan.do" class="pull-right">더보기</a></td>
 							</tr>
 						</thead>
 						<tbody>
@@ -110,7 +114,7 @@ td{text-align: center;}
 						<thead>
 							<tr>
 								<th><h3>쪽지함</h3></th>
-								<td><a href="" class="pull-right">더보기</a></td>
+								<td><a href="message.do" class="pull-right">더보기</a></td>
 							</tr>
 						</thead>
 						<tbody>
