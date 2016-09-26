@@ -68,7 +68,7 @@ ul.pagination li a:hover:not(.active) {background-color: #ddd;}
 				</thead>
 				<tbody>
 					<!-- 반복 -->
-					<c:forEach begin="${pageNo.beginBoardNo }" end="${pageNo.endBoardNo }" var="board" items="${boardList}">
+					<c:forEach begin="${pageNo.beginBoardNo }" end="${pageNO.endBoardNo }" var="board" items="${boardList}">
 						<!-- detail 들어갈때 보내는 전송값 -->
 						<c:url var="detailURL" value="boardDetail.do">
 							<c:param name="no" value="${board.no }" />
