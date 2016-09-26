@@ -7,13 +7,55 @@ $(function() {
 	$('#bodywritemessage').hide();
 	$('#bodymessagedetail').hide();
 	
+	$.ajax({
+		type:"GET",
+		url:"/FinalProject/json/getemplist/",
+		dataType:"json",
+		success:function(result) {
+			var $tbody = $('#employeeList');
+			$tbody.empty();
+			$.each(result, function(index, emp) {
+				$tbody.append(
+					"<tr>"+
+						"<td class='text-center' style='vertical-align:middle'>"+
+							"<a href='#'><img border='0' height='80' width='60' alt='hong' src='resources/image/"+emp.photo+"'></a>"+
+						"</td>"+
+						"<td class='text-center' style='vertical-align:middle'><h4>"+emp.name+"</h4></td>"+
+						"<td class='text-center' style='vertical-align:middle'><h4>"+emp.position+".</h4></td>"+
+						"<td class='text-center' style='vertical-align:middle'><button type='button' class='btn btn-default'>쪽지보내기</button></td>"+
+					"</tr>"
+				);
+			});
+		}
+	});
 	$('#list').click(function(){
 		$('#bodyreceive').hide();
 		$('#bodysend').hide();
 		$('#bodywritemessage').hide();
-		$('#bodylist').show();
 		$('#bodymessagedetail').hide();
-		
+		$('#bodylist').show();
+
+		$.ajax({
+			type:"GET",
+			url:"/FinalProject/json/getemplist/",
+			dataType:"json",
+			success:function(result) {
+				var $tbody = $('#employeeList');
+				$tbody.empty();
+				$.each(result, function(index, emp) {
+					$tbody.append(
+						"<tr>"+
+							"<td class='text-center' style='vertical-align:middle'>"+
+								"<a href='#'><img border='0' height='80' width='60' alt='hong' src='resources/image/"+emp.photo+"'></a>"+
+							"</td>"+
+							"<td class='text-center' style='vertical-align:middle'><h4>"+emp.name+"</h4></td>"+
+							"<td class='text-center' style='vertical-align:middle'><h4>"+emp.position+".</h4></td>"+
+							"<td class='text-center' style='vertical-align:middle'><button type='button' class='btn btn-default'>쪽지보내기</button></td>"+
+						"</tr>"
+					);
+				});
+			}
+		});
 	});
 	$('#receive').click(function(){
 		$('#bodylist').hide();
@@ -39,7 +81,7 @@ $(function() {
 					);
 				});
 			}
-		})
+		});
 	});
 	$('#send').click(function(){
 		$('#bodywritemessage').hide();
@@ -65,7 +107,7 @@ $(function() {
 					);
 				});
 			}
-		})
+		});
 	});
 	$('#writemessage').click(function(){
 		$('#bodylist').hide();
