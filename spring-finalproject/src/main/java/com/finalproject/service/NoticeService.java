@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.finalproject.model.NoticeBoard;
 import com.finalproject.model.PageNo;
+import com.finalproject.model.TodayPlan;
 
 public interface NoticeService {
 

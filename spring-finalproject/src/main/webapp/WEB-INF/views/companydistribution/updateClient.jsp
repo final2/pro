@@ -18,21 +18,19 @@
 		
 		<div class="container" style="margin-top:10px">
 			<h1>거래처 수정</h1>
-			
 			<hr>
-		
 			<form action="updateClient.do" method="post" role="form">
 				<div class="form-group">
 					<label>거래처 번호</label>
-					<input type="number" name="no" class="form-control" readonly="readonly" value="${client.no}">
+					<input type="number" name="no" class="form-control" readonly="readonly" value="${clients.no}">
 				</div>
 				<div class="form-group">
 					<label>거래처 명</label>
-					<input type="text" name="name" class="form-control" value="${client.name}">
+					<input type="text" name="name" class="form-control" value="${clients.name}">
 				</div>
 				<div class="form-group">
 					<label>거래 여부</label>
-					<input type="text" name="isadimt" class="form-control" value="${client.isAdmit}">
+					<input type="text" name="isadimt" class="form-control" value="${clients.isAdmit}">
 				</div>
 				<div class="pull-right">
 					<input type="submit" class="btn btn-primary" value="확인" />

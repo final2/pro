@@ -20,6 +20,7 @@
 	     	<div id="login">
 	      		<p>로그인 시 이미지</p>
 	      		<a href="">내정보</a>
+	      		<a href="" data-toggle="modal" data-target="#messenger">메신저</a>
 	      		<a href="">로그아웃</a>	
       		</div>	
     	</li>
@@ -68,7 +69,7 @@
        		</ul>		
        </li>
        <li>
-       		<a href="">게시판</a>		
+       		<a href="">통계</a>		
        </li>
     </ul>
     <div class="sidebar-nav-btn"></div>

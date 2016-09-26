@@ -14,20 +14,48 @@
 <style type="text/css">
 table {width:100%}
 td{text-align: center;}
+.disdiv {border-style:solid;
+		 border-radius: 10px;
+		 border-color:#00cac2;}
 </style>
-<title>Insert title here</title>
+<title>Main</title>
+<script type="text/javascript">
+$(function() {
+	$.ajax({
+		type:'GET',
+		url:'json/plan/now',
+		dataType:'json',
+		success:function(result) {
+			var $tbody = $('#today-planList');
+			$tbody.empty();
+			
+			$.each(result, function(index, plan) {
+				if(plan.successed == 'N') {
+					$tbody.append("<tr>"
+									+"<td>"+plan.title+"</td>"
+									+"<td>"+plan.contents+"</td></tr>")			
+				}
+			});
+		}
+	});
+});
+</script>
 </head>
 <body>
 <div id="wrapper">
 	<%@ include file="/WEB-INF/views/sidebartemplate/sidebar.jsp" %>
 	<a href="#menu-toggle" class="btn btn-default btn-xs" id="menu-toggle">side bar</a>
+	<!-- modal창 -->
+	<div class="modal fade" id="messenger" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+		<%@ include file="../message/messagebutton.jsp" %>
+	</div>
 	
 	<div id="page-content-wrapper">
 		<h1>Notice</h1>
 
 		<div class="row" style="margin-top:10px">
 			<div class="col-sm-6">
-				<div style="border: thin solid black">
+				<div class="disdiv">
 					<table class="table table-hover">
 						<colgroup>
 							<col width="60%">
@@ -41,6 +69,10 @@ td{text-align: center;}
 								</c:url>
 								<td><a href="${boardListURL }" class="pull-right">더보기</a></td>
 							</tr>
+							<tr>
+								<th style="text-align:center">제목</th>
+								<th style="text-align:center">날짜</th>
+							</tr>
 						</thead>
 						<tbody>
 							<c:forEach var="board" items="${boardList }">
@@ -50,7 +82,7 @@ td{text-align: center;}
 								</c:url>
 								<tr>
 									<td><a href="${detailURL }">${board.title }</a></td>
-									<td><fmt:formatDate value="${board.regdate }" pattern="yyyy.MM.dd / hh:mm:ss"/></td>
+									<td><fmt:formatDate value="${board.regdate }" pattern="yyyy-MM-dd / hh:mm:ss"/></td>
 								</tr>
 							</c:forEach>
 						</tbody>
@@ -58,23 +90,23 @@ td{text-align: center;}
 				</div>
 			</div>
 			<div class="col-sm-6">
-				<div style="border: thin solid black">
-					<table class="table table-hover">
+				<div class="disdiv">
+					<table  class="table table-hover">
 						<colgroup>
-							<col width="60%">
-							<col width="40%">
+							<col width="30%">
+							<col width="70%">
 						</colgroup>
 						<thead>
 							<tr>
 								<th><h3>오늘의 일정</h3></th>
-								<td><a href="" class="pull-right">더보기</a></td>
+								<td><a href="todayplan.do" class="pull-right">더보기</a></td>
+							</tr>
+							<tr>
+								<th style="text-align:center">제목</th>
+								<th style="text-align:center">내용</th>
 							</tr>
 						</thead>
-						<tbody>
-							<tr>
-								<td>제목</td>
-								<td>날짜</td>
-							</tr>
+						<tbody id="today-planList">
 						</tbody>
 					</table>
 				</div>
@@ -82,7 +114,7 @@ td{text-align: center;}
 		</div>
 		<div class="row" style="margin-top:10px">
 			<div class="col-sm-6">
-				<div style="border: thin solid black">
+				<div class="disdiv">
 					<table>
 						<colgroup>
 							<col width="60%">
@@ -101,7 +133,7 @@ td{text-align: center;}
 				</div>
 			</div>
 			<div class="col-sm-6">
-				<div style="border: thin solid black">
+				<div class="disdiv">
 					<table class="table table-hover">
 						<colgroup>
 							<col width="60%">
@@ -110,7 +142,7 @@ td{text-align: center;}
 						<thead>
 							<tr>
 								<th><h3>쪽지함</h3></th>
-								<td><a href="" class="pull-right">더보기</a></td>
+								<td><a href="message.do" class="pull-right">더보기</a></td>
 							</tr>
 						</thead>
 						<tbody>

@@ -4,36 +4,76 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
     
-<mapper namespace="com.finalproject.TodayPlanDao">
-
+<mapper namespace="com.finalproject.dao.TodayPlanDao">
+	<!-- 오늘의 할일 추가 -->
 	<insert id="addTodayPlan" parameterType="TP">
-		insert into todaywork(no, todaywork_title, todaywork_contents, regdate, employee_no)
-		values(my_seq.nextval, #{title}, #{contents}, sysdate, '90000006')
+		insert into todaywork(no, todaywork_title, todaywork_contents, regdate, employee_no, successed)
+		values(my_seq.nextval, #{title}, #{contents}, sysdate, '90000006', 'N')
 	</insert>
-	
-	<delete id="removeTodayPlan" parameterType="TP">
-		delete from todaywork where employee_no = #{empNo} and no = #{no}
+	<!-- 오늘의 할일 삭제 -->
+	<delete id="removeTodayPlan" parameterType="int">
+		delete from todaywork where no = #{value}
 	</delete>
-
+	<!-- 오늘의 할일 완료하기 -->
+	<update id="updateTodayPlan" parameterType="int">
+		update todaywork
+			set successed = 'Y'
+		where no = #{value}
+	</update>
+	<!-- 오늘 날짜 전체 가져오기 -->
 	<select id="getTodayPlanList" resultType="TP">
 		select 
 			no					as no,
 			todaywork_title		as title,
 			todaywork_contents	as contents,
 			regdate				as regdate,
-			employee_no			as empNo
+			employee_no			as empNo,
+			successed			as successed
 		from todaywork
+		where to_char(regdate, 'yyyy-MM-dd') = to_char(sysdate, 'yyyy-MM-dd')
 	</select>
 	
-	<select id="getTodayPlanListByEmpNo" parameterType="int">
+	<!-- 사원별 오늘 날짜에 대한 할 일 가져오기 -->
+	<select id="getTodayPlanListByEmpNo" parameterType="int" resultType="TP">
 		select 
 			no					as no,
 			todaywork_title		as title,
 			todaywork_contents	as contents,
 			regdate				as regdate,
-			employee_no			as empNo
+			employee_no			as empNo,
+			successed			as successed
+		from todaywork
+		where employee_no = #{value}
+		and to_char(regdate, 'yyyy-MM-dd') = to_char(sysdate, 'yyyy-MM-dd')
+	</select>
+	<!-- 사원별 오늘의 할일 날짜 별 가져오기 -->
+	<select id="getTodayPlanListByDate" parameterType="TP" resultType="TP">
+		select 
+			no					as no,
+			todaywork_title		as title,
+			todaywork_contents	as contents,
+			regdate				as regdate,
+			employee_no			as empNo,
+			successed			as successed
 		from todaywork
 		where employee_no = #{empNo}
-			
+		and to_char(regdate, 'yyyy-MM-dd') = to_char(#{regdate}, 'yyyy-MM-dd')
+	</select>
+	<!-- 최근에 추가한 할 일 5개 -->
+	<select id="getNewPlanList" parameterType="int" resultType="TP">
+		select 
+			rank,
+			no					as no,
+			todaywork_title		as title,
+			todaywork_contents	as contents,
+			regdate				as regdate,
+			employee_no			as empNo,
+			successed			as successed
+		from (select row_number() over(order by regdate desc) as rank, 
+					 no, todaywork_title, todaywork_contents, regdate, employee_no, successed
+			  from todaywork
+			  where employee_no = #{value}
+			  and to_char(regdate, 'yyyy-MM-dd') = to_char(#{regdate}, 'yyyy-MM-dd'))
+		where rank &lt;= 5
 	</select>
 </mapper>    

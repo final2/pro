@@ -17,9 +17,7 @@ ul.pagination {
     padding: 0;
     margin: 0;
 }
-
 ul.pagination li {display: inline;}
-
 ul.pagination li a {
     color: black;
     float: left;
@@ -27,7 +25,6 @@ ul.pagination li a {
     text-decoration: none;
     border-radius: 5px;
 }
-
 ul.pagination li a.active {
     background-color: #4CAF50;
     color: white;
@@ -35,15 +32,12 @@ ul.pagination li a.active {
     pointer-events: none;
     cursor: default;
 }
-
 ul.pagination li a:hover:not(.active) {background-color: #ddd;}
-
  .disabled {
         pointer-events: none;
         cursor: default;
         opacity: 0.6;
     }
-
 </style>
 </head>
 <body>
@@ -68,7 +62,7 @@ ul.pagination li a:hover:not(.active) {background-color: #ddd;}
 				</thead>
 				<tbody>
 					<!-- 반복 -->
-					<c:forEach begin="${pageNo.beginBoardNo }" end="${pageNo.endBoardNo }" var="board" items="${boardList}">
+					<c:forEach begin="${pageNo.beginBoardNo }" end="${pageNO.endBoardNo }" var="board" items="${boardList}">
 						<!-- detail 들어갈때 보내는 전송값 -->
 						<c:url var="detailURL" value="boardDetail.do">
 							<c:param name="no" value="${board.no }" />

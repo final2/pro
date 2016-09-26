@@ -13,6 +13,7 @@
       	<typeAlias type="com.finalproject.model.WebBoard" alias="Wboard" />
       	<typeAlias type="com.finalproject.model.PageNo" alias="PN"/>
       	<typeAlias type="com.finalproject.model.Client" alias="Client"/>
+      	<typeAlias type="com.finalproject.model.ClientDetail" alias="ClDetail"/>      	
       	<typeAlias type="com.finalproject.model.Employee" alias="Employee"/>
       	<typeAlias type="com.finalproject.model.BranchOrder" alias="BrOrder"/>
       	<typeAlias type="com.finalproject.model.Message" alias="Message"/>
