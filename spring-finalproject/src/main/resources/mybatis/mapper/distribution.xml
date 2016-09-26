@@ -15,9 +15,9 @@
 	<!-- 거래처 리스트 -->
 	<select id="getClients" resultType="Client">
 		select
-			no		as no,
-			name	as name,
-			isAdmit as isAdmit
+			no,
+			name,
+			isAdmit
 		from
 			client
 		order by 
@@ -25,19 +25,27 @@
 	</select>
 	
 	<!-- 번호로 거래처 조회 -->
-	<select id="getClientByNo" parameterType="int" resultType="Client">
+	<select id="getClientsByNo" parameterType="int" resultType="Client">
 		select 
-			c.no		as no,
-			c.name		as name,
-			c.isAdmit	as isAdmit,
-			p.name		as product,
-			d.qty		as qty
+			no,
+			name,
+			isAdmit
 		from 
-			client c, product p, client_detail d
+			client
 		where 
-			c.no = d.client_no 
-		and p.no = d.product_no
-		and c.no = #{value}
+			no = #{value}
+	</select>
+	
+	<select id="getClientDetailsByNo" parameterType="int" resultType="ClDetail">
+		select
+			c.qty			as qty,
+			p.name			as "product.name",
+			p.client_no		as clientNo
+		from
+			client_detail c, product p
+		where
+			c.product_no = p.no
+			and c.client_no = #{value}
 	</select>
 	
 	<!-- 거래처 수정 -->
@@ -48,4 +56,11 @@
 				isAdmit = #{isAdmit}
 		where no = #{no}
 	</update> 
+	
+	<!-- 게시글 총 수 불러오기 -->
+	<select id="getListTotal" resultType="PN">
+		select 
+			count(*) as clientTotalNo  
+		from client
+	</select>
 </mapper>

@@ -1,10 +1,11 @@
 package com.finalproject.model;
 
+
 public class ClientDetail {
 
 	private int no;
 	private int qty;
-	private Client client;
+	private int clientNo;
 	private Product product;
 	
 	public int getNo() {
@@ -19,11 +20,11 @@ public class ClientDetail {
 	public void setQty(int qty) {
 		this.qty = qty;
 	}
-	public Client getClient() {
-		return client;
+	public int getClientNo() {
+		return clientNo;
 	}
-	public void setClient(Client client) {
-		this.client = client;
+	public void setClientNo(int clientNo) {
+		this.clientNo = clientNo;
 	}
 	public Product getProduct() {
 		return product;
@@ -31,6 +32,5 @@ public class ClientDetail {
 	public void setProduct(Product product) {
 		this.product = product;
 	}
-	
 	
 }
