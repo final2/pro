@@ -8,14 +8,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.finalproject.dao.NoticeDao;
+import com.finalproject.dao.TodayPlanDao;
 import com.finalproject.model.NoticeBoard;
 import com.finalproject.model.PageNo;
+import com.finalproject.model.TodayPlan;
 
 @Service
 public class NoticeServiceImpl implements NoticeService {
 
 	@Autowired
 	private NoticeDao noticeDao;
+	
+	@Autowired
+	private TodayPlanDao todayPlanDao;
 	
 	@Override
 	public void addNoticeBoard(NoticeBoard noticeBoard) {
@@ -90,6 +95,7 @@ public class NoticeServiceImpl implements NoticeService {
 		
 		return map;
 	}
+	
 	
 	
 }
