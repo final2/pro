@@ -20,12 +20,12 @@ window.onload = printTime;
 <nav class="navbar-branch">
 	  <div class="container-fluid">
 	    <div class="navbar-header">
-	      <a class="navbar-brand" href="#"><img src="resources/image/logo1.png" /></a>
+	      <a class="navbar-brand" href="#"><img src="../resources/image/logo1.png" /></a>
 	    </div>
 	    
 	    <div class="navbar-time">
 	    	<span id="clock"></span>
-	    	<p><sec:authentication property="principal.brEmp.name"/></p>
+	    	<p><sec:authentication property="principal.brEmp.name" /></p>
 	    </div>
 	    
 	    <ul class="nav navbar-nav pull-right">
@@ -35,7 +35,7 @@ window.onload = printTime;
 	      <li><a href="#">결산</a></li>
 	      <li class="${current_page eq 'branchorder' ? 'active' : '' }"><a href="branchorder.do">발주</a></li>
 	      <li><a href="#">사용자등록</a></li>
-	      <li><a href="branchlogout.do">로그아웃</a></li>
+	      <li><a href="../branch/branchlogout.do">로그아웃</a></li>
 	    </ul>
 	  </div>
 	</nav>

@@ -8,19 +8,19 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
 
 	<http auto-config="true">
-		<intercept-url pattern="/branchlogin.do" access="permitAll" />		
+		<intercept-url pattern="/branch/branchlogin.do" access="permitAll" />		
         <!--  
         <intercept-url pattern="/admin/*.do" access="hasRole('ADMIN')" />
         <intercept-url pattern="/member/*.do" access="hasRole('ADMIN') or hasRole('USER')" />
         -->
         
-        <form-login  login-page="/branchlogin.do"
-        			login-processing-url="/branchlogin.do"
+        <form-login  login-page="/branch/branchlogin.do"
+        			login-processing-url="/branch/branchlogin.do"
         			username-parameter="username"
         			password-parameter="password"
         			always-use-default-target="true"
-        			default-target-url="/branchmain.do"
-        			authentication-failure-url="/denied.do"/>
+        			default-target-url="/branch/branchmain.do"
+        			authentication-failure-url="/branch/denied.do"/>
        	<!-- 
 			login-page : 사용자정의 로그인 폼으로 이동하는 URL 지정
 			login-processing-url :  로그인폼의 <form action="login.do" >의 action 속성값 지정
@@ -29,8 +29,8 @@
 			default-target-url : 로그인 성공시 이동할 URL 지정
 			authentication-failure-url : 로그인 실패시 이동할 URL 지정
 		-->
-        <logout logout-url="/branchlogout.do"
-        		logout-success-url="/branchlogin.do"/>
+        <logout logout-url="/branch/branchlogout.do"
+        		logout-success-url="/branch/branchlogin.do"/>
         		
         <!-- 사이트 간 요청 위조 방지 설정 -->
        	<csrf/>

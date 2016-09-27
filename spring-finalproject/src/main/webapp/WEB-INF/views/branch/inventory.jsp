@@ -6,9 +6,9 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" type="text/css" href="resources/bootstrap/css/bootstrap.css">
-<link rel="stylesheet" type="text/css" href="resources/css/branch.css">
-<script type="text/javascript" src="resources/jquery/jquery.js" ></script>
+<link rel="stylesheet" type="text/css" href="../resources/bootstrap/css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="../resources/css/branch.css">
+<script type="text/javascript" src="../resources/jquery/jquery.js" ></script>
 <script type="text/javascript">
 $(function() {
 	

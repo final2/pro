@@ -1,15 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <c:set var="current_page" value="branchorder" />
 <!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" type="text/css" href="resources/bootstrap/css/bootstrap.css">
-<link rel="stylesheet" type="text/css" href="resources/css/branch.css">
-<script type="text/javascript" src="resources/jquery/jquery.js" ></script>
-<script type="text/javascript" src="resources/jquery/money.js" ></script>
+<link rel="stylesheet" type="text/css" href="../resources/bootstrap/css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="../resources/css/branch.css">
+<script type="text/javascript" src="../resources/jquery/jquery.js" ></script>
+<script type="text/javascript" src="../resources/jquery/money.js" ></script>
 <script type="text/javascript">
 $(function() {
 	
@@ -17,9 +18,10 @@ $(function() {
 	var refreshWaitingOrderList = function() {
 		var $tbody = $("#tab-2 tbody").empty();
 		
+		var brno = $(".container").attr("id").replace("brno-", "");
 		$.ajax({
 			type:"GET",
-			url:"/FinalProject/json/wor/",
+			url:"/FinalProject/json/wor/" + brno,
 			dataType:"json",
 			success:function(result) {
 				var orderNo = 0;
@@ -86,7 +88,7 @@ $(function() {
 				
 				$.ajax({
 					type:"DELETE",
-					url:"/FinalProject/json/wor/"+no,
+					url:"/FinalProject/json/wor/del/"+no,
 					dataType:"json",
 					success:function(result) {
 						refreshWaitingOrderList();
@@ -112,7 +114,10 @@ $(function() {
 <title>지점 - 발주</title>
 </head>
 <body>
-<div class="wrapper container">
+<sec:authorize access="isAuthenticated()">
+	<sec:authentication var="brno" property="principal.brEmp.branch.no"/>
+</sec:authorize>
+<div class="wrapper container" id="brno-${brno }">
 	<div class="row">
 		<div class="col-sm-12">
 			<%@ include file="topmenu.jsp" %>
