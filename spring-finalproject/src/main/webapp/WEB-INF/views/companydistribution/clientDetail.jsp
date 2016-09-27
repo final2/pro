@@ -52,7 +52,8 @@ tbody th {text-align:center;}
 			</table>
 			<div class="pull-right">
 				<c:url var="updateURL" value="updateClient.do">
-					<c:param name="no" value="${client.no}" />
+					<c:param name="no" value="${clients.no}" />
+					<c:param name="pn" value="${param.pn }" />
 				</c:url>
 				<a href="${updateURL}" class="btn btn-primary">수정</a>
 				<a href="clientList.do" class="btn btn-primary">목록</a>

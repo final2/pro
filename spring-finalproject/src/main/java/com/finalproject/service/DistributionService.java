@@ -21,4 +21,10 @@ public interface DistributionService {
 	// 번호로 거래처 조회
 	Client getClientsByNo(int no);
 	List<ClientDetail> getClientDetailsByNo(int no);
+	
+	// 리스트 총 수량
+	PageNo getTotalClient();
+	
+	// 페이지 번호에 해당하는 리스트 조회
+	Map<String, Object> getBeginEndClients(int no);
 }

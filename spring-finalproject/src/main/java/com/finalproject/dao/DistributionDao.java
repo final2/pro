@@ -22,8 +22,8 @@ public interface DistributionDao {
 	List<ClientDetail> getClientDetailsByNo(int no);
 	
 	// 리스트 총 수량
-	PageNo getListTotal();
+	PageNo getTotalClient();
 	
 	// 페이지 번호에 해당하는 리스트 조회
-	List<Client> getListClients(PageNo pageNo);
+	List<Client> getBeginEndClients(PageNo pageNo);
 }

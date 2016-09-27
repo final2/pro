@@ -20,15 +20,26 @@ public class DistributionController {
 	@Autowired
 	private DistributionService distributionService;
 	
-	// 거래처 리스트 페이지
+	/*// 거래처 리스트 페이지
 	@RequestMapping("/clientList.do")
 	public String clientList(Model model) {
 		List<Client> clientList = distributionService.getClientList();
 		model.addAttribute("clientList", clientList);
 		
 		return "companydistribution/clientList";
-	}
+	}*/
+	
+	// 거래처 리스트 페이지
+	@RequestMapping(value="/clientList.do", method=RequestMethod.GET)
+	public String getBeginEndClients(int pn, Model model) {
 		
+		Map<String, Object> map = distributionService.getBeginEndClients(pn);
+		model.addAttribute("clientList", map.get("BeginEndClientList"));
+		model.addAttribute("pageNo", map.get("PageNo"));
+		
+		return "companydistribution/clientList";
+	}
+	
 	// 거래처 상세정보 페이지
 	@RequestMapping("/clientDetail.do")
 	public String clientDetail(@RequestParam(name="no") int no, Model model) {

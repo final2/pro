@@ -21,7 +21,7 @@
 		from
 			client
 		order by 
-			no asc
+			no desc
 	</select>
 	
 	<!-- 번호로 거래처 조회 -->
@@ -58,9 +58,19 @@
 	</update> 
 	
 	<!-- 게시글 총 수 불러오기 -->
-	<select id="getListTotal" resultType="PN">
+	<select id="getTotalClient" resultType="PN">
 		select 
-			count(*) as clientTotalNo  
+			count(*) as boardTotalNo  
 		from client
+	</select>
+	
+	<!-- 페이지당 리스트 불러오기 -->
+	<select id="getBeginEndClients" parameterType="PN" resultType="Client">
+		select
+			rank, no as no, name as name, isAdmit as isAdmit
+		from (select row_number() OVER(order by no desc) as rank, no, name, isAdmit
+			  from client
+			  order by rank)
+		where rank >= #{beginBoardNo} and rank &lt;= #{endBoardNo}
 	</select>
 </mapper>

@@ -38,9 +38,10 @@ th,td {text-align:center;}
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach var="client" items="${clientList}">
+					<c:forEach begin="${pageNo.beginBoardNo}" end="${pageNo.endBoardNo}" var="client" items="${clientList}">
 						<c:url var="detailURL" value="clientDetail.do">
 							<c:param name="no" value="${client.no}" />
+							<c:param name="pn" value="${param.pn }"/>
 						</c:url>
 						<tr>
 							<td>${client.no}</td>
@@ -52,6 +53,45 @@ th,td {text-align:center;}
 			</table>
 			<div class="pull-right">
 				 <a href="addClient.do" class="btn btn-primary">거래처 등록</a>
+			</div>
+			<div class="text-center">
+				<ul class="pagination">
+					<c:choose>
+						<c:when test="${param.pn == pageNo.beginPageNo}">
+							<li><a class="disabled">&lt;</a></li>
+						</c:when>
+						<c:otherwise>
+							<c:url var="nextClientListURL" value="clientList.do">
+								<c:param name="pn" value="${param.pn + 1 }" />
+							</c:url>
+							<li><a href="${nextClientListURL }">></a></li>
+						</c:otherwise>
+					</c:choose>
+					<c:forEach begin="${pageNo.beginPageNo }" end="${pageNo.endPageNo }" varStatus="status">
+						<c:url var="clientListURL" value="clientList.do">
+							<c:param name="pn" value="${status.count }" />
+						</c:url>
+						<c:choose>
+							<c:when test="${param.pn == status.count }">
+								<li><a href="${clientListURL }" class="active">${status.count }</a></li>
+							</c:when>
+							<c:otherwise>
+								<li><a href="${clientListURL }">${status.count }</a></li>
+							</c:otherwise>
+						</c:choose>
+					</c:forEach>
+					<c:choose>
+						<c:when test="${param.pn == pageNo.endPageNo}">
+							<li><a class="disabled">></a></li>
+						</c:when>
+						<c:otherwise>
+							<c:url var="preClientList" value="clientList.do">
+								<c:param name="pn" value="${param.pn - 1}" />
+							</c:url>
+							<li><a href="${preClientList }">&lt;</a></li>
+						</c:otherwise>
+					</c:choose>
+				</ul>
 			</div>
 		</div>
    </div>
