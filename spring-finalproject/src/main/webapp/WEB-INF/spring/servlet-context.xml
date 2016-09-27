@@ -17,6 +17,12 @@
 		<mvc:jsp prefix="/WEB-INF/views/" suffix=".jsp"/>
 	</mvc:view-resolvers>
 	
+	<mvc:annotation-driven>
+		<mvc:argument-resolvers>
+		<bean class="com.finalproject.security.BrEmpUserDetailsHandlerMethodArgumentResolver" />
+	</mvc:argument-resolvers>
+	</mvc:annotation-driven>
+	
 	<!-- 
 	 MultipartResolver
 		- 파일 업로드 요청과 같은 멀티파트요청을 처리한다. *<form method="post" enctype="multipart/form-data" >
