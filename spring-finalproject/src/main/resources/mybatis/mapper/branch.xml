@@ -3,6 +3,29 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.finalproject.dao.BranchDao">
+	<!-- 지점회원번호로 지점회원 찾기 -->
+	<select id="getBrMemberByNo" parameterType="int" resultType="com.finalproject.model.BranchEmp">
+		select 
+			A.no, 
+			A.email, 
+			A.address, 
+			A.phone, 
+			A.grade, 
+			A.password, 
+			A.name, 
+			A.retiredate, 
+			A.branch_no as "branch.no", 
+			A.images, 
+			A.birth
+		from 
+			br_employees A, branch B
+		where
+			A.branch_no = B.no
+		and 
+			A.no = #{value}
+	</select>
+	
+	<!-- 판매 : 대분류 찾기 -->
 	<select id="getAllLargeCats" resultType="LC">
 		select 
 			no, name
@@ -10,19 +33,108 @@
 			largecategory
 	</select>
 	
+	<!-- 판매 : 소분류 찾기 -->
 	<select id="getSmallCatsByLargeNo" parameterType="int" resultType="SC">
 		select
 			no, name, largecategory_no as largeCat
 		from
 			smallcategory
-		where largecategory_no = #{value}
+		where 
+			largecategory_no = #{value}
 	</select>
 	
+	<!-- 판매 : 물품 찾기 -->
 	<select id="getProductsBySmallNo" parameterType="int" resultType="Product">
 		select
 			no, name, maker, price, smallcategory_no as smallCat
 		from
 			product
-		where smallcategory_no = #{value}
+		where 
+			smallcategory_no = #{value}
 	</select>
+	
+	<!-- 발주 : 발주대기 주문 찾기 -->
+	<select id="getWaitingOrder" resultType="com.finalproject.model.BranchOrderDetail">
+		select
+			A.no, 
+			A.qty, 
+			A.warehousein, 
+			A.warehouseout, 
+			A.order_no as "order.no", 
+			A.product_no as "product.no",
+			B.name as "product.name",
+			B.maker as "product.maker",
+			B.price as "product.price",
+			C.branch_no as "order.branchNo"
+		from
+			br_order_details A, product B, br_orders C
+		where 
+			C.iscart = 'N'
+		and
+			A.product_no = B.no
+		and
+			A.order_no = C.no
+	</select>
+	
+	<!-- 발주대기 목록에서 삭제하기 -->
+	<delete id="deleteWaitingByOrderDetailNo" parameterType="int">
+		delete from br_order_details
+		where no = #{value}
+	</delete>
+	
+	<!-- 지점 재고에 물품 추가하기 -->
+	<insert id="addInventory" parameterType="com.finalproject.model.BranchInventory">
+		insert into 
+			branch_inventory(no, qty, branch_no, product_no)
+		values
+			(mybranch_seq.nextval, #{qty}, #{branchNo}, #{product.no})
+	</insert>
+	
+	<!-- 주문번호로 발주 찾기 -->
+	<select id="getBranchOrderByNo" parameterType="int" resultType="BrOrder">
+		select
+			no,
+			regdate,
+			note,
+			branch_no as "branch.no",
+			iscomplete,
+			iscart
+		from
+			br_orders
+		where
+			no = #{value}
+	</select>
+	
+	<!-- 발주 수정하기 -->
+	<update id="updateBranchOrder" parameterType="BrOrder">
+		update
+			br_orders
+		set
+			note = #{note},
+			iscomplete = #{iscomplete},
+			iscart = #{iscart}
+		where
+			no = #{no}
+	</update>
+	
+	<!-- 물품번호로 재고찾기 -->
+	<select id="getInventoryByProductNo" parameterType="int" resultType="com.finalproject.model.BranchInventory">
+		select
+			 no, qty, branch_no as "branchNo", product_no as "productNo"
+		from 
+			branch_inventory
+		where 
+			product_no = #{value}
+	</select>
+	
+	<!-- 재고 수정하기 -->
+	<update id="updateInventory" parameterType="com.finalproject.model.BranchInventory">
+		update
+			branch_inventory
+		set
+			qty = #{qty},
+			branch_no = #{branchNo}
+		where
+			product_no = #{productNo}
+	</update>
 </mapper>
