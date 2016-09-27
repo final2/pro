@@ -8,7 +8,8 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
 
 	<http auto-config="true">
-		<intercept-url pattern="/branchlogin.do" access="permitAll" />		
+		<intercept-url pattern="/branchlogin.do" access="permitAll" />	
+		<intercept-url pattern="/*.do" access="permitAll"/>	
         <!--  
         <intercept-url pattern="/admin/*.do" access="hasRole('ADMIN')" />
         <intercept-url pattern="/member/*.do" access="hasRole('ADMIN') or hasRole('USER')" />
@@ -21,6 +22,7 @@
         			always-use-default-target="true"
         			default-target-url="/branchmain.do"
         			authentication-failure-url="/denied.do"/>
+        			
        	<!-- 
 			login-page : 사용자정의 로그인 폼으로 이동하는 URL 지정
 			login-processing-url :  로그인폼의 <form action="login.do" >의 action 속성값 지정

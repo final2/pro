@@ -22,7 +22,6 @@
 				<div class="form-group">
 					<input type="password" name="password" class="form-control" placeholder="비밀번호를 입력하세요" />
 				</div>
-				<input type="hidden" name="${_csrf.parameterName}"  value="${_csrf.token}" />
 				<button type="submit" class="btn btn-primary form-control">로그인</button>
 			</form>
 		</div>
