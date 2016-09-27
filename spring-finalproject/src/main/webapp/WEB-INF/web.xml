@@ -34,7 +34,10 @@
   <!-- Root WebApplicationContext 설정 -->
    <context-param>
       <param-name>contextConfigLocation</param-name>
-      <param-value>WEB-INF/spring/root-context.xml</param-value>
+      <param-value>
+      	WEB-INF/spring/root-context.xml
+      	WEB-INF/spring/sec-context.xml
+      	</param-value>
    </context-param>
    <listener>
       <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
@@ -58,5 +61,18 @@
       <url-pattern>/json/*</url-pattern>
    </servlet-mapping>
    
+   <!--  
+		스프링 시큐리티 적용을 지원하는 필터를 등록한다.
+		<filter-name />은 "springSecurityFilterChain"이라는 이름으로 꼭 등록
+	-->
+	<filter>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<url-pattern>*.do</url-pattern>
+		<url-pattern>/json/*</url-pattern>
+	</filter-mapping>
    
 </web-app>
