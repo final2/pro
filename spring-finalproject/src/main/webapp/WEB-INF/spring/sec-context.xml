@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bean:beans xmlns:bean="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://www.springframework.org/schema/security"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.1.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+	<http auto-config="true">
+		<intercept-url pattern="/branchlogin.do" access="permitAll" />		
+        <!--  
+        <intercept-url pattern="/admin/*.do" access="hasRole('ADMIN')" />
+        <intercept-url pattern="/member/*.do" access="hasRole('ADMIN') or hasRole('USER')" />
+        -->
+        
+        <form-login  login-page="/branchlogin.do"
+        			login-processing-url="/branchlogin.do"
+        			username-parameter="username"
+        			password-parameter="password"
+        			always-use-default-target="true"
+        			default-target-url="/branchmain.do"
+        			authentication-failure-url="/denied.do"/>
+       	<!-- 
+			login-page : 사용자정의 로그인 폼으로 이동하는 URL 지정
+			login-processing-url :  로그인폼의 <form action="login.do" >의 action 속성값 지정
+			username-parameter : 로그인폼의 아이디 입력필드 이름 지정
+			password-parameter : 로그인폼의 비밀번호 입력필드 이름 지정
+			default-target-url : 로그인 성공시 이동할 URL 지정
+			authentication-failure-url : 로그인 실패시 이동할 URL 지정
+		-->
+        <logout logout-url="/branchlogout.do"
+        		logout-success-url="/branchlogin.do"/>
+        		
+        <!-- 사이트 간 요청 위조 방지 설정 -->
+       	<csrf/>
+	</http>
+	
+	<!--  
+		인증/인가에 필요한 사용자정보를 제공하는 메소드를 구현한 객체다.
+	-->
+	<context:component-scan base-package="com.finalproject.security"/>
+	
+	<!--  
+		authentication-manager는 authentication-provider로부터 제공받은 
+		사용자정보를 활용해서 인증/인가와 관련된 처리를 수행한다.
+	-->
+	<authentication-manager>
+		<!--  
+			authentication-provider는 인증정보를 제공한다.
+			authentication-provider에는 username에 해당하는 UserDetails정보를 
+			제공하는 UserDetailService의 구현객체를 등록한다.
+		-->
+		<authentication-provider user-service-ref="brEmpUserDetailsService"/>
+	</authentication-manager>
+
+</bean:beans>
