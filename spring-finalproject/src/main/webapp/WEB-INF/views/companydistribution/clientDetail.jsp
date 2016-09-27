@@ -10,9 +10,6 @@
 <script type="text/javascript" src="resources/jquery/jquery.js"></script>
 <link href="resources/bootstrap/css/simple-sidebar.css" rel="stylesheet">
 <script src="resources/bootstrap/js/bootstrap.min.js"></script>
-<style>
-tbody th {text-align:center;}
-</style>
 </head>
 <body>
 <div id="wrapper">
@@ -28,13 +25,13 @@ tbody th {text-align:center;}
 					<thead>
 						<tr>
 							<th colspan="2">거래처번호</th>
-							<td colspan="2">${clients.no }</td>
+							<td colspan="2"></td>
 						</tr>
 						<tr>
 							<th>거래처 명</th>
-							<td>${clients.name }</td>
+							<td></td>
 							<th>거래 여부</th>
-							<td>${clients.isAdmit }</td>
+							<td></td>
 						</tr>
 					</thead>
 					<tbody>
@@ -42,19 +39,14 @@ tbody th {text-align:center;}
 							<th colspan="2">제품명</th>
 							<th colspan="2">수량</th>
 						</tr>
-						<c:forEach var="ds" items="${details}">
-							<tr>
-								<td colspan="2">${ds.product.name }</td>
-								<td colspan="2"><fmt:formatNumber value="${ds.qty }" type="number" /></td>
-							</tr>
-						</c:forEach>
+						<tr>
+							<td colspan="2"></td>
+							<td colspan="2"></td>
+						</tr>
 					</tbody>
 			</table>
 			<div class="pull-right">
-				<c:url var="updateURL" value="updateClient.do">
-					<c:param name="no" value="${client.no}" />
-				</c:url>
-				<a href="${updateURL}" class="btn btn-primary">수정</a>
+				<a href="updateClient.do" class="btn btn-primary">수정</a>
 				<a href="clientList.do" class="btn btn-primary">목록</a>
 			</div>
 		</div>

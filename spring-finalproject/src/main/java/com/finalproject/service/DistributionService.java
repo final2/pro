@@ -1,11 +1,9 @@
 package com.finalproject.service;
 
 import java.util.List;
-import java.util.Map;
 
 import com.finalproject.model.Client;
 import com.finalproject.model.ClientDetail;
-import com.finalproject.model.PageNo;
 
 public interface DistributionService {
 
@@ -19,6 +17,5 @@ public interface DistributionService {
 	void updateClient(Client client);
 	
 	// 번호로 거래처 조회
-	Client getClientsByNo(int no);
-	List<ClientDetail> getClientDetailsByNo(int no);
+	List<ClientDetail> getClientByNo(int no);
 }
