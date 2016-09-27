@@ -12,10 +12,10 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" type="text/css" href="resources/bootstrap/css/bootstrap.css">
-<link rel="stylesheet" type="text/css" href="resources/css/branch.css">
-<script type="text/javascript" src="resources/jquery/jquery.js" ></script>
-<script type="text/javascript" src="resources/jquery/money.js" ></script>
+<link rel="stylesheet" type="text/css" href="../resources/bootstrap/css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="../resources/css/branch.css">
+<script type="text/javascript" src="../resources/jquery/jquery.js" ></script>
+<script type="text/javascript" src="../resources/jquery/money.js" ></script>
 <script type="text/javascript">
 $(function() {
 	// 화면 띄우자마자 물품목록 띄우기

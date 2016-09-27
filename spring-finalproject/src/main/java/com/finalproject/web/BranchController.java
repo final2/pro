@@ -28,55 +28,55 @@ public class BranchController {
 	@Autowired BranchService brService;
 	
 	// 지점 로그인
-	@RequestMapping("branchlogin.do")
+	@RequestMapping("/branch/branchlogin.do")
 	public String login() {
 		return "branch/login";
 	}
 	
 	// 지점 로그아웃
-	@RequestMapping(value="branchlogout.do", method = RequestMethod.GET)
+	@RequestMapping(value="/branch/branchlogout.do", method = RequestMethod.GET)
     public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null){    
             new SecurityContextLogoutHandler().logout(request, response, auth);
         }
-        return "redirect:/branchlogin.do";
+        return "redirect:/branch/branchlogin.do";
     }
 	
-	@RequestMapping("denied.do")
+	@RequestMapping("/branch/denied.do")
 	public String deniy() {
 		return "branch/denied";
 	}
 
 	// 지점 메인
-	@RequestMapping("branchmain.do")
+	@RequestMapping("/branch/branchmain.do")
 	public String main() {
 		return "branch/main";
 	}
 	
 	// 지점 - 판매
-	@RequestMapping("branchsales.do")
+	@RequestMapping("/branch/branchsales.do")
 	public String sales() {
 		return "branch/sales";
 	}
 	
 	// 지점 - 재고
-	@RequestMapping("branchinven.do")
+	@RequestMapping("/branch/branchinven.do")
 	public String inventory() {
 		return "branch/inventory";
 	}
 	
 	// 지점 - 발주
-	@RequestMapping("branchorder.do")
+	@RequestMapping("/branch/branchorder.do")
 	public String order() {
 		return "branch/order";
 	}
 	
 	// 발주 전송하기
-	@RequestMapping("orderupdate.do")
+	@RequestMapping("/branch/orderupdate.do")
 	public String orderUpdate(@RequestParam(name="no") int no) {
 		
-		List<BranchOrderDetail> detailList = brService.getWaitingOrder();
+		List<BranchOrderDetail> detailList = brService.getWaitingOrder(no);
 		
 		for (BranchOrderDetail d : detailList){
 			int productNo = d.getProduct().getNo();

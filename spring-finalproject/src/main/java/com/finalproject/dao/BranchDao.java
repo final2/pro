@@ -21,7 +21,8 @@ public interface BranchDao {
 	List<Product> getProductsBySmallNo(int no);
 	
 	// 지점 - 발주
-	List<BranchOrderDetail> getWaitingOrder();
+	List<BranchOrderDetail> getWaitingOrder(int no);
+	BranchOrderDetail getOrderDetailByNo(int no);
 	void deleteWaitingByOrderDetailNo(int no);
 	void addInventory(BranchInventory brInven);
 	BranchOrder getBranchOrderByNo(int no);

@@ -71,8 +71,7 @@
 	</filter>
 	<filter-mapping>
 		<filter-name>springSecurityFilterChain</filter-name>
-		<url-pattern>*.do</url-pattern>
-		<url-pattern>/json/*</url-pattern>
+		<url-pattern>/branch/*</url-pattern>
 	</filter-mapping>
    
 </web-app>

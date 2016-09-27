@@ -54,7 +54,7 @@
 	</select>
 	
 	<!-- 발주 : 발주대기 주문 찾기 -->
-	<select id="getWaitingOrder" resultType="com.finalproject.model.BranchOrderDetail">
+	<select id="getWaitingOrder" parameterType="int" resultType="com.finalproject.model.BranchOrderDetail">
 		select
 			A.no, 
 			A.qty, 
@@ -69,11 +69,13 @@
 		from
 			br_order_details A, product B, br_orders C
 		where 
-			C.iscart = 'N'
-		and
 			A.product_no = B.no
 		and
 			A.order_no = C.no
+		and
+			C.iscart = 'N'
+		and 
+			C.branch_no = #{value}
 	</select>
 	
 	<!-- 발주대기 목록에서 삭제하기 -->
@@ -101,6 +103,16 @@
 			iscart
 		from
 			br_orders
+		where
+			no = #{value}
+	</select>
+	
+	<!-- 주문상세번호로 주문상세 찾기 -->
+	<select id="getOrderDetailByNo" parameterType="int" resultType="com.finalproject.model.BranchOrderDetail">
+		select 
+			no, qty, order_no as "order.no", product_no as "product.no"
+		from
+			br_order_details
 		where
 			no = #{value}
 	</select>

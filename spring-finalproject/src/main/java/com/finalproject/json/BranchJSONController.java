@@ -38,16 +38,17 @@ public class BranchJSONController {
 	}
 	
 	// 발주대기 주문 조회
-	@RequestMapping(value="/wor/", method=RequestMethod.GET)
-	public List<BranchOrderDetail> getWaitingOrder() {
-		return brService.getWaitingOrder();
+	@RequestMapping(value="/wor/{no}", method=RequestMethod.GET)
+	public List<BranchOrderDetail> getWaitingOrder(@PathVariable("no") int no) {
+		return brService.getWaitingOrder(no);
 	}
 
 	// 발주대기 목록에서 삭제
 	@RequestMapping(value="/wor/{no}", method=RequestMethod.DELETE)
 	public List<BranchOrderDetail> deleteOrderDetailByNo(@PathVariable("no") int no) {
 		brService.deleteWaitingByOrderDetailNo(no);
-		return brService.getWaitingOrder();
+		BranchOrderDetail detail = brService.getOrderDetailByNo(no);
+		return brService.getWaitingOrder(detail.getOrder().getNo());
 	}
 	
 }
