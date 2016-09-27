@@ -34,7 +34,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	
 	@Override
 	public Employee empLogin(int no, String password) {
-		Employee savedEmp = empDao.getEmployeeByNo(no);
+		Employee savedEmp = empDao.loginByNo(no);
 	
 		if (savedEmp == null) {
 			throw new RuntimeException("아이디 혹은 비밀번호가 올바르지 않습니다.");
@@ -44,7 +44,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 		if (!savedEmp.getPassword().equals(secretPassword)) {
 			throw new RuntimeException("아이디 혹은 비밀번호가 올바르지 않습니다.");
 		}
-		
 		return savedEmp;
 	}
 	

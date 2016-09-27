@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -11,29 +12,17 @@
 <style>
 	.insertempBox {width:1200px;position:absolute; top:50%; margin-top:-300px;}
 	.insertempBox:after {clear:both; content:""; display:block;}
-	/* 
+	
 	tr {clear:both;}
-	th {text-align:center}
-	td > input, td > select {width:100%; height:100%;border:none;}
+	th, td {height:50px;}
+	th {text-align:center; vertical-align:middle !important;}
+	td {padding:8px 0 !important;}
+	td > input, td > select {width:100%; height:100%;border:none; padding:0 8px !important;}
 	td > input:focus, td > select:focus {outline:none;}
-	 */
-	 
-	.insertLeft1 {width:80%; float:left; border-top:1px solid #ddd;}
-	.left, .right {clear:both; width:100%; height:100%; padding:8px; border-bottom:1px solid #ddd;}
-	.left:after, .right:after {clear:both; content:""; display:block; }
-	.left > .info, .right > .info {width:100px; float:left;  vertical-align:middle;}
-	.left > div, .right > div {float:left; vertical-align:middle;}
-	.left > div > input, .left > div > select, .right > div > input, .right > div > select {width:100%; height:100%; padding:0; border:none; vertical-align:middle;}
-	.insertRight1 {width:20%; float:right; border:1px solid #ddd; border-bottom:none;}
-	.insertline {clear:both; width:100%; border-top:1px solid #ddd;}
-	.insertline > left {width:50%; float:left;}
-	.insertline > right {width:50%; float:right;}
-	.content3 {clear:both; width:100%;}
-	 
-	 
-	#photobox { width:100%; height:188px;}
-	#photobox > img { height:100%; }
-	.photoBtn label { width:100%; height:45px; line-height: normal; vertical-align: middle; cursor: pointer;}
+	
+	.ptBox { height:100%; text-align:center; margin:0; padding:0 !important;}
+	.ptBox > img { height:66%;}
+	.photoBtn label { width:100%; vertical-align: middle; cursor: pointer; text-align:center;}
 	/* 파일 필드 숨기기 */
 	.photoBtn input[type="file"] { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip:rect(0,0,0,0); border: 0;}
 	
@@ -41,11 +30,12 @@
 	.formBtn {width:50%; float:left; text-align:center;}
 	.formBtn > input { width:50%; padding:10px 0;}
 	
-	.deptBtn-box {position:relative; padding:0 !important;}
-	.deptBtn-box > input {width:80%;}
-	.deptBtn-box > .deptBtn {padding:0; width:20%; height:100%; cursor:pointer; vertical-align:middle; text-align:center; float:right; }
-	.deptBtn-box > .deptBtn > span.glyphicon {top:12px !important;}
-	.deptBtn-box > .deptBtn-scroll {width:100%; height:300px; position:absolute; margin-top:2px; background:blue;}
+	.branchBtn-box {position:relative; padding:0 !important;}
+	.branchBtn-box > input {width:80%;}
+	.branchBtn-box > .branchBtn {padding:0; width:16%; height:100%; cursor:pointer; vertical-align:middle; text-align:center; float:right; }
+	.branchBtn-box > .branchBtn > span.glyphicon {top:17px !important;}
+	.branchBtn-box > .branchBtn-scroll {width:100%; height:300px; position:absolute; border:1.5px solid #ddd; background:#fff;}
+
 </style>
 <script type="text/javascript">
 $(function() {
@@ -62,11 +52,18 @@ $(function() {
     } 
 
 	today = yyyy+'-'+mm+'-'+dd;
-	$("input[name='birth']").setAttribute("max", today);
+	//$("input[name='birth']").setAttribute("max", today);
 	
 	/* 썸네일 이미지 */
 	$("#ptFile").on("change", function() {
 		alert( $("#ptFile").val());
+		
+	});
+	
+	/* 근무지점 */
+	$(".branchBtnScroll").hide();
+	$("#branchBtn").click(function() {
+		 $(".branchBtnScroll").toggle();
 	});
 	
 });
@@ -76,77 +73,70 @@ $(function() {
 <%@ include file="/WEB-INF/views/sidebartemplate/sidebar.jsp" %>	
 	<div class="container">
 		<form role="form" action="insertemp.do" method="post" class="insertempBox">
-			<div class="insertLeft1">
-				<div class="left">
-					<p class="info">비밀번호</p>
-					<div><input type="password" name="password"/></div>
-				</div>
-				<div class="left">
-					<p class="info">이름</p>
-					<div><input type="text" name="name"/></div>
-				</div>
-				<div class="left">
-					<p class="info">연락처</p>
-					<div><input type="text" name="phone"/></div>
-				</div>
-				<div class="left">
-					<p class="info">이메일</p>
-					<div><input type="text" name="email"/></div>
-				</div>
-			</div>
-			<div class="insertRight1">
-				<div id="photobox">
-					<img id="thumnail" src="/FinalProject/resources/image/no-image.png" width="100%"/>
-				</div>					
-				<div class="info photoBtn">
-					<label for="ptFile">사진등록</label>
-					<input type="file" id="ptFile" name="photo"/>
-				</div>
-			</div>
-			<div class="content">
-				<div class="inserline">
-					<div class="left">
-						<p class="info">주소</p>
-						<div><input type="text" name="address"/></div>
-					</div>
-					<div class="right">
-						<p class="info">생년월일</p>
-						<div colspan="2"><input type="date" name="birth" min="1850-01-01" max="2016-09-22"></div>
-					</div>	
-				</div>
-				<div class="content">	
-					<div class="left">
-						<p class="info">직책</p>
-						<div colspan="2">
-							<select name="position">
-								<option>부장</option>
-								<option>과장</option>
-								<option>대리</option>
-								<option>주임</option>
-								<option>사원</option>
-							</select>					
+			<table class="table table-bordered" >
+				<colgroup>
+					<col style="width:15%;">
+					<col style="width:17%;">
+					<col style="width:17%;">
+					<col style="width:15%;">
+					<col style="width:17%;">
+					<col style="width:15%;">
+				</colgroup>
+				<tr>
+					<th class="info">비밀번호</th>
+					<td colspan="4"><input type="password" name="emp.password"/></td>
+					<td rowspan="3" class="ptBox">
+						<img id="thumnail" src="/FinalProject/resources/image/no-image.png"/>
+					</td>
+				</tr>
+				<tr>
+					<th class="info">이름</th>
+					<td colspan="4"><input type="text" name="emp.name"/></td>
+				</tr>
+				<tr>
+					<th class="info">연락처</th>
+					<td colspan="4"><input type="text" name="emp.phone"/></td>
+				</tr>
+				<tr>
+					<th class="info">주소</th>
+					<td colspan="4"><input type="text" name="emp.address"/></td>
+					<th class="info photoBtn" >
+						<label for="ptFile">이미지 등록</label> 
+  						<input type="file" id="ptFile" class="upload-hidden" name="emp.photo"> 
+					</th>
+				</tr>
+				<tr>
+					<th class="info">이메일</th>
+					<td colspan="2"><input type="text" name="emp.email"/></td>
+					<th class="info">생년월일</th>
+					<td colspan="2"><input type="date" name="emp.birth" min="1850-01-01" max="2016-09-22"></td>
+				</tr>
+				<tr>
+					<th class="info">직책</th>
+					<td colspan="2">
+						<select name="emp.position">
+							<option>부장</option>
+							<option>과장</option>
+							<option>대리</option>
+							<option>주임</option>
+							<option>사원</option>
+						</select>	
+					</td>
+					<th class="info">근무지점</th>
+					<td colspan="2" class="branchBtn-box">
+						<input type="text" name="name"/>
+						<div id="branchBtn">
+							<span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
 						</div>
-					</div>
-				<div class="insertRight2">
-					<div class="right">
-						<p class="info">근무지점</p>
-						<div colspan="2" class="deptBtn-box">
-								<input type="text" name="dept"/>
-								<!-- <div class="deptBtn">
-									<span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
-								</div>
-								<div class="deptBtn-scroll"></div> -->
+						<div class="branchBtnScroll">
 						</div>
-					</div>	
-				</div>
-				</div>
-			</div>
-			<div class="content3">
-				<div class="left">
-					<p class="info">비고</p>
-					<div colspan="5"><input type="text" name="remarks"/></div>
-				</div>
-			</div>
+					</td>
+				</tr>
+				<tr>
+					<th class="info">비고</th>
+					<td colspan="5"><input type="text" name="emp.remarks"/></td>
+				</tr>
+			</table>
 			<div class="formBtnBox">
 				<div class="formBtn">
 					<input type="submit" class="btn btn-primary" value="등록"/>

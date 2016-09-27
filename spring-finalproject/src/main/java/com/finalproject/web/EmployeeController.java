@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.finalproject.model.Branch;
 import com.finalproject.model.Employee;
 import com.finalproject.service.EmployeeService;
 
@@ -27,7 +28,10 @@ public class EmployeeController {
 	
 	@RequestMapping(value="/companylogin.do", method=RequestMethod.POST)
 	public String compLogin(Employee employee, HttpSession session) {
-		Employee emp = empService.getEmployeeByNo(employee.getNo());
+		System.out.println("no:" + employee.getNo()); 
+		System.out.println("pwd:" + employee.getPassword()); 
+		
+		Employee emp = empService.empLogin(employee.getNo(), employee.getPassword());
 		session.setAttribute("LoginUser", emp);
 		return "redirect:/notice.do";
 	}

@@ -61,11 +61,11 @@ $(function() {
 				<div class="login-right">
 					<div class="row">
 						<label class="col-sm-3">ID</label>
-						<input type="text" name="empID" class="col-sm-8"/>
+						<input type="text" name="no" class="col-sm-8"/>
 					</div>
 					<div class="row row-mid">
 						<label class="col-sm-3">password</label>
-						<input type="password" name="empPWD" class="col-sm-8"/>
+						<input type="password" name="password" class="col-sm-8"/>
 					</div>
 					<div class="text-right">
 						<input type="submit" class="btn btn-primary" value="로그인"/>
