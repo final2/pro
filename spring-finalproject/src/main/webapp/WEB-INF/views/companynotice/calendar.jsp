@@ -9,6 +9,11 @@
 <script type="text/javascript" src="resources/fullcalendar/locale-all.js"></script>
 <script type="text/javascript">
 $(function() {
+	/* var date = new Date();
+	var d = date.getDate();
+	var m = date.getMonth();
+	var y = date.getFullYear(); */
+	
 	$("#calendar").fullCalendar({
 		
 		locale: 'ko',
@@ -25,15 +30,30 @@ $(function() {
 		selectHelper: true,
 		select: function(start, end) {
 			var title = prompt('Event Title:');
-			var eventData;
-			if (title) {
-				eventData = {
+			var eventData={};
+			var start = new Date(start);
+			var end = new Date(end);
+			 if (title) {
+				/* eventData = {
 					title: title,
 					start: start,
 					end: end
-				};
-				$('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
-			}
+				}; */ 
+			eventData['title'] = title;
+			eventData['startDate'] = start;
+			eventData['endDate'] = end;
+			var jsonData = JSON.stringify(eventData);
+				$.ajax({
+					type:"POST",
+					url:'json/calendar/add',
+					contentType:'application/json',
+					data:jsonData,
+					dataType:'json',
+					success:function(result) {			
+						$('#calendar').fullCalendar('renderEvent', result, true); // stick? = true
+					}					
+				});
+			} 
 			$('#calendar').fullCalendar('unselect');
 		},
 		editable: true,
