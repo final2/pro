@@ -19,4 +19,16 @@ public interface WebsiteDao {
 	
 	// Lotto 판매점 정보 불러오기
 	List<Branch> getBranchByLotto();
+	
+	// ATM 판매점 정보 불러오기
+	List<Branch> getBranchByATM();
+	
+	// 택배서비스 정보 불러오기
+	List<Branch> getBranchByPARCELSERVICE();
+	
+	// 즉석식품 판매점 확인하기
+	List<Branch> getBranchByFreshFood();
+	
+	// 지점 상세정보 불러오기
+	Branch getBranchByNo(int no);
 }

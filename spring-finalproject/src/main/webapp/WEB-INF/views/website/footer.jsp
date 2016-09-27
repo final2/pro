@@ -7,6 +7,7 @@
 
 <!-- Footer -->
 <footer class="w3-container w3-padding-10 w3-theme-d1 w3-center">
+
  
  	<div class="w3-quarter">
     <h3>저희 BigStore는 </h3>

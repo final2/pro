@@ -8,7 +8,7 @@
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" href="resources/bootstrap/css/bootstrap.css">
 <script type="text/javascript" src="resources/jquery/jquery.js"></script>
-<title>Introduce BigStore</title>
+<title>BigStore 1+1상품안내</title>
 </head>
 <body>
 <div class="container" style="w3-center">
@@ -20,40 +20,20 @@
 	  		<h1>1+1 상품</h1>
 			</div>
 			
-	        <div class="w3-display-container  w3-padding-64 w3-center" style="width:100%;min-height:300px;max-height:600px;">
+	        <div class="w3-display-container  w3-padding-64 w3-center" style="width:100%;min-height:300px;max-height:600px;overflow:auto;">
 	
 			<!-- 반복 -->
 			<ul style="overflow:hidden">
 				<c:forEach var="product" items="${eventList}">
-					<li style="float:left">
-						<p>${product.no }</p>
-						<img src="${product.image }" />
-						<p>${product.price }</p>
-						<p>${product.name }</p>
-					</li>
+				<div class="w3-quarter">
+					<p class="hidden">${product.no }</p>
+					<img src="${product.image }" style="width:45%" class="w3-circle w3-hover-opacity"/>
+					<p>${product.price }</p>
+					<p>${product.name }</p>
+				</div>
 				</c:forEach>
 			</ul>
-				
-<!-- 	           <div class="w3-quarter">
-	              <img src="resources/image/ohgamja.jpg" alt="감자깡" style="width:45%" class="w3-circle w3-hover-opacity">
-	              <h3>상품명감자깡</h3>
-	              <p>상품명가격1,500원</p>
-	           </div>
-	           <div class="w3-quarter">
-	              <img src="resources/image/drinkyo.jpg" alt="감자깡" style="width:45%" class="w3-circle w3-hover-opacity">
-	              <h3>상품명감자깡</h3>
-	              <p>상품명가격1,500원</p>
-	            </div>
-	           <div class="w3-quarter">
-	              <img src="resources/image/mccol.jpg" alt="감자깡" style="width:45%" class="w3-circle w3-hover-opacity">
-	              <h3>상품명감자깡</h3>
-	              <p>상품명가격1,500원</p>
-	            </div>
-	            <div class="w3-quarter">
-	              <img src="resources/image/came.jpg" alt="감자깡" style="width:45%;" class="w3-circle w3-hover-opacity">
-	              <h3>상품명감자깡</h3>
-	              <p>상품명가격1,500원</p>
-	            </div>   --> 
+
 	      
 	    </div>
 		</div>

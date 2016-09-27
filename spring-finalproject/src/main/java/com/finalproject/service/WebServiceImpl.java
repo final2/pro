@@ -37,4 +37,24 @@ public class WebServiceImpl implements WebService{
 		return websiteDao.getBranchByLotto();
 	}
 
+	@Override
+	public List<Branch> getBranchByATM() {
+		return websiteDao.getBranchByATM();
+	}
+
+	@Override
+	public List<Branch> getBranchByPARCELSERVICE() {
+		return websiteDao.getBranchByPARCELSERVICE();
+	}
+
+	@Override
+	public List<Branch> getBranchByFreshFood() {
+		return websiteDao.getBranchByFreshFood();
+	}
+
+	@Override
+	public Branch getBranchByNo(int no) {
+		return websiteDao.getBranchByNo(no);
+	}
+
 }

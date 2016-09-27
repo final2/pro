@@ -16,6 +16,7 @@
     <div class="w3-dropdown-content w3-white w3-card-4">
       <a href="lotto.do">Lotto판매</a>
       <a href="atm.do">ATM</a>
+<!--       <a href="parcelService.do">편의서비스</a> -->
       <a href="delivery.do">택배서비스</a>
       <a href="makefood.do">직접조리식품</a>
     </div>
@@ -35,6 +36,7 @@
     <div class="w3-dropdown-content w3-light-grey w3-card-4">
       <a href="lotto.do">Lotto판매</a>
       <a href="atm.do">ATM</a>
+<!--       <a href="parcelService.do">편의서비스</a> -->
       <a href="delivery.do">택배서비스</a>
       <a href="makefood.do">직접조리식품</a>
     </div>
@@ -43,7 +45,7 @@
         <a href="#" title="Notifications">상품안내 <i class="fa fa-caret-down"></i></a>
         <div class="w3-dropdown-content w3-light-grey w3-card-4">
           <a href="oneplus.do?no=1">1+1상품</a>
-          <a href="twoplus.do">2+1상품</a>
+          <a href="twoplus.do?no=2">2+1상품</a>
           <a href="event.do">덤증정상품</a>
           <a href="event.do">선물추첨상품</a>
         </div>

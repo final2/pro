@@ -1,39 +1,63 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
-  <head>
-	<meta charset="UTF-8">
-	<link rel="stylesheet" type="text/css" href="resources/bootstrap/css/bootstrap.css">
-	<script type="text/javascript" src="resources/jquery/jquery.js"></script>
-    <style type="text/css">
-      html, body { height: 100%; margin: 0; padding: 0; }
-      #map { height: 100%; }
-    </style>
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDsDTlcI5XqzK67fSOu37B4wl-U8RzoJy4&sensor=true"></script>
-  </head>
-  <body onload="initialize()">
+<html lang="ko">
+<head>
+    <title>지도표시</title>
 
-    <script>		
-		function initialize() {
-		    var mapOptions = {
-          		center: new google.maps.LatLng(37.572914,126.992209), //좌표
-          		zoom: 17, //확대정도
-          		mapTypeId: google.maps.MapTypeId.ROADMAP //기본지도사용(위성지도및 기타지도도있음~)
-        	};
-        	var map = new google.maps.Map(document.getElementById("map_canvas"),mapOptions);
-        	
-        	var marker = new google.maps.Marker({
-        	    position: mapOptions,
-        	    map: map,
-        	    title: 'BigStore!'
-        	  });
-      		}
+<meta charset="utf-8">
+
+<script class="hidden" type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=cfdcd22439144d2fe4a21b6375bed0fa"></script>
+  </head>
+  <body>
+  	<div id="map" style="min-height:450px;">
+  	<script>
+		var mapContainer = document.getElementById('map');
+		var mapOptions = {
+			center: new daum.maps.LatLng(33.450701, 126.570667),
+			level: 3
+		};
+
+		var map = new daum.maps.Map(mapContainer, mapOptions);
 		
-	</script>
-    
-	<div id="map_canvas" style="width:430px;height:540px;"></div>
+		var positions = [
+		                 {
+		                     title: '카카오', 
+		                     latlng: new daum.maps.LatLng(33.450705, 126.570677)
+		                 },
+		                 {
+		                     title: '생태연못', 
+		                     latlng: new daum.maps.LatLng(33.450936, 126.569477)
+		                 },
+		                 {
+		                     title: '텃밭', 
+		                     latlng: new daum.maps.LatLng(33.450879, 126.569940)
+		                 },
+		                 {
+		                     title: '근린공원',
+		                     latlng: new daum.maps.LatLng(33.451393, 126.570738)
+		                 }
+		             ];
+		// 마커 이미지의 이미지 주소입니다
+		var imageSrc = "http://i1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
+		    
+		for (var i = 0; i < positions.length; i ++) {
+		    
+		    // 마커 이미지의 이미지 크기 입니다
+		    var imageSize = new daum.maps.Size(24, 35); 
+		    
+		    // 마커 이미지를 생성합니다    
+		    var markerImage = new daum.maps.MarkerImage(imageSrc, imageSize); 
+		    
+		    // 마커를 생성합니다
+		    var marker = new daum.maps.Marker({
+		        map: map, // 마커를 표시할 지도
+		        position: positions[i].latlng, // 마커를 표시할 위치
+		        title : positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+		        image : markerImage // 마커 이미지 
+		    });
+		}
+	</script>	
+  	</div>
   </body>
 </html>
-
-

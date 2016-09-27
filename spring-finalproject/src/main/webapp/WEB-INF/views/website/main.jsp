@@ -4,10 +4,36 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" href="resources/bootstrap/css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="resources/css/branch.css">
+<script type="text/javascript" src="resources/jquery/jquery.js" ></script>
 <title>Welcome BigStore</title>
+<script type="text/javascript">
+$(function() {
+	// 첫화면에 1+1 상품 보이기
+	var num = 1
+	
+	$.ajax({
+		type:"GET",
+		url:"main2.do",
+		data: {no:num},		// 서버로 전송하는 데이타
+		dateType:"json",
+		success:function(result){
+			
+ 			var $ul=$('#1plus1List');
+			$ul.empty();
+			
+			$.each(result, function(index, pd) {
+				$ul.append("<div class='w3-quarter'><p class='hidden' value='"+pd.no
+						+"'></p><image src='"+pd.image+"' style='width:45%' class='w3-circle w3-hover-opacity'/><p>"
+						+pd.price+"</p><p>"+pd.name+"</p></div>");
+			} );
+		}
+	});
+});
+</script>
 </head>
 <body id="mypage">
-
 <div class="w3-container">
 	<div class="w3-display-container" style="max-width:1080px;">
 	<%@ include file="navbar.jsp" %>
@@ -16,9 +42,10 @@
 	
 	<!-- 좌측 메뉴바 -->
 	<!-- 메뉴쪽-->
-	    <div class="w3-col" style="width:200px;min-height:300px;max-height:600px;">
+	    <div class="w3-col" style="width:20%;min-height:300px;max-height:600px;">
 	         <nav class="w3-sidenav w3-teal w3-card-2 w3-xlarge" id="leftMenu" style="width:200px;height:300px;position:static!important">
-	              <a href="#" style="margin-top:10px;">1+1상품</a>
+	              <!-- <a href="oneplus.do?no=1" style="margin-top:10px;" >1+1상품</a> -->
+	              <a href="#" style="margin-top:10px;" >1+1상품</a>
 	              <a href="#" style="margin-top:10px;">2+1상품</a>
 	              <a href="#" style="margin-top:10px;">덤증정상품</a>
 	              <a href="#" style="margin-top:10px;">선물추첨상품</a>
@@ -27,69 +54,12 @@
 	<!-- 좌측메뉴바 끝-->
 	
 	<!-- 상단메뉴아래 사이드 메뉴와 제품 이미지 나열예정 jsp로 분리예정 -->
-	    <div class="w3-rest">
-	        <div class="w3-display-container  w3-padding-64 w3-center" style="width:100%;min-height:300px;max-height:600px;">
-	
-	          <div class="w3-quarter">
-	              <img src="resources/image/ohgamja.jpg" alt="감자깡" style="width:45%" class="w3-circle w3-hover-opacity">
-	              <h3><!--상품명-->감자깡</h3>
-	              <p><!--상품명가격-->1,500원</p>
-	           </div>
-	           <div class="w3-quarter">
-	              <img src="resources/image/drinkyo.jpg" alt="감자깡" style="width:45%" class="w3-circle w3-hover-opacity">
-	              <h3><!--상품명-->감자깡</h3>
-	              <p><!--상품명가격-->1,500원</p>
-	            </div>
-	           <div class="w3-quarter">
-	              <img src="resources/image/mccol.jpg" alt="감자깡" style="width:45%" class="w3-circle w3-hover-opacity">
-	              <h3><!--상품명-->감자깡</h3>
-	              <p><!--상품명가격-->1,500원</p>
-	            </div>
-	            <div class="w3-quarter">
-	              <img src="resources/image/came.jpg" alt="감자깡" style="width:45%;" class="w3-circle w3-hover-opacity">
-	              <h3><!--상품명-->감자깡</h3>
-	              <p><!--상품명가격-->1,500원</p>
-	            </div>
-	          <div class="w3-quarter">
-	              <img src="resources/image/ohgamja.jpg" alt="감자깡" style="width:45%" class="w3-circle w3-hover-opacity">
-	              <h3><!--상품명-->감자깡</h3>
-	              <p><!--상품명가격-->1,500원</p>
-	           </div>
-	           <div class="w3-quarter">
-	              <img src="resources/image/drinkyo.jpg" alt="감자깡" style="width:45%" class="w3-circle w3-hover-opacity">
-	              <h3><!--상품명-->감자깡</h3>
-	              <p><!--상품명가격-->1,500원</p>
-	            </div>
-	           <div class="w3-quarter">
-	              <img src="resources/image/mccol.jpg" alt="감자깡" style="width:45%" class="w3-circle w3-hover-opacity">
-	              <h3><!--상품명-->감자깡</h3>
-	              <p><!--상품명가격-->1,500원</p>
-	            </div>
-	            <div class="w3-quarter">
-	              <img src="resources/image/came.jpg" alt="감자깡" style="width:45%;" class="w3-circle w3-hover-opacity">
-	              <h3><!--상품명-->감자깡</h3>
-	              <p><!--상품명가격-->1,500원</p>
-	            </div>
-	              <div class="w3-quarter">
-	              <img src="resources/image/ohgamja.jpg" alt="감자깡" style="width:45%" class="w3-circle w3-hover-opacity">
-	              <h3><!--상품명-->감자깡</h3>
-	              <p><!--상품명가격-->1,500원</p>
-	           </div>
-	           <div class="w3-quarter">
-	              <img src="resources/image/drinkyo.jpg" alt="감자깡" style="width:45%" class="w3-circle w3-hover-opacity">
-	              <h3><!--상품명-->감자깡</h3>
-	              <p><!--상품명가격-->1,500원</p>
-	            </div>
-	           <div class="w3-quarter">
-	              <img src="resources/image/mccol.jpg" alt="감자깡" style="width:45%" class="w3-circle w3-hover-opacity">
-	              <h3><!--상품명-->감자깡</h3>
-	              <p><!--상품명가격-->1,500원</p>
-	            </div>
-	            <div class="w3-quarter">
-	              <img src="resources/image/came.jpg" alt="감자깡" style="width:45%;" class="w3-circle w3-hover-opacity">
-	              <h3><!--상품명-->감자깡</h3>
-	              <p><!--상품명가격-->1,500원</p>
-	            </div>   
+	    <div class="w3-rest" style="width:80%;min-height:300px;max-height:300px;overflow:auto;">
+	        <div class="w3-display-container  ">
+				<!-- ajax값 처음 뿌려질 위치 -->
+	        	<ul id="1plus1List" >
+	        	</ul>
+	          
 	        </div>
 	    </div>
 	</div>

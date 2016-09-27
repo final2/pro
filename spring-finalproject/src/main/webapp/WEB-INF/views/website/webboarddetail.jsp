@@ -25,31 +25,30 @@ th,td {text-align:center;}
 		<%@ include file="navbar.jsp" %>
 	
 		<div class="w3-container w3-padding-10  w3-margin-bottom">
-			<!-- 공지테이블 -->
-			<h3>공지사항</h3>
+			<!-- 공지테이블 상세 -->
+			<div class="w3-container w3-teal">
+	  			<h1>${boardDetail.title }</h1>
+			</div>
 			<table class="w3-table w3-striped w3-bordered w3-border">
-			
-		
-					<tr>
-					  <th>제목</th>
-					  </tr>
-					  <tr>
-						<td>${boardDetail.title }</td>
+				<tr>
+				  <th>제목</th>
+				  </tr>
+				  <tr>
+					<td>${boardDetail.title }</td>
+				</tr>
+				<tr>
+				  <th>내용</th>
 					</tr>
-					<tr>
-					  <th>내용</th>
-						</tr>
-					  		<tr>
-						<td>${boardDetail.content }</td>
-					</tr>	
-					<tr>
-					  <th>날자</th>
-					  </tr>
-					  <tr>
-						<td><fmt:formatDate value="${boardDetail.regdate }" pattern="yyyy.MM.dd hh:mm"/></td>
-					</tr>
-					
-	
+				  		<tr>
+					<td>${boardDetail.content }</td>
+				</tr>	
+				<tr>
+				  <th>날자</th>
+				  </tr>
+				  <tr>
+					<td><fmt:formatDate value="${boardDetail.regdate }" pattern="yyyy.MM.dd hh:mm"/></td>
+				</tr>
+				
 			</table>
 		</div>
 		

@@ -1,12 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" href="resources/bootstrap/css/bootstrap.css">
 <script type="text/javascript" src="resources/jquery/jquery.js"></script>
-<title>Lotto BigStore</title>
+<title>food BigStore</title>
 </head>
 <body>
 <div class="container" style="w3-center">
@@ -15,8 +17,10 @@
 	
 		<div class="w3-container w3-padding-10  w3-margin-bottom w3-margin-top" >
 			<div class="w3-container w3-teal">
-	  		<h1>직접요리식품판매점</h1>
+	  		<h1>ATM서비스</h1>
 			</div>
+			
+			<div class="w3-container w3-padding-10  w3-margin-bottom w3-margin-top" >
 			<!-- 판매점 리스트 -->
 			<div class="w3-half" style="min-height:450px;">
 				<table class="w3-table w3-striped w3-bordered w3-border" >
@@ -28,17 +32,20 @@
 					</tr>
 					</thead>
 					<tbody>
-					<tr>
-					  <td>Jill</td>
-					  <td>Smith</td>
-					  <td>50</td>
-					</tr>
+						<c:forEach var="bs" items="${makeList }">
+							<tr>
+								<td>${bs.name }</td>
+								<td>${bs.address }</td>
+								<td>${bs.phone }</td>
+							</tr>
+						</c:forEach>
 					</tbody>
 				</table>	
 			</div>
 			<!-- 지도표시하기 -->
-			<div class="w3-half" style="min-height:450px;">
-			지도야 나와라!
+			<div class="w3-container w3-half" style="min-height:450px;">
+				<%@ include file="map.jsp" %>
+			</div>
 			</div>
 		</div>
 		<!-- Footer -->

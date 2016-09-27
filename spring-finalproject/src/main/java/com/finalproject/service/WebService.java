@@ -19,4 +19,16 @@ public interface WebService {
 	
 	// 서비스 유형별 지점정보 불러오기
 	List<Branch> getBranchByLotto();
+	
+	// ATM 지점정보 불러오기
+	List<Branch> getBranchByATM();
+	
+	// 택배가능지점 불러오기
+	List<Branch> getBranchByPARCELSERVICE();
+	
+	// 즉석제조식품 판매점 불러오기
+	List<Branch> getBranchByFreshFood();
+	
+	// 지점 상세정보 불러오기
+	Branch getBranchByNo(int no);
 }
