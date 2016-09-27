@@ -6,6 +6,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <c:set var="current_page" value="branchsales" />
 <!DOCTYPE html>
 <html lang="ko">
@@ -14,6 +15,7 @@
 <link rel="stylesheet" type="text/css" href="resources/bootstrap/css/bootstrap.css">
 <link rel="stylesheet" type="text/css" href="resources/css/branch.css">
 <script type="text/javascript" src="resources/jquery/jquery.js" ></script>
+<script type="text/javascript" src="resources/jquery/money.js" ></script>
 <script type="text/javascript">
 $(function() {
 	// 화면 띄우자마자 물품목록 띄우기
@@ -50,7 +52,7 @@ $(function() {
 		}
 	});
 	
-	// 대분류 클릭시 소분류 및 물품 조회하기
+	// 대분류 클릭시 소분류 조회하기
 	$("#sales-lc").on("click", "li", function() {
 		$(this).addClass('active').siblings().removeClass('active');
 		
@@ -67,24 +69,26 @@ $(function() {
 					$ul.append("<li id='no-"+sc.no+"'>"+sc.name+"</li>");
 				});
 				
-				$("#sales-sc").on("click", "li", function() {
-					$(this).addClass('active').siblings().removeClass('active');
-					
-					var scno = $(this).attr("id").replace("no-", "");
-					$.ajax({
-						type:"GET",
-						url:"/FinalProject/json/pt/" + scno,
-						dataType:"json",
-						success:function(result) {
-							var $ul = $("#sales-pt");
-							$ul.empty();
-							
-							$.each(result, function(index, pt) {
-								$ul.append("<li id='no-"+pt.no+"'>"+"<p>"+pt.name+"</p><p class='sales-pt-price'>"+formatNumber(pt.price)+"</p></li>")
-							});
-						}
-					})
-				})
+			}
+		})
+	});
+
+	// 소분류 클릭시 물품 조회하기
+	$("#sales-sc").on("click", "li", function() {
+		$(this).addClass('active').siblings().removeClass('active');
+		
+		var scno = $(this).attr("id").replace("no-", "");
+		$.ajax({
+			type:"GET",
+			url:"/FinalProject/json/pt/" + scno,
+			dataType:"json",
+			success:function(result) {
+				var $ul = $("#sales-pt");
+				$ul.empty();
+				
+				$.each(result, function(index, pt) {
+					$ul.append("<li id='no-"+pt.no+"'>"+"<p>"+pt.name+"</p><p class='sales-pt-price'>"+formatNumber(pt.price)+"</p></li>")
+				});
 			}
 		})
 	})
@@ -138,8 +142,6 @@ $(function() {
 		    return str;
 		  }
 		}
-	
-	console.log(formatNumber(100000));
 });
 </script>
 <title>지점 - 판매</title>
