@@ -41,8 +41,8 @@ public class BranchServiceImpl implements BranchService {
 	}
 
 	@Override
-	public List<BranchOrderDetail> getWaitingOrder() {
-		return branchDao.getWaitingOrder();
+	public List<BranchOrderDetail> getWaitingOrder(int no) {
+		return branchDao.getWaitingOrder(no);
 	}
 
 	@Override
@@ -73,6 +73,11 @@ public class BranchServiceImpl implements BranchService {
 	@Override
 	public BranchInventory getInventoryByProductNo(int no) {
 		return branchDao.getInventoryByProductNo(no);
+	}
+
+	@Override
+	public BranchOrderDetail getOrderDetailByNo(int no) {
+		return branchDao.getOrderDetailByNo(no);
 	}
 
 }

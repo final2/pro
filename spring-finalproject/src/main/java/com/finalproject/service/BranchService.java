@@ -25,7 +25,7 @@ public interface BranchService {
 	List<Product> getProductsBySmallNo(int no);
 
 	// 지점 발주대기 주문 상세 조회하기
-	List<BranchOrderDetail> getWaitingOrder();
+	List<BranchOrderDetail> getWaitingOrder(int no);
 	
 	// 지점 발주대기 주문 상세에서 삭제하기
 	void deleteWaitingByOrderDetailNo(int no);
@@ -42,4 +42,6 @@ public interface BranchService {
 	void updateInventory(BranchInventory brInven);
 	
 	BranchInventory getInventoryByProductNo(int no);
+	
+	BranchOrderDetail getOrderDetailByNo(int no);
 }
