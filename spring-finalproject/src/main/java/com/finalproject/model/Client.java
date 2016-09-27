@@ -1,10 +1,13 @@
 package com.finalproject.model;
 
+import java.util.List;
+
 public class Client {
 
 	private int no;
 	private String name;
 	private String isAdmit;
+	private List<ClientDetail> clientDetails;
 	
 	public int getNo() {
 		return no;
@@ -24,6 +27,11 @@ public class Client {
 	public void setIsAdmit(String isAdmit) {
 		this.isAdmit = isAdmit;
 	}
-	
+	public List<ClientDetail> getClientDetails() {
+		return clientDetails;
+	}
+	public void setClientDetails(List<ClientDetail> clientDetails) {
+		this.clientDetails = clientDetails;
+	}
 	
 }

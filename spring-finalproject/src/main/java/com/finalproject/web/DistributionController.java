@@ -1,6 +1,7 @@
 package com.finalproject.web;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,40 +21,44 @@ public class DistributionController {
 	private DistributionService distributionService;
 	
 	// 거래처 리스트 페이지
-	@RequestMapping("clientList.do")
+	@RequestMapping("/clientList.do")
 	public String clientList(Model model) {
 		List<Client> clientList = distributionService.getClientList();
-		model.addAttribute("List", clientList);
+		model.addAttribute("clientList", clientList);
 		
 		return "companydistribution/clientList";
 	}
-	
+		
 	// 거래처 상세정보 페이지
-	@RequestMapping("clientDetail.do")
+	@RequestMapping("/clientDetail.do")
 	public String clientDetail(@RequestParam(name="no") int no, Model model) {
-		List<ClientDetail> clientDetailes = distributionService.getClientByNo(no);
-		model.addAttribute("detailes", clientDetailes);
+		Client clients = distributionService.getClientsByNo(no);
+		
+		List<ClientDetail> details = distributionService.getClientDetailsByNo(no);
+		
+		model.addAttribute("clients", clients);
+		model.addAttribute("details", details);
 		return "companydistribution/clientDetail";
 	}
 	
 	// 거래처 수정 페이지
-	@RequestMapping("updateClient.do")
+	@RequestMapping("/updateClient.do")
 	public String updateClient() {
 		return "companydistribution/updateClient";
 	}
 	
 	// 거래처 등록 페이지
-	@RequestMapping(value="addClient.do", method=RequestMethod.GET)
+	@RequestMapping(value="/addClient.do", method=RequestMethod.GET)
 	public String addClient() {
 		return "companydistribution/addClient";
 	}
-	@RequestMapping(value="addClient.do", method=RequestMethod.POST)
+	@RequestMapping(value="/addClient.do", method=RequestMethod.POST)
 	public String writeClient(Client client) {
 		distributionService.addNewClient(client);
 		return "redirect:/clientList.do";
 	}
 	
-	// 발주내역 리스트 페이지
+	/*// 발주내역 리스트 페이지
 	@RequestMapping("hqOrder.do")
 	public String hqOrder() {
 		return "companydistribution/hqOrder";
@@ -79,5 +84,5 @@ public class DistributionController {
 	@RequestMapping("updateOrder.do")
 	public String updateOrder() {
 		return "companydistribution/updateOrder";
-	}
+	}*/
 }
