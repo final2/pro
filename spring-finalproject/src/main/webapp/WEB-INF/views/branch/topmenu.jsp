@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <script type="text/javascript">
 function printTime() {
     var clock = document.getElementById("clock");
@@ -24,7 +25,7 @@ window.onload = printTime;
 	    
 	    <div class="navbar-time">
 	    	<span id="clock"></span>
-	    	<p>홍길동</p>
+	    	<p><sec:authentication property="principal.brEmp.name"/></p>
 	    </div>
 	    
 	    <ul class="nav navbar-nav pull-right">
@@ -34,7 +35,7 @@ window.onload = printTime;
 	      <li><a href="#">결산</a></li>
 	      <li class="${current_page eq 'branchorder' ? 'active' : '' }"><a href="branchorder.do">발주</a></li>
 	      <li><a href="#">사용자등록</a></li>
-	      <li><a href="#">로그아웃</a></li>
+	      <li><a href="branchlogout.do">로그아웃</a></li>
 	    </ul>
 	  </div>
 	</nav>
