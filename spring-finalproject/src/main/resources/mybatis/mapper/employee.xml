@@ -37,25 +37,41 @@
 		from branch		
 	</select>
 	
-	<!-- 사원번호로 사원 조회하기 -->
-	<select id="chechByNo" parameterType="int" resultType="Branch">
+	<!-- 모든 사원 조회하기 -->
+	<select id="getAllEmployees" resultType="Employee">
 		select 
-			E.no				as "emp.no", 
-			E.name				as "emp.name", 
-			E.phone				as "emp.phone", 
-			E.email				as "emp.email", 
-			E.address			as "emp.address", 
-			E.birth				as "emp.birth", 
-			E.position			as "emp.position", 
-			B.name,
-			E.department		as "emp.dept",
-			E.retiredate		as "emp.retireDate",
-			E.remarks
+			no, 
+			name, 
+			department 	as dept, 
+			position
+		from employee
+	</select>
+
+	<!-- 사원번호로 사원정보 가져오기 -->
+	<select id="getEmployeeByNo" parameterType="int" resultType="Employee">
+		select 
+			no, 
+			name, 
+			phone, 
+			email, 
+			address, 
+			birth, 
+			department 	as dept, 
+			position, 
+			photo, 
+			retiredate	as retireDate, 
+			remarks
+		from employee
+		where no = #{no}
+	</select>
+	
+	<!-- 사원번호로 근무지점 조회하기 -->
+	<select id="getBranchListByNo" parameterType="int" resultType="Branch">
+		select 
+			B.name
 		from employee E, branch B
 		where E.no = B.employee_no
 		and E.no = #{no}
 	</select>
-
-
 	
 </mapper>

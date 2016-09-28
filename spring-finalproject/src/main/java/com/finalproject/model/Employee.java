@@ -17,6 +17,7 @@ public class Employee {
 	private String photo;
 	private Date hireDate;
 	private String password;
+	private String workingStatus;
 	private Date retireDate;
 	private String remarks;
 	
@@ -91,6 +92,12 @@ public class Employee {
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	public String getWorkingStatus() {
+		return workingStatus;
+	}
+	public void setWorkingStatus(String workingStatus) {
+		this.workingStatus = workingStatus;
 	}
 	public Date getRetireDate() {
 		return retireDate;

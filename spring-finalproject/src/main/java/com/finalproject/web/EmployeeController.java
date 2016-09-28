@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.finalproject.model.Branch;
 import com.finalproject.model.Employee;
@@ -28,8 +29,6 @@ public class EmployeeController {
 	
 	@RequestMapping(value="/companylogin.do", method=RequestMethod.POST)
 	public String compLogin(Employee employee, HttpSession session) {
-		System.out.println("no:" + employee.getNo()); 
-		System.out.println("pwd:" + employee.getPassword()); 
 		
 		Employee emp = empService.empLogin(employee.getNo(), employee.getPassword());
 		session.setAttribute("LoginUser", emp);
@@ -41,19 +40,38 @@ public class EmployeeController {
 		
 		List<Employee> empList = empService.getAllEmployees();
 		model.addAttribute("empList", empList);
+		System.out.println(empList);
 		
 		return "employees/emplist";
+	}
+	
+	@RequestMapping("/empdetail.do")
+	public String empDetail(@RequestParam(name="no") int empNo, Model model) {
+		
+		Employee emp = empService.getEmployeeByNo(empNo);
+		List<Branch> branchs = empService.getBranchListByNo(empNo);
+		
+		model.addAttribute("emp", emp);
+		System.out.println(emp);
+		model.addAttribute("branchs", branchs);
+		
+		return "employees/empdetail";
 	}
 
 	// 사원등록 페이지 연결
 	@RequestMapping(value="/insertemp.do", method=RequestMethod.GET)
-	public String insertEmpForm() {
+	public String insertEmpForm(Model model) {
+		List<Branch> branchNames = empService.getAllBranch();
+		model.addAttribute("branchNames", branchNames);
+		
 		return "employees/insertempform";
 	}
 	
 	@RequestMapping(value="/insertemp.do", method=RequestMethod.POST)
-	public String inserEmp(Employee emp) {
+	public String insertEmp(Employee emp) {
+
 		empService.insertEmployee(emp);
+		
 		return "redirect:/emplist.do";
 	}
 	

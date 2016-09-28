@@ -14,10 +14,13 @@ public interface EmployeeService {
 	List<Employee> getAllEmployees();
 	
 	// 사원번호로 해당사원 조회
-	Employee getEmployeeByNo(int no);
+	Employee getEmployeeByNo(int empNo);
+	
+	// 사원번호로 담당지점 조회
+	List<Branch> getBranchListByNo(int empNo);
 	
 	// 로그인 확인
-	Employee empLogin(int no, String password);
+	Employee empLogin(int empNo, String password);
 	
 	// 모든 지점 조회
 	List<Branch> getAllBranch();

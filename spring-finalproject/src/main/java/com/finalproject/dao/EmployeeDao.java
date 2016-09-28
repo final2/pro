@@ -12,7 +12,8 @@ public interface EmployeeDao {
 	// 모든 사원 조회
 	List<Employee> getAllEmployees();
 	// 사원번호로 해당사원 조회
-	Branch getEmployeeByNo(int no);
+	Employee getEmployeeByNo(int empNo);
+	List<Branch> getBranchListByNo(int empNo);
 	// 로그인시 사원번호 확인
 	Employee loginByNo(int no);
 	// 모든 지점 조회
