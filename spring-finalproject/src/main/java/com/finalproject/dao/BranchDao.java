@@ -1,6 +1,7 @@
 package com.finalproject.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import com.finalproject.model.BranchEmp;
 import com.finalproject.model.BranchInventory;
@@ -21,7 +22,7 @@ public interface BranchDao {
 	List<Product> getProductsBySmallNo(int no);
 	
 	// 지점 - 발주
-	List<BranchOrderDetail> getWaitingOrder(int no);
+	List<BranchOrderDetail> getWaitingOrderDetail(int no);
 	BranchOrderDetail getOrderDetailByNo(int no);
 	void deleteWaitingByOrderDetailNo(int no);
 	void addInventory(BranchInventory brInven);
@@ -29,4 +30,16 @@ public interface BranchDao {
 	void updateBranchOrder(BranchOrder order);
 	void updateInventory(BranchInventory brInven);
 	BranchInventory getInventoryByProductNo(int no);
+	
+	// 지점 - 재고
+	List<BranchInventory> getAllInvenByBranchNo(int no);
+	void addOrder(BranchOrder order);
+	void addOrderDetail(BranchOrderDetail orderDetail);
+	BranchOrderDetail getOrderDetailByProNo(Map<String, Object> map);
+	void updateBranchOrderDetail(BranchOrderDetail detail);
+	Product getProductByNo(int no);
+	BranchOrder getBranchOrderByIsCartNo(int no);
+	
+	List<BranchInventory> getInvenByKeyword(Map<String, Object> map);
+	List<BranchOrder> getOrdersByBranchNo(int brno);
 }

@@ -5,7 +5,7 @@ public class BranchInventory {
 	private int no;
 	private int qty;
 	private int branchNo;
-	private int productNo;
+	private Product product;
 	
 	public int getNo() {
 		return no;
@@ -25,13 +25,12 @@ public class BranchInventory {
 	public void setBranchNo(int branchNo) {
 		this.branchNo = branchNo;
 	}
-	public int getProductNo() {
-		return productNo;
+	public Product getProduct() {
+		return product;
 	}
-	public void setProductNo(int productNo) {
-		this.productNo = productNo;
+	public void setProduct(Product product) {
+		this.product = product;
 	}
-	
 	
 	
 }

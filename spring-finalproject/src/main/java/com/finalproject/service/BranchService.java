@@ -1,6 +1,7 @@
 package com.finalproject.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.finalproject.model.BranchEmp;
 import com.finalproject.model.BranchInventory;
@@ -25,7 +26,7 @@ public interface BranchService {
 	List<Product> getProductsBySmallNo(int no);
 
 	// 지점 발주대기 주문 상세 조회하기
-	List<BranchOrderDetail> getWaitingOrder(int no);
+	List<BranchOrderDetail> getWaitingOrderDetail(int no);
 	
 	// 지점 발주대기 주문 상세에서 삭제하기
 	void deleteWaitingByOrderDetailNo(int no);
@@ -44,4 +45,21 @@ public interface BranchService {
 	BranchInventory getInventoryByProductNo(int no);
 	
 	BranchOrderDetail getOrderDetailByNo(int no);
+	
+	List<BranchInventory> getAllInvenByBranchNo(int no);
+	
+	void addOrder(BranchOrder order);
+	void addOrderDetail(BranchOrderDetail orderDetail);
+	
+	BranchOrderDetail getOrderDetailByProNo(Map<String, Object> map);
+	
+	void updateBranchOrderDetail(BranchOrderDetail detail);
+	
+	Product getProductByNo(int no);
+	
+	BranchOrder getBranchOrderByIsCartNo(int no);
+	
+	List<BranchInventory> getInvenByKeyword(Map<String, Object> map);
+	
+	List<BranchOrder> getOrdersByBranchNo(int brno);
 }

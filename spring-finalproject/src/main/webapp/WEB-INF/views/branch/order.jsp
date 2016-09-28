@@ -9,16 +9,19 @@
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" href="../resources/bootstrap/css/bootstrap.css">
 <link rel="stylesheet" type="text/css" href="../resources/css/branch.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="../resources/jquery/jquery.js" ></script>
 <script type="text/javascript" src="../resources/jquery/money.js" ></script>
 <script type="text/javascript">
 $(function() {
+	var brno = $(".container").attr("id").replace("brno-", "");
+	$("#order-detail").hide();
 	
 	// 발주 대기목록 가져오기
 	var refreshWaitingOrderList = function() {
-		var $tbody = $("#tab-2 tbody").empty();
+		var $tbody = $("#tab-1 tbody").empty();
 		
-		var brno = $(".container").attr("id").replace("brno-", "");
 		$.ajax({
 			type:"GET",
 			url:"/FinalProject/json/wor/" + brno,
@@ -56,7 +59,7 @@ $(function() {
 	
 	
 	// 발주 대기목록에서 전체선택/전체해제 
-	$("#tab-2").on("click",":checkbox[name='allcheck']", function() {
+	$("#tab-1").on("click",":checkbox[name='allcheck']", function() {
 		if($(":checkbox[name='allcheck']").is(":checked")){
 	        $(":checkbox[name^='ck']").prop("checked", true);
 	    }
@@ -66,7 +69,7 @@ $(function() {
 	});
 	
 	// 발주 대기목록에서 전체선택 상태에서 개별 체크해제시 전체선택 체크해제
-	$("#tab-2").on("click",":checkbox[name^='ck']", function() {
+	$("#tab-1").on("click",":checkbox[name^='ck']", function() {
 		var countCk = $(":checkbox[name^='ck']").length;
 		if($(":checkbox[name^='ck']").is(":checked").length == countCk){
 	        $(":checkbox[name='allcheck']").prop("checked", true);
@@ -88,7 +91,7 @@ $(function() {
 				
 				$.ajax({
 					type:"DELETE",
-					url:"/FinalProject/json/wor/del/"+no,
+					url:"/FinalProject/json/wor/"+brno+"/del/"+no,
 					dataType:"json",
 					success:function(result) {
 						refreshWaitingOrderList();
@@ -105,10 +108,50 @@ $(function() {
 			$(this).attr("disabled");
 		} else {
 			var no = $(".order-con").attr("id");
-			window.location.href = "orderupdate.do?no="+ no;
+			window.location.href = "orderupdate.do?no="+ no + "&brno=" +brno;
 		}
-	})
+	});
 	
+	// 발주내역 조회하기
+	$.ajax({
+		type:"GET",
+		url:"/FinalProject/json/or/" + brno,
+		dataType:"json",
+		success:function(result) {
+			var $tbody2 = $("#tab-2 tbody").empty();
+			var iscomplete = "";
+			
+			$.each(result, function(index, tr) {
+				if (tr.iscomplete == 'Y') {
+					iscomplete = "완료";
+				} else {
+					iscomplete = "진행중"
+				}
+				
+				var note = tr.note;
+				console.log(note)
+				if (tr.note == null) {
+					note = "";
+				}
+				
+				$tbody2.append("<tr><td class='regdate'>"+tr.regdate+"</td><td><a type='button' data-toggle='modal' data-target='#myModal' id='order-"+tr.no+"'>"
+					+tr.no+"</a></td><td>"+iscomplete+"</td><td>"
+					+note+"</td></tr>");
+				
+			})
+		}
+	});
+	
+	$("#tab-2").on("click", "a[id^='order-']", function() {
+		console.log($(this).attr("id"));
+		var no = $(this).attr("id").replace("order-", "");
+		
+		$(".order-number").empty();
+		$(".order-date").empty();
+		
+		$(".order-number").append("발주번호: "+no);
+		$(".order-date").append("발주일자: "+$(this).parent().parent().find("td[class='regdate']").text());
+	});
 });
 </script>
 <title>지점 - 발주</title>
@@ -127,39 +170,13 @@ $(function() {
 	<div class="row order-con">
 		<div class="col-sm-12">
 			<ul id="order-tabmenu">
-				<li>발주내역</li>
 				<li>발주대기목록</li>
+				<li>발주내역</li>
 				<li>반품목록</li>
 			</ul>
 			
 			<div class="tab-con">
 				<div id="tab-1">
-					<form role="form" class="form-inline">
-						<div class="form-group form-group-sm">
-							<label>날짜검색:</label>
-							<input type="date" name="startdate" class="form-control" /> - <input type="date" name="enddate" class="form-control" />
-						</div>
-						<div class="form-group">
-							<input type="submit" value="검색" name="keyword" class="btn btn-default btn-sm" />
-						</div>
-					</form>
-					
-					<table class="table table-bordered">
-						<thead>
-							<tr>
-								<th>발주일자</th>
-								<th>발주번호</th>
-								<th>완료여부</th>
-								<th>비고</th>
-							</tr>
-						</thead>
-						
-						<tbody>
-						</tbody>
-					</table>
-				</div>
-				
-				<div id="tab-2">
 					<div class="order-btn">
 						<button id="send-btn" class="btn btn-success">전송</button>
 						<button id="delete-btn" class="btn btn-danger">삭제</button>
@@ -189,9 +206,78 @@ $(function() {
 						</thead>
 						
 						<tbody>
-						
+							<!-- 발주 대기목록 -->
 						</tbody>
 					</table>
+				</div>
+				
+				<div id="tab-2">
+					<form role="form" class="form-inline">
+						<div class="form-group form-group-sm">
+							<label>날짜검색:</label>
+							<input type="date" name="startdate" class="form-control" /> - <input type="date" name="enddate" class="form-control" />
+						</div>
+						<div class="form-group">
+							<input type="submit" value="검색" name="keyword" class="btn btn-default btn-sm" />
+						</div>
+					</form>
+					
+					<table class="table table-bordered">
+						<colgroup>
+							<col width="25%" />
+							<col width="25%" />
+							<col width="25%" />
+							<col width="25%" />
+						</colgroup>
+						<thead>
+							<tr>
+								<th>발주일자</th>
+								<th>발주번호</th>
+								<th>완료여부</th>
+								<th>비고</th>
+							</tr>
+						</thead>
+						
+						<tbody>
+							<!-- 발주내역 리스트 -->
+						</tbody>
+					</table>
+					
+					<!-- Modal -->
+					<div id="myModal" class="modal fade" role="dialog">
+					  <div class="modal-dialog modal-lg">
+					
+					    <!-- Modal content-->
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <button type="button" class="close" data-dismiss="modal">&times;</button>
+					        <h4 class="modal-title">발주 상세내역</h4>
+					      </div>
+					      <div class="modal-body">
+					      	<div>
+					      		<p class="order-number"></p>
+					      		<p class="order-date"></p>
+					      		<button class="btn btn-primary btn-sm" id="order-send-btn">전송</button>
+					      	</div>
+					      	<table class="table table-bordered">
+					      		<thead>
+					      			<tr>
+					      				<th>제품번호</th>
+					      				<th>제품명</th>
+					      				<th>수량</th>
+					      				<th>가격</th>
+					      				<th>금액</th>
+					      			</tr>
+					      		</thead>
+					      	</table>
+					      </div>
+					      <div class="modal-footer">
+					        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					      </div>
+					    </div>
+					
+					  </div>
+					</div>
 				</div>
 				
 				<div id="tab-3">

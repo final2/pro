@@ -24,6 +24,8 @@ a:hover, a:focus, a:active {text-decoration: underline;}
 body { font-family: 'Nanum Gothic', sans-serif; }
 .wrapper { width:1000px; margin:0 auto; padding:0; }
 .btn-purple { color:#fff; background-color:#bf6bfa; border-color:#af6bfa; }
+.red { background-color:red; color:#fff; }
+.red input { color:#000; }
 
 /* 로그인 */
 .login-box { margin-top:300px; }
@@ -96,8 +98,16 @@ body { font-family: 'Nanum Gothic', sans-serif; }
 #order-tabmenu li { float:left; padding:10px 15px; cursor:pointer; border:solid 1px #ddd; border-bottom:0; border-top-left-radius:5px; border-top-right-radius:5px; }
 #order-tabmenu li.active { background-color:#999; color:#fff; text-shadow:#000 1px 1px 2px; }
 .tab-con { border:solid 1px #ddd; text-align:center; padding:20px; }
-#tab-1 table { width:80%; margin:0 auto; }
-#tab-1 form { margin-bottom:20px; }
-#tab-2 .order-btn { text-align:right; }
-#tab-2 table { margin-top:20px; }
+#tab-1 .order-btn { text-align:right; }
+#tab-1 table { margin-top:20px; }
+#tab-1 table th { text-align:center; }
+#tab-2 table { width:80%; margin:0 auto; }
 #tab-2 table th { text-align:center; }
+#tab-2 table td a { cursor:pointer; }
+#tab-2 form { margin-bottom:20px; }
+
+#order-detail { position:absolute; top:50px; left:auto; width:500px; background-color:#fff; }
+.modal-body div { width:100%; overflow:hidden; margin-bottom:15px; }
+.modal-body p.order-number { width:200px; float:left; }
+.modal-body p.order-date { width:200px; float:left; }
+.modal-body #order-send-btn { float:right; margin-right:20px; }

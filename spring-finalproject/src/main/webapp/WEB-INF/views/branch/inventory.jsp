@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <c:set var="current_page" value="branchinven" />
 <!DOCTYPE html>
 <html lang="ko">
@@ -11,13 +12,111 @@
 <script type="text/javascript" src="../resources/jquery/jquery.js" ></script>
 <script type="text/javascript">
 $(function() {
+	var brno = $(".container").attr("id").replace("brno-", "");
+	
+	var $tbody = $("tbody").empty();
+	var detailList = [];
+	
+	
+	// 지점 재고 띄우기
+	$.ajax({
+		type:"GET",
+		url:"/FinalProject/json/inv/" + brno,
+		dataType:"json",
+		success:function(result) {
+			$.each(result, function(index, tr) {
+				var no = index + 1;
+				
+				$tbody.append("<tr><td>"+no+"</td><td>"+tr.product.name+"</td><td>"+tr.qty
+						+"</td><td><input type='hidden' value='"+tr.product.no+"' />"
+						+"<input type='number' min='0' value='0' name='qty-"+no+"' /></td></tr>");
+				
+				if ( tr.qty < 20) {
+					$("input[name='qty-"+no+"']").parent().addClass("red").siblings().addClass("red");
+				}
+			})
+		}
+	});
+	
+	// 발주 추가하기
+	$("#addorder-btn").on("click", function(){
+		var $qtyList = $("input[name^='qty']");
+		var $pnoList = {};
+		$qtyList.each(function(index, item) {
+			var detail = {};
+			detail.qty = $(item).val();
+			var product = {};
+			product.no = $(item).siblings("input").val();
+			detail.product = product;
+			detailList.push(detail);			
+		})
+		
+		var jsonData = JSON.stringify(detailList);
+		$.ajax({
+			type:"POST",
+			url:"/FinalProject/json/wor/" + brno,
+			contentType:"application/json",	// 서버로 보내는 요청데이타 타입
+			data:jsonData,
+			dataType:"json",				// 서버로부터 받는 응답데이타 타입
+			success:function(result) {
+				alert("발주 대기목록에 추가되었습니다.")
+				window.location.href = "branchorder.do";
+			}
+		})
+	});
+	
+	// 재고 - 검색
+	$("#inven-search").change(function() {
+		var k = $("#inven-search option:selected").val();
+		console.log(k)
+		$("form").submit(function(event) {
+			event.preventDefault();
+			
+			var $q = $("input[name='keyword']").val();
+			if (!$q) {
+				$("input[name='keyword']").focus().attr("placeholder", "검색할 값을 입력하세요.");
+				return;
+			}
+			
+			$.ajax({
+				type:"POST",
+				url:"/FinalProject/json/inv/" + brno + "/key/" + k + "/q/" + $q,
+				contentType:"application/json",
+				success:function(result) {					
+					$("tbody").empty();
+					
+					$.ajax({
+						type:"GET",
+						url:"/FinalProject/json/inv/" + brno + "/key/" + k + "/q/" + $q,
+						dataType:"json",
+						success:function(result) {
+							$.each(result, function(index, tr) {
+								var no = index + 1;
+								
+								$tbody.append("<tr><td>"+no+"</td><td>"+tr.product.name+"</td><td>"+tr.qty
+										+"</td><td><input type='hidden' value='"+tr.product.no+"' />"
+										+"<input type='number' min='0' value='0' name='qty-"+no+"' /></td></tr>");
+								
+								if ( tr.qty < 20) {
+									$("input[name='qty-"+no+"']").parent().addClass("red").siblings().addClass("red");
+								}
+							})
+						}
+					});
+				}
+			})
+		})
+	})
 	
 })
 </script>
 <title>지점 - 재고</title>
 </head>
 <body>
-<div class="wrapper container">
+<sec:authorize access="isAuthenticated()">
+	<sec:authentication var="brno" property="principal.brEmp.branch.no"/>
+</sec:authorize>
+<div class="wrapper container" id="brno-${brno }">
 	<div class="row">
 		<div class="col-sm-12">
 			<%@ include file="topmenu.jsp" %>
@@ -28,11 +127,11 @@ $(function() {
 		<div class="col-sm-6 col-sm-offset-3">
 			<form role="form" class="form-inline">
 				<div class="form-group col-sm-3">
-					<select name="inven-search" class="form-control">
-						<option>검색조건</option>
+					<select title="검색조건" id="inven-search" class="form-control">
+						<option value>검색조건</option>
 						<option value="name">상품명</option>
 						<option value="qty">수량</option>
-						<option value="cat">카테고리</option>
+						<option value="cat">소분류명</option>
 					</select>
 				</div>
 				
@@ -66,17 +165,12 @@ $(function() {
 				</thead>
 				
 				<tbody>
-					<tr>
-						<td>1</td>
-						<td>감자깡</td>
-						<td>0</td>
-						<td><input type="text" value="1" name="qty" /></td>
-					</tr>
+					
 				</tbody>
 			</table>
 			
 			<div class="pull-right">
-				<a href="" class="btn btn-default btn-lg">발주 추가</a>
+				<button class="btn btn-default btn-lg" id="addorder-btn">발주 추가</button>
 			</div>
 		</div>
 	</div>

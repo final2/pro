@@ -2,9 +2,13 @@ package com.finalproject.model;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonFormat.Shape;
+
 public class BranchOrder {
 
 	private int no;
+	@JsonFormat(shape=Shape.STRING, pattern="yyyy-MM-dd")
 	private Date regdate;
 	private String note;
 	private int branchNo;

@@ -3,6 +3,7 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.finalproject.dao.BranchDao">
+
 	<!-- 지점회원번호로 지점회원 찾기 -->
 	<select id="getBrMemberByNo" parameterType="int" resultType="com.finalproject.model.BranchEmp">
 		select 
@@ -53,8 +54,8 @@
 			smallcategory_no = #{value}
 	</select>
 	
-	<!-- 발주 : 발주대기 주문 찾기 -->
-	<select id="getWaitingOrder" parameterType="int" resultType="com.finalproject.model.BranchOrderDetail">
+	<!-- 발주 : 발주대기 주문 상세 찾기 -->
+	<select id="getWaitingOrderDetail" parameterType="int" resultType="com.finalproject.model.BranchOrderDetail">
 		select
 			A.no, 
 			A.qty, 
@@ -78,13 +79,13 @@
 			C.branch_no = #{value}
 	</select>
 	
-	<!-- 발주대기 목록에서 삭제하기 -->
+	<!-- 발주 : 발주대기 목록에서 삭제하기 -->
 	<delete id="deleteWaitingByOrderDetailNo" parameterType="int">
 		delete from br_order_details
 		where no = #{value}
 	</delete>
 	
-	<!-- 지점 재고에 물품 추가하기 -->
+	<!-- 발주 : 지점 재고에 물품 추가하기 -->
 	<insert id="addInventory" parameterType="com.finalproject.model.BranchInventory">
 		insert into 
 			branch_inventory(no, qty, branch_no, product_no)
@@ -92,7 +93,7 @@
 			(mybranch_seq.nextval, #{qty}, #{branchNo}, #{product.no})
 	</insert>
 	
-	<!-- 주문번호로 발주 찾기 -->
+	<!-- 발주 : 주문번호로 발주 찾기 -->
 	<select id="getBranchOrderByNo" parameterType="int" resultType="BrOrder">
 		select
 			no,
@@ -107,7 +108,7 @@
 			no = #{value}
 	</select>
 	
-	<!-- 주문상세번호로 주문상세 찾기 -->
+	<!-- 발주 : 주문상세번호로 주문상세 찾기 -->
 	<select id="getOrderDetailByNo" parameterType="int" resultType="com.finalproject.model.BranchOrderDetail">
 		select 
 			no, qty, order_no as "order.no", product_no as "product.no"
@@ -117,29 +118,28 @@
 			no = #{value}
 	</select>
 	
-	<!-- 발주 수정하기 -->
+	<!-- 발주 : 발주 수정하기 -->
 	<update id="updateBranchOrder" parameterType="BrOrder">
 		update
 			br_orders
 		set
-			note = #{note},
 			iscomplete = #{iscomplete},
 			iscart = #{iscart}
 		where
 			no = #{no}
 	</update>
 	
-	<!-- 물품번호로 재고찾기 -->
+	<!-- 발주 : 물품번호로 재고찾기 -->
 	<select id="getInventoryByProductNo" parameterType="int" resultType="com.finalproject.model.BranchInventory">
 		select
-			 no, qty, branch_no as "branchNo", product_no as "productNo"
+			 no, qty, branch_no as "branchNo", product_no as "product.no"
 		from 
 			branch_inventory
 		where 
 			product_no = #{value}
 	</select>
 	
-	<!-- 재고 수정하기 -->
+	<!-- 발주 : 재고 수정하기 -->
 	<update id="updateInventory" parameterType="com.finalproject.model.BranchInventory">
 		update
 			branch_inventory
@@ -147,6 +147,139 @@
 			qty = #{qty},
 			branch_no = #{branchNo}
 		where
-			product_no = #{productNo}
+			product_no = #{product.no}
 	</update>
+	
+	<!-- 재고 : 지점번호로 재고 조회하기 -->
+	<select id="getAllInvenByBranchNo" parameterType="int" resultType="com.finalproject.model.BranchInventory">
+		select
+			A.no, 
+			A.qty, 
+			A.branch_no as "branchNo", 
+			A.product_no as "product.no",
+			B.name as "product.name"
+		from 
+			branch_inventory A, product B
+		where 
+			A.product_no = B.no
+		and
+			A.branch_no = #{value}
+		and 
+			qty &lt;= 100
+		order by
+			qty asc
+	</select>
+	
+	<!-- 재고 : 발주 추가하기 -->
+	<insert id="addOrder" parameterType="BrOrder">
+		insert into br_orders(no, regdate, branch_no, iscomplete, iscart)
+		values(mybranch_seq.nextval, sysdate, #{branchNo}, 'N', 'N')
+	</insert>
+	
+	<!-- 재고 : 발주 상세 추가하기 -->
+	<insert id="addOrderDetail" parameterType="com.finalproject.model.BranchOrderDetail">
+		insert into br_order_details(no, qty, order_no, product_no)
+		values(mybranch_seq.nextval, #{qty}, #{order.no}, #{product.no})
+	</insert>
+	
+	<select id="getOrderDetailByProNo" parameterType="map" resultType="com.finalproject.model.BranchOrderDetail">
+		select
+			A.no, 
+			A.qty, 
+			A.warehousein, 
+			A.warehouseout, 
+			A.order_no as "order.no", 
+			A.product_no as "product.no",
+			B.name as "product.name",
+			B.maker as "product.maker",
+			B.price as "product.price",
+			C.branch_no as "order.branchNo"
+		from
+			br_order_details A, product B, br_orders C
+		where 
+			A.product_no = B.no
+		and
+			A.order_no = C.no
+		and
+			C.iscart = 'N'
+		and 
+			C.branch_no = #{branchNo}
+		and 
+			A.product_no = #{productNo}
+	</select>
+	
+	<update id="updateBranchOrderDetail" parameterType="com.finalproject.model.BranchOrderDetail">
+		update
+			br_order_details
+		set
+			qty = #{qty}
+		where
+			no = #{no}
+	</update>
+	
+	<select id="getProductByNo" parameterType="int" resultType="Product">
+		select 
+			no, name, maker, price, memo, limiteage as "limiteAge", eventcode "event.no", smallcategory_no as "smallCat.no", image
+		from 
+			product
+		where 
+			no = #{value}
+	</select>
+	
+	<select id="getBranchOrderByIsCartNo" parameterType="int" resultType="BrOrder">
+		select
+			no,
+			regdate,
+			note,
+			branch_no as "branch.no",
+			iscomplete,
+			iscart
+		from
+			br_orders
+		where
+			iscart = 'N'
+		and
+			branch_no = #{value}
+	</select>
+	
+	<select id="getInvenByKeyword" parameterType="map" resultType="com.finalproject.model.BranchInventory">
+		select
+			 A.no, 
+			 A.qty, 
+			 A.branch_no as "branchNo", 
+			 A.product_no as "product.no",
+			 B.name as "product.name",
+			 C.name as "product.smallCat.name"
+		from 
+			branch_inventory A, product B, smallcategory C
+		where 
+			A.product_no = B.no
+		and
+			B.smallcategory_no = C.no
+		and
+			A.branch_no = #{branchNo}
+			<if test="type == 'name'">
+			and B.name like '%' || #{keyword} || '%'	
+			</if>
+			<if test="type == 'qty'">
+			and A.qty &lt;= #{keyword}
+			</if>
+			<if test="type == 'cat'">
+			and C.name like '%' || #{keyword} || '%'
+			</if>
+		order by
+			B.name		
+	</select>
+	
+	<!-- 발주 : 발주내역 조회하기 -->
+	<select id="getOrdersByBranchNo" parameterType="int" resultType="BrOrder">
+		select
+			no, regdate, note, branch_no as "branch.no", iscomplete, iscart
+		from
+			br_orders
+		where
+			branch_no = #{value}
+		and
+			iscart = 'Y'	
+	</select>
 </mapper>

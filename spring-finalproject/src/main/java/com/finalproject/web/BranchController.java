@@ -74,24 +74,24 @@ public class BranchController {
 	
 	// 발주 전송하기
 	@RequestMapping("/branch/orderupdate.do")
-	public String orderUpdate(@RequestParam(name="no") int no) {
+	public String orderUpdate(@RequestParam(name="brno") int brno, @RequestParam(name="no") int no) {
 		
-		List<BranchOrderDetail> detailList = brService.getWaitingOrder(no);
+		List<BranchOrderDetail> detailList = brService.getWaitingOrderDetail(brno);
 		
 		for (BranchOrderDetail d : detailList){
 			int productNo = d.getProduct().getNo();
 			BranchInventory inven = brService.getInventoryByProductNo(productNo);
-			
-			if(inven.getProductNo() == d.getProduct().getNo()) {
+			System.out.println(inven.getQty());
+			if(inven.getProduct().getNo() == d.getProduct().getNo()) {
 				inven.setQty(inven.getQty() + d.getQty());
 				brService.updateInventory(inven);
 			} 
 			
-			if(inven.getProductNo() != d.getProduct().getNo()) {
+			if(inven.getProduct().getNo() != d.getProduct().getNo()) {
 				inven = new BranchInventory();
 				inven.setQty(d.getQty());
 				inven.setBranchNo(d.getOrder().getBranchNo());
-				inven.setProductNo(d.getProduct().getNo());
+				inven.setProduct(d.getProduct());;
 				brService.addInventory(inven);
 			}
 		}
@@ -102,7 +102,6 @@ public class BranchController {
 			
 		return "branch/order";
 	}
-	
-	
+
 	
 }

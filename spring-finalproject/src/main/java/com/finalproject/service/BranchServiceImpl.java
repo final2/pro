@@ -1,6 +1,7 @@
 package com.finalproject.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,8 +42,8 @@ public class BranchServiceImpl implements BranchService {
 	}
 
 	@Override
-	public List<BranchOrderDetail> getWaitingOrder(int no) {
-		return branchDao.getWaitingOrder(no);
+	public List<BranchOrderDetail> getWaitingOrderDetail(int no) {
+		return branchDao.getWaitingOrderDetail(no);
 	}
 
 	@Override
@@ -78,6 +79,51 @@ public class BranchServiceImpl implements BranchService {
 	@Override
 	public BranchOrderDetail getOrderDetailByNo(int no) {
 		return branchDao.getOrderDetailByNo(no);
+	}
+
+	@Override
+	public List<BranchInventory> getAllInvenByBranchNo(int no) {
+		return branchDao.getAllInvenByBranchNo(no);
+	}
+
+	@Override
+	public void addOrder(BranchOrder order) {
+		branchDao.addOrder(order);
+	}
+
+	@Override
+	public void addOrderDetail(BranchOrderDetail orderDetail) {
+		branchDao.addOrderDetail(orderDetail);
+	}
+
+	@Override
+	public void updateBranchOrderDetail(BranchOrderDetail detail) {
+		branchDao.updateBranchOrderDetail(detail);
+	}
+
+	@Override
+	public BranchOrderDetail getOrderDetailByProNo(Map<String, Object> map) {
+		return branchDao.getOrderDetailByProNo(map);
+	}
+
+	@Override
+	public Product getProductByNo(int no) {
+		return branchDao.getProductByNo(no);
+	}
+
+	@Override
+	public BranchOrder getBranchOrderByIsCartNo(int no) {
+		return branchDao.getBranchOrderByIsCartNo(no);
+	}
+
+	@Override
+	public List<BranchInventory> getInvenByKeyword(Map<String, Object> map) {
+		return branchDao.getInvenByKeyword(map);
+	}
+
+	@Override
+	public List<BranchOrder> getOrdersByBranchNo(int brno) {
+		return branchDao.getOrdersByBranchNo(brno);
 	}
 
 }
