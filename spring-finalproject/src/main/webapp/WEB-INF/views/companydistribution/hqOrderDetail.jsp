@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -45,7 +47,7 @@
 			</table>
 			<div class="pull-right">
 				<a href="updateOrder.do" class="btn btn-primary">수정</a>
-				<a href="hqOrder.do" class="btn btn-danger">목록</a>
+				<a href="hqOrder.do" class="btn btn-danger">확인</a>
 			</div>
 		</div>
 	</div>

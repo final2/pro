@@ -53,9 +53,19 @@ public class DistributionController {
 	}
 	
 	// 거래처 수정 페이지
-	@RequestMapping("/updateClient.do")
-	public String updateClient() {
+	@RequestMapping(value="/updateClient.do", method=RequestMethod.GET)
+	public String updateClient(int no, Model model) {
+		Client client = distributionService.getClientsByNo(no);
+		model.addAttribute("client", client);
+		
 		return "companydistribution/updateClient";
+	}
+	
+	// 거래처 수정 페이지
+	@RequestMapping(value="/updateClient.do", method=RequestMethod.POST)
+	public String writerUpdate(@RequestParam(name="pn") int pn, Client client) {
+		distributionService.updateClient(client);
+		return "redirect:/clientDetail.do?no="+client.getNo()+"&pn=" + pn;
 	}
 	
 	// 거래처 등록 페이지
@@ -66,10 +76,11 @@ public class DistributionController {
 	@RequestMapping(value="/addClient.do", method=RequestMethod.POST)
 	public String writeClient(Client client) {
 		distributionService.addNewClient(client);
-		return "redirect:/clientList.do";
+		return "redirect:/clientList.do?pn=1";
 	}
-	
-	/*// 발주내역 리스트 페이지
+
+/* 거래처 ========================================================================================================= */
+	// 발주내역 리스트 페이지
 	@RequestMapping("hqOrder.do")
 	public String hqOrder() {
 		return "companydistribution/hqOrder";
@@ -83,7 +94,8 @@ public class DistributionController {
 	
 	// 발주 신청 페이지
 	@RequestMapping(value="orderApp.do", method=RequestMethod.GET)
-	public String orderApp() {
+	public String orderApp(Model model) {
+		
 		return "companydistribution/orderApp";
 	}
 	@RequestMapping(value="orderApp.do", method=RequestMethod.POST)
@@ -95,5 +107,7 @@ public class DistributionController {
 	@RequestMapping("updateOrder.do")
 	public String updateOrder() {
 		return "companydistribution/updateOrder";
-	}*/
+	}
+
+/* 발주 ========================================================================================================== */
 }
