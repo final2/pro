@@ -19,7 +19,7 @@
 			</div>
 			<div class="w3-container w3-margin-top">
 				<div class="w3-half w3-center" >
-					<img src="resources/image/song.jpg" style="height:480px;"/>
+					<img src="resources/image/empimg/song.jpg" style="height:480px;"/>
 				</div>
 				
 				<div class="w3-half w3-center w3-margin-top">

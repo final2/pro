@@ -47,6 +47,11 @@ public class WebController {
 	public @ResponseBody List<Branch> lotto2(){
 		return webservice.getBranchByLotto();
 	}
+	// 즉석 조리식품 판매점 
+	@RequestMapping("makeFood2.do")
+	public @ResponseBody List<Branch> makeFood2(){
+		return webservice.getBranchByFreshFood();
+	}
 	//회사소개
 	@RequestMapping("intro.do")
 	public String intro(){
