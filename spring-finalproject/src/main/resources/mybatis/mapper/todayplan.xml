@@ -8,7 +8,7 @@
 	<!-- 오늘의 할일 추가 -->
 	<insert id="addTodayPlan" parameterType="TP">
 		insert into todaywork(no, todaywork_title, todaywork_contents, regdate, employee_no, successed)
-		values(my_seq.nextval, #{title}, #{contents}, sysdate, '90000006', 'N')
+		values(my_seq.nextval, #{title}, #{contents}, sysdate, #{empNo}, 'N')
 	</insert>
 	<!-- 오늘의 할일 삭제 -->
 	<delete id="removeTodayPlan" parameterType="int">
@@ -20,18 +20,6 @@
 			set successed = 'Y'
 		where no = #{value}
 	</update>
-	<!-- 오늘 날짜 전체 가져오기 -->
-	<select id="getTodayPlanList" resultType="TP">
-		select 
-			no					as no,
-			todaywork_title		as title,
-			todaywork_contents	as contents,
-			regdate				as regdate,
-			employee_no			as empNo,
-			successed			as successed
-		from todaywork
-		where to_char(regdate, 'yyyy-MM-dd') = to_char(sysdate, 'yyyy-MM-dd')
-	</select>
 	
 	<!-- 사원별 오늘 날짜에 대한 할 일 가져오기 -->
 	<select id="getTodayPlanListByEmpNo" parameterType="int" resultType="TP">
@@ -46,7 +34,7 @@
 		where employee_no = #{value}
 		and to_char(regdate, 'yyyy-MM-dd') = to_char(sysdate, 'yyyy-MM-dd')
 	</select>
-	<!-- 사원별 오늘의 할일 날짜 별 가져오기 -->
+	<!-- 날짜 별 가져오기 -->
 	<select id="getTodayPlanListByDate" parameterType="TP" resultType="TP">
 		select 
 			no					as no,

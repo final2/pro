@@ -96,6 +96,17 @@ public class NoticeController {
 	public String todayPlan() {
 		return "companynotice/todayPlanList";
 	}
+	
+	//Calendar 페이지 이동
+	@RequestMapping(value="/calendar.do", method=RequestMethod.GET)
+	public String calendar() {
+		return "companynotice/calendarForm";
+	}
+	
+	@RequestMapping(value="video.do", method=RequestMethod.GET)
+	public String video() {
+		return "companynotice/backgroundVideo";
+	}
 
 	
 }

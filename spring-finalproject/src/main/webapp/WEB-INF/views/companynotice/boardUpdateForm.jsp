@@ -18,7 +18,13 @@
 <div id="wrapper">
 	<%@ include file="/WEB-INF/views/sidebartemplate/sidebar.jsp" %>
 	<a href="#menu-toggle" class="btn btn-default btn-xs" id="menu-toggle">side bar</a>
+	<!-- 메신저 modal창 -->
+	<div class="modal fade" id="messenger" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+		<%@ include file="../message/messagebutton.jsp" %>
+	</div>
 	<div id="page-context-wrapper">
+	<!-- Background 불러오기 -->
+		<%@ include file="backgroundVideo.jsp" %>
 		<div class="container">
 			<form role="form" action="boardUpdateForm.do" method="post">
 				<div>

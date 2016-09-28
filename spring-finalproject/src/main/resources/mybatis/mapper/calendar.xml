@@ -6,4 +6,30 @@
     
 <mapper namespace="com.finalproject.dao.CalendarDao">
 
+	<insert id="insertCalendar" parameterType="Calendar">
+		insert into calendar(no, title, start_date, end_date )
+		values(my_seq.nextval, #{title}, #{startDate}, #{endDate})
+	</insert>
+	
+	<select id="getCalendarList" resultType="Calendar">
+		select 
+			no			as no,
+			title		as title,
+			start_date	as startDate,
+			end_date	as	endDate
+		from calendar
+	</select>
+	
+	<delete id="removeCalendar" parameterType="int">
+		delete from calendar where no = #{value}
+	</delete>
+	
+	<update id="updateCalendar" parameterType="Calendar">
+		update calendar
+			set
+				start_date = #{startDate},
+				end_date = #{endDate}
+			where
+				no = #{no}	
+	</update>
 </mapper>

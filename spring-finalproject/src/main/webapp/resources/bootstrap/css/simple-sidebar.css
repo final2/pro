@@ -61,6 +61,13 @@
     padding: 0;
     list-style: none;
 }
+/* sidebar-div */
+.sidebar-nav .sdiv {
+	position: relative;
+	margin: 0;
+    padding: 0;
+    list-style: none;
+}
 
 .sidebar-nav li {
     text-indent: 20px;

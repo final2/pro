@@ -13,9 +13,12 @@
 
 <script type="text/javascript">
 $(function() {
+	
+	var loginUserNo = ${LoginUser.no}
+	
 	$.ajax({
-		type:'GET',
-		url:'json/plan/now',
+		type:'POST',
+		url:'json/plan/now/' + loginUserNo,
 		dataType:'json',
 		success:function(result) {
 			var $tbody = $('.todayList');
@@ -48,7 +51,7 @@ $(function() {
 		}
 		var todayPlan = {};
 		todayPlan['regdate'] = date;
-		
+		todayPlan['empNo'] = loginUserNo;
 		var jsonData = JSON.stringify(todayPlan);
 		
 		$.ajax({
@@ -87,9 +90,15 @@ $(function() {
 		event.stopPropagation();
 		var todayplanNo = $(this).parent().parent().find('td:first').text();
 	
+		var todayPlan = {};
+		todayPlan['no'] = todayplanNo;
+		todayPlan['empNo'] = loginUserNo;
+		var jsonData = JSON.stringify(todayPlan);
 		$.ajax({
 			type:'DELETE',
-			url:'json/plan/delete/' + todayplanNo,
+			url:'json/plan/delete',
+			contentType:'application/json',
+			data:jsonData,
 			dataType:'json',
 			success:function(result) {
 				alert("삭제 되었습니다.")
@@ -119,10 +128,15 @@ $(function() {
 	$("tbody.todayList").on("click","tr td button.success", function() {
 		event.stopPropagation();
 		var todayplanNo = $(this).parent().parent().find('td:first').text();
-		
+		var todayPlan = {};
+		todayPlan['no'] = todayplanNo;
+		todayPlan['empNo'] = loginUserNo;
+		var jsonData = JSON.stringify(todayPlan);
 		$.ajax({
 			type:'POST',
-			url:'json/plan/update/' + todayplanNo,
+			url:'json/plan/update',
+			contentType:'application/json',
+			data:jsonData,
 			dataType:'json',
 			success:function(result) {
 				alert("완료 되었습니다.")
@@ -159,6 +173,7 @@ $(function() {
 		var todayPlan = {};
 		todayPlan['title'] = title;
 		todayPlan['contents'] = contents;
+		todayPlan['empNo'] = loginUserNo;
 		
 		var jsonData = JSON.stringify(todayPlan);
 		
@@ -216,8 +231,10 @@ input[type=text] {border-radius:5px;}
 	<%@ include file="/WEB-INF/views/sidebartemplate/sidebar.jsp" %>
 	<a href="#menu-toggle" class="btn btn-default btn-xs" id="menu-toggle">side bar</a>
 	<div id="page-context-wrapper">
+		<!-- Background 불러오기 -->
+		<%@ include file="backgroundVideo.jsp" %>
 		<div class="container">
-			<div class="panel panel-default">
+			<div class="panel panel-default" style="opacity:0.8">
 				<div class="panel panel-heading well">
 					<div>
 						<input id="mydate" type="date" name="tdate">
@@ -239,16 +256,18 @@ input[type=text] {border-radius:5px;}
 					<table class="table">
 						<colgroup>
 							<col width="5%">
-							<col width="15%">
+							<col width="20%">
 							<col width="50">
-							<col span="2" width="15%">
+							<col width="10%">
+							<col width="15%">
 						</colgroup>
 						<thead>
 							<tr>
 								<th>번호</th>
 								<th>제목</th>
 								<th>내용</th>
-								<th colspan="2">작성일</th>								
+								<th>작성일</th>								
+								<th>완료 여부</th>								
 							</tr>
 						</thead>
 						<tbody class="todayList">

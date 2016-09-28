@@ -18,9 +18,24 @@ public class CalendarController {
 	@Autowired
 	private CalendarDao calendarDao;
 	
-	@RequestMapping(value="/calendar/add", method=RequestMethod.POST) 
-	public @ResponseBody List<Calendar> getCalendar(@RequestBody Calendar calendar) {
-		System.out.println(calendar.getStartDate() + " " + calendar.getEndDate());
+	@RequestMapping(value="/calendar/", method=RequestMethod.GET)
+	public @ResponseBody List<Calendar> getCalendarPlan() {
 		return calendarDao.getCalendarList();
+	}
+	
+	@RequestMapping(value="/calendar/add", method=RequestMethod.POST) 
+	public @ResponseBody List<Calendar> addCalendarPlan(@RequestBody Calendar calendar) {
+		calendarDao.insertCalendar(calendar);
+		return calendarDao.getCalendarList();
+	}
+	
+	@RequestMapping(value="/calendar/delete/{no}", method=RequestMethod.POST)
+	public @ResponseBody void removeCalendarPlan(@RequestBody int no) {
+		calendarDao.removeCalendar(no);
+	}
+	
+	@RequestMapping(value="/calendar/update", method=RequestMethod.POST)
+	public @ResponseBody void updateCalendarPlan(@RequestBody Calendar calendar) {
+		calendarDao.updateCalendar(calendar);
 	}
 }

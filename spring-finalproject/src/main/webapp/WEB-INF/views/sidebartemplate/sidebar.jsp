@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <style type="text/css">
 	#imgdiv {margin-top:10px; margin-bottom:10px;}
+	.emp {color: white}
 </style>
 
 <!-- Sidebar -->
@@ -11,18 +12,29 @@
     	<li>
     		<div id="imgdiv">
     			<a href="notice.do">
-    				<img alt="logo" src="resources/image/logo2.png" width="200px" height="150px"/>
+    				<img alt="logo" src="resources/image/logo2.png" width="200px" height="100px"/>
     			</a>
     		</div>
     	</li>
     	<li>
-	      		<a href="">로그인</a>
-	     	<div id="login">
-	      		<p>로그인 시 이미지</p>
-	      		<a href="">내정보</a>
+     		<div class="row" style="width:250px">
+     			<div class="col-sm-5">
+		      		<img id="myImg" width="80px" height="120px"
+		      			src="/FinalProject/resources/image/empimg/${LoginUser.photo }" />
+     			</div>
+	     		<div class="col-sm-6">
+		     			<div style="height:30px;" class="emp">사원번호</div>
+		     			<div style="height:30px;" class="emp">${LoginUser.no }</div>		     				
+	    	 			<div style="height:30px;" class="emp">이름</div>
+	    	 			<div style="height:30px;" class="emp">${LoginUser.name }</div>	  
+     			</div>
+     		</div>
+     		<div>
+    	  		<a href="" style="clear:both">내정보</a>
 	      		<a href="" data-toggle="modal" data-target="#messenger">메신저</a>
 	      		<a href="">로그아웃</a>	
-      		</div>	
+     		</div>
+      		
     	</li>
        <hr />
        <li class="list">

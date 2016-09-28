@@ -11,6 +11,7 @@
 <link href="resources/bootstrap/css/simple-sidebar.css" rel="stylesheet">
 <script src="resources/bootstrap/js/bootstrap.min.js"></script>
 <style>
+h1 {color: white;}
 th,td {text-align:center;}
 ul.pagination {
     display: inline-block;
@@ -43,39 +44,48 @@ ul.pagination li a:hover:not(.active) {background-color: #ddd;}
 <body>
 <div id="wrapper">
 	<%@ include file="/WEB-INF/views/sidebartemplate/sidebar.jsp" %>
+	<!-- 메신저 modal창 -->
+	<div class="modal fade" id="messenger" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+		<%@ include file="../message/messagebutton.jsp" %>
+	</div>
 	<a href="#menu-toggle" class="btn btn-default btn-xs" id="menu-toggle">side bar</a>
 	<div id="page-context-wrapper">
+		<!-- Background 불러오기 -->
+		<%@ include file="backgroundVideo.jsp" %>
 		<div class="container">	
 			<h1>공지 사항</h1>
-			<table class="table table-hover">
-				<colgroup>
-					<col width="20%">
-					<col width="50%">
-					<col width="30%">
-				</colgroup>
-				<thead>
-					<tr>
-						<th>번호</th>
-						<th>제목</th>					
-						<th>작성 날짜</th>					
-					</tr>
-				</thead>
-				<tbody>
-					<!-- 반복 -->
-					<c:forEach begin="${pageNo.beginBoardNo }" end="${pageNO.endBoardNo }" var="board" items="${boardList}">
-						<!-- detail 들어갈때 보내는 전송값 -->
-						<c:url var="detailURL" value="boardDetail.do">
-							<c:param name="no" value="${board.no }" />
-							<c:param name="pn" value="${param.pn }" />
-						</c:url>
+			<div class="well" style="opacity:0.8">
+			
+				<table class="table table-hover">
+					<colgroup>
+						<col width="20%">
+						<col width="50%">
+						<col width="30%">
+					</colgroup>
+					<thead>
 						<tr>
-							<td>${board.no }</td>
-							<td><a href="${detailURL }">${board.title }</a></td>
-							<td><fmt:formatDate value="${board.regdate }" pattern="yyyy.MM.dd / hh:mm:ss"/></td>
+							<th>번호</th>
+							<th>제목</th>					
+							<th>작성 날짜</th>					
 						</tr>
-					</c:forEach>
-				</tbody>
-			</table>
+					</thead>
+					<tbody>
+						<!-- 반복 -->
+						<c:forEach begin="${pageNo.beginBoardNo }" end="${pageNo.endBoardNo }" var="board" items="${boardList}">
+							<!-- detail 들어갈때 보내는 전송값 -->
+							<c:url var="detailURL" value="boardDetail.do">
+								<c:param name="no" value="${board.no }" />
+								<c:param name="pn" value="${param.pn }" />
+							</c:url>
+							<tr>
+								<td>${board.no }</td>
+								<td><a href="${detailURL }">${board.title }</a></td>
+								<td><fmt:formatDate value="${board.regdate }" pattern="yyyy.MM.dd / hh:mm:ss"/></td>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+			</div>
 			<div class="text-right">
 				<a href="boardForm.do" class="btn btn-default">글쓰기</a>
 			</div>
