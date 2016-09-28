@@ -38,7 +38,7 @@ th,td {text-align:center;}
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach begin="${pageNo.beginBoardNo}" end="${pageNo.endBoardNo}" var="client" items="${clientList}">
+					<c:forEach var="client" items="${clientList}">
 						<c:url var="detailURL" value="clientDetail.do">
 							<c:param name="no" value="${client.no}" />
 							<c:param name="pn" value="${param.pn }"/>
@@ -52,7 +52,10 @@ th,td {text-align:center;}
 				</tbody>
 			</table>
 			<div class="pull-right">
-				 <a href="addClient.do" class="btn btn-primary">거래처 등록</a>
+				<c:url var="addClientURL" value="addClient.do">
+					<c:param name="pn" value="${param.pn }" />
+				</c:url>
+				 <a href="${addClientURL}" class="btn btn-primary">거래처 등록</a>
 			</div>
 			<div class="text-center">
 				<ul class="pagination">
@@ -62,9 +65,9 @@ th,td {text-align:center;}
 						</c:when>
 						<c:otherwise>
 							<c:url var="nextClientListURL" value="clientList.do">
-								<c:param name="pn" value="${param.pn + 1 }" />
+								<c:param name="pn" value="${param.pn - 1 }" />
 							</c:url>
-							<li><a href="${nextClientListURL }">></a></li>
+							<li><a href="${nextClientListURL }">&lt;</a></li>
 						</c:otherwise>
 					</c:choose>
 					<c:forEach begin="${pageNo.beginPageNo }" end="${pageNo.endPageNo }" varStatus="status">
@@ -86,9 +89,9 @@ th,td {text-align:center;}
 						</c:when>
 						<c:otherwise>
 							<c:url var="preClientList" value="clientList.do">
-								<c:param name="pn" value="${param.pn - 1}" />
+								<c:param name="pn" value="${param.pn + 1}" />
 							</c:url>
-							<li><a href="${preClientList }">&lt;</a></li>
+							<li><a href="${preClientList }">></a></li>
 						</c:otherwise>
 					</c:choose>
 				</ul>

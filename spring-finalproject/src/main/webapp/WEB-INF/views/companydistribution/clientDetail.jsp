@@ -36,12 +36,12 @@ tbody th {text-align:center;}
 							<th>거래 여부</th>
 							<td>${clients.isAdmit }</td>
 						</tr>
-					</thead>
-					<tbody>
 						<tr>
 							<th colspan="2">제품명</th>
 							<th colspan="2">수량</th>
 						</tr>
+					</thead>
+					<tbody>
 						<c:forEach var="ds" items="${details}">
 							<tr>
 								<td colspan="2">${ds.product.name }</td>
@@ -56,7 +56,7 @@ tbody th {text-align:center;}
 					<c:param name="pn" value="${param.pn }" />
 				</c:url>
 				<a href="${updateURL}" class="btn btn-primary">수정</a>
-				<a href="clientList.do" class="btn btn-primary">목록</a>
+				<a href="clientList.do?pn=${param.pn }" class="btn btn-primary">목록</a>
 			</div>
 		</div>
    </div>

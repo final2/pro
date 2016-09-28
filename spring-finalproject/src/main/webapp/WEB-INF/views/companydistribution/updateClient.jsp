@@ -21,24 +21,25 @@
 		<div class="container" style="margin-top:10px">
 			<h1>거래처 수정</h1>
 			<hr>
-			<form action="updateClient.do" method="post" role="form">
+			<form action="updateClient.do?pn=${param.pn }" method="post" role="form">
 				<div>
 					<label>거래처 번호</label>
-					<input type="number" name="no" class="form-control" readonly="readonly" value="${client.no}">
+					<input type="text" name="no" class="form-control" readonly="readonly" value="${client.no}">
 				</div>
 				<div>
 					<label>거래처 명</label>
 					<input type="text" name="name" class="form-control" value="${client.name}">
 				</div>
 				<div>
-					<label>거래 여부</label>
-					<input type="text" name="isadimt" class="form-control" value="${client.isAdmit}">
+					<label>거래 여부</label><br />
+					<input type="radio" name="isAdmit" value="Y" ${client.isAdmit eq 'Y' ? 'checked=checked': '' }> 거래중
+					<input type="radio" name="isAdmit" value="N" ${client.isAdmit eq 'N' ? 'checked=chedked': '' }> 거래중지
 				</div>
 				<div class="pull-right">
-					<c:url var="detailURL" value="clientDetail.do">
-						<c:param name="no" value="${clients.no }" />
+					<c:url var="clientListURL" value="clientList.do">
+						<c:param name="pn" value="${param.pn }" />
 					</c:url>
-					<a href="${detailURL }" class="btn btn-danger">취소</a>
+					<a href="${clientListURL }" class="btn btn-danger">취소</a>
 					<input type="submit" class="btn btn-primary" value="확인" />
 				</div>
 			</form>

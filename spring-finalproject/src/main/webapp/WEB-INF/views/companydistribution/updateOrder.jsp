@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -17,7 +19,7 @@
 	<div id="page-content-wrapper">
 		
 		<div class="container" style="margin-top:10px">
-			<h1>발주 신청서</h1>
+			<h1>발주 신청서 수정</h1>
 			<hr>
 			
 			<table class="table table-bordered">

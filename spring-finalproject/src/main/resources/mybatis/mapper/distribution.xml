@@ -3,7 +3,7 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.finalproject.dao.DistributionDao">
-
+<!-- 거래처======================================================================================================= -->
 	<!-- 거래처 등록 -->
 	<insert id="insertClient" parameterType="Client">
 		insert into client
@@ -73,4 +73,7 @@
 			  order by rank)
 		where rank >= #{beginBoardNo} and rank &lt;= #{endBoardNo}
 	</select>
+	
+<!-- 발주 ======================================================================================================= -->
+
 </mapper>

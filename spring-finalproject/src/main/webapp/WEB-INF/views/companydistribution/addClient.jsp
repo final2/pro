@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -22,15 +24,19 @@
 			<form action="addClient.do" method="post" role="form">
 				<div class="form-group">
 					<label>거래처 명</label>
-					<input type="text" name="name" class="form-control">
+					<input type="text" name="name" class="form-control" required>
 				</div>
 				<div class="form-group">
-					<label>거래 여부</label>
-					<input type="text" name="isAdmit" class="form-control">
+					<label>거래 여부</label><br />
+					<input type="radio" name="isAdmit" value="Y" checked="checked"> 거래중
+					<input type="radio" name="isAdmit" value="N"> 거래중지
 				</div>
 				<div class="pull-right">
+					<c:url var="listURL" value="clientList.do">
+						<c:param name="pn" value="${param.pn }"></c:param>
+					</c:url>
+					<a href="clientList.do?pn=${param.pn }" class="btn btn-danger">취소</a>
 					<input type="submit" class="btn btn-primary" value="등록" />
-					<a href="clientList.do" class="btn btn-danger">취소</a>
 				</div>
 			</form>
 		</div>
