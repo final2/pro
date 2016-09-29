@@ -27,7 +27,7 @@ public class LoginUserHandlerMethodArgumentResolver implements HandlerMethodArgu
 		HttpServletRequest request = (HttpServletRequest)webRequest.getNativeRequest();
 		HttpSession session = request.getSession();
 		
-		Employee loginUser = (Employee) session.getAttribute("LoginUser");
+		Employee loginUser = (Employee)session.getAttribute("LoginUser");
 		if(loginUser == null) {
 			return null;
 		}

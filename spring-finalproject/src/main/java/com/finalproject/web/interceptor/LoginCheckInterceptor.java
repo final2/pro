@@ -19,7 +19,7 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
 		Employee loginedUser =  (Employee)session.getAttribute("LoginUser");
 		if(loginedUser == null) {
 			
-			response.sendRedirect("login.do?error=req");
+			response.sendRedirect("companylogin.do?error=req");
 			return false;
 		}
 		
