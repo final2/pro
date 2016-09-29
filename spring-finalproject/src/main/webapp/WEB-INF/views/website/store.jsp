@@ -9,7 +9,7 @@
 <link rel="stylesheet" type="text/css" href="resources/bootstrap/css/bootstrap.css">
 <script type="text/javascript" src="resources/jquery/jquery.js"></script>
 <!-- 서브메뉴관련 --> 
-	<style>
+<style>
 	body {margin: 0;}
 
 	ul.topnav {
@@ -40,7 +40,7 @@
 	    ul.topnav li.right,
 	    ul.topnav li {float: none;}
 	}
-	</style>
+</style>
 	
 	<!-- 규석씨 api키값 	bf6fd53fddf7f8f7309b459f43aceb86 -->
 <!-- 지도 및 테이블 데이타 갱신 관련 -->
@@ -50,7 +50,6 @@
 $(function() {
 	
 	displayMap("lotto");
-		
 	function displayMap(selectedId) {
 		var id = selectedId || "lotto";
 		var map = makeMap();
@@ -61,7 +60,7 @@ $(function() {
 			dataType:"json",
 			success:function(data){
 				$("tbody").empty();	
-				
+				$("#id a").addClass("active");
 				// 테이블에 입력값 넣기
 				$.each(data, function(index, item) {
 					$("tbody").append("<tr><td>"+item.name+"</td><td>"+item.address+"</td><td>"+item.phone+"</td></tr>")
@@ -146,7 +145,10 @@ $(function() {
 	
 /* 서브메뉴 선택 */	
 	$("#store-gubun li").click(function() {
+		$(this).siblings().find("a").removeClass("active");
+		$(this).find("a").addClass("active");
 		displayMap($(this).attr("id"));
+		
 	}); 
 	
 });
