@@ -10,6 +10,30 @@
 <script type="text/javascript" src="resources/jquery/jquery.js"></script>
 <link href="resources/bootstrap/css/simple-sidebar.css" rel="stylesheet">
 <script src="resources/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	$("#client").change(function() {
+		
+		var clno = $("#client option:selected").val();
+		
+		alert(clno);
+		 $.ajax({
+			type:"GET",
+			url:"/FinalProject/json/pro/" + clno,
+			dateType:"json",
+			success:function(result) { 
+				
+				var $tr = $("#order-table");
+				$tr.empty();
+				
+				$.each(result, function(index, pro) {
+					$tr.append("<tr id='no-"+pro.no+"'><td>"+pro.no+"</td><td>"+제품명+"</td><td>"+가격+"</td><td>"+수량+"</td></tr>")
+				}); 
+			}
+		}); 
+	});
+});
+</script>
 <title>Big Store</title>
 </head>
 <body>
@@ -25,35 +49,29 @@
 			<table class="table table-bordered">
 				<thead>
 					<tr>
-						<th>발주번호</th>
-						<td></td>
-						<th>발주신청일자</th>
-						<td></td>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<th colspan="2">거래처명</th>
-						<td colspan="2">
-							<select class="form-control">
-								<c:forEach var="client" items="${client }">
-								<option value=""></option>
+						<th colspan="2" style="width: 50%">거래처명</th>
+						<td colspan="2" style="width: 50%">
+							<select id="client" class="form-control">
+								<option selected>거래처를 선택하세요.</option>
+								<c:forEach var="clients" items="${clientList}">
+									<c:choose>
+										<c:when test="${clients.isAdmit eq 'Y'}">
+											<option value="${clients.no}">${clients.name }</option>
+										</c:when>
+									</c:choose>
 								</c:forEach>
 							</select>
 						</td>
 					</tr>
+				</thead>
+				<tbody>
 					<tr>
-						<th>제품번호</th>
-						<th>제품 명</th>
-						<th>수량</th>
-						<th>가격</th>
+						<th style="width:25%">제품번호</th>
+						<th style="width:25%">제품 명</th>
+						<th style="width:25%">가격</th>
+						<th style="width:25%">수량</th>
 					</tr>
-					<tr>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
+					<!-- 입력 -->
 				</tbody>
 			</table>
 			<div class="pull-right">

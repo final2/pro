@@ -56,7 +56,7 @@ tbody th {text-align:center;}
 					<c:param name="pn" value="${param.pn }" />
 				</c:url>
 				<a href="${updateURL}" class="btn btn-primary">수정</a>
-				<a href="clientList.do?pn=${param.pn }" class="btn btn-primary">목록</a>
+				<a href="clientList.do?pn=${param.pn }" class="btn btn-primary">확인</a>
 			</div>
 		</div>
    </div>

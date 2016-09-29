@@ -19,7 +19,7 @@ public class DistributionServiceImpl implements DistributionService{
 	private DistributionDao distributionDao;
 
 /* 거래처 ========================================================================================================= */
-	// 거래처 리스트
+	// 거래처 리스트 / 발주 신청시 거래처명
 	@Override
 	public List<Client> getClientList() {
 		return distributionDao.getClients();
@@ -30,6 +30,7 @@ public class DistributionServiceImpl implements DistributionService{
 	public Client getClientsByNo(int no) {
 		return distributionDao.getClientsByNo(no);
 	}
+	// 발수 신청시 사용(품번,품명,가격)
 	@Override
 	public List<ClientDetail> getClientDetailsByNo(int no) {
 		return distributionDao.getClientDetailsByNo(no);

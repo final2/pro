@@ -9,11 +9,12 @@ import com.finalproject.model.PageNo;
 public interface DistributionDao {
 
 /* 거래처 ========================================================================================================= */
-	// 거래처 리스트
+	// 거래처 리스트 / 발주 신청시 거래처명
 	List<Client> getClients();
 	
 	// 번호로 거래처 조회
 	Client getClientsByNo(int no);
+	// 발수 신청시 사용(품번,품명,가격)
 	List<ClientDetail> getClientDetailsByNo(int no);
 
 	// 리스트 총 수량

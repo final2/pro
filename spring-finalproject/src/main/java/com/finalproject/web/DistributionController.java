@@ -6,12 +6,14 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.finalproject.model.Client;
 import com.finalproject.model.ClientDetail;
+import com.finalproject.model.Product;
 import com.finalproject.service.DistributionService;
 
 @Controller
@@ -19,7 +21,8 @@ public class DistributionController {
 
 	@Autowired
 	private DistributionService distributionService;
-	
+
+/* 거래처 ========================================================================================================= */
 	/*// 거래처 리스트 페이지
 	@RequestMapping("/clientList.do")
 	public String clientList(Model model) {
@@ -79,7 +82,7 @@ public class DistributionController {
 		return "redirect:/clientList.do?pn=1";
 	}
 
-/* 거래처 ========================================================================================================= */
+/* 발주 ========================================================================================================== */
 	// 발주내역 리스트 페이지
 	@RequestMapping("hqOrder.do")
 	public String hqOrder() {
@@ -95,6 +98,8 @@ public class DistributionController {
 	// 발주 신청 페이지
 	@RequestMapping(value="orderApp.do", method=RequestMethod.GET)
 	public String orderApp(Model model) {
+		List<Client> clientList = distributionService.getClientList();
+		model.addAttribute("clientList", clientList);
 		
 		return "companydistribution/orderApp";
 	}
@@ -109,5 +114,4 @@ public class DistributionController {
 		return "companydistribution/updateOrder";
 	}
 
-/* 발주 ========================================================================================================== */
 }
