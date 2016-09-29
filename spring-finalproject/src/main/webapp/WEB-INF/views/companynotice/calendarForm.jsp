@@ -22,7 +22,7 @@
 		<%@ include file="backgroundVideo.jsp" %>
 		<div class="container">
 			<h1>회사 일정</h1>
-			<div class="well">
+			<div class="well" style="opacity:0.8">
 				<%@ include file="calendar.jsp" %>
 			</div>			
 		</div>

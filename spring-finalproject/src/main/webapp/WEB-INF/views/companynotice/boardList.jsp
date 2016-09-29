@@ -86,9 +86,11 @@ ul.pagination li a:hover:not(.active) {background-color: #ddd;}
 					</tbody>
 				</table>
 			</div>
-			<div class="text-right">
-				<a href="boardForm.do" class="btn btn-default">글쓰기</a>
-			</div>
+			<c:if test="$LoginUser.dept eq 'director'">			
+				<div class="text-right">
+					<a href="boardForm.do" class="btn btn-default">글쓰기</a>
+				</div>
+			</c:if>
 			<div class="text-center"> 
 				<ul class="pagination">
 				<c:choose>

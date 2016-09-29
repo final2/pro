@@ -1,4 +1,4 @@
-/*package com.finalproject.web.argumentResolver;
+package com.finalproject.web.argumentResolver;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -9,13 +9,13 @@ import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
-import com.example.model.User;
+import com.finalproject.model.Employee;;
 
 public class LoginUserHandlerMethodArgumentResolver implements HandlerMethodArgumentResolver {
 
 	@Override
 	public boolean supportsParameter(MethodParameter parameter) {
-		return User.class.isAssignableFrom(parameter.getParameterType());
+		return Employee.class.isAssignableFrom(parameter.getParameterType());
 	}
 
 	@Override
@@ -27,7 +27,7 @@ public class LoginUserHandlerMethodArgumentResolver implements HandlerMethodArgu
 		HttpServletRequest request = (HttpServletRequest)webRequest.getNativeRequest();
 		HttpSession session = request.getSession();
 		
-		User loginUser = (User) session.getAttribute("LOGIN_USER");
+		Employee loginUser = (Employee) session.getAttribute("LoginUser");
 		if(loginUser == null) {
 			return null;
 		}
@@ -36,4 +36,3 @@ public class LoginUserHandlerMethodArgumentResolver implements HandlerMethodArgu
 
 	
 }
-*/

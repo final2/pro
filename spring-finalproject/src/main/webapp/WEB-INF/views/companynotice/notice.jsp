@@ -53,11 +53,6 @@ $(function() {
 	<div id="page-content-wrapper">
 		<!-- Background 불러오기 -->
 		<%@ include file="backgroundVideo.jsp" %>
-		
-		<marquee>
-			<h1>Notice</h1>
-		</marquee>
-
 		<div class="row" style="margin-top:10px">
 			<div class="col-sm-6">
 				<div class="disdiv well" style="opacity:0.8">

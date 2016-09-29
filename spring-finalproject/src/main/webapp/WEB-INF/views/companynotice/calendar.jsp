@@ -5,16 +5,16 @@
 <!-- calendar css -->
 <link rel="stylesheet" href="resources/fullcalendar/fullcalendar.css">
 <script type="text/javascript" src="resources/jquery/moment.min.js"></script>
-<script type="text/javascript" src="resources/fullcalendar/fullcalendar.min.js"></script>
+<script type="text/javascript" src="resources/fullcalendar/fullcalendar.js"></script>
 <script type="text/javascript" src="resources/fullcalendar/locale-all.js"></script>
 <script type="text/javascript">
 $(function() {
-	/* var date = new Date();
+	var date = new Date();
 	var d = date.getDate();
 	var m = date.getMonth();
-	var y = date.getFullYear(); */
+	var y = date.getFullYear();
 	
-	$(".fc-today").text("today");
+	var loginUserNo = ${LoginUser.no}
 	
 	$("#calendar").fullCalendar({
 		
@@ -31,19 +31,31 @@ $(function() {
 		events:function(start, end, timezone, callback) {
 			$.ajax({
 				type:'GET',
-				url:'json/calendar/',
+				url:'json/calendar/' + loginUserNo,
 				dataType:'json',
 				success:function(data, text, request) {
 					var events = [];
-					$(data).each(function() {
-						events.push({
-						id: $(this).attr('no'),
-						title: $(this).attr('title'),
-						start: $(this).attr('startDate'),
-						end: $(this).attr('endDate')							
-						});
+					$(data).each(function(index, calendar) {
+						if(calendar.employee.no == loginUserNo) {	
+							events.push({
+								id: calendar.no,
+								title: calendar.title,
+								start: calendar.startDate,
+								end: calendar.endDate,
+								className: calendar.employee.no.toString(),
+								editable:true,
+								color : '#00ff7f'
+							});
+						} else {
+							events.push({
+								id: calendar.no,
+								title: calendar.title,
+								start: calendar.startDate,
+								end: calendar.endDate,
+								className: calendar.employee.no.toString()
+								});
+						}
 					});
-					
 					callback(events);
 					
 				}
@@ -54,45 +66,53 @@ $(function() {
 		selectable: true,
 		selectHelper: true,
 		//선택시 일정 추가 가능
-		select: function(start, end) {
+		select: function(start, end, timezone, callback) {
 			var title = prompt('Event Title:');
-			if(!title == true) {
-				return false;
-			}
-			var eventData={};
 			if (title) {
-			eventData['title'] = prompt('Event Title:');
-			eventData['startDate'] = new Date(start);
-			eventData['endDate'] = new Date(end);
-			var jsonData = JSON.stringify(eventData);
-				$.ajax({
-					type:"POST",
-					url:'json/calendar/add',
-					contentType:'application/json',
-					data:jsonData,
-					dataType:'json',
-					success:function(data) {
-						alert("add Succesfully")
-						var events = [];
-						$(data).each(function() {
-							events.push({
-								id: $(this).attr('no'),
-							title: $(this).attr('title'),
-							start: $(this).attr('startDate'),
-							end: $(this).attr('endDate')							
+				var eventData={};
+				eventData['title'] = title;
+				eventData['startDate'] = new Date(start);
+				eventData['endDate'] = new Date(end);
+				eventData['employee'] =  {'no':loginUserNo};
+				var jsonData = JSON.stringify(eventData);
+					$.ajax({
+						type:"POST",
+						url:'json/calendar/add',
+						contentType:'application/json',
+						data:jsonData,
+						dataType:'json',
+						success:function() {
+							alert("add Successfully")
+							$('#calendar').fullCalendar('refetchEvents');
+						}
+						/* success:function(data) {
+							alert("add Succesfully")
+							var events = [];
+							/$(data).each(function(index, calendar) {
+								events.push({
+									id: calendar.no,
+									title: calendar.title,
+									start: calendar.startDate,
+									end: calendar.endDate,
+									className: calendar.employee.no,
+									editable:true,
+									allDay: allDay
+								});
 							});
-						});
-						$('#calendar').fullCalendar('renderEvent', events, true); // stick? = true
-					}					
+							$('#calendar').fullCalendar('renderEvent', events, true); // stick? = true
+						}	 */				
 				});
 			} 
-			$('#calendar').fullCalendar('unselect');
+				$('#calendar').fullCalendar('unselect');
 		},
 		//표시된 일정 변경 가능 여부
-		editable: true,
 		//일정 옮기기
 		eventDrop: function(event, delta, revertFunc) {
-			alert(event.title + " was dropped on " + event.start.format() + " ~ " + evnet.end.format());
+			if(loginUserNo != event.className) {
+				alert("It is not your writed the Plan");
+	            revertFunc();
+			} 
+			alert(event.title + " was dropped on " + event.start.format() + " ~ " + event.end.format());
 			if (!confirm("Are you sure about this change?")) {
 	            revertFunc();
 	        }	
@@ -115,7 +135,11 @@ $(function() {
 			});
 		},
 		//일정 변경
-		eventResize: function(event, delta, revertFunc) {
+		eventResize: function( event, delta, revertFunc, jsEvent, ui, view ) {
+				if (loginUserNo != event.className) {				
+				alert("It is not your writed the Plan");
+				revertFunc();
+			}
 			alert(event.title + " end is now " + event.end.format());
 
 	        if (!confirm("is this okay?")) {
@@ -123,8 +147,8 @@ $(function() {
 	        }
 	        var eventDatas = {};
 			eventDatas['no'] = event.id;
-			eventDatas['startDate'] = new Date(event.start);
-			eventDatas['endDate'] = new Date(event.end);
+			eventDatas['startDate'] = event.start.format();
+			eventDatas['endDate'] = event.end.format();
 			var jsonData = JSON.stringify(eventDatas);
 			
 			$.ajax({
@@ -149,20 +173,22 @@ $(function() {
             alert("removing stuff");
         },*/
         eventClick: function(calEvent, jsEvent, view) {
-        	var no = calEvent.id;
+        	if(calEvent.className != loginUserNo) {  		
+        		alert("It is not your writed the Plan");
+        		return false;
+        	}
             var r=confirm("Do you really want to delete " + calEvent.title + " Plan ? ");
             if (r===true) {
             	$.ajax({
             		type:'POST',
-            		url:'json/calendar/delete/' + no,
+            		url:'json/calendar/delete/' + calEvent.id,
             		dataType:'json',
             		success:function(data) {
-            			alert("Removed Succesfully")
+            			alert("Removed Succesfully");
             		}
             	}); 
-            		
-                  $('#calendar').fullCalendar('removeEvents', calEvent._id);
-              }
+		        $('#calendar').fullCalendar('removeEvents', calEvent.id);
+            }
         }
 
 	});
@@ -174,7 +200,7 @@ $(function() {
 #calendar .fc-sat {color:blue;}
 #calendar .holiday {color: red;}
 </style>
-<title>Insert title here</title>
+<title>Calendar</title>
 </head>
 <body>
 	<div id="calendar"></div>
