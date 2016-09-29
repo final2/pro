@@ -1,5 +1,5 @@
 /*!
- * FullCalendar v3.0.0 Stylesheet
+ * FullCalendar v3.0.1 Stylesheet
  * Docs & License: http://fullcalendar.io/
  * (c) 2016 Adam Shaw
  */
@@ -51,12 +51,11 @@ body .fc { /* extra precedence to overcome jqui */
 
 .fc-unthemed .fc-today {
 	background: #fcf8e3;
-	opacity: 0.3;
 }
 
 .fc-highlight { /* when user is selecting cells */
 	background: #bce8f1;
-	opacity: 0.3;
+	opacity: .3;
 }
 
 .fc-bgevent { /* default look for background events */

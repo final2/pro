@@ -1,4 +1,4 @@
-/*package com.finalproject.web.interceptor;
+package com.finalproject.web.interceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -7,7 +7,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.example.model.User;
+import com.finalproject.model.Employee ;
 
 public class LoginCheckInterceptor implements HandlerInterceptor {
 
@@ -16,7 +16,7 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
 			throws Exception {
 		
 		HttpSession session = request.getSession();
-		User loginedUser =  (User)session.getAttribute("LOGIN_USER");
+		Employee loginedUser =  (Employee)session.getAttribute("LoginUser");
 		if(loginedUser == null) {
 			
 			response.sendRedirect("login.do?error=req");
@@ -38,4 +38,3 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
 		
 	}
 }
-*/

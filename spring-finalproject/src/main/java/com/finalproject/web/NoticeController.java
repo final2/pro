@@ -103,10 +103,4 @@ public class NoticeController {
 		return "companynotice/calendarForm";
 	}
 	
-	@RequestMapping(value="video.do", method=RequestMethod.GET)
-	public String video() {
-		return "companynotice/backgroundVideo";
-	}
-
-	
 }

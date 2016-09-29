@@ -34,7 +34,6 @@ public class CalendarController {
 	
 	@RequestMapping(value="/calendar/delete/{no}", method=RequestMethod.POST)
 	public @ResponseBody void removeCalendarPlan(@PathVariable int no) {
-		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + no);
 		calendarDao.removeCalendar(no);
 	}
 	
