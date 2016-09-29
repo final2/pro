@@ -10,6 +10,8 @@
 <script type="text/javascript">
 $(function() {
 
+	var loginUserNo = ${LoginUser.no}
+	
 	$("#calendar").fullCalendar({
 		
 		locale: 'ko',
@@ -19,23 +21,22 @@ $(function() {
 			center: 'title',
 			right: 'month,listYear',
 		},
-		//defaultView:'agendaWeek',
-		defaultDate: '2016-09-12',
 		//저장된 일정 불러오기
 		events:function(start, end, timezone, callback) {
 			$.ajax({
 				type:'GET',
-				url:'json/calendar/',
+				url:'json/calendar/' + loginUserNo,
 				dataType:'json',
 				success:function(data, text, request) {
 					var events = [];
 					$(data).each(function() {
-						events.push({
-						id: $(this).attr('no'),
-						title: $(this).attr('title'),
-						start: $(this).attr('startDate'),
-						end: $(this).attr('endDate')							
-						});
+						var empNo = $(this).attr('empNo');
+							events.push({
+								id: $(this).attr('empNo'),
+								title: $(this).attr('title'),
+								start: $(this).attr('startDate'),
+								end: $(this).attr('endDate'),
+							});
 					});
 					
 					callback(events);
