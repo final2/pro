@@ -10,8 +10,8 @@
 <script type="text/javascript" src="resources/jquery/jquery.js"></script>
 <!-- 서브메뉴관련 --> 
 	<style>
-	/*body {margin: 0;}*/
-	
+	body {margin: 0;}
+
 	ul.topnav {
 	    list-style-type: none;
 	    margin: 0;
@@ -42,98 +42,116 @@
 	}
 	</style>
 	
-	
+	<!-- 규석씨 api키값 	bf6fd53fddf7f8f7309b459f43aceb86 -->
 <!-- 지도 및 테이블 데이타 갱신 관련 -->
-<script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=cfdcd22439144d2fe4a21b6375bed0fa&libraries=services"></script>
+<script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=bf6fd53fddf7f8f7309b459f43aceb86&libraries=services"></script>
 <script type="text/javascript">
 // 지도 보이기
 $(function() {
 	
-	$.ajax({
-		type:"GET",
-		url:"makeFood2.do",
-		dateType:"json",
-		success:function(data){
-			//console.log(data);
-			// 첫 화면에 보이는 지도
-			var mapContainer = document.getElementById('map'),
-				mapOption={
-				center:new daum.maps.LatLng(37.5722920,126.9929130),
-				level:8
-				};
-			var map=new daum.maps.Map(mapContainer,mapOption);
-			
-			// json으로 받아온 데이타중 주소를 좌표값으로 변환하여 위치를 표시하고 싶다
-			// Geocoder는 주소 변환 api
-			var geocoder = new daum.maps.services.Geocoder();
-			
-			// 테이블에 입력값 넣기
-			$.each(data, function(index, item) {
-				$("tbody").append("<tr><td>"+item.name+"</td><td>"+item.address+"</td><td>"+item.phone+"</td></tr>")
-			
-				//주소를 검색하여 좌표값들을 담아 marker에 position값으로 넣으면 지도에 표시된다
-				geocoder.addr2coord(item.address, function(status, result) {
-				    // 정상적으로 검색이 완료됐으면 
-				     if (status === daum.maps.services.Status.OK) {
-	
-				        var coords = new daum.maps.LatLng(result.addr[0].lat, result.addr[0].lng);
-	
-				        // 결과값으로 받은 위치를 마커로 표시합니다
-				        var marker = new daum.maps.Marker({
-				            map: map,
-				            position: coords
-				        });
-				        
-				        daum.maps.event.addListener(marker, 'click', function() {
-				        	// 지점번호
-				        	var no = item.no;
-				        	
-				        	// 지점번호에 해당하는 지점의 상세정보 조회하기(구현예정)
-				        	$.ajax({
-				        		type:"GET",
-				        		url:"",
-				        		dataType:"json",
-				        		success: function(detail) {
-				        			
-				        			
-				        		}
-				        	});
-				        	
-				        });
-	
-				        // 인포윈도우로 장소에 대한 설명을 표시합니다 marker위에 지점명을 보여주고 싶다
-				        var infowindow = new daum.maps.InfoWindow({
-				            content: '<div style="width:150px;text-align:center;padding:6px 0;">'+item.name+'</div>'
-				        });
-
-				        daum.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
-				        daum.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
-	
-				        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-				        map.setCenter(new daum.maps.LatLng(37.5520169,126.9917114));
-				    } 
-				}); 
+	displayMap("lotto");
+		
+	function displayMap(selectedId) {
+		var id = selectedId || "lotto";
+		var map = makeMap();
+		
+		$.ajax({
+			type:"GET",
+			url:"store.do?id=" + id,
+			dataType:"json",
+			success:function(data){
+				$("tbody").empty();	
 				
-				
-			})
-			// 인포윈도우를 표시하는 클로저를 만드는 함수입니다 
-			function makeOverListener(map, marker, infowindow) {
-			    return function() {
-			        infowindow.open(map, marker);
-			    };
-			}
+				// 테이블에 입력값 넣기
+				$.each(data, function(index, item) {
+					$("tbody").append("<tr><td>"+item.name+"</td><td>"+item.address+"</td><td>"+item.phone+"</td></tr>")
+					
+					$.ajax({
+						url:"json/geo.do",
+						data:{address:item.address},
+						dataType:"json",
+						success: function(geo) {
+							
+							addMarker(map, item, geo.lat, geo.lng)
 
-			// 인포윈도우를 닫는 클로저를 만드는 함수입니다 
-			function makeOutListener(infowindow) {
-			    return function() {
-			        infowindow.close();
-			    };
+						}
+					});	
+				})
 			}
-		}
-	});
+		}); 
+	}
+	
+ 	function makeOverListener(map, marker, infowindow) {
+	    return function() {
+	        infowindow.open(map, marker);
+	    };
+	}
+
+	// 인포윈도우를 닫는 클로저를 만드는 함수입니다 
+	function makeOutListener(infowindow) {
+	    return function() {
+	        infowindow.close();
+	    };
+	}
+	
+	function makeMap() {
+		$("#map").empty();
+		var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
+	    mapOption = { 
+	        center: new daum.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+	        level: 8 // 지도의 확대 레벨
+	    };
+
+		var map = new daum.maps.Map(mapContainer, mapOption); // 지도를 생성합
+		// 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+        map.setCenter(new daum.maps.LatLng(37.5520169,126.9917114));
+		
+		return map;
+	}
+	
+	function addMarker(map, store, lat, lng) {
+		
+		var marker = new daum.maps.Marker({
+	        map: map, // 마커를 표시할 지도
+	        position: new daum.maps.LatLng(lat, lng), // 마커를 표시할 위치
+	        title : store.name, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+	    });
+		
+        daum.maps.event.addListener(marker, 'click', function() {
+        	// 지점번호
+        	var no = store.no;
+        	$.ajax({
+        		type:"GET",
+        		url:"branchdetail.do?no="+no,
+        		dataType:"json",
+        		success: function(detail) {
+        			
+        			$("#panelTab").empty();
+        			$("#panelTab").append(
+        				"<table class='w3-table w3-striped w3-bordered w3-border'><tr><th><h3>지점상세안내</h3></th></tr><tr><th>지점명</th></tr><tr><td>"+detail.name+"</td></tr><tr><th>지점전화번호</th></tr><tr><td>"+detail.phone+"</td></tr><tr><th>지점주소</th></tr><tr><td>"+detail.address+"</td></tr></table>"	
+        			)
+        		}
+        	});
+        	
+        });
+
+        // 인포윈도우로 장소에 대한 설명을 표시합니다 marker위에 지점명을 보여주고 싶다
+        var infowindow = new daum.maps.InfoWindow({
+            content: '<div style="width:150px;text-align:center;padding:6px 0;">'+store.name+'</div>'
+        });
+
+        daum.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
+        daum.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+	}
+	
+/* 서브메뉴 선택 */	
+	$("#store-gubun li").click(function() {
+		displayMap($(this).attr("id"));
+	}); 
+	
 });
 </script>
-<title>food BigStore</title>
+<title>지점 유형별 안내</title>
 </head>
 <body>
 <div class="container" style="w3-center">
@@ -214,18 +232,21 @@ $(function() {
 	
 	<!-- 메뉴 하단부 시작  양옆 패딩값은 0으로 하고 위아래약간의 마진을 두었다-->	
 	<div class="w3-container w3-padding-0   " >
-	<!-- sub메뉴 -->
-	<ul class="topnav">
-  		<li><a href="#home">Lotto판매점</a></li>
-  		<li><a href="#news">ATM 설치점</a></li>
-  		<li><a href="#contact">택배 가능점</a></li>
-  		<li><a href="#contact" class="active">조리식품판매점</a></li>
-  		<li class="right"><a href="#about">About</a></li>
+	
+<!-- sub메뉴 -->
+	<ul class="topnav" id="store-gubun">
+  		<li id="LOTTO" ><a class="active">Lotto판매점</a></li>
+  		<li id="ATM"><a >ATM 설치점</a></li>
+  		<li id="PARCELSERVICE"><a >택배 가능점</a></li>
+  		<li id="FRESHFOOD"><a  >조리식품판매점</a></li>
+  		<!-- <li class="right"><a href="#about">About</a></li> -->
 	</ul>
-	<!-- sub메뉴 하단 표시부 -->
-	<div class="w3-container w3-padding-0 w3-margin-0" style="height:100%;">
+	
+
+<!-- sub메뉴 하단 표시부 -->
+	<div  class="w3-container w3-padding-0 w3-margin-0" style="height:100%;">
 		<!-- 판매점 리스트 -->
-		<div class="w3-half" style="height:100%;overflow:auto;">
+		<div id="panelTab" class="w3-half" style="height:100%;overflow:auto;">
 			<table class="w3-table w3-striped w3-bordered w3-border" >
 				<thead>
 				<tr>
@@ -240,7 +261,7 @@ $(function() {
 			</table>	
 		</div>
 		<!-- 지도표시하기 -->
-		<div class="w3-container w3-half" style="height:540px">
+		<div id="mapContainer" class="w3-container w3-half w3-padding-0" style="height:540px">
 			<div id="map" style="width:100%;height:100%;"></div>
 		</div>
 	</div>

@@ -47,8 +47,8 @@
 		where eventcode = #{value}
 	</select>
 	
-	<!-- 편의점 LOTTO 검색 -->
-	<select id="getBranchByLotto" parameterType="String" resultType="Branch">
+	<!-- 모든 지점 정보 -->
+	<select id="getAllBranch" resultType="Branch">
 		select 
 			b.NO 				as no,
 			b.NAME 				as name,
@@ -65,53 +65,10 @@
 			BRANCH B,EMPLOYEE E
 		where
 			B.employee_no=e.no and 
-			LOTTO = 'Y'
 	</select>
 	
-	<!-- 편의점 ATM 검색 -->
- 	<select id="getBranchByATM"  resultType="Branch">
-		select 
-			b.NO 				as no,
-			b.NAME 				as name,
-			b.PHONE				as phone,
-			b.ADDRESS 			as address,
-			b.ATM 				as atm, 
-			b.FRESHFOOD 		as freshFood,
-			b.IMAGE 			as img, 
-			b.LOTTO 			as lotto,
-			b.PARCELSERVICE 	as parcelService,
-			b.LIFESERVICE 		as lifeService,
-			B.EMPLOYEE_NO 		as "emp.no"
-		from 
-			BRANCH B,EMPLOYEE E
-		where
-			B.employee_no=e.no
-			and B.ATM = 'Y'
-	</select> 
-	
-	<!-- 편의점 택배 검색 -->
-	<select id="getBranchByPARCELSERVICE" parameterType="String" resultType="Branch">
-		select 
-			b.NO 				as no,
-			b.NAME 				as name,
-			b.PHONE				as phone,
-			b.ADDRESS 			as address,
-			b.ATM 				as atm, 
-			b.FRESHFOOD 		as freshFood,
-			b.IMAGE 			as img, 
-			b.LOTTO 			as lotto,
-			b.PARCELSERVICE 	as parcelService,
-			b.LIFESERVICE 		as lifeService,
-			B.EMPLOYEE_NO 		as "emp.no"
-		from 
-			BRANCH B,EMPLOYEE E
-		where
-			B.employee_no=e.no
-			and PARCELSERVICE = 'Y'
-	</select>
-	
-	<!-- 즉석식품 판매점 검색 -->
-	<select id="getBranchByFreshFood" parameterType="String" resultType="Branch">
+	<!-- 유형별 지점 검색 -->
+	<select id="getBranchByType" parameterType="string" resultType="Branch">
 		select 
 			b.NO 				as no,
 			b.NAME 				as name,
@@ -129,11 +86,11 @@
 		where
 			B.employee_no=e.no
 			and 
-			FRESHFOOD = 'Y'
+			${value} = 'Y'
 	</select>
 	
 	<!-- 번호로 지점찾기 -->
-	<select id="getBranchByNo" parameterType="String" resultType="Branch">
+	<select id="getBranchByNo" parameterType="int" resultType="Branch">
 		select 
 			b.NO 				as no,
 			b.NAME 				as name,
@@ -150,6 +107,8 @@
 			BRANCH B,EMPLOYEE E
 		where
 			B.employee_no=e.no and
-			NO = #{value}
-	</select>
+			b.NO = #{value}
+	</select>	
+
+
 </mapper>

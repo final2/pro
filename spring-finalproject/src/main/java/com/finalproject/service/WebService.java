@@ -17,18 +17,13 @@ public interface WebService {
 	// event 제품 보기
 	List<Product> getProductByEvent(int no);
 	
-	// 서비스 유형별 지점정보 불러오기
-	List<Branch> getBranchByLotto();
-	
-	// ATM 지점정보 불러오기
-	List<Branch> getBranchByATM();
-	
-	// 택배가능지점 불러오기
-	List<Branch> getBranchByPARCELSERVICE();
-	
-	// 즉석제조식품 판매점 불러오기
-	List<Branch> getBranchByFreshFood();
+	// 모든 지점 정보 불러오기
+	List<Branch> getAllBranch();
 	
 	// 지점 상세정보 불러오기
 	Branch getBranchByNo(int no);
+	
+	// 유형별 지점정보 불러오기 
+	List<Branch> getBranchByType(String type);
+	
 }
