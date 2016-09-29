@@ -15,7 +15,10 @@
       	<typeAlias type="com.finalproject.model.PageNo" alias="PN"/>
       	<typeAlias type="com.finalproject.model.Client" alias="Client"/>
       	<typeAlias type="com.finalproject.model.ClientDetail" alias="ClDetail"/>      	
-      	<typeAlias type="com.finalproject.model.Employee" alias="Employee"/>
+      	<typeAlias type="com.finalproject.model.Employee" alias="Employee"/>   	
+      	<typeAlias type="com.finalproject.model.Career" alias="Career"/>   	
+      	<typeAlias type="com.finalproject.model.Licenses" alias="Licenses"/>   	
+      	<typeAlias type="com.finalproject.model.Languages" alias="Languages"/>
       	<typeAlias type="com.finalproject.model.BranchOrder" alias="BrOrder"/>
       	<typeAlias type="com.finalproject.model.Message" alias="Message"/>
       	<typeAlias type="com.finalproject.model.Branch" alias="Branch"/>
