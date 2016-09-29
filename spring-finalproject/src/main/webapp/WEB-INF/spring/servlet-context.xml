@@ -33,10 +33,16 @@
 	 </bean>
 	
 	<!-- interceptor -->
-	<!-- <mvc:interceptors>
+	<mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/*.do/"/>
-			<mvc:exclude-mapping path=""/>
+			<mvc:exclude-mapping path="/notice.do"/>
+			<mvc:exclude-mapping path="/boardForm.do"/>
+			<mvc:exclude-mapping path="/boardList.do"/>
+			<mvc:exclude-mapping path="/boardDetail.do"/>
+			<mvc:exclude-mapping path="/boardUpdateForm.do"/>
+			<mvc:exclude-mapping path="/todaplan.do"/>
+			<mvc:exclude-mapping path="/calendar.do"/>
 			
 			<bean class="com.finalproject.web.interceptor.LoginCheckInterceptor"></bean>
 		</mvc:interceptor>
@@ -46,5 +52,5 @@
 		<mvc:argument-resolvers>
 			<bean class="com.finalproject.web.argumentResolver.LoginUserHandlerMethodArgumentResolver" />
 		</mvc:argument-resolvers>
-	</mvc:annotation-driven> -->
+	</mvc:annotation-driven>
 </beans>

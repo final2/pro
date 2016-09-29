@@ -23,34 +23,36 @@
 		<!-- Background 불러오기 -->
 		<%@ include file="backgroundVideo.jsp" %>
 		<div class="container">
-		<h1>공지사항</h1>
-		<div>
-			<table class="table table-bordered">
-				<tr>
-					<th width="10%">번호</th>
-					<td width="40%">${board.no }</td>
-					<th width="10%">작성 날짜</th>
-					<td width="40%"><fmt:formatDate value="${board.regdate }" pattern="yyyy.MM.dd / hh:mm:ss"/></td>		
-				</tr>
-				<tr>
-					<th width="10%">제목</th>
-					<td width="90%" colspan="3">${board.title }</td>
-				</tr>
-				<tr>
-					<th width="10%">내용</th>
-					<td width="90%" colspan="3">${board.content }</td>
-				</tr>
-			</table>
+		<h1 style="color:white">공지사항</h1>
+			<div class="well" style="opacity:0.8;">
+				<table class="table table-bordered">
+					<tr>
+						<th width="10%">번호</th>
+						<td width="40%">${board.no }</td>
+						<th width="10%">작성 날짜</th>
+						<td width="40%"><fmt:formatDate value="${board.regdate }" pattern="yyyy.MM.dd / hh:mm:ss"/></td>		
+					</tr>
+					<tr>
+						<th width="10%">제목</th>
+						<td width="90%" colspan="3">${board.title }</td>
+					</tr>
+					<tr>
+						<th width="10%">내용</th>
+						<td width="90%" colspan="3">${board.content }</td>
+					</tr>
+				</table>
+			</div>
 			<div class="pull-right">
 				<c:url var="updateFormURL" value="boardUpdateForm.do">
 					<c:param name="no" value="${board.no }" />
 					<c:param name="pn" value="${param.pn }" />
 				</c:url>
-				<a href="${updateFormURL }" class="btn btn-default">수정</a>
-				<a href="boardDelete.do" class="btn btn-default">삭제</a>
+				<c:if test="UserLogin.dept eq 'director' ">
+					<a href="${updateFormURL }" class="btn btn-default">수정</a>
+					<a href="boardDelete.do" class="btn btn-default">삭제</a>
+				</c:if>
 				<a href="boardList.do" class="btn btn-default">목록</a>
 			</div>
-		</div>
 		</div>
 	</div>
 </div>

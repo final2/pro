@@ -29,14 +29,26 @@ $(function() {
 				dataType:'json',
 				success:function(data, text, request) {
 					var events = [];
-					$(data).each(function() {
-						var empNo = $(this).attr('empNo');
+					$(data).each(function(index, calendar) {
+						if(calendar.employee.no == loginUserNo) {	
 							events.push({
-								id: $(this).attr('empNo'),
-								title: $(this).attr('title'),
-								start: $(this).attr('startDate'),
-								end: $(this).attr('endDate'),
+								id: calendar.no,
+								title: calendar.title,
+								start: calendar.startDate,
+								end: calendar.endDate,
+								className: calendar.employee.no.toString(),
+								editable:true,
+								color : '#00ff7f'
 							});
+						} else {
+							events.push({
+								id: calendar.no,
+								title: calendar.title,
+								start: calendar.startDate,
+								end: calendar.endDate,
+								className: calendar.employee.no.toString()
+								});
+						}
 					});
 					
 					callback(events);
