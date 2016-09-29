@@ -1,5 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<!-- Bootstrap Core JavaScript -->
+<link href="resources/bootstrap/css/simple-sidebar.css" rel="stylesheet">
+<script src="resources/bootstrap/js/bootstrap.min.js"></script>
 <style type="text/css">
 	#imgdiv {margin-top:10px; margin-bottom:10px;}
 	.emp {color: white}
@@ -61,8 +67,11 @@
        		<a >인사 <span class="caret"></span></a>
        		<ul class="bar">
        			<li><a href="">사원 조회</a></li>
-       			<li><a href="">사원 등록</a></li>
-       			<li><a href="notice.do">공지 사항</a></li>
+       			<li><a href="insertemp.do">사원 등록</a></li>
+	       			<c:url var="boardListURL" value="boardList.do">
+						<c:param name="pn" value="1" />
+					</c:url>
+       			<li><a href="${boardListURL }">공지 사항</a></li>
        			<li><a href="">회사 일정</a></li>
        			<li>
        				<a>지점 관리<span class="caret"></span></a>
@@ -84,7 +93,6 @@
        		<a href="">통계</a>		
        </li>
     </ul>
-    <div class="sidebar-nav-btn"></div>
 </div>
 <script type="text/javascript">
 $(function() {
@@ -92,15 +100,27 @@ $(function() {
 	$("ul.bar").hide();
 	$("ul.in-bar").hide();
 	$(".sidebar-nav li.list > a").click(function() {
-		console.log($(this).parent().find(".ul.bar").first());
 		$(this).parent().find("ul.bar").first().animate({
 			height: 'toggle'
 		});
+		var active = $(this).attr('class');
+		if(active == 'active') {
+			$(this).removeAttr('class');			
+		} else {
+			$(this).attr('class', 'active');
+		}
+		
 	});
 	$(".sidebar-nav li.list ul.bar a").click(function() {
 		$(this).parent().find("ul.in-bar").first().animate({
 			height: 'toggle'
 		});
+		var active = $(this).attr('class');
+		if(active == 'active') {
+			$(this).removeAttr('class');			
+		} else {
+			$(this).attr('class', 'active');
+		}
 	});
 	
 	$("#menu-toggle").click(function(e) {
