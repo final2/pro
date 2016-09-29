@@ -7,17 +7,23 @@
 <mapper namespace="com.finalproject.dao.CalendarDao">
 
 	<insert id="insertCalendar" parameterType="Calendar">
-		insert into calendar(no, title, start_date, end_date )
-		values(my_seq.nextval, #{title}, #{startDate}, #{endDate})
+		insert into calendar(no, title, start_date, end_date, employee_no )
+		values(my_seq.nextval, #{title}, #{startDate}, #{endDate}, #{employee.no})
 	</insert>
 	
 	<select id="getCalendarList" resultType="Calendar">
 		select 
-			no			as no,
-			title		as title,
-			start_date	as startDate,
-			end_date	as	endDate
-		from calendar
+			c.no			as no,
+			c.title			as title,
+			c.start_date	as startDate,
+			c.end_date		as endDate,
+			e.no			as "employee.no",
+			e.position		as "employee.position",
+			e.department	as "employee.dept"
+		from calendar c, employee e
+		where c.employee_no = e.no
+		and e.position = 'director'
+		or e.no = #{employee.no}
 	</select>
 	
 	<delete id="removeCalendar" parameterType="int">

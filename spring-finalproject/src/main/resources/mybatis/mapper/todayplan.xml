@@ -61,7 +61,7 @@
 					 no, todaywork_title, todaywork_contents, regdate, employee_no, successed
 			  from todaywork
 			  where employee_no = #{value}
-			  and to_char(regdate, 'yyyy-MM-dd') = to_char(#{regdate}, 'yyyy-MM-dd'))
+			  and to_char(regdate, 'yyyy-MM-dd') = to_char(sysdate, 'yyyy-MM-dd'))
 		where rank &lt;= 5
 	</select>
 </mapper>    
