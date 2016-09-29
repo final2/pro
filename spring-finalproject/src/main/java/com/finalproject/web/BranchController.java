@@ -76,12 +76,21 @@ public class BranchController {
 	@RequestMapping("/branch/orderupdate.do")
 	public String orderUpdate(@RequestParam(name="brno") int brno, @RequestParam(name="no") int no) {
 		
-		List<BranchOrderDetail> detailList = brService.getWaitingOrderDetail(brno);
+		BranchOrder order = brService.getBranchOrderByNo(no);
+		order.setIscart("Y");		
+		brService.updateBranchOrder(order);
+			
+		return "branch/order";
+	}
+	
+	@RequestMapping("/branch/invenupdate.do")
+	public String invenUpdate(@RequestParam(name="no") int no) {
+		
+		List<BranchOrderDetail> detailList = brService.getOrderDetailsByOrderNo(no);
 		
 		for (BranchOrderDetail d : detailList){
 			int productNo = d.getProduct().getNo();
 			BranchInventory inven = brService.getInventoryByProductNo(productNo);
-			System.out.println(inven.getQty());
 			if(inven.getProduct().getNo() == d.getProduct().getNo()) {
 				inven.setQty(inven.getQty() + d.getQty());
 				brService.updateInventory(inven);
@@ -97,9 +106,9 @@ public class BranchController {
 		}
 		
 		BranchOrder order = brService.getBranchOrderByNo(no);
-		order.setIscart("Y");		
+		order.setIscomplete("Y");		
 		brService.updateBranchOrder(order);
-			
+		
 		return "branch/order";
 	}
 

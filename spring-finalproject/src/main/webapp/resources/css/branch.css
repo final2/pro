@@ -101,6 +101,7 @@ body { font-family: 'Nanum Gothic', sans-serif; }
 #tab-1 .order-btn { text-align:right; }
 #tab-1 table { margin-top:20px; }
 #tab-1 table th { text-align:center; }
+#tab-1 table tfoot td { background-color:#efefef; font-weight:bold; }
 #tab-2 table { width:80%; margin:0 auto; }
 #tab-2 table th { text-align:center; }
 #tab-2 table td a { cursor:pointer; }
@@ -111,3 +112,4 @@ body { font-family: 'Nanum Gothic', sans-serif; }
 .modal-body p.order-number { width:200px; float:left; }
 .modal-body p.order-date { width:200px; float:left; }
 .modal-body #order-send-btn { float:right; margin-right:20px; }
+.modal-body table tfoot td { background-color:#efefef; font-weight:bold; }

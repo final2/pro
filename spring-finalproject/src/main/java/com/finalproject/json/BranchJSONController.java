@@ -152,6 +152,7 @@ public class BranchJSONController {
 		return brService.getAllInvenByBranchNo(brno);
 	}
 	
+	// 재고 검색 키워드 보내기
 	@RequestMapping(value="/inv/{brno}/key/{key}/q/{q}", method=RequestMethod.POST)
 	public List<BranchInventory> searchInvenByKeyword(@PathVariable("key") String key, 
 									@PathVariable("q") String q,
@@ -166,6 +167,7 @@ public class BranchJSONController {
 		return brService.getInvenByKeyword(map);
 	}
 	
+	// 재고 검색 키워드 받아서 조회하기
 	@RequestMapping(value="/inv/{brno}/key/{key}/q/{q}", method=RequestMethod.GET)
 	public List<BranchInventory> getInvenByKeyword(@PathVariable("key") String key, 
 									@PathVariable("q") String q,
@@ -180,9 +182,41 @@ public class BranchJSONController {
 		return brService.getInvenByKeyword(map);
 	}
 	
+	// 발주 내역 조회하기
 	@RequestMapping(value="/or/{brno}", method=RequestMethod.GET)
 	public List<BranchOrder> getOrdersByBranchNo(@PathVariable("brno") int brno) {
 		return brService.getOrdersByBranchNo(brno);
 	}
 	
+	// 발주 상세내역 조회하기
+	@RequestMapping(value="/or/d/{no}", method=RequestMethod.GET)
+	public List<BranchOrderDetail> getOrderDetailsByOrderNo(@PathVariable("no") int no) {
+		return brService.getOrderDetailsByOrderNo(no);
+	}
+	
+	@RequestMapping(value="/or/{brno}/d1/{date1}/d2/{date2}", method=RequestMethod.GET)
+	public List<BranchOrder> getOrdersByRegDate(@PathVariable("brno") int brno,
+												@PathVariable("date1") String date1,
+												@PathVariable("date2") String date2) {
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("branchNo", brno);
+		map.put("date1", date1);
+		map.put("date2", date2);
+		
+		return brService.getOrdersByRegDate(map);
+	}
+	
+	@RequestMapping(value="/or/{brno}/d1/{date1}/d2/{date2}", method=RequestMethod.POST)
+	public List<BranchOrder> searchOrderByRegDate(@PathVariable("brno") int brno,
+												@PathVariable("date1") String date1,
+												@PathVariable("date2") String date2) {
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("branchNo", brno);
+		map.put("date1", date1);
+		map.put("date2", date2);
+		
+		return brService.getOrdersByRegDate(map);
+	}
 }

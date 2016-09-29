@@ -282,4 +282,39 @@
 		and
 			iscart = 'Y'	
 	</select>
+	
+	<select id="getOrderDetailsByOrderNo" parameterType="int" resultType="com.finalproject.model.BranchOrderDetail">
+		select
+			A.no,
+			A.qty,
+			A.warehousein,
+			A.warehouseout,
+			A.order_no as "order.no",
+			A.product_no as "product.no",
+			B.name as "product.name",
+			B.price as "product.price"
+		from
+			br_order_details A, product B
+		where
+			A.product_no = B.no
+		and
+			A.order_no = #{value}
+	</select>
+	
+	<select id="getOrdersByRegDate" parameterType="map" resultType="BrOrder">
+		select 
+			no,
+			regdate,
+			note,
+			branch_no as "branch.no",
+			iscomplete,
+			iscart
+		from
+			br_orders
+		where
+			branch_no = #{branchNo}
+		and
+			regdate between to_date('${date1}','YY-MM-DD')-1
+			and to_date('${date2}', 'YY-MM-DD')+1
+	</select>
 </mapper>

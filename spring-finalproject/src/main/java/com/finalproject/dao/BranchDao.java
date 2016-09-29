@@ -42,4 +42,6 @@ public interface BranchDao {
 	
 	List<BranchInventory> getInvenByKeyword(Map<String, Object> map);
 	List<BranchOrder> getOrdersByBranchNo(int brno);
+	List<BranchOrderDetail> getOrderDetailsByOrderNo(int no);
+	List<BranchOrder> getOrdersByRegDate(Map<String, Object>map);
 }

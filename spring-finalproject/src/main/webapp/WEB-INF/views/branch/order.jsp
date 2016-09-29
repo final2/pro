@@ -21,6 +21,7 @@ $(function() {
 	// 발주 대기목록 가져오기
 	var refreshWaitingOrderList = function() {
 		var $tbody = $("#tab-1 tbody").empty();
+		var worsum = 0;
 		
 		$.ajax({
 			type:"GET",
@@ -38,8 +39,10 @@ $(function() {
 							+formatNumber(tr.product.price)+"</td><td>"
 							+formatNumber(sum)+"</td><td><input type='checkbox' name='ck"+no+"' value='"+tr.no+"' /></td></tr>");
 					orderNo = tr.order.no;
+					worsum+= sum;
 				})
 				$(".order-con").attr("id", orderNo);
+				$(".wor-sum").append(formatNumber(worsum));
 			}
 		});
 	}
@@ -102,7 +105,7 @@ $(function() {
 		
 	});
 	
-	// 발주 대기목록에서 전송하기 - 재고에 추가됨
+	// 발주 대기목록에서 전송하기 - isCart N -> Y 변경
 	$(".order-btn").on("click", "#send-btn", function(event) {
 		if ($(".order-con").attr("id") == 0) {
 			$(this).attr("disabled");
@@ -129,19 +132,19 @@ $(function() {
 				}
 				
 				var note = tr.note;
-				console.log(note)
 				if (tr.note == null) {
 					note = "";
 				}
 				
 				$tbody2.append("<tr><td class='regdate'>"+tr.regdate+"</td><td><a type='button' data-toggle='modal' data-target='#myModal' id='order-"+tr.no+"'>"
-					+tr.no+"</a></td><td>"+iscomplete+"</td><td>"
+					+tr.no+"</a></td><td class='is-complete'>"+iscomplete+"</td><td>"
 					+note+"</td></tr>");
 				
 			})
 		}
 	});
 	
+	// 발주번호 클릭시 발주 상세내역 조회하기
 	$("#tab-2").on("click", "a[id^='order-']", function() {
 		console.log($(this).attr("id"));
 		var no = $(this).attr("id").replace("order-", "");
@@ -151,6 +154,98 @@ $(function() {
 		
 		$(".order-number").append("발주번호: "+no);
 		$(".order-date").append("발주일자: "+$(this).parent().parent().find("td[class='regdate']").text());
+		
+		var iscomplete = $(this).parent().parent().find(".is-complete").text();
+		console.log(iscomplete);
+		
+		$.ajax({
+			type:"GET",
+			url:"/FinalProject/json/or/d/" + no,
+			dataType:"json",
+			success:function(result) {
+				var $tbody = $(".modal-body tbody").empty();
+				
+				var sum = 0;
+				var orsum = 0;
+				
+				$.each(result, function(index, tr) {
+					sum = tr.qty * tr.product.price;
+					$tbody.append("<tr><td>"+tr.product.no+"</td><td>"
+							+tr.product.name+"</td><td>"
+							+tr.qty+"</td><td>"
+							+formatNumber(tr.product.price)+"</td><td>"
+							+formatNumber(sum)+"</td></tr>");
+					orsum += sum;
+				});
+				
+				$(".or-sum").empty().append(formatNumber(orsum));
+				
+				if (iscomplete == '완료') {
+					$("#order-send-btn").hide();
+				} else {
+					$("#order-send-btn").show();
+					
+					// 발주 상세내역에서 전송하기 - 재고에 추가됨
+					$(".modal-body").on("click", "#order-send-btn", function(event) {
+						
+							window.location.href = "invenupdate.do?no="+ no;
+						
+					});
+					
+				}
+			}
+		});
+	});
+	
+	$("#tab-2 form").submit(function(event) {
+		event.preventDefault();
+		var $date1 = $("input[name='startdate']").val();
+		var $date2 = $("input[name='enddate']").val();
+		
+		if (!$date1 && !$date2) {
+			$("input[name='startdate']").focus();
+		} else if (!$date1) {
+			$("input[name='startdate']").focus();
+		} else if (!$date2) {
+			$("input[name='enddate']").focus();
+		} else if ($date1 && $date2) {
+			$.ajax({
+				type:"POST",
+				url:"/FinalProject/json/or/"+brno+"/d1/"+$date1+"/d2/" + $date2,
+				contentType:"application/json",
+				dataType:"json",
+				success:function(result){
+					// 날짜 검색이 이루어진 발주내역 가져오기
+					$.ajax({
+						type:"GET",
+						url:"/FinalProject/json/or/"+brno+"/d1/"+$date1+"/d2/" + $date2,
+						dataType:"json",
+						success:function(result) {
+							var $tbody2 = $("#tab-2 tbody").empty();
+							var iscomplete = "";
+							
+							$.each(result, function(index, tr) {
+								if (tr.iscomplete == 'Y') {
+									iscomplete = "완료";
+								} else {
+									iscomplete = "진행중"
+								}
+								
+								var note = tr.note;
+								if (tr.note == null) {
+									note = "";
+								}
+								
+								$tbody2.append("<tr><td class='regdate'>"+tr.regdate+"</td><td><a type='button' data-toggle='modal' data-target='#myModal' id='order-"+tr.no+"'>"
+									+tr.no+"</a></td><td class='is-complete'>"+iscomplete+"</td><td>"
+									+note+"</td></tr>");
+								
+							})
+						}
+					});
+				}
+			});
+		}
 	});
 });
 </script>
@@ -200,7 +295,7 @@ $(function() {
 								<th>제조사</th>
 								<th>수량</th>
 								<th>단가</th>
-								<th>총금액</th>
+								<th>금액</th>
 								<th><input type="checkbox" name="allcheck" /></th>
 							</tr>
 						</thead>
@@ -208,6 +303,13 @@ $(function() {
 						<tbody>
 							<!-- 발주 대기목록 -->
 						</tbody>
+						
+						<tfoot>
+							<tr>
+								<td colspan="3">금액 합계</td>
+								<td colspan="4" class="wor-sum"></td>
+							</tr>
+						</tfoot>
 					</table>
 				</div>
 				
@@ -218,7 +320,7 @@ $(function() {
 							<input type="date" name="startdate" class="form-control" /> - <input type="date" name="enddate" class="form-control" />
 						</div>
 						<div class="form-group">
-							<input type="submit" value="검색" name="keyword" class="btn btn-default btn-sm" />
+							<input type="submit" value="검색" id="search-date-btn" class="btn btn-default btn-sm" />
 						</div>
 					</form>
 					
@@ -269,6 +371,17 @@ $(function() {
 					      				<th>금액</th>
 					      			</tr>
 					      		</thead>
+					      		
+					      		<tbody>
+					      			<!-- 발주 상세내역 -->
+					      		</tbody>
+					      		
+					      		<tfoot>
+							<tr>
+								<td colspan="2">금액 합계</td>
+								<td colspan="3" class="or-sum"></td>
+							</tr>
+						</tfoot>
 					      	</table>
 					      </div>
 					      <div class="modal-footer">

@@ -126,4 +126,14 @@ public class BranchServiceImpl implements BranchService {
 		return branchDao.getOrdersByBranchNo(brno);
 	}
 
+	@Override
+	public List<BranchOrderDetail> getOrderDetailsByOrderNo(int no) {
+		return branchDao.getOrderDetailsByOrderNo(no);
+	}
+
+	@Override
+	public List<BranchOrder> getOrdersByRegDate(Map<String, Object> map) {
+		return branchDao.getOrdersByRegDate(map);
+	}
+
 }
