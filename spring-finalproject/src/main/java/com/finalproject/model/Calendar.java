@@ -12,6 +12,14 @@ public class Calendar {
 	private Date startDate;
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
 	private Date endDate;
+	private Employee employee;
+	
+	public Employee getEmployee() {
+		return employee;
+	}
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
+	}
 	public int getNo() {
 		return no;
 	}
