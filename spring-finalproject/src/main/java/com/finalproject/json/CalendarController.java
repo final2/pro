@@ -28,14 +28,13 @@ public class CalendarController {
 	
 	@RequestMapping(value="/calendar/add", method=RequestMethod.POST) 
 	public @ResponseBody List<Calendar> addCalendarPlan(@RequestBody Calendar calendar) {
-		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@"+calendar.getTitle());
-		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@"+calendar.getEmployee().getNo());
 		calendarDao.insertCalendar(calendar);
 		return calendarDao.getCalendarList(calendar.getEmployee().getNo());
 	}
 	
 	@RequestMapping(value="/calendar/delete/{no}", method=RequestMethod.POST)
 	public @ResponseBody void removeCalendarPlan(@PathVariable int no) {
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + no);
 		calendarDao.removeCalendar(no);
 	}
 	
