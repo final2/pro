@@ -5,8 +5,8 @@ import java.util.Date;
 public class Message {
 
 	private int no;
-	private String from;
-	private String to;
+	private int from;
+	private int to;
 	private String contents;
 	private String receiving;
 	private Date regdate;
@@ -35,17 +35,18 @@ public class Message {
 	public void setRegdate(Date regdate) {
 		this.regdate = regdate;
 	}
-	public String getFrom() {
+	public int getFrom() {
 		return from;
 	}
-	public void setFrom(String from) {
+	public void setFrom(int from) {
 		this.from = from;
 	}
-	public String getTo() {
+	public int getTo() {
 		return to;
 	}
-	public void setTo(String to) {
+	public void setTo(int to) {
 		this.to = to;
 	}
+
 
 }

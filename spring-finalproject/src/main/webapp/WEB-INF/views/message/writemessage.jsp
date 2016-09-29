@@ -2,17 +2,39 @@
     pageEncoding="UTF-8"%>
 <script type="text/javascript">
 $(function() {
-	$('#send-form').submit(function(){
+	$('#send-form').submit(function(event){
+
+		
+		event.preventDefault();
+		
+		
+		var send = document.insert;
+		var obj = new Object();
+		var loginUserNo = ${LoginUser.no};
+		obj.to = send.to.value;
+		obj.contents = send.contents.value;
+		obj.from = loginUserNo;
+		
+		$ajax({
+			type:"POST",
+			url:"/FinalProject/json/insertmessage/",
+			data:obj,
+			dataType:"Object",
+			success:function(result){
+				alert("성공적으로 보냈습니다.")
+			}
+		}); 
+		
+		return false; 
+	});
+	$('#reset').click(function(){
 		$('#bodyreceive').hide();
 		$('#bodysend').hide();
 		$('#bodywritemessage').hide();
 		$('#bodylist').show();
 		
-		// ajax
-		
-		return false;
 	});
-	$('#reset').click(function(){
+		$('#selectemp').click(function(){
 		$('#bodyreceive').hide();
 		$('#bodysend').hide();
 		$('#bodywritemessage').hide();
@@ -22,9 +44,10 @@ $(function() {
 })
 </script>
 		<div class="well">
-			<form role="form" id="send-form" method="post" action="post.do">
-				<div class="form-group">
+			<form role="form" name="insert" id="send-form" method="post" action="post.do">
+				<div class="form-group" id="receiveemp">
 					<label>받는사람</label>
+					<button class="btn btn-default" type="reset" id="selectemp" style="margin-left: 385px;">사원찾기</button>
 					<input type="text" class="form-control" name="to" />
 				</div>
 				<div class="form-group">

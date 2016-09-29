@@ -2,112 +2,38 @@
     pageEncoding="UTF-8"%>
 <script type="text/javascript">
 $(function() {
+	/* 초기화면 */
 	$('#bodyreceive').hide();
 	$('#bodysend').hide();
 	$('#bodywritemessage').hide();
 	$('#bodymessagedetail').hide();
 	
-	$.ajax({
-		type:"GET",
-		url:"/FinalProject/json/getemplist/",
-		dataType:"json",
-		success:function(result) {
-			var $tbody = $('#employeeList');
-			$tbody.empty();
-			$.each(result, function(index, emp) {
-				$tbody.append(
-					"<tr>"+
-						"<td class='text-center' style='vertical-align:middle'>"+
-							"<a href='#'><img border='0' height='80' width='60' alt='hong' src='resources/image/"+emp.photo+"'></a>"+
-						"</td>"+
-						"<td class='text-center' style='vertical-align:middle'><h4>"+emp.name+"</h4></td>"+
-						"<td class='text-center' style='vertical-align:middle'><h4>"+emp.position+".</h4></td>"+
-						"<td class='text-center' style='vertical-align:middle'><button type='button' class='btn btn-default'>쪽지보내기</button></td>"+
-					"</tr>"
-				);
-			});
-		}
-	});
+	/* 사원목록 클릭시 */
 	$('#list').click(function(){
 		$('#bodyreceive').hide();
 		$('#bodysend').hide();
 		$('#bodywritemessage').hide();
 		$('#bodymessagedetail').hide();
 		$('#bodylist').show();
-
-		$.ajax({
-			type:"GET",
-			url:"/FinalProject/json/getemplist/",
-			dataType:"json",
-			success:function(result) {
-				var $tbody = $('#employeeList');
-				$tbody.empty();
-				$.each(result, function(index, emp) {
-					$tbody.append(
-						"<tr>"+
-							"<td class='text-center' style='vertical-align:middle'>"+
-								"<a href='#'><img border='0' height='80' width='60' alt='hong' src='resources/image/"+emp.photo+"'></a>"+
-							"</td>"+
-							"<td class='text-center' style='vertical-align:middle'><h4>"+emp.name+"</h4></td>"+
-							"<td class='text-center' style='vertical-align:middle'><h4>"+emp.position+".</h4></td>"+
-							"<td class='text-center' style='vertical-align:middle'><button type='button' class='btn btn-default'>쪽지보내기</button></td>"+
-						"</tr>"
-					);
-				});
-			}
-		});
 	});
+	
+	/* 받은쪽지 클릭시 */
 	$('#receive').click(function(){
 		$('#bodylist').hide();
 		$('#bodysend').hide();
 		$('#bodywritemessage').hide();
 		$('#bodymessagedetail').hide();
 		$('#bodyreceive').show();
-		$.ajax({
-			type:"GET",
-			url:"/FinalProject/json/getreceivelist/",
-			dataType:"json",
-			success:function(result) {
-				var $tbody = $('#recivelist');
-				$tbody.empty();
-				$.each(result, function(index, rm) {
-					$tbody.append(
-						"<tr>"+
-						"<td class='text-center' style='vertical-align:middle'><span class='glyphicon glyphicon-envelope'></span></td>" +
-						"<td class='text-center' style='vertical-align:middle'><h4>"+rm.from+"</h4></td>"+
-						"<td class='text-center' style=vertical-align:middle'><p>"+rm.contents+".</p></td>"+
-						"<td class='text-center' style='vertical-align:middle'><p>"+ +"</p><p>"+ +"</p></td>"+
-						"</tr>"
-					);
-				});
-			}
-		});
+		
 	});
+	/* 보낸쪽지 클릭시 */
 	$('#send').click(function(){
 		$('#bodywritemessage').hide();
 		$('#bodylist').hide();
 		$('#bodyreceive').hide();
 		$('#bodymessagedetail').hide();
 		$('#bodysend').show();
-		$.ajax({
-			type:"GET",
-			url:"/FinalProject/json/getsendlist/",
-			dataType:"json",
-			success:function(result) {
-				var $tbody = $('#sendlist');
-				$tbody.empty();
-				$.each(result, function(index, rm) {
-					$tbody.append(
-						"<tr>"+
-						"<td class='text-center' style='vertical-align:middle'><span class='glyphicon glyphicon-envelope'></span></td>" +
-						"<td class='text-center' style='vertical-align:middle'><h4>"+rm.from+"</h4></td>"+
-						"<td class='text-center' style=vertical-align:middle'><p>"+rm.contents+".</p></td>"+
-						"<td class='text-center' style='vertical-align:middle'><p>"+ +"</p><p>"+ +"</p></td>"+
-						"</tr>"
-					);
-				});
-			}
-		});
+		
 	});
 	$('#writemessage').click(function(){
 		$('#bodylist').hide();
@@ -122,7 +48,7 @@ $(function() {
 			<div class="modal-content">
 				<!-- 팝업창 헤더(메뉴바) -->
 				<div class="modal-header">
-					<nav class="navbar navbar-default" role="navigation">
+					<nav class="navbar navbar-inverse" role="navigation">
 						<div class="container-fluid">
 					       	<div class="navbar-header">
 					    		<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-1">
@@ -131,8 +57,9 @@ $(function() {
 					    			<span class="icon-bar"></span>
 					    			<span class="icon-bar"></span>
 					    		</button>
-					    		<a class="navbar-brand" href="#"><span style="width:100%; height:100%" class="glyphicon glyphicon-user"></span></a>
-							</div>
+					    		<a class="navbar-brand" href="#"><img alt="Brand" height="30" width="60" src="/FinalProject/resources/image/logo2.png"></a>
+					    		
+					     	  </div>
 					
 						    <!-- Collect the nav links, forms, and other content for toggling -->
 							<div class="navbar-collapse collapse" id="navbar-collapse-1">
@@ -166,7 +93,7 @@ $(function() {
 	     		</div>
 	   			<!-- 쪽지함 푸터 -->
 	     		<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-inverse" data-dismiss="modal">Close</button>
 	      		</div>
 	      	</div>
 		</div>

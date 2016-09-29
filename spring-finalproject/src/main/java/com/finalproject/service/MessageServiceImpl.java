@@ -22,4 +22,18 @@ public class MessageServiceImpl implements MessageService{
 	public List<Employee> getAllEmployeeList() {
 		return messageDao.getEmployeeList();
 	}
+
+	@Override
+	public Employee getEmployeeByNo(int no) {
+		return messageDao.getEmp(no);
+	}
+
+	@Override
+	public Message getMessageByNo(int no) {
+		// TODO Auto-generated method stub
+		return messageDao.getMessagesByNo(no);
+	}
+	public void insertMessage(Message message){
+		messageDao.addMessage(message);
+	}
 }

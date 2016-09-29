@@ -9,4 +9,7 @@ public interface MessageService {
 	
 	List<Message> getMessageList();
 	List<Employee> getAllEmployeeList();
+	Employee getEmployeeByNo(int no);
+	Message getMessageByNo(int no);
+	void insertMessage(Message message);
 }
