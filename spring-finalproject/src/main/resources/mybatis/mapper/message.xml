@@ -6,13 +6,25 @@
 	<select id="getReceiveMessages" resultType="Message">
 		select
 			no, 
-			from_name	as	"from", 
-			to_name		as	"to", 
+			from_no 	as	"from", 
+			to_no		as	"to", 
 			contents, 
 			receiving, 
 			regdate
 		from
 			messenger
+	</select>
+	<select id="getMessagesByNo" parameterType="int" resultType="Message">
+		select
+			no, 
+			from_no 	as	"from", 
+			to_no		as	"to", 
+			contents, 
+			receiving, 
+			regdate
+		from
+			messenger
+		where no=#{value}
 	</select>
 	<select id="getEmployeeList" resultType="Employee">
 		select 
@@ -33,6 +45,30 @@
 		from 
 			Employee
 	</select>
+	<select id="getEmp" parameterType="int" resultType="Employee">
+		select 
+			no, 
+			name, 
+			phone, 
+			email, 
+			address, 
+			birth, 
+			department	as	"dept", 
+			position, 
+			salary, 
+			photo, 
+			hiredate, 
+			password, 
+			retiredate, 
+			remarks 
+		from 
+			Employee
+		where no=#{value}
+	</select>
+	<insert id="addMessage" parameterType="Message">
+		insert into messenger (no, from_no, to_no, contents, regdate)
+		values (my_seq.nextval, #{from}, #{to}, #{contents}, sysdate);
+	</insert>
 </mapper>
 
 
