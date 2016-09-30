@@ -68,7 +68,7 @@ $(function() {
 	// 재고 - 검색
 	$("#inven-search").change(function() {
 		var k = $("#inven-search option:selected").val();
-		console.log(k)
+		
 		$("form").submit(function(event) {
 			event.preventDefault();
 			
@@ -85,24 +85,47 @@ $(function() {
 				success:function(result) {					
 					$("tbody").empty();
 					
-					$.ajax({
-						type:"GET",
-						url:"/FinalProject/json/inv/" + brno + "/key/" + k + "/q/" + $q,
-						dataType:"json",
-						success:function(result) {
-							$.each(result, function(index, tr) {
-								var no = index + 1;
-								
-								$tbody.append("<tr><td>"+no+"</td><td>"+tr.product.name+"</td><td>"+tr.qty
-										+"</td><td><input type='hidden' value='"+tr.product.no+"' />"
-										+"<input type='number' min='0' value='0' name='qty-"+no+"' /></td></tr>");
-								
-								if ( tr.qty < 20) {
-									$("input[name='qty-"+no+"']").parent().addClass("red").siblings().addClass("red");
-								}
-							})
-						}
-					});
+					console.log(k);
+					if (k == 'pt') {
+						console.log("본사");
+						$.ajax({
+							type:"GET",
+							url:"/FinalProject/json/pt/",
+							dataType:"json",
+							success:function(result) {
+								$.each(result, function(index, tr) {
+									var no = index + 1;
+									
+									$tbody.append("<tr><td>"+no+"</td><td>"
+											+tr.name+"</td><td></td><td><input type='hidden' value='"+tr.no+"' />"
+											+"<input type='number' min='0' value='0' name='qty-"+no+"' /></td></tr>");
+									
+									if ( tr.qty < 20) {
+										$("input[name='qty-"+no+"']").parent().addClass("red").siblings().addClass("red");
+									}
+								})
+							}
+						})
+					} else {
+						$.ajax({
+							type:"GET",
+							url:"/FinalProject/json/inv/" + brno + "/key/" + k + "/q/" + $q,
+							dataType:"json",
+							success:function(result) {
+								$.each(result, function(index, tr) {
+									var no = index + 1;
+									
+									$tbody.append("<tr><td>"+no+"</td><td>"+tr.product.name+"</td><td>"+tr.qty
+											+"</td><td><input type='hidden' value='"+tr.product.no+"' />"
+											+"<input type='number' min='0' value='0' name='qty-"+no+"' /></td></tr>");
+									
+									if ( tr.qty < 20) {
+										$("input[name='qty-"+no+"']").parent().addClass("red").siblings().addClass("red");
+									}
+								})
+							}
+						});
+					}
 				}
 			})
 		})
@@ -132,6 +155,7 @@ $(function() {
 						<option value="name">상품명</option>
 						<option value="qty">수량</option>
 						<option value="cat">소분류명</option>
+						<option value="pt">본사물품</option>
 					</select>
 				</div>
 				

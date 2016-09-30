@@ -41,14 +41,12 @@
 	
 
 	</style>
-<title >Welcome BigStore</title>
-
+<title>Welcome BigStore</title>
+<link rel="BigStore" href="resources/image/bs2.ico" />
 <script type="text/javascript">
 $(function() {
-	// 첫화면에 1+1 상품 보이기
 	eventProduct(1);
-
-	/* 서브메뉴 선택 */	
+	
 	$("#leftMenu a").click(function() {
 				
 		$(this).siblings().find("a").removeClass("active");
@@ -61,11 +59,10 @@ $(function() {
 		var code = evcode || "1";
 		$.ajax({
 			type:"GET",
-			url:"main2.do?",
+			url:"main2.do",
 			data: {no:code},		// 서버로 전송하는 데이타
 			dateType:"json",
 			success:function(result){
-				console.log(result);
 	 			var $ul=$('#eventList');
 				$ul.empty();
 				
@@ -77,7 +74,7 @@ $(function() {
 			}
 		});
 	}
-	
+	 /* 셀렉트 옵션 선택시 페이지 이동 */
 	$("select").change(function() {
 		
 	});
@@ -88,7 +85,8 @@ $(function() {
 <body id="mypage">
 <div id="mainview" >
 	<div id="header" class="w3-display-container">
-		<nav class="w3-top" style="position:static;" >
+	<%@ include file="navbar.jsp" %>
+		<!-- <nav class="w3-top" style="position:static;" >
 			 <ul class="w3-navbar w3-theme-d2 w3-left-align w3-large" style="height:100px; padding:7px">
 			    <li class="w3-hide-medium w3-hide-large w3-opennav w3-right">
 			      <a class="w3-hover-white w3-large w3-theme-d2" href="javascript:void(0);" onclick="openNav()"><i class="fa fa-bars"></i></a>
@@ -101,7 +99,7 @@ $(function() {
 			  <li class="w3-hide-small w3-right"><a href="#" class="w3-hover-teal" title="Search"><i class="fa fa-search"></i></a></li>
 			 </ul>
 			
-			<!-- Navbar on small screens -->
+			Navbar on small screens
 			<div id="navDemo" class="w3-hide w3-hide-large w3-hide-medium w3-top" style="margin-top:43px;">
 			  <ul class="w3-navbar w3-left-align w3-large w3-theme">
 			    <li><a href="intro.do">회사소개</a></li>
@@ -111,7 +109,7 @@ $(function() {
 			    <div class="w3-dropdown-content w3-light-grey w3-card-4">
 			      <a href="store.do?id=lotto">Lotto판매</a>
 			      <a href="store.do">ATM</a>
-			<!--       <a href="parcelService.do">편의서비스</a> -->
+			      <a href="parcelService.do">편의서비스</a>
 			      <a href="store.do">택배서비스</a>
 			      <a href="store.do">직접조리식품</a>
 			    </div>
@@ -127,7 +125,7 @@ $(function() {
 			      </li>
 			  </ul>
 			</div>
-			</nav>
+			</nav> -->
 	</div>
 		
 	<div id="content">
@@ -140,17 +138,17 @@ $(function() {
 	    <div class="w3-col" style="width:20%;min-height:300px;max-height:600px;">
 	         <nav id="leftMenu" class="w3-sidenav w3-teal w3-card-2 w3-xlarge" style="width:200px;height:300px;position:static!important">
 	              <!-- <a href="oneplus.do?no=1" style="margin-top:10px;" >1+1상품</a> -->
-	              <a id="1" href="#" style="margin-top:10px;" >1+1상품</a>
-	              <a id="2" href="#" style="margin-top:10px;">2+1상품</a>
-	              <a id="3" href="#" style="margin-top:10px;">덤증정상품</a>
-	              <a id="9" href="#" style="margin-top:10px;">선물추첨상품</a>
+	              <a id="1" href="#" style="margin:6px;">1+1상품</a>
+	              <a id="2" href="#" style="margin:6px;">2+1상품</a>
+	              <a id="3" href="#" style="margin:6px;">덤증정상품</a>
+	              <a id="9" href="#" style="margin:6px;">선물추첨상품</a>
 	         </nav>
 	    </div>
 	<!-- 좌측메뉴바 끝-->
 	
 	<!-- 상단메뉴아래 사이드 메뉴와 제품 이미지 나열예정 jsp로 분리예정 -->
-	    <div class="w3-rest" style="width:80%;min-height:300px;max-height:300px;overflow:auto;">
-	        <div class="w3-display-container  ">
+	    <div class="w3-rest" >
+	        <div class="w3-display-container" style="width:100%;min-height:300px;max-height:300px;overflow:auto;">
 				<!-- 이벤트제품들이 뿌려질 위치 -->
 	        	<ul id="eventList" >
 	        	</ul>
@@ -161,31 +159,59 @@ $(function() {
 	
 		<!-- 검색창 -->
 		<div class="w3-row-padding w3-center w3-padding-10 w3-panel w3-padding-xlarge">
-		    <div class="w3-half" >
+		    
+		    <!--  검색창  -->
+<%-- 		<div class="w3-half row text-center">
+			<form id="searchform" class="form-inline" method="get" action="list.do">
+				<input type="hidden" name="pno" value="${navi.pageNo }" />
+				<div class="form-group">
+					<label class="sr-only" for="opt"></label>
+					<select class="form-control" name="opt" id="opt">
+						<option value="name"  ${param.opt eq 'name'? 'selected=selected' : ''}> 지점명</option>
+						<option value="address" ${param.opt eq 'address'? 'selected=selected' : ''}> 주소</option>
+					</select>
+				</div>
+				<div class="form-group">
+					<label class="sr-only" for="keyword"></label>
+					<input type="text" class="form-control" name="keyword" id="keyword" value="${param.keyword }">
+				</div>
+				<button class="btn  btn-primary">조회</button>
+			</form>
+		</div>
+		    
+		    
+		    
+		     --%>
+		    
+		    
+		    <!-- 검색 기존 -->
+		     <div class="w3-half" >
 		      <ul class="w3-ul w3-border w3-hover-shadow " style="max-width:480px;">
+		      
 		        <li class="w3-theme">
 		          <p class="w3-xlarge">지점검색</p>
 		        </li>
 		       <li class="w3-padding-1"><input class="w3-input w3-border w3-round-large" type="text" /></li>
 		       <li><button class="w3-btn w3-teal w3-padding-large" ><i class="fa fa-check"></i> 검색</button></li>
 		      </ul>
-		    </div>
-		
-		    <div class="w3-half  " >
+		    </div> 
+		    
+<!-- 서비스유형별검색 선택창 -->		
+ 		    <div class="w3-half  " >
 		      <ul class="w3-ul w3-border w3-hover-shadow " style="max-width:480px;">
 		        <li class="w3-theme-l2">
 		          <p class="w3-xlarge">서비스유형별검색</p>
 		        </li>
-		          <select class="w3-select" name="option">
+		          <select class="w3-select" name="option" onchange="location.href=this.value">
 		            <option value="" disabled selected>선택하세요</option>
-		            <option value="LOTTO">Lotto판매</option>
-		            <option value="ATM">ATM</option>
-		            <option value="PARCELSERVICE">택배서비스</option>
-		            <option value="FRESHFOOD">직접조리식품</option>
+		            <option value=""id="LOTTO">Lotto판매</option>
+		            <option value=""id="ATM">ATM</option>
+		            <option value=""id="PARCELSERVICE">택배서비스</option>
+		            <option value=""id="FRESHFOOD">직접조리식품</option>
 		          </select>
 		      </ul>
-		    </div>
-		    </div>
+		    </div> 
+		</div>
 	</div>
 		<!-- footer -->
 	<div id="footer">

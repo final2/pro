@@ -3,10 +3,13 @@ package com.finalproject.service;
 import java.util.List;
 import java.util.Map;
 
+import com.finalproject.model.Branch;
 import com.finalproject.model.BranchEmp;
 import com.finalproject.model.BranchInventory;
 import com.finalproject.model.BranchOrder;
 import com.finalproject.model.BranchOrderDetail;
+import com.finalproject.model.BranchSales;
+import com.finalproject.model.BranchSalesDetail;
 import com.finalproject.model.LargeCategory;
 import com.finalproject.model.Product;
 import com.finalproject.model.SmallCategory;
@@ -18,12 +21,16 @@ public interface BranchService {
 
 	// 대분류 조회하기
 	List<LargeCategory> getAllLargeCats();
+	List<LargeCategory> getAllLargeCatsByBranch(int brno);
 	
 	// 대분류 번호로 소분류 조회하기
 	List<SmallCategory> getSmallCatsByLargeNo(int no);
 	
 	// 소분류 번호로 물품 조회하기
 	List<Product> getProductsBySmallNo(int no);
+	
+	// 물품번호로 재고조회하기
+	List<BranchInventory> getBranchInvenByProductNo(Map<String, Object> map);
 
 	// 지점 발주대기 주문 상세 조회하기
 	List<BranchOrderDetail> getWaitingOrderDetail(int no);
@@ -57,6 +64,8 @@ public interface BranchService {
 	
 	Product getProductByNo(int no);
 	
+	List<Product> getAllProductsFromCompany();
+	
 	BranchOrder getBranchOrderByIsCartNo(int no);
 	
 	List<BranchInventory> getInvenByKeyword(Map<String, Object> map);
@@ -66,4 +75,18 @@ public interface BranchService {
 	List<BranchOrderDetail> getOrderDetailsByOrderNo(int no);
 	
 	List<BranchOrder> getOrdersByRegDate(Map<String, Object>map);
+	
+	void addBranchSales(BranchSales sales);
+	
+	void addBranchSalesDetail(BranchSalesDetail salesDetail);
+	
+	BranchSales getBranchSalesByNotIsSaled(Map<String, Object> map);
+	
+	List<BranchSalesDetail> getBranchSalesDetailBySalesNo(int no);
+	
+	Branch getBranchByNo(int brno);
+	
+	BranchEmp getBrEmpByNo(int empno);
+	
+	void updateBranchSalesDetail(BranchSalesDetail salesDetail);
 }
