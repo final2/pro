@@ -18,7 +18,7 @@
 	<div id="page-context-wrapper">
 	
 		<div class="container" style="margin-top:10px">
-			<h1>발주 상세 정보</h1>
+			<h1>발주내용 상세 정보</h1>
 			<hr>
 			
 			<table class="table table-bordered" >

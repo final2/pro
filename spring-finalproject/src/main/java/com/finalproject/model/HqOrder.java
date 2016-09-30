@@ -9,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 public class HqOrder {
 	
 	private int no;
-	private List<Client> client;
+	private int clientNo;
 	private String confirm;
 	@JsonFormat(shape=Shape.STRING, pattern="yyyy-MM-dd")
 	private Date regdate;
@@ -20,11 +20,11 @@ public class HqOrder {
 	public void setNo(int no) {
 		this.no = no;
 	}
-	public List<Client> getClient() {
-		return client;
+	public int getClientNo() {
+		return clientNo;
 	}
-	public void setClient(List<Client> client) {
-		this.client = client;
+	public void setClientNo(int clientNo) {
+		this.clientNo = clientNo;
 	}
 	public String getConfirm() {
 		return confirm;

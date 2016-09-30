@@ -65,7 +65,7 @@ th,td {text-align:center;}
 						</c:when>
 						<c:otherwise>
 							<c:url var="nextClientListURL" value="clientList.do">
-								<c:param name="pn" value="${param.pn - 1 }" />
+								<c:param name="pn" value="${param.pn + 1 }" />
 							</c:url>
 							<li><a href="${nextClientListURL }">&lt;</a></li>
 						</c:otherwise>
@@ -89,7 +89,7 @@ th,td {text-align:center;}
 						</c:when>
 						<c:otherwise>
 							<c:url var="preClientList" value="clientList.do">
-								<c:param name="pn" value="${param.pn + 1}" />
+								<c:param name="pn" value="${param.pn - 1}" />
 							</c:url>
 							<li><a href="${preClientList }">></a></li>
 						</c:otherwise>

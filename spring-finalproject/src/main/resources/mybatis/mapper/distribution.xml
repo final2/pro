@@ -63,20 +63,23 @@
 	</update> 
 	
 	<!-- 게시글 총 수 불러오기 -->
-	<select id="getTotalClient" resultType="PV">
+	<select id="getTotalClient" resultType="int">
 		select 
-			count(*) as boardTotalNo  
+			count(*)  
 		from client
 	</select>
 	
 	<!-- 페이지당 리스트 불러오기 -->
 	<select id="getBeginEndClients" parameterType="PV" resultType="Client">
 		select
-			rank, no as no, name as name, isAdmit as isAdmit
+			rank,
+			no 	as no, 
+			name as name, 
+			isAdmit 	as isAdmit
 		from (select row_number() OVER(order by no desc) as rank, no, name, isAdmit
 			  from client
 			  order by rank)
-		where rank >= #{beginBoardNo} and rank &lt;= #{endBoardNo}
+		where rank >= #{beginIndex} and rank &lt;= #{endIndex}
 	</select>
 	
 <!-- 발주 ======================================================================================================= -->
