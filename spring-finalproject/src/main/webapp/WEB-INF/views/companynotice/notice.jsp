@@ -64,10 +64,7 @@ $(function() {
 						<thead>
 							<tr>
 								<th><h3>공지사항</h3></th>
-								<c:url var="boardListURL" value="boardList.do">
-									<c:param name="pn" value="1" />
-								</c:url>
-								<td><a href="${boardListURL }" class="pull-right">더보기</a></td>
+								<td><a href="boardList.do?pn=1" class="pull-right">더보기</a></td>
 							</tr>
 							<tr>
 								<th style="text-align:center">제목</th>

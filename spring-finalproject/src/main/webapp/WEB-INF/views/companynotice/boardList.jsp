@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<c:set var="current_page" value="boardList" />
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -71,7 +72,7 @@ ul.pagination li a:hover:not(.active) {background-color: #ddd;}
 					</thead>
 					<tbody>
 						<!-- 반복 -->
-						<c:forEach begin="${pageNo.beginBoardNo }" end="${pageNo.endBoardNo }" var="board" items="${boardList}">
+						<c:forEach begin="${pageVo.beginIndex }" end="${pageVo.endIndex}" var="board" items="${boardList}">
 							<!-- detail 들어갈때 보내는 전송값 -->
 							<c:url var="detailURL" value="boardDetail.do">
 								<c:param name="no" value="${board.no }" />
@@ -93,41 +94,30 @@ ul.pagination li a:hover:not(.active) {background-color: #ddd;}
 			</c:if>
 			<div class="text-center"> 
 				<ul class="pagination">
-				<c:choose>
-					<c:when test="${param.pn == pageNo.beginPageNo}">				
-						<li><a class="disabled">❮</a></li>
-					</c:when>
-					<c:otherwise>
-						<c:url var="nextBoardListURL" value="boardList.do">
-							<c:param name="pn" value="${param.pn + 1 }" />
-						</c:url>
-						<li><a href="${nextBoardListURL }">❮</a></li>					
-					</c:otherwise>				
-				</c:choose>
-				<c:forEach begin="${pageNo.beginPageNo }" end="${pageNo.endPageNo }" varStatus="status">
-					<c:url var="boardListURL" value="boardList.do">
-						<c:param name="pn" value="${status.count }" />
-					</c:url>
+				<c:if test="${pageVo.pageNo gt 1 }">
+					<li>
+						<a href="boardList.do?pn=${pageVo.pageNo - 1 }" aria-label="Previous">
+							<span aria-hidden="true">&laquo;</span>
+						</a>
+					</li>
+				</c:if>
+				<c:forEach var="num" begin="${pageVo.beginPage }" end="${pageVo.endPage }">
 					<c:choose>
-						<c:when test="${param.pn == status.count }">
-							<li><a href="${boardListURL }" class="active">${status.count }</a></li>				
+						<c:when test="${pageVo.pageNo eq num }">
+							<li><a class="active" href="boardList.do?pn=${num }">${num }</a></li>
 						</c:when>
-						<c:otherwise>
-							<li><a href="${boardListURL }" >${status.count }</a></li>										
+						<c:otherwise>				
+							<li><a href="boardList.do?pn=${num }">${num }</a></li>
 						</c:otherwise>
 					</c:choose>
 				</c:forEach>
-				<c:choose>
-					<c:when test="${param.pn == pageNo.endPageNo}">
-						<li><a class="disabled">❯</a></li>
-					</c:when>
-					<c:otherwise>
-						<c:url var="preBoardList" value="boardList.do">
-							<c:param name="pn" value="${param.pn - 1}" />
-						</c:url>
-						<li><a href="${preBoardList }">❯</a></li>
-					</c:otherwise>
-				</c:choose>
+				<c:if test="${pageVo.pageNo lt pageVo.totalPages }" >
+					<li>
+						<a href="boardList.do?pn=${pageVo.pageNo + 1 }" aria-label="Next">
+							<span aria-hidden="true">&raquo;</span>
+						</a>
+					</li>
+				</c:if>
 				</ul>
 			</div>
 		</div>

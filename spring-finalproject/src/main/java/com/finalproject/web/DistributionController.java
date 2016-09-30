@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.finalproject.model.Client;
 import com.finalproject.model.ClientDetail;
+import com.finalproject.model.NoticeBoard;
+import com.finalproject.model.PageVo;
 import com.finalproject.model.Product;
 import com.finalproject.service.DistributionService;
 
@@ -34,13 +36,33 @@ public class DistributionController {
 	
 	// 거래처 리스트 페이지
 	@RequestMapping(value="/clientList.do", method=RequestMethod.GET)
-	public String getBeginEndClients(int pn, Model model) {
+	public String getBeginEndClients(@RequestParam(name="pn", required=false, defaultValue="1") int pn, Model model) {
+		if (pn < 1) {
+			return "companydistribution/clientList?pn=1";		
+		}
+		int rows = 10;
+		int pages = 5;
+		int beginIndex = (pn - 1)* rows + 1;
+		int endIndex = pn*rows;
 		
-		Map<String, Object> map = distributionService.getBeginEndClients(pn);
-		model.addAttribute("clientList", map.get("BeginEndClientList"));
-		model.addAttribute("pageNo", map.get("PageNo"));
+		// 전체 공지사항 조회하기
+		int totalBoards = distributionService.getTotalClient(pn);
+		// 페이지 객체 생성하기
+		PageVo pageVo = new PageVo(rows, pages, pn, totalBoards);
+		pageVo.setBeginIndex(beginIndex);
+		pageVo.setEndIndex(endIndex);
 		
-		return "companydistribution/clientList";
+		if(pn > pageVo.getTotalPages()) {			
+			return "companynotice/clientList?pn=" + pageVo.getTotalPages();
+		}
+		
+		List<Client> clients = distributionService.getBeginEndClients(pageVo);
+		
+		model.addAttribute("clientList", clients);
+		model.addAttribute("pageVo", pageVo);
+		
+		return "companynotice/clientList";
+		
 	}
 	
 	// 거래처 상세정보 페이지

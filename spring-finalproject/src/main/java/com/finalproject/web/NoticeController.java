@@ -58,9 +58,9 @@ public class NoticeController {
 		int pages = 5;
 		int beginIndex = (pn - 1)* rows + 1;
 		int endIndex = pn*rows;
-		
-		// 전체 공지사항 조회하기
+		// 전체 공지사항 수 조회하기
 		int totalBoards = noticeService.getTotalBoard(pn);
+		
 		// 페이지 객체 생성하기
 		PageVo pageVo = new PageVo(rows, pages, pn, totalBoards);
 		pageVo.setBeginIndex(beginIndex);
@@ -80,7 +80,20 @@ public class NoticeController {
 	
 	// 공지사항 디테일
 	@RequestMapping("/boardDetail.do")
-	public String getBoardDetail(@RequestParam(name="no") int no, Model model) {
+	public String getBoardDetail(int no, int pn, Model model) {
+		
+		int rows = 10;
+		int pages = 5;
+		int beginIndex = (pn - 1)* rows + 1;
+		int endIndex = pn*rows;
+		// 전체 공지사항 수 조회하기
+		int totalBoards = noticeService.getTotalBoard(pn);
+		
+		// 페이지 객체 생성하기
+		PageVo pageVo = new PageVo(rows, pages, pn, totalBoards);
+		pageVo.setBeginIndex(beginIndex);
+		pageVo.setEndIndex(endIndex);
+		
 		NoticeBoard noticeBoard = noticeService.getNoticeBoardByNo(no);
 		model.addAttribute("board", noticeBoard);
 		

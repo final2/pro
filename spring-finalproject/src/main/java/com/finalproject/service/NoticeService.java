@@ -21,7 +21,10 @@ public interface NoticeService {
 	NoticeBoard getNoticeBoardByNo(int no);
 	// 최신 게시글 불러오기
 	List<NoticeBoard> getLatestBoard();
+	// 게시글 총 수량 불러오기
 	int getTotalBoard(int pn);
+	// 페이지당 게시글 랭크 불러오기
+	int getBoardRank(PageVo pageVo);
 	// 페이지번호당 공지 글 불러오기
 	List<NoticeBoard> getBeginEndBoard(PageVo pageVo);
 }

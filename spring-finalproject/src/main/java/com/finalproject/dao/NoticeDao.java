@@ -21,6 +21,8 @@ public interface NoticeDao {
 	List<NoticeBoard> getNoticeToLatestBoard();
 	// 공지글 총 수량
 	int getTotalBoard();
+	// 페이지당 게시글 랭크 불러오기
+	int getBoardRank(PageVo pageVo);
 	// 페이지 번호에 해당하는 게시글 불러오기
 	List<NoticeBoard> getBeginEndBoard(PageVo pageVo);
 }
