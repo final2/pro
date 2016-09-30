@@ -35,16 +35,11 @@
 	<!-- interceptor -->
 	<mvc:interceptors>
 		<mvc:interceptor>
-			<mvc:mapping path="/*.do/"/>
+			<!-- 로그인 체크할 url -->
+			<mvc:mapping path="/*.do"/>
+			<!-- 로그인 체크를 제외할 url -->
 			<mvc:exclude-mapping path="/companylogin.do"/>
 			<mvc:exclude-mapping path="/insertemp.do"/>
-			<mvc:exclude-mapping path="/notice.do"/>
-			<mvc:exclude-mapping path="/boardForm.do"/>
-			<mvc:exclude-mapping path="/boardList.do"/>
-			<mvc:exclude-mapping path="/boardDetail.do"/>
-			<mvc:exclude-mapping path="/boardUpdateForm.do"/>
-			<mvc:exclude-mapping path="/todaplan.do"/>
-			<mvc:exclude-mapping path="/calendar.do"/>
 			
 			<bean class="com.finalproject.web.interceptor.LoginCheckInterceptor"></bean>
 		</mvc:interceptor>

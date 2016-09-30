@@ -36,9 +36,9 @@
      			</div>
      		</div>
      		<div>
-    	  		<a href="" style="clear:both">내정보</a>
+    	  		<a href="myprofile.do" style="clear:both">내정보</a>
 	      		<a href="" data-toggle="modal" data-target="#messenger">메신저</a>
-	      		<a href="">로그아웃</a>	
+	      		<a href="company/logout.do">로그아웃</a>	
      		</div>
       		
     	</li>
@@ -57,8 +57,8 @@
        			<li>
        				<a>거래처 관리 <span class="caret"></span></a>
        				<ul class="in-bar">
-       					<li><a href="">거래처  조회</a></li>
-       					<li><a href="">거래처 등록</a></li>
+       					<li><a href="clientList.do" class="${current_page eq 'main' ? 'active' : '' }">거래처  조회</a></li>
+       					<li><a href="addClient.do" class="${current_page eq 'main' ? 'active' : '' }">거래처 등록</a></li>
        				</ul>
        			</li>
        		</ul>   		
@@ -66,18 +66,18 @@
        <li class="list">
        		<a >인사 <span class="caret"></span></a>
        		<ul class="bar">
-       			<li><a href="">사원 조회</a></li>
-       			<li><a href="insertemp.do">사원 등록</a></li>
+       			<li><a href="emplist.do" class="${current_page eq 'main' ? 'active' : '' }">사원 조회</a></li>
+       			<li><a href="insertemp.do" class="${current_page eq 'main' ? 'active' : '' }">사원 등록</a></li>
 	       			<c:url var="boardListURL" value="boardList.do">
 						<c:param name="pn" value="1" />
 					</c:url>
-       			<li><a href="${boardListURL }">공지 사항</a></li>
-       			<li><a href="">회사 일정</a></li>
+       			<li><a href="${boardListURL }" class="${current_page eq 'boardList' ? 'active' : '' }">공지 사항</a></li>
+       			<li><a href="calendar.do" class="${current_page eq 'main' ? 'active' : '' }">회사 일정</a></li>
        			<li>
        				<a>지점 관리<span class="caret"></span></a>
        				<ul class="in-bar">
-       					<li><a href="">지점 조회</a></li>
-       					<li><a href="">지점 등록</a></li>
+       					<li><a href="" class="">지점 조회</a></li>
+       					<li><a href="" class="">지점 등록</a></li>
        				</ul>
        			</li>
        		</ul>			
@@ -85,8 +85,8 @@
        <li class="list">
        		<a>급여 <span class="caret"></span></a>
        		<ul class="bar">
-       			<li><a href="">급여 대장</a></li>
-       			<li><a href="">급여 지급</a></li>
+       			<li><a href="" class="">급여 대장</a></li>
+       			<li><a href="" class="">급여 지급</a></li>
        		</ul>		
        </li>
        <li>
