@@ -26,7 +26,12 @@ $(function(){
 				$tr.empty();
 				$tr.append("<tr><th style='width:25%'>제품번호</th><th style='width:25%'>제품 명</th><th style='width:25%'>가격</th><th style='width:25%'>수량</th></tr>");
 				$.each(result, function(index, pro) {
-					$tr.append("<tr id='no-"+pro.clientNo+"'><td>"+pro.clientNo+"</td><td>"+pro.product.name+"</td><td>"+pro.product.price+"</td><td><input type='number'/></td></tr>")
+					$tr.append("<tr id='no-"+pro.product.no+"'>"
+							  +"<td>"+pro.product.no+"<input type='hidden' name='no' class='form-control' value ="+pro.product.no+"/></td>"
+							  +"<td>"+pro.product.name+"</td>"
+						   	  +"<td>"+pro.product.price+"<input type='hidden' name='price' class='form-control'value ="+pro.product.price+"/></td>"
+							  +"<td><input type='number' name='qty' class=form-control /></td>"
+							  +"</tr>")
 				}); 
 			}
 		}); 
@@ -45,38 +50,40 @@ $(function(){
 			<h1>발주 신청서</h1>
 			<hr>
 			
-			<table class="table table-bordered">
-				<thead>
-					<tr>
-						<th colspan="2" style="width: 50%">거래처명</th>
-						<td colspan="2" style="width: 50%">
-							<select id="client" class="form-control">
-								<option selected>거래처를 선택하세요.</option>
-								<c:forEach var="clients" items="${clientList}">
-									<c:choose>
-										<c:when test="${clients.isAdmit eq 'Y'}">
-											<option value="${clients.no}">${clients.name }</option>
-										</c:when>
-									</c:choose>
-								</c:forEach>
-							</select>
-						</td>
-					</tr>
-				</thead>
-				<tbody id="order-table">
-					<tr>
-						<th style="width:25%">제품번호</th>
-						<th style="width:25%">제품 명</th>
-						<th style="width:25%">가격</th>
-						<th style="width:25%">수량</th>
-					</tr>
-					<!-- 입력 -->
-				</tbody>
-			</table>
-			<div class="pull-right">
-				<a href="hqOrderDetail.do" class="btn btn-primary">신청</a>
-				<a href="hqOrder.do" class="btn btn-danger">취소</a>
-			</div>
+			<form action="orderApp.do" method="post" role="form">
+				<table class="table table-bordered">
+					<thead>
+						<tr>
+							<th colspan="2" style="width: 50%">거래처명</th>
+							<td colspan="2" style="width: 50%">
+								<select id="client" class="form-control">
+									<option selected>거래처를 선택하세요.</option>
+									<c:forEach var="clients" items="${clientList}">
+										<c:choose>
+											<c:when test="${clients.isAdmit eq 'Y'}">
+												<option value="${clients.no}">${clients.name }</option>
+											</c:when>
+										</c:choose>
+									</c:forEach>
+								</select>
+							</td>
+						</tr>
+					</thead>
+					<tbody id="order-table">
+						<tr>
+							<th style="width:25%">제품번호</th>
+							<th style="width:25%">제품 명</th>
+							<th style="width:25%">가격</th>
+							<th style="width:25%">수량</th>
+						</tr>
+						<!-- 입력 -->
+					</tbody>
+				</table>
+				<div class="pull-right">
+					<a href="hqOrderDetail.do" class="btn btn-primary">신청</a>
+					<a href="hqOrder.do" class="btn btn-danger">취소</a>
+				</div>
+			</form>
 		</div>
    </div>
 </div>

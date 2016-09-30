@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.finalproject.model.Client;
 import com.finalproject.model.ClientDetail;
-import com.finalproject.model.PageNo;
+import com.finalproject.model.PageVo;
 
 public interface DistributionService {
 
@@ -19,10 +19,10 @@ public interface DistributionService {
 	List<ClientDetail> getClientDetailsByNo(int no);
 	
 	// 리스트 총 수량
-	PageNo getTotalClient();
+	int getTotalClient(int pn);
 	
 	// 페이지 번호에 해당하는 리스트 조회
-	Map<String, Object> getBeginEndClients(int no);
+	List<Client> getBeginEndClients(PageVo pageVo);
 
 	// 거래처 등록
 	void addNewClient(Client client);
