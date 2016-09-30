@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.finalproject.model.NoticeBoard;
+import com.finalproject.model.PageVo;
 import com.finalproject.model.TodayPlan;
 import com.finalproject.service.NoticeService;
 
@@ -48,23 +49,34 @@ public class NoticeController {
 	}
 	// 공지사항 페이지당 게시글 불러오기
 	@RequestMapping(value="/boardList.do", method=RequestMethod.GET)
-	public String getBeginEndBoard(int pn, Model model) {
+	public String getBeginEndBoard(@RequestParam(name="pn", required=false, defaultValue="1")int pn, Model model) {
+		if(pn < 1) {
+			return "companynotice/boardList?pn=1";
+		}
 		
-		Map<String, Object> map = noticeService.getBeginEndboard(pn);
-		model.addAttribute("boardList", map.get("BeginEndBoardList"));
-		model.addAttribute("pageNo", map.get("PageNo"));
+		int rows = 10;
+		int pages = 5;
+		int beginIndex = (pn - 1)* rows + 1;
+		int endIndex = pn*rows;
+		
+		// 전체 공지사항 조회하기
+		int totalBoards = noticeService.getTotalBoard(pn);
+		// 페이지 객체 생성하기
+		PageVo pageVo = new PageVo(rows, pages, pn, totalBoards);
+		pageVo.setBeginIndex(beginIndex);
+		pageVo.setEndIndex(endIndex);
+		
+		if(pn > pageVo.getTotalPages()) {			
+			return "companynotice/boardList?pn=" + pageVo.getTotalPages();
+		}
+		
+		List<NoticeBoard> boards = noticeService.getBeginEndBoard(pageVo);
+		
+		model.addAttribute("boardList", boards);
+		model.addAttribute("pageVo", pageVo);
 		
 		return "companynotice/boardList";
 	}
-
-	/*// 공지사항 리스트 불러오기
-	@RequestMapping("boardList.do")
-	public String getBoardList(Model model) {
-		List<NoticeBoard> noticeBoardList = noticeService.getNoticeBoardList();
-		model.addAttribute("boardList", noticeBoardList);
-		
-		return "companynotice/boardList";
-	}*/
 	
 	// 공지사항 디테일
 	@RequestMapping("/boardDetail.do")

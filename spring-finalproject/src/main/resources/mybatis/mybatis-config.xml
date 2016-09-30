@@ -8,11 +8,11 @@
 		<typeAlias type="com.finalproject.model.NoticeBoard" alias="Notice"/>
 		<typeAlias type="com.finalproject.model.TodayPlan" alias="TP"/>
 		<typeAlias type="com.finalproject.model.Calendar" alias="Calendar"/>				
+      	<typeAlias type="com.finalproject.model.PageNo" alias="PV"/>
 	    <typeAlias type="com.finalproject.model.Product" alias="Product" />
      	<typeAlias type="com.finalproject.model.LargeCategory" alias="LC" />
       	<typeAlias type="com.finalproject.model.SmallCategory" alias="SC" />
       	<typeAlias type="com.finalproject.model.WebBoard" alias="Wboard" />
-      	<typeAlias type="com.finalproject.model.PageNo" alias="PN"/>
       	<typeAlias type="com.finalproject.model.Client" alias="Client"/>
       	<typeAlias type="com.finalproject.model.ClientDetail" alias="ClDetail"/> 
       	<typeAlias type="com.finalproject.model.RegisterEmp" alias="RegisterEmp"/>     	

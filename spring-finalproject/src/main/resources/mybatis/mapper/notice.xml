@@ -53,7 +53,7 @@
 	</select>
 	
 	<!-- 페이지당 공지사항 불러오기 -->
-	<select id="getBeginEndBoard" parameterType="PN" resultType="Notice">
+	<select id="getBeginEndBoard" parameterType="PV" resultType="Notice">
 		select 
 			rank,
 			no		as no,
@@ -63,7 +63,7 @@
 		from (select row_number() OVER(order by regdate desc) as rank, no, title, content, regdate
 			  from hq_board
 			  order by rank)
-		where rank >= #{beginBoardNo} and rank &lt;= #{endBoardNo}
+		where rank >= #{beginIndex} and rank &lt;= #{endIndex}
 	</select>
 
 	<!-- 게시글 번호로 공지사항 불러오기 -->
@@ -78,9 +78,9 @@
 	</select>
 	
 	<!-- 게시글 총 수 불러오기 -->
-	<select id="getTotalBoard" resultType="PN">
+	<select id="getTotalBoard" resultType="int">
 		select 
-			count(*) as boardTotalNo  
+			count(*)  
 		from hq_board
 	</select>
 </mapper>
