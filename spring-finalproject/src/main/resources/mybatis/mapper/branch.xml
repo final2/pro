@@ -34,6 +34,22 @@
 			largecategory
 	</select>
 	
+	<!-- 판매 : 대분류 찾기(지점별, 재고에 있는 물품별) -->
+	<select id="getAllLargeCatsByBranch" resultType="LC">
+		select 
+			distinct(D.no)
+		from
+			branch_inventory A, product B, smallcategory C, largecategory D
+		where
+			A.product_no = B.no
+		and
+			B.smallcategory_no = C.no
+		and
+			C.largecategory_no = D.no
+		and
+			A.branch_no = #{value}
+	</select>
+	
 	<!-- 판매 : 소분류 찾기 -->
 	<select id="getSmallCatsByLargeNo" parameterType="int" resultType="SC">
 		select
@@ -52,6 +68,18 @@
 			product
 		where 
 			smallcategory_no = #{value}
+	</select>
+	
+	<!-- 판매 : 물품번호로 재고 조회하기 -->
+	<select id="getBranchInvenByProductNo" parameterType="map" resultType="com.finalproject.model.BranchInventory">
+		select
+			no, qty, branch_no as "branchNo", product_no as "product.no"
+		from 
+			branch_inventory
+		where 
+			branch_no = #{branchNo}
+		and
+			product_no = #{productNo}
 	</select>
 	
 	<!-- 발주 : 발주대기 주문 상세 찾기 -->
@@ -99,7 +127,7 @@
 			no,
 			regdate,
 			note,
-			branch_no as "branch.no",
+			branch_no as "branchNo",
 			iscomplete,
 			iscart
 		from
@@ -226,6 +254,13 @@
 			no = #{value}
 	</select>
 	
+	<select id="getAllProductsFromCompany" resultType="Product">
+		select 
+			no, name, maker, price, memo, limiteage as "limiteAge", eventcode "event.no", smallcategory_no as "smallCat.no", image
+		from 
+			product
+	</select>
+	
 	<select id="getBranchOrderByIsCartNo" parameterType="int" resultType="BrOrder">
 		select
 			no,
@@ -280,7 +315,8 @@
 		where
 			branch_no = #{value}
 		and
-			iscart = 'Y'	
+			iscart = 'Y'
+		order by regdate desc	
 	</select>
 	
 	<select id="getOrderDetailsByOrderNo" parameterType="int" resultType="com.finalproject.model.BranchOrderDetail">
@@ -314,7 +350,103 @@
 		where
 			branch_no = #{branchNo}
 		and
-			regdate between to_date('${date1}','YY-MM-DD')-1
+			regdate between to_date('${date1}','YY-MM-DD')
 			and to_date('${date2}', 'YY-MM-DD')+1
+		order by regdate desc
+	</select>
+	
+	<insert id="addBranchSales" parameterType="com.finalproject.model.BranchSales">
+		insert into br_sales (no, regdate, issaled, isreturned, br_employee_no, branch_no)
+		values(mybranch_seq.nextval, sysdate, 'N', 'N', #{brEmp.no}, #{branch.no})
+	</insert>
+	
+	<insert id="addBranchSalesDetail" parameterType="com.finalproject.model.BranchSalesDetail">
+		insert into br_sales_detail (no, br_sales_no, product_no)
+		values(mybranch_seq.nextval, #{branchSales.no}, #{product.no})
+	</insert>
+	
+	<update id="updateBranchSalesDetail" parameterType="com.finalproject.model.BranchSalesDetail">
+		update br_sales_detail
+		set
+			qty = #{qty}
+		where
+			no = #{no}
+	</update>
+	
+	<select id="getBranchSalesByNotIsSaled" parameterType="map" resultType="com.finalproject.model.BranchSales">
+		select
+			no,
+			regdate,
+			ages,
+			gender,
+			issaled,
+			isreturned,
+			payment,
+			br_employee_no as "brEmp.no",
+			branch_no as "branch.no"
+		from
+			br_sales
+		where
+			br_employee_no = #{empNo}
+			<if test="issaled == 'Y'">
+			and issaled = 'Y'
+			</if>			
+			<if test="issaled == 'N'">
+			and issaled = 'N'
+			</if>
+	</select>
+	
+	<select id="getBranchSalesDetailBySalesNo" parameterType="int" resultType="com.finalproject.model.BranchSalesDetail">
+		select 
+			A.no,
+			A.qty,
+			A.br_sales_no as "branchSales.no",
+			A.product_no as "product.no",
+			B.name as "product.name",
+			B.price as "product.price"
+		from
+			br_sales_detail A, product B
+		where
+			A.product_no = B.no
+		and
+			A.br_sales_no = #{value}
+	</select>
+	
+	<select id="getBranchByNo" parameterType="int" resultType="Branch">
+		select
+			no,
+			employee_no,
+			image,
+			name,
+			phone,
+			address,
+			atm,
+			freshfood,
+			lotto,
+			parcelservice,
+			lifeservice
+		from
+			branch
+		where
+			no = #{value}
+	</select>
+	
+	<select id="getBrEmpByNo" parameterType="int" resultType="com.finalproject.model.BranchEmp">
+		select
+			no,
+			email,
+			address,
+			phone,
+			grade,
+			password,
+			name,
+			retiredate,
+			branch_no as "branch.no",
+			images,
+			birth
+		from
+			br_employees
+		where
+			no = #{value}
 	</select>
 </mapper>

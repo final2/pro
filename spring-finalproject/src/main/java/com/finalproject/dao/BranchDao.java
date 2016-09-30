@@ -3,10 +3,13 @@ package com.finalproject.dao;
 import java.util.List;
 import java.util.Map;
 
+import com.finalproject.model.Branch;
 import com.finalproject.model.BranchEmp;
 import com.finalproject.model.BranchInventory;
 import com.finalproject.model.BranchOrder;
 import com.finalproject.model.BranchOrderDetail;
+import com.finalproject.model.BranchSales;
+import com.finalproject.model.BranchSalesDetail;
 import com.finalproject.model.LargeCategory;
 import com.finalproject.model.Product;
 import com.finalproject.model.SmallCategory;
@@ -18,8 +21,10 @@ public interface BranchDao {
 
 	// 지점 - 판매
 	List<LargeCategory> getAllLargeCats();
+	List<LargeCategory> getAllLargeCatsByBranch(int brno);
 	List<SmallCategory> getSmallCatsByLargeNo(int no);
 	List<Product> getProductsBySmallNo(int no);
+	List<BranchInventory> getBranchInvenByProductNo(Map<String, Object> map);
 	
 	// 지점 - 발주
 	List<BranchOrderDetail> getWaitingOrderDetail(int no);
@@ -38,10 +43,19 @@ public interface BranchDao {
 	BranchOrderDetail getOrderDetailByProNo(Map<String, Object> map);
 	void updateBranchOrderDetail(BranchOrderDetail detail);
 	Product getProductByNo(int no);
+	List<Product> getAllProductsFromCompany();
 	BranchOrder getBranchOrderByIsCartNo(int no);
 	
 	List<BranchInventory> getInvenByKeyword(Map<String, Object> map);
 	List<BranchOrder> getOrdersByBranchNo(int brno);
 	List<BranchOrderDetail> getOrderDetailsByOrderNo(int no);
-	List<BranchOrder> getOrdersByRegDate(Map<String, Object>map);
+	List<BranchOrder> getOrdersByRegDate(Map<String, Object> map);
+	// 지점 - 판매
+	void addBranchSales(BranchSales sales);
+	void addBranchSalesDetail(BranchSalesDetail salesDetail);
+	BranchSales getBranchSalesByNotIsSaled(Map<String, Object> map);
+	List<BranchSalesDetail> getBranchSalesDetailBySalesNo(int no);
+	Branch getBranchByNo(int brno);
+	BranchEmp getBrEmpByNo(int empno);
+	void updateBranchSalesDetail(BranchSalesDetail salesDetail);
 }

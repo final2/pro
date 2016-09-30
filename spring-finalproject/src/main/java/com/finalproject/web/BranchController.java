@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.finalproject.model.BranchInventory;
 import com.finalproject.model.BranchOrder;
 import com.finalproject.model.BranchOrderDetail;
+import com.finalproject.model.Product;
 import com.finalproject.service.BranchService;
 
 
@@ -72,7 +73,7 @@ public class BranchController {
 		return "branch/order";
 	}
 	
-	// 발주 전송하기
+	// 발주 전송하기 : 발주 수정하기
 	@RequestMapping("/branch/orderupdate.do")
 	public String orderUpdate(@RequestParam(name="brno") int brno, @RequestParam(name="no") int no) {
 		
@@ -83,29 +84,32 @@ public class BranchController {
 		return "branch/order";
 	}
 	
+	
+	// 발주 전송하기 : 재고에 저장
 	@RequestMapping("/branch/invenupdate.do")
 	public String invenUpdate(@RequestParam(name="no") int no) {
 		
 		List<BranchOrderDetail> detailList = brService.getOrderDetailsByOrderNo(no);
+		BranchOrder order = brService.getBranchOrderByNo(no);
 		
 		for (BranchOrderDetail d : detailList){
 			int productNo = d.getProduct().getNo();
 			BranchInventory inven = brService.getInventoryByProductNo(productNo);
-			if(inven.getProduct().getNo() == d.getProduct().getNo()) {
+
+			if(inven != null && inven.getProduct().getNo() == d.getProduct().getNo()) {
 				inven.setQty(inven.getQty() + d.getQty());
 				brService.updateInventory(inven);
-			} 
-			
-			if(inven.getProduct().getNo() != d.getProduct().getNo()) {
+			} else {
 				inven = new BranchInventory();
 				inven.setQty(d.getQty());
-				inven.setBranchNo(d.getOrder().getBranchNo());
-				inven.setProduct(d.getProduct());;
+				inven.setBranchNo(order.getBranchNo());
+				
+				Product product = brService.getProductByNo(d.getProduct().getNo());
+				inven.setProduct(product);
 				brService.addInventory(inven);
 			}
 		}
 		
-		BranchOrder order = brService.getBranchOrderByNo(no);
 		order.setIscomplete("Y");		
 		brService.updateBranchOrder(order);
 		
