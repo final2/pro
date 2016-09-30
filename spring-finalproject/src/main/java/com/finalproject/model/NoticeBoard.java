@@ -11,6 +11,7 @@ public class NoticeBoard {
 	private String title;
 	private String content;
 	private Date regdate;
+	private int boardRank;
 	
 	public int getNo() {
 		return no;
@@ -36,6 +37,13 @@ public class NoticeBoard {
 	public void setRegdate(Date regdate) {
 		this.regdate = regdate;
 	}
+	public int getBoardRank() {
+		return boardRank;
+	}
+	public void setBoardRank(int boardRank) {
+		this.boardRank = boardRank;
+	}
+	
 	
 	
 }

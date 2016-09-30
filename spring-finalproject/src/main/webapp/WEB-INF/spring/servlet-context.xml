@@ -40,6 +40,18 @@
 			<!-- 로그인 체크를 제외할 url -->
 			<mvc:exclude-mapping path="/companylogin.do"/>
 			<mvc:exclude-mapping path="/insertemp.do"/>
+			<mvc:exclude-mapping path="/main.do"/>
+			<mvc:exclude-mapping path="/main2.do"/>
+			<mvc:exclude-mapping path="/searchBranch.do"/>
+			<mvc:exclude-mapping path="/store.do"/>
+			<mvc:exclude-mapping path="/branchdetail.do"/>
+			<mvc:exclude-mapping path="/intro.do"/>
+			<mvc:exclude-mapping path="/announcement.do"/>
+			<mvc:exclude-mapping path="/oneplus.do"/>
+			<mvc:exclude-mapping path="/webBoardDetail.do"/>
+			<mvc:exclude-mapping path="/qnamail.do"/>
+			<mvc:exclude-mapping path="/searchbranch.do"/>
+			<mvc:exclude-mapping path="/searchtype.do"/>
 			
 			<bean class="com.finalproject.web.interceptor.LoginCheckInterceptor"></bean>
 		</mvc:interceptor>

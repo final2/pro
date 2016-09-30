@@ -26,5 +26,4 @@ public interface WebsiteDao {
 	// 지점 상세정보 불러오기
 	Branch getBranchByNo(int no);
 	
-	
 }

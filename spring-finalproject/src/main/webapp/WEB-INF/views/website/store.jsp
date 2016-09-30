@@ -9,20 +9,52 @@
 <link rel="stylesheet" type="text/css" href="resources/bootstrap/css/bootstrap.css">
 <script type="text/javascript" src="resources/jquery/jquery.js"></script>
 <!-- 서브메뉴관련 --> 
-<style>
-	body {margin: 0;}
-
-	ul.topnav {
-	    list-style-type: none;
-	    margin: 0;
-	    padding: 0;
-	    overflow: hidden;
-	    background-color: #333;
+	<style>
+	html,body {margin: 0; padding:0; height:100%;  }
+	#mainview {
+		margin: auto;
+		max-width:1080px;
+		min-height: 100%; 
+		// relative 선언을 통해 하단바의 absolute position 이 정확한 위치에 오도록 한다.
+		position: relative;
+		// content 시작 위치부터 그라디언트 효과가 나타나도록 한다.
+		background: #0202F7 url('images/gr.jpg') 0 70px repeat-x;
+	}
+		 
+ 	#mainview #header {
+		height: 100px;
+		background-color: white;
+	} 
+		 
+	#mainview #content {
+		// 하단바가 표시되는 공간 부여
+		min-height: 100%; 
+		padding-bottom: 130px;
+	}
+		 
+	#footer {
+		// 하단바를 하단에 고정
+		position: absolute;
+		bottom: 0;
+		width: 100%;
+		height: 130px;
+		background-color: silver;
 	}
 	
-	ul.topnav li {float: left;}
+	/* 중간 네비바 */ 
+	ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+	}
+
+	li {
+	    float: left;
+	}
 	
-	ul.topnav li a {
+	li span {
 	    display: block;
 	    color: white;
 	    text-align: center;
@@ -30,17 +62,15 @@
 	    text-decoration: none;
 	}
 	
-	ul.topnav li a:hover:not(.active) {background-color: #111;}
-	
-	ul.topnav li a.active {background-color: #4CAF50;}
-	
-	ul.topnav li.right {float: right;}
-	
-	@media screen and (max-width: 600px){
-	    ul.topnav li.right,
-	    ul.topnav li {float: none;}
+	li span:hover:not(.active) {
+	    background-color: #111;
 	}
-</style>
+	
+	.active {
+	    background-color: #4CAF50;
+}
+
+	</style>
 	
 	<!-- 규석씨 api키값 	bf6fd53fddf7f8f7309b459f43aceb86 -->
 <!-- 지도 및 테이블 데이타 갱신 관련 -->
@@ -59,6 +89,7 @@ $(function() {
 			url:"store.do?id=" + id,
 			dataType:"json",
 			success:function(data){
+				console.log(data);
 				$("tbody").empty();	
 				$("#id a").addClass("active");
 				// 테이블에 입력값 넣기
@@ -127,7 +158,7 @@ $(function() {
         			
         			$("#panelTab").empty();
         			$("#panelTab").append(
-        				"<table class='w3-table w3-striped w3-bordered w3-border'><tr><th><h3>지점상세안내</h3></th></tr><tr><th>지점명</th></tr><tr><td>"+detail.name+"</td></tr><tr><th>지점전화번호</th></tr><tr><td>"+detail.phone+"</td></tr><tr><th>지점주소</th></tr><tr><td>"+detail.address+"</td></tr></table>"	
+        				"<table class='w3-table w3-striped w3-bordered w3-border'><tr><th><h3>지점상세안내</h3></th></tr><tr><th>지점명</th></tr><tr><td>"+detail.name+"</td></tr><tr><th>지점전화번호</th></tr><tr><td>"+phoneFomatter(detail.phone)+"</td></tr><tr><th>지점주소</th></tr><tr><td>"+detail.address+"</td></tr></table>"	
         			)
         		}
         	});
@@ -145,11 +176,43 @@ $(function() {
 	
 /* 서브메뉴 선택 */	
 	$("#store-gubun li").click(function() {
-		$(this).siblings().find("a").removeClass("active");
-		$(this).find("a").addClass("active");
+		$(this).siblings().find("span").removeClass("active");
+		$(this).find("span").addClass("active");
 		displayMap($(this).attr("id"));
 		
 	}); 
+	
+	
+	function phoneFomatter(num,type){
+	    
+	    var formatNum = '';
+	    
+	    if(num.length==11){
+	        if(type==0){
+	            formatNum = num.replace(/(\d{3})(\d{4})(\d{4})/, '$1-****-$3');
+	        }else{
+	            formatNum = num.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
+	        }
+	    }else if(num.length==8){
+	        formatNum = num.replace(/(\d{4})(\d{4})/, '$1-$2');
+	    }else{
+	        if(num.indexOf('02')==0){
+	            if(type==0){
+	                formatNum = num.replace(/(\d{2})(\d{4})(\d{4})/, '$1-****-$3');
+	            }else{
+	                formatNum = num.replace(/(\d{2})(\d{4})(\d{4})/, '$1-$2-$3');
+	            }
+	        }else{
+	            if(type==0){
+	                formatNum = num.replace(/(\d{3})(\d{3})(\d{4})/, '$1-***-$3');
+	            }else{
+	                formatNum = num.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
+	            }
+	        }
+	    }
+	    return formatNum;
+	    
+	}
 	
 });
 </script>
@@ -188,7 +251,7 @@ $(function() {
 	    <li class="w3-dropdown-hover">
 	    <a href="#" title="Notifications">서비스유형별안내 <i class="fa fa-caret-down"></i></a>
 	    <div class="w3-dropdown-content w3-light-grey w3-card-4">
-	      <a href="lotto.do">Lotto판매</a>
+	      <span title="lotto.do">Lotto판매</span>
 	      <a href="atm.do">ATM</a>
 	<!--       <a href="parcelService.do">편의서비스</a> -->
 	      <a href="delivery.do">택배서비스</a>
@@ -237,10 +300,10 @@ $(function() {
 	
 <!-- sub메뉴 -->
 	<ul class="topnav" id="store-gubun">
-  		<li id="LOTTO" ><a class="active">Lotto판매점</a></li>
-  		<li id="ATM"><a >ATM 설치점</a></li>
-  		<li id="PARCELSERVICE"><a >택배 가능점</a></li>
-  		<li id="FRESHFOOD"><a  >조리식품판매점</a></li>
+  		<li id="LOTTO" ><span class="active">Lotto판매점</span></li>
+  		<li id="ATM"><span>ATM 설치점</span></li>
+  		<li id="PARCELSERVICE"><span>택배 가능점</span></li>
+  		<li id="FRESHFOOD"><span >조리식품판매점</span></li>
   		<!-- <li class="right"><a href="#about">About</a></li> -->
 	</ul>
 	

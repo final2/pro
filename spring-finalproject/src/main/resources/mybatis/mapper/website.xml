@@ -64,7 +64,7 @@
 		from 
 			BRANCH B,EMPLOYEE E
 		where
-			B.employee_no=e.no and 
+			B.employee_no=e.no 
 	</select>
 	
 	<!-- 유형별 지점 검색 -->

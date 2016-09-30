@@ -9,12 +9,14 @@
 		<typeAlias type="com.finalproject.model.TodayPlan" alias="TP"/>
 		<typeAlias type="com.finalproject.model.Calendar" alias="Calendar"/>				
       	<typeAlias type="com.finalproject.model.PageVo" alias="PV"/>
+      	<typeAlias type="com.finalproject.model.PageBoardDetail" alias="PBD"/>
 	    <typeAlias type="com.finalproject.model.Product" alias="Product" />
      	<typeAlias type="com.finalproject.model.LargeCategory" alias="LC" />
       	<typeAlias type="com.finalproject.model.SmallCategory" alias="SC" />
       	<typeAlias type="com.finalproject.model.WebBoard" alias="Wboard" />
       	<typeAlias type="com.finalproject.model.Client" alias="Client"/>
-      	<typeAlias type="com.finalproject.model.ClientDetail" alias="ClDetail"/> 
+      	<typeAlias type="com.finalproject.model.ClientDetail" alias="ClDetail"/>
+      	<typeAlias type="com.finalproject.model.HqOrder" alias="HqOrder"/> 
       	<typeAlias type="com.finalproject.model.RegisterEmp" alias="RegisterEmp"/>     	
       	<typeAlias type="com.finalproject.model.Employee" alias="Employee"/>   	
       	<typeAlias type="com.finalproject.model.Career" alias="Career"/>   	

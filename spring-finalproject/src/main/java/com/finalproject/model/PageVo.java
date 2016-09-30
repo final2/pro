@@ -73,28 +73,17 @@ public class PageVo {
 	public void setEndPage(int endPage) {
 		this.endPage = endPage;
 	}
-
-
 	public int getBeginIndex() {
 		return beginIndex;
 	}
-
-
 	public void setBeginIndex(int beginIndex) {
 		this.beginIndex = beginIndex;
 	}
-
-
 	public int getEndIndex() {
 		return endIndex;
 	}
-
-
 	public void setEndIndex(int endIndex) {
 		this.endIndex = endIndex;
-	}
-	
-	
-	
+	}	
 	
 }
