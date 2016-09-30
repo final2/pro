@@ -3,7 +3,7 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.finalproject.dao.MessageDao">
-	<select id="getReceiveMessages" resultType="Message">
+	<select id="getReceiveMessages" parameterType="int"  resultType="Message">
 		select
 			no, 
 			from_no 	as	"from", 
@@ -13,6 +13,21 @@
 			regdate
 		from
 			messenger
+		where to_no=#{value}
+		order by regdate desc
+	</select>
+	<select id="getSendMessages" parameterType="int"  resultType="Message">
+		select
+			no, 
+			from_no 	as	"from", 
+			to_no		as	"to", 
+			contents, 
+			receiving, 
+			regdate
+		from
+			messenger
+		where from_no=#{value}
+		order by regdate desc
 	</select>
 	<select id="getMessagesByNo" parameterType="int" resultType="Message">
 		select
@@ -66,8 +81,8 @@
 		where no=#{value}
 	</select>
 	<insert id="addMessage" parameterType="Message">
-		insert into messenger (no, from_no, to_no, contents, regdate)
-		values (my_seq.nextval, #{from}, #{to}, #{contents}, sysdate);
+		insert into messenger (no, from_no, to_no, contents, receiving, regdate)
+		values (my_seq.nextval, #{from}, #{to}, #{contents}, 'n', sysdate)
 	</insert>
 </mapper>
 

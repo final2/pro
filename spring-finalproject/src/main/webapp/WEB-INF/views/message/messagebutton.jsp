@@ -24,7 +24,38 @@ $(function() {
 		$('#bodywritemessage').hide();
 		$('#bodymessagedetail').hide();
 		$('#bodyreceive').show();
-		
+		var loginUserNo = ${LoginUser.no};
+		$.ajax({
+			type:"GET",
+			url:"/FinalProject/json/getreceivelist/"+loginUserNo,
+			dataType:"json",
+			success:function(result) {
+				var $tbody = $('#recivelist');
+				$tbody.empty();
+				$.each(result, function(index, rm) {
+					/* 사원번호로 사원이름불러오기 */
+					$.ajax({
+						type:"GET",
+						url:"/FinalProject/json/empbyno/"+rm.from,
+						dataType:"json",
+						success:function(emp){
+							$tbody.append(
+								"<tr id='messageNo-"+rm.no+"'>"+
+								"<td class='text-center' style='vertical-align:middle'><span class='glyphicon glyphicon-envelope'></span></td>" +
+								"<td class='text-center' style='vertical-align:middle' id='no-"+rm.from+"'><h4></h4></td>"+
+								"<td class='text-center' style='vertical-align:middle'><p>"+rm.contents+".</p></td>"+
+								"<td class='text-center' style='vertical-align:middle'><p>"+rm.regdate+"</p></td>"+
+								"</tr>"
+							);
+							var $td = $('#recivelist').find("td[id='no-"+rm.from+"']");
+							
+							$td.empty();
+							$td.append("<h4>"+emp.name+"</h4>");
+						}
+					});
+				});
+			}
+		});
 	});
 	/* 보낸쪽지 클릭시 */
 	$('#send').click(function(){
@@ -33,7 +64,39 @@ $(function() {
 		$('#bodyreceive').hide();
 		$('#bodymessagedetail').hide();
 		$('#bodysend').show();
-		
+		var loginUserNo = ${LoginUser.no};
+		$.ajax({
+			type:"GET",
+			url:"/FinalProject/json/getsendlist/"+loginUserNo,
+			dataType:"json",
+			success:function(result) {
+				var $tbody = $('#sendlist');
+				$tbody.empty();
+				$.each(result, function(index, sm) {
+					/* 사원번호로 사원이름불러오기 */
+					$.ajax({
+						type:"GET",
+						url:"/FinalProject/json/empbyno/"+sm.to,
+						dataType:"json",
+						success:function(emp){
+							$tbody.append(
+								"<tr id='messageNo-"+sm.no+"'>"+
+								"<td class='text-center' style='vertical-align:middle'><span class='glyphicon glyphicon-envelope'></span></td>" +
+								"<td class='text-center' style='vertical-align:middle' id='no-"+sm.to+"'><h4></h4></td>"+
+								"<td class='text-center' style='vertical-align:middle'><p>"+sm.contents+".</p></td>"+
+								"<td class='text-center' style='vertical-align:middle'><p>"+sm.regdate+"</p></td>"+
+								"</tr>"
+							);
+							var $td = $('#sendlist').find("td[id='no-"+sm.to+"']");
+							
+							$td.empty();
+							$td.append("<h4>"+emp.name+"</h4>");
+							
+						}
+					});
+				});
+			}
+		});
 	});
 	$('#writemessage').click(function(){
 		$('#bodylist').hide();

@@ -14,8 +14,8 @@ public class MessageServiceImpl implements MessageService{
 	@Autowired private MessageDao messageDao;
 
 	@Override
-	public List<Message> getMessageList() {
-		return messageDao.getReceiveMessages();
+	public List<Message> getReceiveMessageList(int no) {
+		return messageDao.getReceiveMessages(no);
 	}
 
 	@Override
@@ -35,5 +35,10 @@ public class MessageServiceImpl implements MessageService{
 	}
 	public void insertMessage(Message message){
 		messageDao.addMessage(message);
+	}
+
+	@Override
+	public List<Message> getSendMessageList(int no) {
+		return messageDao.getSendMessages(no);
 	}
 }

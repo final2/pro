@@ -2,6 +2,9 @@ package com.finalproject.model;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonFormat.Shape;
+
 public class Message {
 
 	private int no;
@@ -9,6 +12,7 @@ public class Message {
 	private int to;
 	private String contents;
 	private String receiving;
+	@JsonFormat(shape=Shape.STRING, pattern="yyyy-MM-dd")
 	private Date regdate;
 	
 	public int getNo() {

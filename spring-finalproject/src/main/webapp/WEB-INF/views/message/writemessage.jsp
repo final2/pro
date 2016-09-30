@@ -15,33 +15,32 @@ $(function() {
 		obj.contents = send.contents.value;
 		obj.from = loginUserNo;
 		
-		$ajax({
+		$.ajax({
 			type:"POST",
 			url:"/FinalProject/json/insertmessage/",
 			data:obj,
-			dataType:"Object",
+			dataType:"json",
 			success:function(result){
 				alert("성공적으로 보냈습니다.")
+				$("#send").trigger("click");
 			}
-		}); 
+		});
 		
-		return false; 
+		
 	});
 	$('#reset').click(function(){
 		$('#bodyreceive').hide();
 		$('#bodysend').hide();
 		$('#bodywritemessage').hide();
 		$('#bodylist').show();
-		
 	});
 		$('#selectemp').click(function(){
 		$('#bodyreceive').hide();
 		$('#bodysend').hide();
 		$('#bodywritemessage').hide();
 		$('#bodylist').show();
-		
 	});
-})
+});
 </script>
 		<div class="well">
 			<form role="form" name="insert" id="send-form" method="post" action="post.do">
