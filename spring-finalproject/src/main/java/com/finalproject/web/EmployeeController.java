@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.finalproject.model.Branch;
 import com.finalproject.model.Employee;
+import com.finalproject.model.EmployeeLoginCheck;
 import com.finalproject.model.RegisterEmp;
 import com.finalproject.service.EmployeeService;
 
@@ -29,7 +30,7 @@ public class EmployeeController {
 	}	
 	
 	@RequestMapping(value="/companylogin.do", method=RequestMethod.POST)
-	public String compLogin(Employee employee, HttpSession session) {
+	public String compLogin(EmployeeLoginCheck employee, HttpSession session) {
 		
 		Employee emp = empService.empLogin(employee.getNo(), employee.getPassword());
 		session.setAttribute("LoginUser", emp);
