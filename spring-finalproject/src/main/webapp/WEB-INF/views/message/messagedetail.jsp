@@ -30,22 +30,22 @@ $('#bodysend').on("click", "tr[id^=messageNo]", function() {
 						+"</tbody>"
 						+"</table>"
 					);
+					$('#bodymessagedetail').show();	
 				}
 			});
 		}
 	});
-	$('#bodymessagedetail').show();	
 });
 $('#bodyreceive').on("click", "tr[id^=messageNo]", function() {
 	$('#bodyreceive').hide();
 	var messageno = $(this).attr("id").replace("messageNo-","");
+	var $detail = $("#detail-form");
+	$detail.empty();
 	$.ajax({
 		type:"GET",
 		url:"/FinalProject/json/getmessagebyno/"+messageno,
 		dataType:"json",
 		success:function(detail){
-			var $detail = $("#detail-form");
-			$detail.empty();
 			$.ajax({
 				type:"GET",
 				url:"/FinalProject/json/empbyno/"+detail.from,
@@ -69,7 +69,7 @@ $('#bodyreceive').on("click", "tr[id^=messageNo]", function() {
 			});
 		}
 	});
-	$('#bodymessagedetail').show();	
+				$('#bodymessagedetail').show();	
 });
 </script>
 	<div class="well" style="background-color:#fff">

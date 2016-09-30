@@ -25,13 +25,13 @@ $(function() {
 		$('#bodymessagedetail').hide();
 		$('#bodyreceive').show();
 		var loginUserNo = ${LoginUser.no};
+		var $tbody = $('#recivelist');
+		$tbody.empty();
 		$.ajax({
 			type:"GET",
 			url:"/FinalProject/json/getreceivelist/"+loginUserNo,
 			dataType:"json",
 			success:function(result) {
-				var $tbody = $('#recivelist');
-				$tbody.empty();
 				$.each(result, function(index, rm) {
 					/* 사원번호로 사원이름불러오기 */
 					$.ajax({
@@ -65,13 +65,13 @@ $(function() {
 		$('#bodymessagedetail').hide();
 		$('#bodysend').show();
 		var loginUserNo = ${LoginUser.no};
+		var $tbody = $('#sendlist');
+		$tbody.empty();
 		$.ajax({
 			type:"GET",
 			url:"/FinalProject/json/getsendlist/"+loginUserNo,
 			dataType:"json",
 			success:function(result) {
-				var $tbody = $('#sendlist');
-				$tbody.empty();
 				$.each(result, function(index, sm) {
 					/* 사원번호로 사원이름불러오기 */
 					$.ajax({
