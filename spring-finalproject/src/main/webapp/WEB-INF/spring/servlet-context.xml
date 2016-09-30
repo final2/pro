@@ -41,6 +41,7 @@
 			<mvc:exclude-mapping path="/companylogin.do"/>
 			<mvc:exclude-mapping path="/insertemp.do"/>
 			<mvc:exclude-mapping path="/main.do"/>
+			<mvc:exclude-mapping path="/main2.do"/>
 			<mvc:exclude-mapping path="/searchBranch.do"/>
 			<mvc:exclude-mapping path="/store.do"/>
 			<mvc:exclude-mapping path="/branchdetail.do"/>
