@@ -41,7 +41,8 @@
 		select
 			c.qty			as qty,
 			p.name			as "product.name",
-			p.client_no		as clientNo
+			p.client_no		as clientNo,
+			p.price			as "product.price"
 		from
 			client_detail c, product p
 		where

@@ -16,18 +16,17 @@ $(function(){
 		
 		var clno = $("#client option:selected").val();
 		
-		alert(clno);
 		 $.ajax({
 			type:"GET",
 			url:"/FinalProject/json/pro/" + clno,
-			dateType:"json",
+			dataType:"json",
 			success:function(result) { 
 				
 				var $tr = $("#order-table");
 				$tr.empty();
-				
+				$tr.append("<tr><th style='width:25%'>제품번호</th><th style='width:25%'>제품 명</th><th style='width:25%'>가격</th><th style='width:25%'>수량</th></tr>");
 				$.each(result, function(index, pro) {
-					$tr.append("<tr id='no-"+pro.no+"'><td>"+pro.no+"</td><td>"+제품명+"</td><td>"+가격+"</td><td>"+수량+"</td></tr>")
+					$tr.append("<tr id='no-"+pro.clientNo+"'><td>"+pro.clientNo+"</td><td>"+pro.product.name+"</td><td>"+pro.product.price+"</td><td><input type='number'/></td></tr>")
 				}); 
 			}
 		}); 
@@ -64,7 +63,7 @@ $(function(){
 						</td>
 					</tr>
 				</thead>
-				<tbody>
+				<tbody id="order-table">
 					<tr>
 						<th style="width:25%">제품번호</th>
 						<th style="width:25%">제품 명</th>
