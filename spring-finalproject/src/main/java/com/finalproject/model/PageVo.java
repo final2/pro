@@ -21,8 +21,6 @@ public class PageVo {
 	private int beginIndex;
 	//게시글 끝 번호
 	private int endIndex;
-	//페이지당 게시글 순서
-	private int rowNumber;
 	
 	public PageVo(int rows, int pages, int pageNo, int totalRows) {
 		this.pageNo = pageNo;
@@ -86,15 +84,6 @@ public class PageVo {
 	}
 	public void setEndIndex(int endIndex) {
 		this.endIndex = endIndex;
-	}
-	public int getRowNumber() {
-		return rowNumber;
-	}
-	public void setRowNumber(int rowNumber) {
-		this.rowNumber = rowNumber;
-	}
-	
-	
-	
+	}	
 	
 }

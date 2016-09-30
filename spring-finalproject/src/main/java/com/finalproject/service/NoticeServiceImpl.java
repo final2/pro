@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.finalproject.dao.NoticeDao;
 import com.finalproject.model.NoticeBoard;
+import com.finalproject.model.PageBoardDetail;
 import com.finalproject.model.PageVo;
 
 @Service
@@ -57,8 +58,8 @@ public class NoticeServiceImpl implements NoticeService {
 	}
 	// 페이지당 게시글 랭크 불러오기
 	@Override
-	public int getBoardRank(PageVo pageVo) {
-		return noticeDao.getBoardRank(pageVo);
+	public NoticeBoard getBoardRank(PageBoardDetail pageBoardDetail) {
+		return noticeDao.getBoardRank(pageBoardDetail);
 	}
 	
 }

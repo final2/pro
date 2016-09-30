@@ -3,6 +3,7 @@ package com.finalproject.dao;
 import java.util.List;
 
 import com.finalproject.model.NoticeBoard;
+import com.finalproject.model.PageBoardDetail;
 import com.finalproject.model.PageVo;
 
 public interface NoticeDao {
@@ -21,8 +22,8 @@ public interface NoticeDao {
 	List<NoticeBoard> getNoticeToLatestBoard();
 	// 공지글 총 수량
 	int getTotalBoard();
-	// 페이지당 게시글 랭크 불러오기
-	int getBoardRank(PageVo pageVo);
+	// 페이지당 순위에 해당하는 게시글 불러오기
+	NoticeBoard getBoardRank(PageBoardDetail pageBoardDetail);
 	// 페이지 번호에 해당하는 게시글 불러오기
 	List<NoticeBoard> getBeginEndBoard(PageVo pageVo);
 }

@@ -75,8 +75,8 @@ ul.pagination li a:hover:not(.active) {background-color: #ddd;}
 						<c:forEach begin="${pageVo.beginIndex }" end="${pageVo.endIndex}" var="board" items="${boardList}">
 							<!-- detail 들어갈때 보내는 전송값 -->
 							<c:url var="detailURL" value="boardDetail.do">
-								<c:param name="no" value="${board.no }" />
 								<c:param name="pn" value="${param.pn }" />
+								<c:param name="rn" value="${board.boardRank}" />
 							</c:url>
 							<tr>
 								<td>${board.no }</td>

@@ -55,7 +55,7 @@
 	<!-- 페이지당 공지사항 불러오기 -->
 	<select id="getBeginEndBoard" parameterType="PV" resultType="Notice">
 		select 
-			rank,
+			rank	as boardRank,
 			no		as no,
 			title 	as title,
 			content as content,
@@ -82,5 +82,19 @@
 		select 
 			count(*)  
 		from hq_board
+	</select>
+	
+	<!-- 페이지당 순위로 불러오는 게시글 -->
+	<select id="getBoardRank" parameterType="PBD" resultType="Notice">
+		select rank		as boardRank, 
+			   no		as no, 
+			   title	as title, 
+			   content	as content, 
+			   regdate	as regdate
+		from (select row_number() OVER(order by regdate desc) as rank, no, title, content, regdate
+			  from hq_board
+			  order by rank)
+		where rank >= #{pageVo.beginIndex} and rank &lt;= #{pageVo.endIndex}
+		and rank = #{noticeBoard.boardRank}
 	</select>
 </mapper>

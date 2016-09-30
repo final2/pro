@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.finalproject.model.NoticeBoard;
+import com.finalproject.model.PageBoardDetail;
 import com.finalproject.model.PageVo;
 import com.finalproject.model.TodayPlan;
 import com.finalproject.service.NoticeService;
@@ -50,6 +51,7 @@ public class NoticeController {
 	// 공지사항 페이지당 게시글 불러오기
 	@RequestMapping(value="/boardList.do", method=RequestMethod.GET)
 	public String getBeginEndBoard(@RequestParam(name="pn", required=false, defaultValue="1")int pn, Model model) {
+		
 		if(pn < 1) {
 			return "companynotice/boardList?pn=1";
 		}
@@ -80,12 +82,12 @@ public class NoticeController {
 	
 	// 공지사항 디테일
 	@RequestMapping("/boardDetail.do")
-	public String getBoardDetail(int no, int pn, Model model) {
+	public String getBoardDetail(int pn, int rn, Model model) {
 		
 		int rows = 10;
 		int pages = 5;
 		int beginIndex = (pn - 1)* rows + 1;
-		int endIndex = pn*rows;
+		int endIndex = pn*rows; 
 		// 전체 공지사항 수 조회하기
 		int totalBoards = noticeService.getTotalBoard(pn);
 		
@@ -94,8 +96,14 @@ public class NoticeController {
 		pageVo.setBeginIndex(beginIndex);
 		pageVo.setEndIndex(endIndex);
 		
-		NoticeBoard noticeBoard = noticeService.getNoticeBoardByNo(no);
-		model.addAttribute("board", noticeBoard);
+		NoticeBoard noticeBoard = new NoticeBoard();
+		noticeBoard.setBoardRank(rn);
+		PageBoardDetail pageBoardDetail = new PageBoardDetail();
+		pageBoardDetail.setPageVo(pageVo);
+		pageBoardDetail.setNoticeBoard(noticeBoard);
+		
+		NoticeBoard board = noticeService.getBoardRank(pageBoardDetail);
+		model.addAttribute("board", board);
 		
 		return "companynotice/boardDetail";
 	}
