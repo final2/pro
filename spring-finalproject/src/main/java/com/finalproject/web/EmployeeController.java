@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.finalproject.model.Branch;
 import com.finalproject.model.Employee;
+import com.finalproject.model.RegisterEmp;
 import com.finalproject.service.EmployeeService;
 
 @Controller
@@ -61,16 +62,20 @@ public class EmployeeController {
 	// 사원등록 페이지 연결
 	@RequestMapping(value="/insertemp.do", method=RequestMethod.GET)
 	public String insertEmpForm(Model model) {
-		List<Branch> branchNames = empService.getAllBranch();
-		model.addAttribute("branchNames", branchNames);
 		
+		int empNo = empService.empSeqCheck();
+		model.addAttribute("empNo", empNo);
+		/*List<Branch> branchNames = empService.getAllBranch();
+		model.addAttribute("branchNames", branchNames);
+		*/
 		return "employees/insertempform";
 	}
 	
 	@RequestMapping(value="/insertemp.do", method=RequestMethod.POST)
-	public String insertEmp(Employee emp) {
-
-		empService.insertEmployee(emp);
+	public String insertEmp(RegisterEmp regEmp) {
+		
+		System.out.println(regEmp);
+		empService.registerEmployee(regEmp);
 		
 		return "redirect:/emplist.do";
 	}

@@ -3,12 +3,18 @@ package com.finalproject.dao;
 import java.util.List;
 
 import com.finalproject.model.Branch;
+import com.finalproject.model.Career;
 import com.finalproject.model.Employee;
 
 public interface EmployeeDao {
 
-	// 사원등록
+	// 현재 사원번호 확인하기
+	int empSeqCheck();
+	// 사원등록시 사원정보 등록
 	void insertEmployee(Employee emp);
+	// 사원등록시 사원학력 등록
+	void insertCareer(Career career);
+	
 	// 모든 사원 조회
 	List<Employee> getAllEmployees();
 	// 사원번호로 해당사원 조회

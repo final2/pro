@@ -4,11 +4,15 @@ import java.util.List;
 
 import com.finalproject.model.Branch;
 import com.finalproject.model.Employee;
+import com.finalproject.model.RegisterEmp;
 
 public interface EmployeeService {
 
+	// 현재 사원번호 확인하기
+	int empSeqCheck();
+	
 	// 사원등록
-	void insertEmployee(Employee emp);
+	void registerEmployee(RegisterEmp regEmp);
 	
 	// 모든 사원 조회
 	List<Employee> getAllEmployees();
