@@ -42,12 +42,15 @@
 			c.qty			as qty,
 			p.name			as "product.name",
 			p.client_no		as clientNo,
-			p.price			as "product.price"
+			p.price			as "product.price",
+			p.no			as "product.no"
 		from
 			client_detail c, product p
 		where
 			c.product_no = p.no
 			and c.client_no = #{value}
+		order by 
+			p.name asc
 	</select>
 	
 	<!-- 거래처 수정 -->
@@ -60,14 +63,14 @@
 	</update> 
 	
 	<!-- 게시글 총 수 불러오기 -->
-	<select id="getTotalClient" resultType="PN">
+	<select id="getTotalClient" resultType="PV">
 		select 
 			count(*) as boardTotalNo  
 		from client
 	</select>
 	
 	<!-- 페이지당 리스트 불러오기 -->
-	<select id="getBeginEndClients" parameterType="PN" resultType="Client">
+	<select id="getBeginEndClients" parameterType="PV" resultType="Client">
 		select
 			rank, no as no, name as name, isAdmit as isAdmit
 		from (select row_number() OVER(order by no desc) as rank, no, name, isAdmit
@@ -79,6 +82,9 @@
 <!-- 발주 ======================================================================================================= -->
 	<!-- 발주 신청 -->
 	<insert id="getNewOrder">
-		
+		insert into hq_order
+			(no, client_no, isconfirm, regdate)
+		values
+			(my_seq.nextval, no, 'N', sysdate)
 	</insert>
 </mapper>
