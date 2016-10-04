@@ -61,7 +61,6 @@ $(function() {
 			data:jsonData,
 			dataType:'json',
 			success:function(result) {
-				console.log(result);
 				var $tbody = $('.todayList');
 				$tbody.empty();
 				

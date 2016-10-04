@@ -73,7 +73,7 @@ public class NoticeController {
 		}
 		
 		List<NoticeBoard> boards = noticeService.getBeginEndBoard(pageVo);
-		
+
 		model.addAttribute("boardList", boards);
 		model.addAttribute("pageVo", pageVo);
 		
@@ -83,6 +83,10 @@ public class NoticeController {
 	// 공지사항 디테일
 	@RequestMapping("/boardDetail.do")
 	public String getBoardDetail(int pn, int rn, Model model) {
+		
+		if(pn < 1 && rn < 1) {
+			return "companynotice/boardDetail?pn=1&rn=1";
+		}
 		
 		int rows = 10;
 		int pages = 5;
@@ -95,6 +99,7 @@ public class NoticeController {
 		PageVo pageVo = new PageVo(rows, pages, pn, totalBoards);
 		pageVo.setBeginIndex(beginIndex);
 		pageVo.setEndIndex(endIndex);
+				
 		
 		NoticeBoard noticeBoard = new NoticeBoard();
 		noticeBoard.setBoardRank(rn);
@@ -102,7 +107,9 @@ public class NoticeController {
 		pageBoardDetail.setPageVo(pageVo);
 		pageBoardDetail.setNoticeBoard(noticeBoard);
 		
+		
 		NoticeBoard board = noticeService.getBoardRank(pageBoardDetail);
+		model.addAttribute("pageVo", pageVo);
 		model.addAttribute("board", board);
 		
 		return "companynotice/boardDetail";
@@ -134,6 +141,12 @@ public class NoticeController {
 	@RequestMapping(value="/calendar.do", method=RequestMethod.GET)
 	public String calendar() {
 		return "companynotice/calendarForm";
+	}
+	
+	//ProductAdd 페이지 이동
+	@RequestMapping(value="product.do", method=RequestMethod.GET)
+	public String product() {
+		return "companynotice/productForm";
 	}
 	
 }

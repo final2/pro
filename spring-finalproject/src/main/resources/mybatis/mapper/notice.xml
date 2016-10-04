@@ -41,12 +41,12 @@
 	<!-- 최신 공지사항 불러오기 -->
 	<select id="getNoticeToLatestBoard" resultType="Notice">
 		select 
-			rank,
+			rank	as boardRank,
 			no		as no,
 			title 	as title,
 			content as content,
 			regdate as regdate
-		from (select row_number() OVER(order by regdate desc) as rank, no, title, content, regdate
+		from (select row_number() OVER(order by no desc) as rank, no, title, content, regdate
 			  from hq_board
 			  order by rank)
 		where rank &lt;= 5
@@ -60,7 +60,7 @@
 			title 	as title,
 			content as content,
 			regdate as regdate
-		from (select row_number() OVER(order by regdate desc) as rank, no, title, content, regdate
+		from (select row_number() OVER(order by no desc) as rank, no, title, content, regdate
 			  from hq_board
 			  order by rank)
 		where rank >= #{beginIndex} and rank &lt;= #{endIndex}
@@ -91,7 +91,7 @@
 			   title	as title, 
 			   content	as content, 
 			   regdate	as regdate
-		from (select row_number() OVER(order by regdate desc) as rank, no, title, content, regdate
+		from (select row_number() OVER(order by no desc) as rank, no, title, content, regdate
 			  from hq_board
 			  order by rank)
 		where rank >= #{pageVo.beginIndex} and rank &lt;= #{pageVo.endIndex}

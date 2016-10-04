@@ -50,7 +50,7 @@
        				<a>물품 관리 <span class="caret"></span></a>
        				<ul class="in-bar">
        					<li><a href="">물품 리스트</a></li>
-       					<li><a href="">물품 등록</a></li>
+       					<li><a href="product.do">물품 등록</a></li>
        				</ul>	
        			</li>
        			<li><a href="">출고 관리</a></li>
