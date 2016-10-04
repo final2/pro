@@ -50,6 +50,7 @@ public interface BranchDao {
 	List<BranchOrder> getOrdersByBranchNo(int brno);
 	List<BranchOrderDetail> getOrderDetailsByOrderNo(int no);
 	List<BranchOrder> getOrdersByRegDate(Map<String, Object> map);
+	
 	// 지점 - 판매
 	void addBranchSales(BranchSales sales);
 	void addBranchSalesDetail(BranchSalesDetail salesDetail);
@@ -58,4 +59,5 @@ public interface BranchDao {
 	Branch getBranchByNo(int brno);
 	BranchEmp getBrEmpByNo(int empno);
 	void updateBranchSalesDetail(BranchSalesDetail salesDetail);
+	void updateBranchSales (BranchSales branchSales);
 }

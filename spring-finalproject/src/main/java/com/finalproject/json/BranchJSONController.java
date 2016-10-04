@@ -54,6 +54,13 @@ public class BranchJSONController {
 		return brService.getAllProductsFromCompany();
 	}
 	
+	@RequestMapping(value="/pno/{pno}", method=RequestMethod.GET)
+	public List<Product> getProduct(@PathVariable("pno") int pno) {
+		List<Product> list = new ArrayList<>();
+		list.add(brService.getProductByNo(pno));
+		return list;
+	}
+	
 	// 물품 번호로 재고 조회하기
 	@RequestMapping(value="/inv/{brno}/pno/{pno}", method=RequestMethod.GET)
 	public List<BranchInventory> getBranchInvenByProductNo(@PathVariable("brno") int brno, @PathVariable("pno") int pno) {
@@ -243,8 +250,8 @@ public class BranchJSONController {
 		return brService.getOrdersByRegDate(map);
 	}
 	
-	@RequestMapping(value="/sales/add/{empno}/pno/{pno}", method=RequestMethod.GET)
-	public List<BranchSalesDetail> getBranchSalesDetailBySalesNo(@PathVariable("empno") int empno, @PathVariable("pno") int pno) {
+	@RequestMapping(value="/sales/add/{empno}", method=RequestMethod.GET)
+	public List<BranchSalesDetail> getBranchSalesDetailBySalesNo(@PathVariable("empno") int empno) {
 		
 		Map<String, Object> map = new HashMap<>();
 		map.put("empNo", empno);
@@ -252,109 +259,47 @@ public class BranchJSONController {
 		
 		BranchSales sale = brService.getBranchSalesByNotIsSaled(map);
 		if (sale == null) {
-			System.out.println("null");
 			return null;
 		} else {
-			System.out.println("null아님");
-			System.out.println(sale.getNo());
-			List<BranchSalesDetail> list = brService.getBranchSalesDetailBySalesNo(sale.getNo());
-			for (BranchSalesDetail d : list) {
-				System.out.println("product" + d.getProduct().getNo());
-				System.out.println("sales" + d.getBranchSales().getNo());
-			}
 			return brService.getBranchSalesDetailBySalesNo(sale.getNo());
-			//xml바꿨으니 나오는지 확인 하자
 		}
 	}
 	
-	@RequestMapping(value="/sales/add/{empno}/pno/{pno}", method=RequestMethod.POST)
-	public List<BranchSalesDetail> addBranchSales(@PathVariable("empno") int empno, @PathVariable("pno") int pno) {
-		
+	@RequestMapping(value="/sales/add/{empno}/pay/{pay}/gen/{gen}/age/{age}", method=RequestMethod.POST)
+	public List<BranchSalesDetail> addBranchSales(@RequestBody List<BranchSalesDetail> detailList, 
+								@PathVariable("empno") int empno,
+								@PathVariable("pay") String payment,
+								@PathVariable("gen") String gender,
+								@PathVariable("age") String ages) {
 		Map<String, Object> map = new HashMap<>();
 		map.put("empNo", empno);
 		map.put("issaled", 'N');
 		
-		BranchSales sale = brService.getBranchSalesByNotIsSaled(map);
-						
 		BranchEmp emp = brService.getBrEmpByNo(empno);
 		Branch branch = brService.getBranchByNo(emp.getBranch().getNo());
 
-		if (sale == null) {
-			BranchSales newSale = new BranchSales();
-			newSale.setBranch(branch);
-			newSale.setBrEmp(emp);
-			brService.addBranchSales(newSale);
-			
-			newSale = brService.getBranchSalesByNotIsSaled(map);
+		BranchSales sale = new BranchSales();
+		sale.setAges(Integer.parseInt(ages));
+		sale.setBrEmp(emp);
+		sale.setGender(gender);
+		sale.setPayment(payment);
+		sale.setBranch(branch);
+		brService.addBranchSales(sale);
+		
+		sale = brService.getBranchSalesByNotIsSaled(map);
+		sale.setIssaled("Y");
+		brService.updateBranchSales(sale);
+		List<BranchSalesDetail> list = detailList;
+		for (BranchSalesDetail d : list) {
 			BranchSalesDetail detail = new BranchSalesDetail();
-			detail.setBranchSales(newSale);
-			Product product = brService.getProductByNo(pno);
+			detail.setBranchSales(sale);
+			
+			Product product = brService.getProductByNo(d.getProduct().getNo());
 			detail.setProduct(product);
+			detail.setQty(d.getQty());
 			brService.addBranchSalesDetail(detail);
-
-			return brService.getBranchSalesDetailBySalesNo(newSale.getNo());
-			
-		} else {
-			List<BranchSalesDetail> list = brService.getBranchSalesDetailBySalesNo(sale.getNo());
-			
-			for (BranchSalesDetail d : list) {
-				if (list!= null && d.getProduct().getNo() == pno) {
-					d.setQty(d.getQty() + 1);
-					brService.updateBranchSalesDetail(d);
-				} else {
-					BranchSalesDetail detail = new BranchSalesDetail();
-					detail.setBranchSales(sale);
-					Product product = brService.getProductByNo(pno);
-					detail.setProduct(product);
-					brService.addBranchSalesDetail(detail);
-				}
-			}
-			return brService.getBranchSalesDetailBySalesNo(sale.getNo());
 		}
-		
-	}
-	
-	@RequestMapping(value="/sales/add//{empno}", method=RequestMethod.POST)
-	public List<BranchSalesDetail> addBranchSalesDetail(@RequestBody List<BranchSalesDetail> detailList, @PathVariable("empno") int empno) {
-		
-		Map<String, Object> map = new HashMap<>();
-		map.put("empNo", empno);
-		map.put("issaled", 'N');
-		
-		BranchSales sale = brService.getBranchSalesByNotIsSaled(map);
-						
-		BranchEmp emp = brService.getBrEmpByNo(empno);
-		Branch branch = brService.getBranchByNo(emp.getBranch().getNo());
-		
-		if (sale == null) {
-			BranchSales newSale = new BranchSales();
-			newSale.setBranch(branch);
-			newSale.setBrEmp(emp);
-			brService.addBranchSales(newSale);
-			
-			newSale = brService.getBranchSalesByNotIsSaled(map);
-			
-			for (BranchSalesDetail d : detailList) {
-				BranchSalesDetail saleDetail = new BranchSalesDetail();
-				saleDetail.setBranchSales(newSale);
-				
-				Product product = d.getProduct();
-				saleDetail.setProduct(product);
-				saleDetail.setQty(d.getQty());
-			}
-		} else {
-			for (BranchSalesDetail d : detailList) {
-				BranchSalesDetail saleDetail = new BranchSalesDetail();
-				saleDetail.setBranchSales(sale);
-				
-				Product product = d.getProduct();
-				saleDetail.setProduct(product);
-				saleDetail.setQty(d.getQty());
-			}
-		}
-		
 		return brService.getBranchSalesDetailBySalesNo(sale.getNo());
 	}
-	
 	
 }

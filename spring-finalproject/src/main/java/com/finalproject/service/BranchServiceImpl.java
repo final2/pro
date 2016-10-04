@@ -188,4 +188,9 @@ public class BranchServiceImpl implements BranchService {
 	public void updateBranchSalesDetail(BranchSalesDetail salesDetail) {
 		branchDao.updateBranchSalesDetail(salesDetail);
 	}
+	
+	@Override
+	public void updateBranchSales(BranchSales branchSales) {
+		branchDao.updateBranchSales(branchSales);
+	}
 }

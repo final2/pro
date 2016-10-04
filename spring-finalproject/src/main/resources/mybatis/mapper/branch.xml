@@ -356,14 +356,25 @@
 	</select>
 	
 	<insert id="addBranchSales" parameterType="com.finalproject.model.BranchSales">
-		insert into br_sales (no, regdate, issaled, isreturned, br_employee_no, branch_no)
-		values(mybranch_seq.nextval, sysdate, 'N', 'N', #{brEmp.no}, #{branch.no})
+		insert into br_sales (no, regdate, ages, gender, issaled, isreturned, payment, br_employee_no, branch_no)
+		values(mybranch_seq.nextval, sysdate, #{ages}, #{gender}, 'N', 'N', #{payment}, #{brEmp.no}, #{branch.no})
 	</insert>
 	
 	<insert id="addBranchSalesDetail" parameterType="com.finalproject.model.BranchSalesDetail">
-		insert into br_sales_detail (no, br_sales_no, product_no)
-		values(mybranch_seq.nextval, #{branchSales.no}, #{product.no})
+		insert into br_sales_detail (no, qty, br_sales_no, product_no)
+		values(mybranch_seq.nextval, #{qty}, #{branchSales.no}, #{product.no})
 	</insert>
+	
+	<update id="updateBranchSales" parameterType="com.finalproject.model.BranchSales">
+		update br_sales
+		set
+			ages = #{ages},
+			gender = #{gender},
+			payment = #{payment},
+			issaled = 'Y'
+		where
+			no = #{no}
+	</update>
 	
 	<update id="updateBranchSalesDetail" parameterType="com.finalproject.model.BranchSalesDetail">
 		update br_sales_detail

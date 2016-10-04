@@ -89,4 +89,6 @@ public interface BranchService {
 	BranchEmp getBrEmpByNo(int empno);
 	
 	void updateBranchSalesDetail(BranchSalesDetail salesDetail);
+	
+	void updateBranchSales (BranchSales branchSales);
 }
