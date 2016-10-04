@@ -4,6 +4,7 @@ public class EmployeeLoginCheck {
 
 	private int no;
 	private String password;
+	
 	public int getNo() {
 		return no;
 	}
@@ -16,6 +17,5 @@ public class EmployeeLoginCheck {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
 	
 }
