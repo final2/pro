@@ -11,6 +11,7 @@ public class Product {
 	private Event event;
 	private SmallCategory smallCat;
 	private String image;
+	private int clientNo;
 	
 	public int getNo() {
 		return no;
@@ -65,6 +66,12 @@ public class Product {
 	}
 	public void setSmallCat(SmallCategory smallCat) {
 		this.smallCat = smallCat;
+	}
+	public int getClientNo() {
+		return clientNo;
+	}
+	public void setClientNo(int clientNo) {
+		this.clientNo = clientNo;
 	}
 	
 	

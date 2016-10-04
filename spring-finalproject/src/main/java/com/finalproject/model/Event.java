@@ -4,7 +4,6 @@ public class Event {
 
 	private int no;
 	private String type;
-	
 	public int getNo() {
 		return no;
 	}
@@ -17,6 +16,7 @@ public class Event {
 	public void setType(String type) {
 		this.type = type;
 	}
+
 	
 	
 }

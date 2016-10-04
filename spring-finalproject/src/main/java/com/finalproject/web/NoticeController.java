@@ -145,7 +145,7 @@ public class NoticeController {
 	
 	//ProductAdd 페이지 이동
 	@RequestMapping(value="product.do", method=RequestMethod.GET)
-	public String product() {
+	public String product(Model model) {
 		return "companynotice/productForm";
 	}
 	

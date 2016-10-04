@@ -8,8 +8,6 @@
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" href="resources/bootstrap/css/bootstrap.css">
 <script type="text/javascript" src="resources/jquery/jquery.js"></script>
-<link href="resources/bootstrap/css/simple-sidebar.css" rel="stylesheet">
-<script src="resources/bootstrap/js/bootstrap.min.js"></script>
 <style>
 thead td,th{text-align:center;}
 </style>
@@ -17,10 +15,10 @@ thead td,th{text-align:center;}
 <body>
 <div id="wrapper">
 	<%@ include file="/WEB-INF/views/sidebartemplate/sidebar.jsp" %>
-	<!-- 메신저 modal창 -->
+	<%-- <!-- 메신저 modal창 -->
 	<div class="modal fade" id="messenger" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
 		<%@ include file="../message/messagebutton.jsp" %>
-	</div>
+	</div> --%>
 	<a href="#menu-toggle" class="btn btn-default btn-xs" id="menu-toggle">side bar</a>
 	<div id="page-context-wrapper">
 		<!-- Background 불러오기 -->
@@ -57,6 +55,42 @@ thead td,th{text-align:center;}
 					<a href="boardDelete.do" class="btn btn-default">삭제</a>
 				</c:if>
 				<a href="boardList.do" class="btn btn-default">목록</a>
+			</div>
+			<div style="text-align:center">
+					<c:choose>
+						<c:when test="${board.boardRank eq 1 and pageVo.pageNo eq 1 }">
+							<a href="" class="btn btn-default disabled" aria-label="Next">
+								<span aria-hidden="true">&lt;</span> 다음 게시글
+							</a>
+						</c:when>
+						<c:when test="${board.boardRank eq 1 and pageVo.pageNo gt 1 }">
+							<a href="boardDetail.do?pn=${pageVo.pageNo - 1 }&rn=10" class="btn btn-default" aria-label="Next">
+								<span aria-hidden="true">&lt;</span> 다음 게시글
+							</a>
+						</c:when>
+						<c:otherwise>
+							<a href="boardDetail.do?pn=${pageVo.pageNo }&rn=${board.boardRank - 1}" class="btn btn-default" aria-label="Next">
+								<span aria-hidden="true">&lt;</span> 다음 게시글
+							</a>
+						</c:otherwise>
+					</c:choose>				
+					<c:choose>
+						<c:when test="${board.boardRank eq 10 and pageVo.pageNo eq pageVo.totalPages }">
+							<a href="" class="btn btn-default disabled" aria-label="Previous">
+								이전 게시글 <span aria-hidden="true">&gt;</span> 
+							</a>
+						</c:when>
+						<c:when test="${board.boardRank eq 10 and pageVo.pageNo lt pageVo.totalPages }">
+							<a href="boardDetail.do?pn=${pageVo.pageNo +1}&rn=1" class="btn btn-default" aria-label="Previous">
+								이전 게시글 <span aria-hidden="true">&gt;</span> 
+							</a>
+						</c:when>
+						<c:otherwise>
+							<a href="boardDetail.do?pn=${pageVo.pageNo }&rn=${board.boardRank + 1}" class="btn btn-default" aria-label="Previous">
+								이전 게시글  <span aria-hidden="true">&gt;</span> 
+							</a>
+						</c:otherwise>
+					</c:choose>
 			</div>
 		</div>
 	</div>

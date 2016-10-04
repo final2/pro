@@ -6,4 +6,30 @@
     
 <mapper namespace="com.finalproject.dao.ProductDao">
 
+	<insert id="insertProduct" parameterType="Product">
+		insert into Product
+			(no, name, maker, price, memo, limiteage, eventcode, smallcategory_no, image, client_no)
+		values
+			(myproduct_seq.nextval, #{name}, #{maker}, #{price}, #{memo}, #{limiteage}, #{event.no}, #{smallcat}, #{image}, #{clientNo})
+	</insert>
+	<select id="getClient" resultType="Client">
+		select 
+			no 		as no, 
+			name	as name
+		from client
+	</select>
+	
+	<select id="getEvent" resultType="event">
+		select 
+			eventcode	as no,
+			event_type	as type
+		from event
+	</select>
+	
+	<select id="getSmallCategory" resultType="SC" >
+		select 
+			no	as no, 
+			name as name
+		from smallcategory
+	</select>
 </mapper>

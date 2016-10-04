@@ -8,8 +8,6 @@
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" href="resources/bootstrap/css/bootstrap.css">
 <script type="text/javascript" src="resources/jquery/jquery.js"></script>
-<link href="resources/bootstrap/css/simple-sidebar.css" rel="stylesheet">
-<script src="resources/bootstrap/js/bootstrap.min.js"></script>
 <!-- textarea editor 플러그인 참조 -->
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.js"></script>
 <script src="http://cdn.ckeditor.com/4.4.7/standard/ckeditor.js"></script>
@@ -18,10 +16,10 @@
 <div id="wrapper">
 	<%@ include file="/WEB-INF/views/sidebartemplate/sidebar.jsp" %>
 	<a href="#menu-toggle" class="btn btn-default btn-xs" id="menu-toggle">side bar</a>
-	<!-- 메신저 modal창 -->
+	<%-- <!-- 메신저 modal창 -->
 	<div class="modal fade" id="messenger" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
 		<%@ include file="../message/messagebutton.jsp" %>
-	</div>
+	</div> --%>
 	<div id="page-context-wrapper">
 	<!-- Background 불러오기 -->
 		<%@ include file="backgroundVideo.jsp" %>

@@ -9,8 +9,9 @@
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" href="resources/bootstrap/css/bootstrap.css">
 <script type="text/javascript" src="resources/jquery/jquery.js"></script>
-<link href="resources/bootstrap/css/simple-sidebar.css" rel="stylesheet">
-<script src="resources/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+
+</script>
 <style>
 h1 {color: white;}
 th,td {text-align:center;}
@@ -45,10 +46,10 @@ ul.pagination li a:hover:not(.active) {background-color: #ddd;}
 <body>
 <div id="wrapper">
 	<%@ include file="/WEB-INF/views/sidebartemplate/sidebar.jsp" %>
-	<!-- 메신저 modal창 -->
+	<%-- <!-- 메신저 modal창 -->
 	<div class="modal fade" id="messenger" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
 		<%@ include file="../message/messagebutton.jsp" %>
-	</div>
+	</div> --%>
 	<a href="#menu-toggle" class="btn btn-default btn-xs" id="menu-toggle">side bar</a>
 	<div id="page-context-wrapper">
 		<!-- Background 불러오기 -->
@@ -72,10 +73,10 @@ ul.pagination li a:hover:not(.active) {background-color: #ddd;}
 					</thead>
 					<tbody>
 						<!-- 반복 -->
-						<c:forEach begin="${pageVo.beginIndex }" end="${pageVo.endIndex}" var="board" items="${boardList}">
+						<c:forEach var="board" items="${boardList}">
 							<!-- detail 들어갈때 보내는 전송값 -->
 							<c:url var="detailURL" value="boardDetail.do">
-								<c:param name="pn" value="${param.pn }" />
+								<c:param name="pn" value="${pageVo.pageNo }" />
 								<c:param name="rn" value="${board.boardRank}" />
 							</c:url>
 							<tr>
