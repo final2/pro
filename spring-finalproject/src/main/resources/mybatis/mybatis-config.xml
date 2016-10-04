@@ -18,6 +18,7 @@
       	<typeAlias type="com.finalproject.model.Client" alias="Client"/>
       	<typeAlias type="com.finalproject.model.ClientDetail" alias="ClDetail"/>
       	<typeAlias type="com.finalproject.model.HqOrder" alias="HqOrder"/> 
+      	<typeAlias type="com.finalproject.model.HqOrderDetail" alias="HOD"/>
       	<typeAlias type="com.finalproject.model.RegisterEmp" alias="RegisterEmp"/>     	
       	<typeAlias type="com.finalproject.model.Employee" alias="Employee"/>   	
       	<typeAlias type="com.finalproject.model.Career" alias="Career"/>   	
