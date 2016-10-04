@@ -52,6 +52,7 @@
 			<mvc:exclude-mapping path="/qnamail.do"/>
 			<mvc:exclude-mapping path="/searchbranch.do"/>
 			<mvc:exclude-mapping path="/searchtype.do"/>
+			<mvc:exclude-mapping path="/send.do"/>
 			
 			<bean class="com.finalproject.web.interceptor.LoginCheckInterceptor"></bean>
 		</mvc:interceptor>

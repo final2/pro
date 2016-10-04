@@ -16,7 +16,10 @@
     <div class="w3-threequarter">
       <div class="w3-treequater w3-right" style="width:350px">
         <div class="w3-col m8">
-        <div class="w3-padding-16"><span class=" w3-border-teal w3-bottombar">Contact Us</span></div>
+        <div class="w3-padding-16">
+        	<a href="#" onclick="window.open('qnamail.do','qnamail','width=500px height=600px menubar=no, location=no, status=no, toolbar=no')">
+          <span id="contactUs"class=" w3-border-teal w3-bottombar">Contact Us</span></a>
+        </div>
           <p>종로구 봉익동 디아망빌딩 4층</p>
           <p><i class="fa fa-map-marker w3-text-teal"></i>  서울시 종로구</p>
           <p><i class="fa fa-phone w3-text-teal"></i>  +00 1515151515</p>
@@ -24,5 +27,4 @@
         </div>
       </div>
     </div>
-
 </footer>

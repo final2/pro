@@ -37,13 +37,18 @@
       <param-value>
       	WEB-INF/spring/root-context.xml
       	WEB-INF/spring/sec-context.xml
+      	WEB-INF/spring/root-mail-context.xml
       	</param-value>
    </context-param>
    <listener>
       <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
    </listener> 
    
-   
+
+
+
+
+
    <!-- 
       /json/* 요청을 받아서 JSON 응답데이타를 제공하는 컨트롤러들을 실행시키는 DispatcherServlet
    -->

@@ -77,11 +77,11 @@ public class WebController {
 		model.addAttribute("boardDetail",board);
 		return "website/webboarddetail";
 	}
-	//문의사항
+/*	//문의사항
 	@RequestMapping("qnamail.do")
 	public String qnamail(){
 		return "website/qnamail";
-	}
+	}*/
 	//지점검색
 	@RequestMapping("searchbranch.do")
 	public String searchbranch(){
