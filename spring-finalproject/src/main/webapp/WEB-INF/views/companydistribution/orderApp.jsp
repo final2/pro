@@ -27,10 +27,10 @@ $(function(){
 				$tr.append("<tr><th style='width:25%'>제품번호</th><th style='width:25%'>제품 명</th><th style='width:25%'>가격</th><th style='width:25%'>수량</th></tr>");
 				$.each(result, function(index, pro) {
 					$tr.append("<tr id='no-"+pro.product.no+"'>"
-							  +"<td>"+pro.product.no+"<input type='hidden' name='no' class='form-control' value ="+pro.product.no+"/></td>"
+							  +"<td>"+pro.product.no+"<input type='hidden' name='no' class='form-control' value='"+pro.product.no+"'/></td>"
 							  +"<td>"+pro.product.name+"</td>"
-						   	  +"<td>"+pro.product.price+"<input type='hidden' name='price' class='form-control'value ="+pro.product.price+"/></td>"
-							  +"<td><input type='number' name='qty' class=form-control /></td>"
+						   	  +"<td>"+pro.product.price+"<input type='hidden' name='price' class='form-control' value='"+pro.product.price+"'/></td>"
+							  +"<td><input type='number' name='qty' class='form-control' value = '0'/></td>"
 							  +"</tr>")
 				}); 
 			}
@@ -56,7 +56,7 @@ $(function(){
 						<tr>
 							<th colspan="2" style="width: 50%">거래처명</th>
 							<td colspan="2" style="width: 50%">
-								<select id="client" class="form-control">
+								<select id="client" name="clientNo" class="form-control">
 									<option selected>거래처를 선택하세요.</option>
 									<c:forEach var="clients" items="${clientList}">
 										<c:choose>
@@ -77,10 +77,11 @@ $(function(){
 							<th style="width:25%">수량</th>
 						</tr>
 						<!-- 입력 -->
+						
 					</tbody>
 				</table>
 				<div class="pull-right">
-					<a href="hqOrderDetail.do" class="btn btn-primary">신청</a>
+					<input type="submit" class="btn btn-primary" value="신청" />
 					<a href="hqOrder.do" class="btn btn-danger">취소</a>
 				</div>
 			</form>

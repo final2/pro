@@ -25,28 +25,39 @@
 				<thead>
 					<tr>
 						<th>발주번호</th>
-						<td></td>
+						<td>${orders.no }</td>
 						<th>발주신청일자</th>
-						<td></td>
+						<td><fmt:formatDate value="${orders.regdate }" pattern="yyyy-MM-dd"/> </td>
+					</tr>
+					<tr>
+						<th>거래처명</th>
+						<td>${orders.client.name}</td>
+						<th>입고확인 여부</th>
+						<td>${orders.confirm }</td>
 					</tr>
 				</thead>
 				<tbody>
 					<tr>
-						<th>거래처명</th>
-						<th>제품번호/제품명</th>
+						<th>제품번호</th>
+						<th>제품명</th>
 						<th>수량</th>
 						<th>가격</th>
 					</tr>
-					<tr>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
+					<c:forEach var="details" items="${details }">
+						<tr>
+							<td>${details.product.no }</td>
+							<td>${details.product.name }</td>
+							<td>${details.qty }</td>
+							<td>${details.product.price }</td>
+						</tr>
+					</c:forEach>
 				</tbody>
 			</table>
 			<div class="pull-right">
-				<a href="updateOrder.do" class="btn btn-primary">수정</a>
+				<c:url var="updateOrderURL" value="updateOrder.do">
+					<c:param name="no" value="${orders.no }"></c:param>
+				</c:url>
+				<a href="${updateOrderURL }" class="btn btn-primary">수정</a>
 				<a href="hqOrder.do" class="btn btn-danger">확인</a>
 			</div>
 		</div>

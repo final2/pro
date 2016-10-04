@@ -59,41 +59,30 @@ th,td {text-align:center;}
 			</div>
 			<div class="text-center">
 				<ul class="pagination">
-					<c:choose>
-						<c:when test="${param.pn == pageNo.beginPageNo}">
-							<li><a class="disabled">&lt;</a></li>
-						</c:when>
-						<c:otherwise>
-							<c:url var="nextClientListURL" value="clientList.do">
-								<c:param name="pn" value="${param.pn + 1 }" />
-							</c:url>
-							<li><a href="${nextClientListURL }">&lt;</a></li>
-						</c:otherwise>
-					</c:choose>
-					<c:forEach begin="${pageNo.beginPageNo }" end="${pageNo.endPageNo }" varStatus="status">
-						<c:url var="clientListURL" value="clientList.do">
-							<c:param name="pn" value="${status.count }" />
-						</c:url>
+					<c:if test="${pageVo.pageNo gt 1}">
+						<li>
+							<a href="clientList.do?pn=${pageVo.pageNo - 1 }" aria-label="Previous">
+								<span aria-hidden="true">&laquo;</span>
+							</a>
+						</li>
+					</c:if>
+					<c:forEach var="num" begin="${pageVo.beginPage }" end="${pageVo.endPage}">
 						<c:choose>
-							<c:when test="${param.pn == status.count }">
-								<li><a href="${clientListURL }" class="active">${status.count }</a></li>
+							<c:when test="${pageVo.pageNo eq num }">
+								<li><a class="active" href="clientList.do?pn=${num }">${num }</a></li>
 							</c:when>
 							<c:otherwise>
-								<li><a href="${clientListURL }">${status.count }</a></li>
+								<li><a href="clientList.do?pn=${num }">${num }</a></li>
 							</c:otherwise>
 						</c:choose>
 					</c:forEach>
-					<c:choose>
-						<c:when test="${param.pn == pageNo.endPageNo}">
-							<li><a class="disabled">></a></li>
-						</c:when>
-						<c:otherwise>
-							<c:url var="preClientList" value="clientList.do">
-								<c:param name="pn" value="${param.pn - 1}" />
-							</c:url>
-							<li><a href="${preClientList }">></a></li>
-						</c:otherwise>
-					</c:choose>
+					<c:if test="${pageVo.pageNo lt pageVo.totalPages }">
+						<li>
+							<a href="clientList.do?pn=${pageVo.pageNo + 1 }" aria-label="Next">
+								<span aria-hidden="true">&raquo;</span>
+							</a>
+						</li>
+					</c:if>
 				</ul>
 			</div>
 		</div>

@@ -36,12 +36,17 @@ th,td {text-align:center;}
 					<th>거래처 번호 / 거래처명</th>
 					<th>입고확인 여부</th>
 				</tr>
-				<tr>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-				</tr>
+				<c:forEach var="order" items="${orderLists }">
+					<c:url var="orderDetailURL" value="hqOrderDetail.do">
+						<c:param name="no" value="${order.no}" />
+					</c:url>
+					<tr>
+						<td><fmt:formatDate value="${order.regdate }" pattern="yyyy-MM-dd" /> </td>
+						<td>${order.no }</td>
+						<td><a href="${orderDetailURL}">${order.client.no } / ${order.client.name }</a></td>
+						<td>${order.confirm }</td>
+					</tr>
+				</c:forEach>
 			</table>
 			<div class="pull-right">
 				<a href="orderApp.do" class="btn btn-primary">발주 신청</a>

@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.finalproject.model.Client;
 import com.finalproject.model.ClientDetail;
+import com.finalproject.model.HqOrder;
+import com.finalproject.model.HqOrderDetail;
 import com.finalproject.model.PageVo;
 
 public interface DistributionDao {
@@ -30,5 +32,17 @@ public interface DistributionDao {
 	void updateClient(Client client);
 
 /* 발주 ========================================================================================================== */
+	// 발주 조회
+	List<HqOrder> getHqOrders();
 	// 발주 신청
+	int getOrderNo(); // 발주 신청시 주문번호 생성
+	void addNewOrder(HqOrder hqOrder);
+	void addNewProductOrder(HqOrderDetail hqOrderDetail);
+	
+	// 번호로 발주 정보 조회
+	HqOrder getOrderByNo(int no);
+	List<HqOrderDetail> getOrderDetailByNo(int no);
+	
+	// 발주 정보 수정
+	void updateOrder(HqOrderDetail hqOrderDetail);
 }

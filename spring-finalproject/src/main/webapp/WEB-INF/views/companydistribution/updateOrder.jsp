@@ -30,12 +30,14 @@
 						<th>발주신청일자</th>
 						<td></td>
 					</tr>
+					<tr>
+						<th>거래처명</th>
+						<td></td>
+						<th>입고확인 여부</th>
+						<td></td>
+					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<th colspan="2">거래처명</th>
-						<td colspan="2"></td>
-					</tr>
 					<tr>
 						<th>제품번호</th>
 						<th>제품 명</th>

@@ -1,17 +1,12 @@
 package com.finalproject.model;
 
 import java.util.Date;
-import java.util.List;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 
 public class HqOrder {
 	
 	private int no;
-	private int clientNo;
+	private Client client;
 	private String confirm;
-	@JsonFormat(shape=Shape.STRING, pattern="yyyy-MM-dd")
 	private Date regdate;
 	
 	public int getNo() {
@@ -20,11 +15,11 @@ public class HqOrder {
 	public void setNo(int no) {
 		this.no = no;
 	}
-	public int getClientNo() {
-		return clientNo;
+	public Client getClient() {
+		return client;
 	}
-	public void setClientNo(int clientNo) {
-		this.clientNo = clientNo;
+	public void setClient(Client client) {
+		this.client = client;
 	}
 	public String getConfirm() {
 		return confirm;
@@ -37,6 +32,11 @@ public class HqOrder {
 	}
 	public void setRegdate(Date regdate) {
 		this.regdate = regdate;
+	}
+	
+	@Override
+	public String toString() {
+		return "HqOrder [no=" + no + ", client=" + client + ", confirm=" + confirm + ", regdate=" + regdate + "]";
 	}
 
 }

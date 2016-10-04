@@ -5,6 +5,8 @@ import java.util.Map;
 
 import com.finalproject.model.Client;
 import com.finalproject.model.ClientDetail;
+import com.finalproject.model.HqOrder;
+import com.finalproject.model.HqOrderDetail;
 import com.finalproject.model.PageVo;
 
 public interface DistributionService {
@@ -31,5 +33,18 @@ public interface DistributionService {
 	void updateClient(Client client);
 
 /* 발주 ========================================================================================================== */
+	// 발주 조회
+	List<HqOrder> getHqOrderLists();
+	
 	// 발주 신청
+	int orderNo(); // 발주 신청시 주문번호 생성
+	void NewOrder(HqOrder hqOrder);
+	void NewProductOrder(HqOrderDetail hqOrderDetail);
+	
+	// 번호로 발주 정보 조회
+	HqOrder getOrderByNo(int no);
+	List<HqOrderDetail> getOrderDetailByNo(int no);
+	
+	// 발주 정보 수정
+	void updateOrder(HqOrderDetail hqOrderDetail);
 }

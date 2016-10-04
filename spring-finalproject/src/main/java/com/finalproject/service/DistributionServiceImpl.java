@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import com.finalproject.dao.DistributionDao;
 import com.finalproject.model.Client;
 import com.finalproject.model.ClientDetail;
+import com.finalproject.model.HqOrder;
+import com.finalproject.model.HqOrderDetail;
 import com.finalproject.model.PageVo;
 
 @Service
@@ -58,6 +60,38 @@ public class DistributionServiceImpl implements DistributionService{
 		distributionDao.updateClient(client);
 	}
 /* 발주 ========================================================================================================== */
-	
+	// 발주 조회
+	@Override
+	public List<HqOrder> getHqOrderLists() {
+		return distributionDao.getHqOrders();
+	}
 	// 발주 신청
+	@Override
+	public int orderNo() {
+		return distributionDao.getOrderNo();
+	}
+	@Override
+	public void NewOrder(HqOrder hqOrder) {
+		distributionDao.addNewOrder(hqOrder);
+	}
+	@Override
+	public void NewProductOrder(HqOrderDetail hqOrderDetail) {
+		distributionDao.addNewProductOrder(hqOrderDetail);
+	}
+	// 번호로 발주 정보 조회
+	@Override
+	public HqOrder getOrderByNo(int no) {
+		return distributionDao.getOrderByNo(no);
+	}
+	// 번호로 발주 상세 정보 조회
+	@Override
+	public List<HqOrderDetail> getOrderDetailByNo(int no) {
+		return distributionDao.getOrderDetailByNo(no);
+	}
+	
+	// 발주 정보 수정
+	@Override
+	public void updateOrder(HqOrderDetail hqOrderDetail) {
+		distributionDao.updateOrder(hqOrderDetail);		
+	}
 }
