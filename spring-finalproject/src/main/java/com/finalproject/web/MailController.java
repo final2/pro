@@ -3,6 +3,7 @@ package com.finalproject.web;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.finalproject.model.SendMail;
 import com.finalproject.service.MailService;
@@ -26,12 +27,12 @@ public class MailController {
 	}
 	
 	@RequestMapping("send.do")
-	public String submit(SendMail sendMail){
+	public @ResponseBody String submit(SendMail sendMail){
 		
 		System.out.println(sendMail);
 		mailService.sendMail(sendMail);
 		
-		return null;
+		return "success";
 	} 
 
 }

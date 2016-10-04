@@ -56,6 +56,26 @@
 	}
 	
 </style>
+<script type="text/javascript">
+$(function() {
+	
+	$(":submit").click(function(event) {
+		event.preventDefault();
+		var texts= $("#from").val();
+			texts += $("#text").val();
+		$.ajax({
+			url:"send.do",
+			data:{to:"lovelyzenak@gmail.com", from:"lovelyzenak@gmail.com", 
+				subject:$("#subject").val(), text:texts},
+			dataType:"text",
+			success: function(result) {
+				self.close();
+			}
+		});
+	}) ;
+})
+
+</script>
 </head>
 <body>
 <div class="w3-display-container w3-padding-10" style="width:100%;">
@@ -64,15 +84,15 @@
 	  		<h1><span style="color:white;">궁금한것 물어보기</span></h1>
 	</div>
 	<div class="w3-container w3-padding-10  w3-margin-bottom">
-		<form method="post" action="send.do">
-			<label for="from" >받는 사람</label>
-			<input type="text" id="from" name="from" onfocus="this.value='';" value="이메일 aaa@bbb.com의 형식으로 적어주세요"/><br />
+		<form id="sendform" method="post" action="send.do">
+			<!-- <label for="from" >받는 사람</label> -->
+			<input type="hidden" id="to" name="to" value="lovelyzenak@gmail.com" /><br />
 			<label for="to" >보내는 사람</label>
-			<input type="hidden" id="to" name="to"  value="lovelyzenak@gmail.com"/><br />  
+			<input type="text" id="from" name="from"  value="이메일 aaa@bbb.com의 형식으로 적어주세요"/><br />  
 			<label for="subject">제목</label>
 			<input type="text" id="subject" name="subject" /><br />
 			<label for="style-textarea">내용</label>
-			<textarea id="text" name="text" onfocus="this.value='';" onblur="setbg('white')">여기에 내용을 적어 주세요</textarea>
+			<textarea id="text" name="text" onfocus="this.value='';" >여기에 내용을 적어 주세요</textarea>
 			<input type="submit" value="보내기" /><br />
 		</form>
 	</div>
