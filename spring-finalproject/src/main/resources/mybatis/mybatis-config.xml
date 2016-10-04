@@ -27,6 +27,7 @@
       	<typeAlias type="com.finalproject.model.Message" alias="Message"/>
       	<typeAlias type="com.finalproject.model.Branch" alias="Branch"/>
       	<typeAlias type="com.finalproject.model.BranchEmp" alias="BranchEmp"/>
+      	<typeAlias type="com.finalproject.model.AccountBook" alias="AccountBook"/>
 	</typeAliases>
 
 	<mappers> 
