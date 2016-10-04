@@ -6,13 +6,78 @@
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" href="resources/bootstrap/css/bootstrap.css">
 <script type="text/javascript" src="resources/jquery/jquery.js"></script>
-<title>Introduce BigStore</title>
+<title>QnA MAil</title>
+<style>
+	input[type=text], select {
+	    width: 100%;
+	    padding: 12px 20px;
+	    margin: 8px 0;
+	    display: inline-block;
+	    border: 1px solid #ccc;
+	    border-radius: 4px;
+	    box-sizing: border-box;
+	}
+	
+	input[type=submit] {
+	    width: 100%;
+	    background-color: #4CAF50;
+	    color: white;
+	    padding: 14px 20px;
+	    margin: 8px 0;
+	    border: none;
+	    border-radius: 4px;
+	    cursor: pointer;
+	}
+	
+	input[type=submit]:hover {
+	    background-color: #45a049;
+	}
+	
+	/* div {
+	    border-radius: 5px;
+	    background-color: #f2f2f2;
+	    padding: 20px;
+	} */
+	
+	 #styled {
+		width : 100%;
+		height : 260px;
+		padding: 12px 20px;
+	    margin: 8px 0;
+	    display: inline-block;
+	    border: 1px solid #ccc;
+	    border-radius: 4px;
+	    box-sizing: border-box;
+	
+	}
+	
+	
+	
+</style>
 </head>
 <body>
 <div class="w3-display-container" style="width:1080px;">
-<%@ include file="navbar.jsp" %>
+    <%@ include file="navbar.jsp" %>
 	<div class="w3-container w3-padding-10  w3-margin-bottom">
 	
+
+	<h1>질문하기</h1>
+	<form method="post" action="send.do">
+		<label for="from">보내는 사람</label>
+		<input type="text" id="from" name="from" /><br />
+		<label for="to">받는 사람</label>
+		<input type="text" id="to" name="to" /><br />
+		<label for="subject">제목</label>
+		<input type="text" id="subject" name="subject" /><br />
+		<label for="style-textarea">내용</label>
+		<textarea id="styled" name="style-textarea" onfocus="this.value='';setbg('#e5fff3');" onblur="setbg('white')">여기에 내용을 적어 주세요</textarea>
+		<input type="submit" value="보내기" /><br />
+	</form>
+
+
+
+
+
 
 	</div>
 	<!-- Footer -->
