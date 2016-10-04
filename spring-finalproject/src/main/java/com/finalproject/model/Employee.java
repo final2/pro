@@ -20,6 +20,7 @@ public class Employee {
 	private String workingStatus;
 	private Date retireDate;
 	private String remarks;
+	private String loginState;
 	
 	public int getNo() {
 		return no;
@@ -110,6 +111,12 @@ public class Employee {
 	}
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
+	}
+	public String getLoginState() {
+		return loginState;
+	}
+	public void setLoginState(String loginState) {
+		this.loginState = loginState;
 	}
 	
 	
