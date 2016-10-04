@@ -30,6 +30,7 @@
       	<typeAlias type="com.finalproject.model.BranchEmp" alias="BranchEmp"/>
       	<typeAlias type="com.finalproject.model.AccountBook" alias="AccountBook"/>
       	<typeAlias type="com.finalproject.model.SendMail" alias="SendMail"/>
+      	<typeAlias type="com.finalproject.model.PageMessage" alias="PM"/>
 	</typeAliases>
 
 	<mappers> 
