@@ -5,7 +5,7 @@
 <mapper namespace="com.finalproject.dao.BranchDao">
 
 	<!-- 지점회원번호로 지점회원 찾기 -->
-	<select id="getBrMemberByNo" parameterType="int" resultType="com.finalproject.model.BranchEmp">
+	<select id="getBrMemberByNo" parameterType="int" resultType="BranchEmp">
 		select 
 			A.no, 
 			A.email, 
@@ -407,6 +407,7 @@
 			</if>
 	</select>
 	
+	<!--  -->
 	<select id="getBranchSalesDetailBySalesNo" parameterType="int" resultType="com.finalproject.model.BranchSalesDetail">
 		select 
 			A.no,
@@ -423,6 +424,7 @@
 			A.br_sales_no = #{value}
 	</select>
 	
+	<!-- 판매 : 지점번호로 지점정보 조회하기 -->
 	<select id="getBranchByNo" parameterType="int" resultType="Branch">
 		select
 			no,
@@ -442,7 +444,8 @@
 			no = #{value}
 	</select>
 	
-	<select id="getBrEmpByNo" parameterType="int" resultType="com.finalproject.model.BranchEmp">
+	<!-- 판매 : 지점회원번호로 지점회원 정보 조회하기 -->
+	<select id="getBrEmpByNo" parameterType="int" resultType="BranchEmp">
 		select
 			no,
 			email,
@@ -459,5 +462,37 @@
 			br_employees
 		where
 			no = #{value}
+	</select>
+	
+	<!-- 행사물품 : 이벤트 코드로 물품 조회하기 -->
+	<select id="getProductsByEventCode" parameterType="int" resultType="Product">
+		select
+			no,
+			name,
+			maker,
+			price,
+			eventcode,
+			image			
+		from
+			product
+		where
+			eventcode = #{value}	
+	</select>
+	
+	<!-- 행사물품 : 모든 이벤트 물품 조회하기 -->
+	<select id="getAllEventProducts" resultType="Product">
+		select
+			no,
+			name,
+			maker,
+			price,
+			eventcode as "event.no",
+			image			
+		from
+			product
+		where
+			eventcode = 1
+		or 
+			eventcode = 2 	
 	</select>
 </mapper>

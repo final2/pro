@@ -28,7 +28,8 @@ body { font-family: 'Nanum Gothic', sans-serif; }
 .red input { color:#000; }
 
 /* 로그인 */
-.login-box { margin-top:300px; }
+.login-logo { text-align:center; margin-bottom:20px;  }
+.login-box { margin-top:200px; }
 
 /* 메인 */
 .main-left img { width:100%; }
@@ -113,3 +114,17 @@ body { font-family: 'Nanum Gothic', sans-serif; }
 .modal-body p.order-date { width:200px; float:left; }
 .modal-body #order-send-btn { float:right; margin-right:20px; }
 .modal-body table tfoot td { background-color:#efefef; font-weight:bold; }
+
+
+/* 이벤트 */
+.event-con { padding:20px; }
+#event-tabmenu { overflow:hidden; padding:0; margin:0; }
+#event-tabmenu li { float:left; padding:10px 15px; cursor:pointer; border:solid 1px #ddd; border-bottom:0; border-top-left-radius:5px; border-top-right-radius:5px; }
+#event-tabmenu li.active { background-color:#999; color:#fff; text-shadow:#000 1px 1px 2px; }
+.tab-con {  border:solid 1px #ddd; text-align:center; padding:20px 0; }
+.tab-con ul { overflow:hidden; }
+.tab-con li { float:left; width:23%; padding:1%; position:relative; }
+.tab-con li img { display:inline-block; width:100%; }
+.event-flag1 { position:absolute; right:0; top:0; width:50px; heigth:50px; border-radius:50%; background-color:#e85831; color:#fff; }
+.event-flag2 {  position:absolute; right:0; top:0; width:50px; heigth:50px; border-radius:50%; background-color:#219c6c; color:#fff; }
+.event-price { font-weight:bold; font-size:15px; }

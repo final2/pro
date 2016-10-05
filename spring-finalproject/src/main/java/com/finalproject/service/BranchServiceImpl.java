@@ -193,4 +193,14 @@ public class BranchServiceImpl implements BranchService {
 	public void updateBranchSales(BranchSales branchSales) {
 		branchDao.updateBranchSales(branchSales);
 	}
+	
+	@Override
+	public List<Product> getProductsByEventCode(int eventcode) {
+		return branchDao.getProductsByEventCode(eventcode);
+	}
+	
+	@Override
+	public List<Product> getAllEventProducts() {
+		return branchDao.getAllEventProducts();
+	}
 }
