@@ -1,17 +1,22 @@
 package com.finalproject.service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
+import org.springframework.web.multipart.MultipartRequest;
 
 import com.finalproject.dao.EmployeeDao;
+import com.finalproject.model.AccountBook;
 import com.finalproject.model.Branch;
+import com.finalproject.model.BranchEmp;
 import com.finalproject.model.Career;
 import com.finalproject.model.Employee;
 import com.finalproject.model.RegisterEmp;
+
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -25,44 +30,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 	
 	@Override
-	public void registerEmployee(RegisterEmp regEmp) {
-		String secretPassword = DigestUtils.md5DigestAsHex(regEmp.getPassword().getBytes());
-		
-		int empNo = empDao.empSeqCheck();
-				
-		Employee emp = new Employee();
-		emp.setNo(empNo);
-		emp.setPassword(secretPassword);
-		emp.setName(regEmp.getName());
-		emp.setPhone(regEmp.getPhone());
-		emp.setBirth(regEmp.getBirth());
-		emp.setSalary(regEmp.getSalary());
-		emp.setDept(regEmp.getDept());
-		emp.setPosition(regEmp.getPosition());
-		emp.setAddress(regEmp.getAddress());
-		
+	public void registerEmployee(Employee emp) {
 		empDao.insertEmployee(emp);
-		
-		
-		List<Career> careeres = new ArrayList<>();
-
-		System.out.println(regEmp.getCareer());
-		
-		for (String c : regEmp.getCareer()) {
-			Career career = new Career();
-			/*career.setNo(c[0]);
-			career.setSchool(c.indexOf("1"));
-			career.setMajor(c.indexOf("2"));
-			career.setEmpNo(c.indexOf("3"));*/
-		}
-		
-		//empDao.insertCareer(career);
-		
-		
-				
-		
-		
-		
+	}
+	
+	@Override
+	public void insertSalary(AccountBook accountBook) {
+		empDao.insertSalary(accountBook);
 	}
 	
 	@Override
@@ -84,19 +58,44 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 	
 	@Override
-	public List<Branch> getBranchListByNo(int empNo) {
-		List<Branch> empBranchList = empDao.getBranchListByNo(empNo);
-		return empBranchList;
-		
+	public List<Branch> getAllBranch() {
+		List<Branch> branchNames = empDao.getAllBranch();
+		return branchNames;
+	}
+	
+	@Override
+	public List<Branch> getAllBranchByEmp() {
+		List<Branch> branchList = empDao.getAllBranchByEmp();
+		return branchList;
+	}
+	
+	@Override
+	public Branch getBranchByBranchNo(int branchNo) {
+		Branch branch = empDao.getBranchByBranchNo(branchNo);
+		return branch;
+	}
+	
+	@Override
+	public void insertBranchEmp(BranchEmp branchEmp) {
+		empDao.insertBranchEmp(branchEmp);
+	}
+	
+	@Override
+	public void empLogout(int empNo) {
+		empDao.logoutstateByNo(empNo);
 	}
 	
 	@Override
 	public Employee empLogin(int empNo, String password) {
+				
+		empDao.loginStateByNo(empNo);
+		
 		Employee savedEmp = empDao.loginByNo(empNo);
-	
+		
 		if (savedEmp == null) {
 			throw new RuntimeException("아이디 혹은 비밀번호가 올바르지 않습니다.");
 		}
+		
 		
 		String secretPassword = DigestUtils.md5DigestAsHex(password.getBytes());
 		if (!savedEmp.getPassword().equals(secretPassword)) {
@@ -106,11 +105,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 	
 	@Override
-	public List<Branch> getAllBranch() {
-		List<Branch> branchNames = empDao.getAllBranch();
-		return branchNames;
+	public void insertBranch(Branch branch) {
+		empDao.insertBranch(branch);
 	}
-	
-	
 
 }

@@ -15,6 +15,7 @@
 		<div class="col-sm-4">
 		</div>
 		<div class="col-sm-4">
+			<p class="login-logo"><img src="../resources/image/logo2.png" /></p>
 			<form method="post" action="branchlogin.do">
 				<div class="form-group">
 					<input type="text" name="username" class="form-control" placeholder="아이디를 입력하세요" />

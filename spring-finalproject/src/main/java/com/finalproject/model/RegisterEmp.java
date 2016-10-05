@@ -4,20 +4,28 @@ import java.util.Date;
 
 public class RegisterEmp {
 
+	private int empNo;
 	private String password;
 	private String name;
 	private String phone;
 	private Date birth;
 	private int salary;
+	private String email;
 	private String dept;
 	private String position;
 	private String address;
-	private String[] career;
-	private String[] licenses;
-	private String[] languages;
+	private String[] career = null;
+	private String[] licenses = null;
+	private String[] languages = null;
 	
 	public RegisterEmp() {}
 	
+	public int getEmpNo() {
+		return empNo;
+	}
+	public void setEmpNo(int empNo) {
+		this.empNo = empNo;
+	}
 	public String getPassword() {
 		return password;
 	}
@@ -47,6 +55,12 @@ public class RegisterEmp {
 	}
 	public void setSalary(int salary) {
 		this.salary = salary;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	public String getDept() {
 		return dept;

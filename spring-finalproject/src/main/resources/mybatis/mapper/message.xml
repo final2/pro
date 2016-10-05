@@ -3,18 +3,33 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.finalproject.dao.MessageDao">
-	<select id="getReceiveMessages" parameterType="int"  resultType="Message">
-		select
+	<select id="getReceiveMessages" parameterType="PM"  resultType="Message">
+		select 
 			no, 
 			from_no 	as	"from", 
 			to_no		as	"to", 
 			contents, 
 			receiving, 
 			regdate
-		from
-			messenger
-		where to_no=#{value}
-		order by regdate desc
+		from (
+			select
+				row_number() over (order by no desc) rn,
+				no, 
+				from_no,  
+				to_no, 
+				contents, 
+				receiving, 
+				regdate
+			from messenger
+			where to_no=#{no}
+			order by regdate desc
+		)
+		where rn >= #{pageVo.beginIndex} and rn &lt;=#{pageVo.endIndex}
+	</select>
+	<select id="getTotalReceive" parameterType="int" resultType="int">
+	select count(*)  
+		from messenger
+	where to_no=#{value}
 	</select>
 	<select id="getSendMessages" parameterType="int"  resultType="Message">
 		select
@@ -42,23 +57,25 @@
 		where no=#{value}
 	</select>
 	<select id="getEmployeeList" resultType="Employee">
-		select 
+		select
 			no, 
 			name, 
 			phone, 
 			email, 
 			address, 
-			birth, 
-			department	as	"dept", 
+			to_date(birth, 'yyyy-MM-dd') as birth, 
+			department 	as dept, 
 			position, 
 			salary, 
 			photo, 
-			hiredate, 
+			hiredate 	as hireDate, 
 			password, 
-			retiredate, 
-			remarks 
+			retiredate	as retireDate, 
+			remarks,
+			loginstate	as loginState
 		from 
 			Employee
+		order by loginstate desc
 	</select>
 	<select id="getEmp" parameterType="int" resultType="Employee">
 		select 
@@ -67,7 +84,7 @@
 			phone, 
 			email, 
 			address, 
-			birth, 
+			to_date(birth, 'yyyy-MM-dd') as birth, 
 			department	as	"dept", 
 			position, 
 			salary, 

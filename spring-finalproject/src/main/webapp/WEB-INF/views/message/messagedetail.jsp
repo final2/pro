@@ -36,6 +36,7 @@ $('#bodysend').on("click", "tr[id^=messageNo]", function() {
 		}
 	});
 });
+
 $('#bodyreceive').on("click", "tr[id^=messageNo]", function() {
 	$('#bodyreceive').hide();
 	var messageno = $(this).attr("id").replace("messageNo-","");
