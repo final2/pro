@@ -10,6 +10,25 @@
 <script type="text/javascript" src="resources/jquery/jquery.js"></script>
 <link href="resources/bootstrap/css/simple-sidebar.css" rel="stylesheet">
 <script src="resources/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+$(function() {
+	$("#confirm").click(function() {
+		var orderNo = $(this).val();
+		$.ajax({
+			type:"GET",
+			url:"/FinalProject/json/con/"+ orderNo,
+			dataType:"json",
+			success:function(result) { 
+				 var text1 = result.confirm;
+				$("#yn").text("입고 완료"); 
+			},
+			error: function(xhr, status, error){
+				console.log(error)
+			}
+		}); 
+	});
+});
+</script>
 <style>
 th,td {text-align:center;}
 </style>
@@ -38,10 +57,10 @@ th,td {text-align:center;}
 						<th>입고확인 여부</th>
 						<c:choose>
 							<c:when test="${orders.confirm == 'Y'}">
-								<td>입고 완료</td>
+								<td id="yn">입고 완료</td>
 							</c:when>
 							<c:otherwise>
-								<td>입고 대기</td>
+								<td id="yn">입고 대기</td>
 							</c:otherwise>
 						</c:choose>
 					</tr>
@@ -71,6 +90,9 @@ th,td {text-align:center;}
 						</tr>
 				</tbody>
 			</table>
+			<div class="pull-left">
+				<button type="button" id="confirm" class="btn btn-default" value="${orders.no }">입고 확인</button>
+			</div>
 			<div class="pull-right">
 				<c:url var="updateOrderURL" value="updateOrder.do">
 					<c:param name="no" value="${orders.no }"></c:param>

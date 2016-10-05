@@ -110,7 +110,7 @@ public class DistributionController {
 
 /* 발주 ========================================================================================================== */
 	// 발주 리스트 페이지
-	@RequestMapping("hqOrder.do")
+	@RequestMapping("/hqOrder.do")
 	public String orderLists(Model model) {
 		List<HqOrder> orderList = distributionService.getHqOrderLists();
 		model.addAttribute("orderLists", orderList);
@@ -118,14 +118,14 @@ public class DistributionController {
 	}
 	
 	// 발주 신청 페이지
-	@RequestMapping(value="orderApp.do", method=RequestMethod.GET)
+	@RequestMapping(value="/orderApp.do", method=RequestMethod.GET)
 	public String orderApp(Model model) {
 		List<Client> clientList = distributionService.getClientList();
 		model.addAttribute("clientList", clientList);
 		
 		return "companydistribution/orderApp";
 	}
-	@RequestMapping(value="orderApp.do", method=RequestMethod.POST)
+	@RequestMapping(value="/orderApp.do", method=RequestMethod.POST)
 	public String writerOrder(OrderForm orderForm) {
 		
 		HqOrder hqOrder = new HqOrder();
@@ -160,7 +160,7 @@ public class DistributionController {
 	}
 	
 	// 발주 상세정보 페이지
-	@RequestMapping("hqOrderDetail.do")
+	@RequestMapping("/hqOrderDetail.do")
 	public String hqOrderDetail(@RequestParam(name="no")int no, Model model) {
 		HqOrder orders = distributionService.getOrderByNo(no);
 		
@@ -173,9 +173,20 @@ public class DistributionController {
 	}
 	
 	// 발주 신청 수정 페이지
-	@RequestMapping("updateOrder.do")
-	public String updateOrder() {
+	@RequestMapping(value="/updateOrder.do", method=RequestMethod.GET)
+	public String updateOrderFom(@RequestParam(name="no") int no, Model model) {
+		HqOrder orders = distributionService.getOrderByNo(no);
+		List<HqOrderDetail> details = distributionService.getOrderDetailByNo(no);
+		
+		model.addAttribute("orders", orders);
+		model.addAttribute("details", details);
+		
 		return "companydistribution/updateOrder";
+	}
+	@RequestMapping(value="/updateOrder.do", method=RequestMethod.POST)
+	public String updateOrder(HqOrderDetail hqOrderDetail) {
+		distributionService.updateOrder(hqOrderDetail);
+		return "redirect:/hqOrderDetail.do?no="+hqOrderDetail.getHqOrder().getNo();
 	}
 
 }

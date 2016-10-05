@@ -94,4 +94,10 @@ public class DistributionServiceImpl implements DistributionService{
 	public void updateOrder(HqOrderDetail hqOrderDetail) {
 		distributionDao.updateOrder(hqOrderDetail);		
 	}
+	
+	// 입고 여부 변경
+	@Override
+	public void updateCon(HqOrder hqOrder) {
+		distributionDao.updateCon(hqOrder);
+	}
 }

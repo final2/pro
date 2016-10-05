@@ -45,4 +45,7 @@ public interface DistributionDao {
 	
 	// 발주 정보 수정
 	void updateOrder(HqOrderDetail hqOrderDetail);
+	
+	// 입고 여부 변경
+	void updateCon(HqOrder hqOrder);
 }

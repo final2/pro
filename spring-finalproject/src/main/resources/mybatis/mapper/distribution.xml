@@ -152,4 +152,22 @@
 			and c.no = h.client_no
 			and d.hq_order_no = #{value}
 	</select>
+	
+	<!-- 입고 확인 여부 변경 -->
+	<update id="updateCon" parameterType="HqOrder">
+		update hq_order
+			set
+				isconfirm = 'Y'
+			where 
+				no = #{no}
+	</update>
+	
+	<!-- 발주 정보 수정 -->
+	<update id="updateOrder" parameterType="HOD">
+		update hq_order_detail
+			set
+				qty = #{qty}
+			where
+				hq_order_no = #{no}
+	</update>
 </mapper>

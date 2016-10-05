@@ -22,40 +22,59 @@
 			<h1>발주 신청서 수정</h1>
 			<hr>
 			
+			<form action="updateOrder.do?no=${orders.no}" method="post" role="form">
 			<table class="table table-bordered">
 				<thead>
 					<tr>
 						<th>발주번호</th>
-						<td></td>
+						<td>${orders.no }<input type="hidden" name="hqOrder.no" class="form-control" value="${orders.no }" /> </td>
 						<th>발주신청일자</th>
-						<td></td>
+						<td><fmt:formatDate value="${orders.regdate }" pattern="yyyy-MM-dd"/><input type="hidden" name="orderDate" class="form-control" value="${orders.regdate }" /></td>
 					</tr>
 					<tr>
 						<th>거래처명</th>
-						<td></td>
+						<td>${orders.client.name }<input type="hidden" name="clientName" class="form-control" value="${orders.client.name }" /></td>
 						<th>입고확인 여부</th>
-						<td></td>
+						<c:choose>
+							<c:when test="${orders.confirm== 'Y'}">
+								<td id="yn">입고 완료</td>
+							</c:when>
+							<c:otherwise>
+								<td id="yn">입고 대기</td>
+							</c:otherwise>
+						</c:choose>
 					</tr>
 				</thead>
 				<tbody>
 					<tr>
-						<th>제품번호</th>
-						<th>제품 명</th>
-						<th>수량</th>
-						<th>가격</th>
+						<th style="width:25%">제품번호</th>
+						<th style="width:25%">제품명</th>
+						<th style="width:25%">수량</th>
+						<th style="width:25%">단가</th>
 					</tr>
-					<tr>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
+					<c:forEach var="details" items="${details}">
+						<tr>
+							<td style="width:25%">${details.product.no }
+								<input type="hidden" name="productNo" class="form-control" value="${details.product.no }" />
+							</td>
+							<td style="width:25%">${details.product.name }
+								<input type="hidden" name="productName" class="form-control" value="${details.product.name }" />
+							</td>
+							<td style="width:25%">
+								<input type="number" name="qty" class="form-control" value="${details.qty }" />
+							</td>
+							<td style="width:25%">${details.product.price }
+								<input type="hidden" name="price" class="form-control" value="${details.product.price }" />
+							</td>
+						</tr>
+					</c:forEach>
 				</tbody>
 			</table>
 			<div class="pull-right">
-				<a href="hqOrderDetail.do" class="btn btn-primary">확인	</a>
+				<input type="submit" class="btn btn-primary" value="확인" />
 				<a href="hqOrder.do" class="btn btn-danger">취소</a>
 			</div>
+			</form>
 		</div>
    </div>
 </div>
