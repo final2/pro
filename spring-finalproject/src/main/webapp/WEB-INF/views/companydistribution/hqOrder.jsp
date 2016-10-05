@@ -10,6 +10,9 @@
 <script type="text/javascript" src="resources/jquery/jquery.js"></script>
 <link href="resources/bootstrap/css/simple-sidebar.css" rel="stylesheet">
 <script src="resources/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+
+</script>
 <style>
 th,td {text-align:center;}
 </style>
@@ -44,7 +47,14 @@ th,td {text-align:center;}
 						<td><fmt:formatDate value="${order.regdate }" pattern="yyyy-MM-dd" /> </td>
 						<td>${order.no }</td>
 						<td><a href="${orderDetailURL}">${order.client.no } / ${order.client.name }</a></td>
-						<td>${order.confirm }</td>
+						<c:choose>
+							<c:when test="${order.confirm == 'Y'}">
+								<td>입고 완료</td>
+							</c:when>
+							<c:otherwise>
+								<td>입고 대기중</td>
+							</c:otherwise>
+						</c:choose>
 					</tr>
 				</c:forEach>
 			</table>

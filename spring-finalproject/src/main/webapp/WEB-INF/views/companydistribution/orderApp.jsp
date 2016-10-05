@@ -10,6 +10,9 @@
 <script type="text/javascript" src="resources/jquery/jquery.js"></script>
 <link href="resources/bootstrap/css/simple-sidebar.css" rel="stylesheet">
 <script src="resources/bootstrap/js/bootstrap.min.js"></script>
+<style>
+th,td {text-align:center;}
+</style>
 <script type="text/javascript">
 $(function(){
 	$("#client").change(function() {
@@ -24,7 +27,7 @@ $(function(){
 				
 				var $tr = $("#order-table");
 				$tr.empty();
-				$tr.append("<tr><th style='width:25%'>제품번호</th><th style='width:25%'>제품 명</th><th style='width:25%'>가격</th><th style='width:25%'>수량</th></tr>");
+				$tr.append("<tr><th style='width:25%'>제품번호</th><th style='width:25%'>제품 명</th><th style='width:25%'>단가</th><th style='width:25%'>수량</th></tr>");
 				$.each(result, function(index, pro) {
 					$tr.append("<tr id='no-"+pro.product.no+"'>"
 							  +"<td>"+pro.product.no+"<input type='hidden' name='no' class='form-control' value='"+pro.product.no+"'/></td>"
@@ -73,7 +76,7 @@ $(function(){
 						<tr>
 							<th style="width:25%">제품번호</th>
 							<th style="width:25%">제품 명</th>
-							<th style="width:25%">가격</th>
+							<th style="width:25%">단가</th>
 							<th style="width:25%">수량</th>
 						</tr>
 						<!-- 입력 -->

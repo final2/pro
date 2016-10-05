@@ -9,7 +9,7 @@
 		insert into client
 			(no, name, isAdmit)
 		values
-			(myclient_seq.nextval, #{name}, #{isAdmit})
+			(myclient_seq.nextval, #{name}, 'Y')
 	</insert>
 	
 	<!-- 거래처 리스트 / 발주 신청시 거래처명 -->

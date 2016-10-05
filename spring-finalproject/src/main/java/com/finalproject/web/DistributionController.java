@@ -92,9 +92,9 @@ public class DistributionController {
 	
 	// 거래처 수정 페이지
 	@RequestMapping(value="/updateClient.do", method=RequestMethod.POST)
-	public String writerUpdate(@RequestParam(name="pn") int pn, Client client) {
+	public String writerUpdate(Client client) {
 		distributionService.updateClient(client);
-		return "redirect:/clientDetail.do?no="+client.getNo()+"&pn=" + pn;
+		return "redirect:/clientDetail.do?no="+client.getNo();
 	}
 	
 	// 거래처 등록 페이지

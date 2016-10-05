@@ -10,6 +10,9 @@
 <script type="text/javascript" src="resources/jquery/jquery.js"></script>
 <link href="resources/bootstrap/css/simple-sidebar.css" rel="stylesheet">
 <script src="resources/bootstrap/js/bootstrap.min.js"></script>
+<style>
+th,td {text-align:center;}
+</style>
 </head>
 <body>
 <div id="wrapper">
@@ -25,15 +28,22 @@
 				<thead>
 					<tr>
 						<th>발주번호</th>
-						<td>${orders.no }</td>
+						<td colspan="2">${orders.no }</td>
 						<th>발주신청일자</th>
 						<td><fmt:formatDate value="${orders.regdate }" pattern="yyyy-MM-dd"/> </td>
 					</tr>
 					<tr>
 						<th>거래처명</th>
-						<td>${orders.client.name}</td>
+						<td colspan="2">${orders.client.name}</td>
 						<th>입고확인 여부</th>
-						<td>${orders.confirm }</td>
+						<c:choose>
+							<c:when test="${orders.confirm == 'Y'}">
+								<td>입고 완료</td>
+							</c:when>
+							<c:otherwise>
+								<td>입고 대기</td>
+							</c:otherwise>
+						</c:choose>
 					</tr>
 				</thead>
 				<tbody>
@@ -41,16 +51,24 @@
 						<th>제품번호</th>
 						<th>제품명</th>
 						<th>수량</th>
-						<th>가격</th>
+						<th>단가</th>
+						<th>금액</th>
 					</tr>
+					<c:set var="sum" value="0" />
 					<c:forEach var="details" items="${details }">
 						<tr>
 							<td>${details.product.no }</td>
 							<td>${details.product.name }</td>
-							<td>${details.qty }</td>
-							<td>${details.product.price }</td>
+							<td><fmt:formatNumber value="${details.qty }" pattern="#,###"/></td>
+							<td><fmt:formatNumber value="${details.product.price }" pattern="#,###"/></td>
+							<td><fmt:formatNumber value="${details.qty * details.product.price }" pattern="#,###"/></td>
 						</tr>
+						<c:set var="sum" value="${sum + details.qty * details.product.price}" />
 					</c:forEach>
+						<tr>
+							<th colspan="2">합계</th>
+							<td colspan="3"><fmt:formatNumber value="${sum }" pattern="#,###"/> </td>
+						</tr>
 				</tbody>
 			</table>
 			<div class="pull-right">

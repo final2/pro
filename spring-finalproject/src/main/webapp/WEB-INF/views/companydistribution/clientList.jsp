@@ -7,9 +7,8 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" href="resources/bootstrap/css/bootstrap.css">
-<script type="text/javascript" src="resources/jquery/jquery.js"></script>
 <link href="resources/bootstrap/css/simple-sidebar.css" rel="stylesheet">
-<script src="resources/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="resources/jquery/jquery.js"></script>
 <style>
 th,td {text-align:center;}
 </style>
@@ -41,22 +40,26 @@ th,td {text-align:center;}
 					<c:forEach var="client" items="${clientList}">
 						<c:url var="detailURL" value="clientDetail.do">
 							<c:param name="no" value="${client.no}" />
-							<c:param name="pn" value="${param.pn }"/>
 						</c:url>
 						<tr>
 							<td>${client.no}</td>
 							<td><a href="${detailURL}">${client.name}</a></td>
-							<td>${client.isAdmit}</td>
+							<c:choose>
+								<c:when test="${client.isAdmit == 'Y'}">
+									<td>거래중</td>
+								</c:when>
+								<c:otherwise>
+									<td>거래 중지</td>
+								</c:otherwise>
+							</c:choose>
 						</tr>
 					</c:forEach>
 				</tbody>
 			</table>
 			<div class="pull-right">
-				<c:url var="addClientURL" value="addClient.do">
-					<c:param name="pn" value="${param.pn }" />
-				</c:url>
-				 <a href="${addClientURL}" class="btn btn-primary">거래처 등록</a>
+				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">거래처 등록</button>
 			</div>
+			
 			<div class="text-center">
 				<ul class="pagination">
 					<c:if test="${pageVo.pageNo gt 1}">
@@ -85,6 +88,32 @@ th,td {text-align:center;}
 					</c:if>
 				</ul>
 			</div>
+			
+			<!-- 등록 모달 창 -->
+			<div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+				<div class="modal-dialog">
+				
+					<!-- Modal content-->
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+							<h4 class="modal-title"><strong>거래처 등록</strong></h4>
+						</div>
+						<form action="addClient.do" method="post" role="form">
+							<div class="modal-body">
+								<label>거래처 명 : </label>
+								<input type="text" name="name" class="form-control" />
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+								<input type="submit" class="btn btn-primary" value="등록" />
+							</div>
+						</form>
+					</div>
+      
+				</div>
+			</div>
+			
 		</div>
    </div>
 </div>
