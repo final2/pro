@@ -91,4 +91,8 @@ public interface BranchService {
 	void updateBranchSalesDetail(BranchSalesDetail salesDetail);
 	
 	void updateBranchSales (BranchSales branchSales);
+	
+	List<Product> getProductsByEventCode(int eventcode);
+	
+	List<Product> getAllEventProducts();
 }

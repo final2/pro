@@ -250,6 +250,7 @@ public class BranchJSONController {
 		return brService.getOrdersByRegDate(map);
 	}
 	
+	//
 	@RequestMapping(value="/sales/add/{empno}", method=RequestMethod.GET)
 	public List<BranchSalesDetail> getBranchSalesDetailBySalesNo(@PathVariable("empno") int empno) {
 		
@@ -265,6 +266,7 @@ public class BranchJSONController {
 		}
 	}
 	
+	// 판매 결제시 판매등록하기
 	@RequestMapping(value="/sales/add/{empno}/pay/{pay}/gen/{gen}/age/{age}", method=RequestMethod.POST)
 	public List<BranchSalesDetail> addBranchSales(@RequestBody List<BranchSalesDetail> detailList, 
 								@PathVariable("empno") int empno,
@@ -300,6 +302,18 @@ public class BranchJSONController {
 			brService.addBranchSalesDetail(detail);
 		}
 		return brService.getBranchSalesDetailBySalesNo(sale.getNo());
+	}
+	
+	// 이벤트 코드로 물품 조회하기
+	@RequestMapping(value="/event/{eventcode}", method=RequestMethod.GET)
+	public List<Product> getProductsByEventCode(@PathVariable("eventcode") int eventcode) {
+		return brService.getProductsByEventCode(eventcode);
+	}
+	
+	// 모든 이벤트 상품 조회하기
+	@RequestMapping(value="/event/", method=RequestMethod.GET)
+	public List<Product> getAllEventProducts() {
+		return brService.getAllEventProducts();
 	}
 	
 }

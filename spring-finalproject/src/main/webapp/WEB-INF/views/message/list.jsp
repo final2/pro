@@ -1,25 +1,41 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <script type="text/javascript">
-	
+$(function(){
 	$.ajax({
 		type:"GET",
 		url:"/FinalProject/json/getemplist/",
 		dataType:"json",
 		success:function(result) {
 			var $tbody = $('#employeeList');
+			var loginstate = "Y";
 			$tbody.empty();
 			$.each(result, function(index, emp) {
-				$tbody.append(
-					"<tr>"+
-						"<td class='text-center' style='vertical-align:middle'>"+
-							"<a href='#'><img border='0' height='80' width='60' alt='hong' src='/FinalProject/resources/image/empimg/"+emp.photo+"'></a>"+
-						"</td>"+
-						"<td class='text-center' style='vertical-align:middle'><h4>"+emp.name+"</h4></td>"+
-						"<td class='text-center' style='vertical-align:middle'><h4>"+emp.position+".</h4></td>"+
-						"<td class='text-center' style='vertical-align:middle'><button type='button' class='btn btn-default' id='no-"+emp.no+"'>쪽지보내기</button></td>"+
-					"</tr>"
-				);
+				if(emp.loginState==loginstate){
+					$tbody.append(
+						"<tr>"+
+							"<td class='text-center' style='vertical-align:middle; color:green;'>ON</td>"+
+							"<td class='text-center' style='vertical-align:middle'>"+
+								"<a href='#'><img border='0' height='80' width='60' alt='hong' src='/FinalProject/resources/image/empimg/"+emp.photo+"'></a>"+
+							"</td>"+
+							"<td class='text-center' style='vertical-align:middle'><h4>"+emp.name+"</h4></td>"+
+							"<td class='text-center' style='vertical-align:middle'><h4>"+emp.position+"</h4></td>"+
+							"<td class='text-center' style='vertical-align:middle'><button type='button' class='btn btn-default' id='no-"+emp.no+"'>쪽지보내기</button></td>"+
+						"</tr>"
+					);	
+				}else{
+					$tbody.append(
+						"<tr>"+
+							"<td class='text-center' style='vertical-align:middle; color:red;'>OFF</td>"+
+							"<td class='text-center' style='vertical-align:middle'>"+
+								"<a href='#'><img border='0' height='80' width='60' alt='hong' src='/FinalProject/resources/image/empimg/"+emp.photo+"'></a>"+
+							"</td>"+
+								"<td class='text-center' style='vertical-align:middle'><h4>"+emp.name+"</h4></td>"+
+								"<td class='text-center' style='vertical-align:middle'><h4>"+emp.position+"</h4></td>"+
+								"<td class='text-center' style='vertical-align:middle'><button type='button' class='btn btn-default' id='no-"+emp.no+"'>쪽지보내기</button></td>"+
+							"</tr>"
+						);	
+				}
 			});
 			$("#employeeList").on("click", "button[id^=no]", function() {
 				$('#bodylist').hide();
@@ -31,13 +47,14 @@
 			})
 		}
 	});
+});
 </script>
 	<form class="navbar-form navbar-right" role="search">
 		<div class="form-group">
 			<select id="selectbox" title="검색"  style="height:34px; border-color:#ccc; border-radius:5px">
-				<option selected="selected">이름</option>
-				<option>직책</option>
-				<option>부서</option>
+				<option value="name" selected="selected">이름</option>
+				<option value="position">직책</option>
+				<option value="department">부서</option>
 			</select>
 		</div>
 		<div class="form-group">

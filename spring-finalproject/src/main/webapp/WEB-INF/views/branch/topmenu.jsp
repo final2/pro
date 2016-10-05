@@ -31,7 +31,7 @@ window.onload = printTime;
 	    <ul class="nav navbar-nav pull-right">
 	      <li class="${current_page eq 'branchsales' ? 'active' : '' }"><a href="branchsales.do">판매</a></li>
 	      <li class="${current_page eq 'branchinven' ? 'active' : '' }"><a href="branchinven.do">재고</a></li>
-	      <li><a href="#">행사물품</a></li>
+	      <li class="${current_page eq 'branchevnet' ? 'active' : '' }"><a href="branchevent.do">행사물품</a></li>
 	      <li><a href="#">결산</a></li>
 	      <li class="${current_page eq 'branchorder' ? 'active' : '' }"><a href="branchorder.do">발주</a></li>
 	      <li><a href="#">사용자등록</a></li>

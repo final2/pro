@@ -116,5 +116,9 @@ public class BranchController {
 		return "branch/order";
 	}
 
-	
+	// 지점 - 행사상품
+	@RequestMapping("/branch/branchevent.do")
+	public String event() {
+		return "branch/event";
+	}
 }

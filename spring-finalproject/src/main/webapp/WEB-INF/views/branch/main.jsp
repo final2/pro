@@ -29,7 +29,7 @@
 					<a class="btn btn-primary btn-lg btn-block" href="branchinven.do">재고</a>
 				</div>
 				<div class="col-sm-4">
-					<a class="btn btn-primary btn-lg btn-block">행사물품</a>
+					<a class="btn btn-primary btn-lg btn-block" href="branchevent.do">행사물품</a>
 				</div>
 			</div>
 			

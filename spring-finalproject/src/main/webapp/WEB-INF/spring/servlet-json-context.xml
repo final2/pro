@@ -12,7 +12,11 @@
 		@RestController 어노테이션이 부착된 컨트롤러의 핸들러 메소드들이 반환하는 데이타가
 		JSON이나 XML 형식의 컨텐츠로 제공되려면 반드시 <mvc:annotation-driven /> 태그를 추가해야 한다.
 	-->
-	<mvc:annotation-driven />
+	<mvc:annotation-driven>
+		<mvc:argument-resolvers>
+			<bean class="com.finalproject.web.argumentResolver.LoginUserHandlerMethodArgumentResolver" />
+		</mvc:argument-resolvers>
+	</mvc:annotation-driven>
 	
 	<context:component-scan base-package="com.finalproject.json" />
 </beans>
