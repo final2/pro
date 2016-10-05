@@ -6,30 +6,96 @@
     
 <mapper namespace="com.finalproject.dao.ProductDao">
 
+	<!-- 제품 등록 -->
 	<insert id="insertProduct" parameterType="Product">
 		insert into Product
 			(no, name, maker, price, memo, limiteage, eventcode, smallcategory_no, image, client_no)
 		values
-			(myproduct_seq.nextval, #{name}, #{maker}, #{price}, #{memo}, #{limiteage}, #{event.no}, #{smallcat}, #{image}, #{clientNo})
+			(myproduct_seq.nextval, #{name}, #{maker}, #{price}, #{memo}, #{limiteAge}, #{event.no}, #{smallCat.no}, #{image}, #{clientNo})
 	</insert>
+	<!-- 제조사 불러오기 -->
 	<select id="getClient" resultType="Client">
 		select 
 			no 		as no, 
 			name	as name
 		from client
 	</select>
-	
+	<!-- 제조사 명 불러오기 -->
+	<select id="getClientByNo" parameterType="int" resultType="Client">
+		select
+			no		as no,
+			name	as name
+		from client
+		where no = #{value}
+	</select>
+	<!-- 이벤트 불러오기 -->
 	<select id="getEvent" resultType="event">
 		select 
 			eventcode	as no,
 			event_type	as type
 		from event
+		order by eventcode desc
 	</select>
-	
+	<!-- 소분류 불러오기 -->
 	<select id="getSmallCategory" resultType="SC" >
 		select 
 			no	as no, 
 			name as name
 		from smallcategory
+	</select>
+	
+	<!-- 제품 총 수 불러오기 -->
+	<select id="getTotalProduct" parameterType="PS" resultType="int">
+		select count(*)
+		from product
+		<where>
+			<if test="maker != 0">
+				client_no = #{maker}	
+			</if>
+			<if test="smallCat != 0">
+				and smallcategory_no = #{smallCat}
+			</if>
+			<if test="eventCode != 0">
+				and eventcode = #{eventCode}
+			</if>
+			<if test="limiteAge != null">
+				and limiteage = #{limiteAge}
+			</if>
+		</where>
+	</select>
+	<!-- 제품 전체 불러오기 -->
+	<select id="getProductPageList" parameterType="PS" resultType="Product">
+		select no			as no, 
+			   name			as name, 
+			   maker		as maker, 
+			   price		as price, 
+			   memo			as memo, 
+			   limiteage	as limiteAge, 
+			   eventcode	as "event.no",	 
+			   smallNo		as "smallCat.no", 
+			   image		as image, 
+			   clientNo		as clientNo, 
+			   smallName	as "smallCat.name"
+		from (  select row_number() OVER(order by p.no desc) as rank,
+				p.no	as no, p.name	as name, 
+				p.maker	as maker, p.price	as price, 
+				p.memo	as memo, p.limiteage	as limiteage, 
+				p.eventcode	as eventcode, p.smallcategory_no	as smallNo, 
+				p.image	as image, p.client_no	as clientNo, s.name	as smallName
+			    from  product p, smallcategory s
+				where p.smallcategory_no = s.no
+					<if test="maker != 0">
+						and p.client_no = #{maker}	
+					</if>
+					<if test="smallCat != 0">
+						and p.smallcategory_no = #{smallCat}
+					</if>
+					<if test="eventCode != 0">
+						and p.eventcode = #{eventCode}
+					</if>
+					<if test="limiteAge != null">
+						and p.limiteage = #{limiteAge}
+					</if>) A
+		where A.rank >= #{beginIndex} and A.rank &lt;= #{endIndex}
 	</select>
 </mapper>

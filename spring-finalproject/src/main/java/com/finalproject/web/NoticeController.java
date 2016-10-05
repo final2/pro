@@ -13,8 +13,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.finalproject.model.NoticeBoard;
 import com.finalproject.model.PageBoardDetail;
 import com.finalproject.model.PageVo;
+import com.finalproject.model.Product;
+import com.finalproject.model.ProductPageVo;
+import com.finalproject.model.ProductSearch;
 import com.finalproject.model.TodayPlan;
 import com.finalproject.service.NoticeService;
+import com.finalproject.service.ProductService;
 
 @Controller
 public class NoticeController {
@@ -142,11 +146,6 @@ public class NoticeController {
 	public String calendar() {
 		return "companynotice/calendarForm";
 	}
-	
-	//ProductAdd 페이지 이동
-	@RequestMapping(value="product.do", method=RequestMethod.GET)
-	public String product(Model model) {
-		return "companynotice/productForm";
-	}
+
 	
 }

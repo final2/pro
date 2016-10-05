@@ -84,6 +84,15 @@ public class PageVo {
 	}
 	public void setEndIndex(int endIndex) {
 		this.endIndex = endIndex;
+	}
+
+
+	@Override
+	public String toString() {
+		return "PageVo [pageNo=" + pageNo + ", blockNo=" + blockNo + ", totalPages=" + totalPages + ", totalBlocks="
+				+ totalBlocks + ", beginPage=" + beginPage + ", endPage=" + endPage + ", beginIndex=" + beginIndex
+				+ ", endIndex=" + endIndex + "]";
 	}	
+	
 	
 }

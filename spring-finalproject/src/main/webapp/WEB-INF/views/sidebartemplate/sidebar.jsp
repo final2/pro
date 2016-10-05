@@ -49,7 +49,7 @@
        			<li>
        				<a>물품 관리 <span class="caret"></span></a>
        				<ul class="in-bar">
-       					<li><a href="">물품 리스트</a></li>
+       					<li><a href="productList.do?pn=1">물품 리스트</a></li>
        					<li><a href="product.do">물품 등록</a></li>
        				</ul>	
        			</li>
@@ -57,8 +57,7 @@
        			<li>
        				<a>거래처 관리 <span class="caret"></span></a>
        				<ul class="in-bar">
-       					<li><a href="clientList.do" class="${current_page eq 'main' ? 'active' : '' }">거래처  조회</a></li>
-       					<li><a href="addClient.do" class="${current_page eq 'main' ? 'active' : '' }">거래처 등록</a></li>
+       					<li><a href="clientList.do">거래처  조회</a></li>
        				</ul>
        			</li>
        		</ul>   		
@@ -66,13 +65,13 @@
        <li class="list">
        		<a >인사 <span class="caret"></span></a>
        		<ul class="bar">
-       			<li><a href="emplist.do" class="${current_page eq 'main' ? 'active' : '' }">사원 조회</a></li>
-       			<li><a href="insertemp.do" class="${current_page eq 'main' ? 'active' : '' }">사원 등록</a></li>
+       			<li><a href="emplist.do" >사원 조회</a></li>
+       			<li><a href="insertemp.do" >사원 등록</a></li>
 	       			<c:url var="boardListURL" value="boardList.do">
 						<c:param name="pn" value="1" />
 					</c:url>
-       			<li><a href="${boardListURL }" class="${current_page eq 'boardList' ? 'active' : '' }">공지 사항</a></li>
-       			<li><a href="calendar.do" class="${current_page eq 'main' ? 'active' : '' }">회사 일정</a></li>
+       			<li><a href="${boardListURL }" >공지 사항</a></li>
+       			<li><a href="calendar.do" >회사 일정</a></li>
        			<li>
        				<a>지점 관리<span class="caret"></span></a>
        				<ul class="in-bar">

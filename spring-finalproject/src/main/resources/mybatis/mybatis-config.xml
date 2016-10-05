@@ -10,8 +10,10 @@
 		<typeAlias type="com.finalproject.model.Calendar" alias="Calendar"/>				
       	<typeAlias type="com.finalproject.model.PageVo" alias="PV"/>
       	<typeAlias type="com.finalproject.model.PageBoardDetail" alias="PBD"/>
+      	<typeAlias type="com.finalproject.model.ProductSearch" alias="PS"/>
       	<typeAlias type="com.finalproject.model.Event" alias="event"/>
 	    <typeAlias type="com.finalproject.model.Product" alias="Product" />
+	    <typeAlias type="com.finalproject.model.ProductPageVo" alias="PPV" />
      	<typeAlias type="com.finalproject.model.LargeCategory" alias="LC" />
       	<typeAlias type="com.finalproject.model.SmallCategory" alias="SC" />
       	<typeAlias type="com.finalproject.model.WebBoard" alias="Wboard" />
