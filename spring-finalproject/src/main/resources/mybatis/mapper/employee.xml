@@ -25,17 +25,53 @@
 		where no = #{no}
 	</select>
 	
+	<!-- 로그인 상태 표시 -->
+	<update id="loginStateByNo" parameterType="int">
+		update employee
+		set
+			loginstate = 'Y'
+		where no = #{no}
+	</update>
+	
+	<!-- 로그아웃 상태 표시 -->
+	<update id="logoutstateByNo" parameterType="int">
+		update employee
+		set
+			loginstate = 'N'
+		where no = #{no}
+	</update>
+	
+	<!-- 현재 사원번호 확인하기 -->
+	<select id="empSeqCheck" resultType="int">
+		select LAST_NUMBER from user_sequences
+		where SEQUENCE_NAME = 'MY_SEQ'
+	</select>
+	
 	<!-- 사원등록 -->
-	<insert id="insertEmployee" parameterType="Employee">
+	<insert id="insertEmployee" parameterType="RegisterEmp">
 		insert into employee (no, name, phone, email, address, birth, department, position, salary, photo, hiredate, password, retiredate, remarks )
-		values (myemp_seq.nextval, #{name}, #{phone}, #{email}, #{address}, #{birth}, #{dept}, #{position}, 0, #{photo}, sysdate, #{password}, null, '-')
+		<!-- values (myemp_seq.nextval, #{name}, #{phone}, #{email}, #{address}, #{birth}, #{dept}, #{position}, 0, #{photo}, sysdate, #{password}, null, '-') -->
+		values (my_seq.nextval, #{name}, #{phone}, #{email}, #{address}, to_char(#{birth}, 'yyyy-mm-dd'), #{dept}, #{position}, #{salary}, #{photo}, sysdate, #{password}, null, '-')
 	</insert>
 	
-	<!-- 모든 근무지점 -->
-	<select id="getAllBranch" resultType="Branch">
-		select name
-		from branch		
-	</select>
+	<!-- 사원등록 시 학력 정보 등록 -->
+	<insert id="insertCareer" parameterType="Career">
+		insert into Career (no, school, major, employee_no)
+		<!-- values (myempopt_seq.nextval, #{school}, #{major}, #{empNo}) -->
+		values (my_seq.nextval, #{school}, #{major}, #{emp )
+	</insert>
+	
+	<!-- 사원등록 시 자격증 정보 등록 -->
+	<!-- <insert id="insertAddLicenses" parameterType="Licenses"></insert> -->
+	
+	<!-- 사원등록 시 어학능력 정보 등록 -->
+	<!-- <insert id="insertAddLanguages" parameterType="Languages"></insert> -->
+		
+	<!-- 사원 급여 등록 -->
+	<insert id="insertSalary" parameterType="AccountBook">
+		insert into accountbook (no, paymentdate, salary, overtime, insure_health, insure_longhealth, insure_social, employee_insure, employee_no)
+		values (my_seq.nextval, #{paymentDate}, #{salary}, #{overtime}, #{insureHealth}, #{insureLonghealth}, #{insureSocial}, #{employeeInsure}, #{empNo})
+	</insert>
 	
 	<!-- 모든 사원 조회하기 -->
 	<select id="getAllEmployees" resultType="Employee">
@@ -43,7 +79,8 @@
 			no, 
 			name, 
 			department 	as dept, 
-			position
+			position,
+			remarks
 		from employee
 	</select>
 
@@ -55,11 +92,12 @@
 			phone, 
 			email, 
 			address, 
-			birth, 
-			department 	as dept, 
+			to_date(birth, 'yyyy-mm-dd') 	as birth, 
+			department 						as dept, 
 			position, 
 			photo, 
-			retiredate	as retireDate, 
+			retiredate						as retireDate, 
+			hiredate						as hireDate,
 			remarks
 		from employee
 		where no = #{no}
@@ -74,4 +112,62 @@
 		and E.no = #{no}
 	</select>
 	
+	<!-- 지점 등록 -->
+	<insert id="insertBranch" parameterType="Branch">
+		insert into branch (no, name, phone, address, atm, freshfood, lotto, parcelservice, lifeservice, image, employee_no )
+		values(mybranch_seq.nextval, #{name}, #{phone}, #{address}, #{atm}, #{freshFood}, #{lotto}, #{parcelService}, #{lifeService}, #{img}, #{emp.no})
+	</insert>
+	
+	<!-- 모든 지점 조회 -->
+	<select id="getAllBranch" resultType="Branch">
+		select name
+		from branch		
+	</select>
+	
+	<!-- 모든 지점 리스트 -->
+	<select id="getAllBranchByEmp" resultType="Branch">
+		select 
+			B.no, 
+			B.name, 
+			B.phone, 
+			B.address, 
+			B.atm, 
+			B.freshfood			as freshFood, 
+			B.lotto, 
+			B.parcelservice		as parcelService, 
+			B.lifeservice		as lifeService, 
+			B.employee_no		as "emp.no", 
+			B.image				as img,
+			E.name				as "emp.name",
+			E.phone				as "emp.phone"
+		from employee E, branch B
+		where E.no = B.employee_no
+	</select>
+	
+	<!-- 담당자와 모든 지점 리스트 -->
+	<select id="getBranchByBranchNo" parameterType="int" resultType="Branch">
+		select 
+			B.no, 
+			B.name, 
+			B.phone, 
+			B.address, 
+			B.atm, 
+			B.freshfood			as freshFood, 
+			B.lotto, 
+			B.parcelservice		as parcelService, 
+			B.lifeservice		as lifeService, 
+			B.employee_no		as "emp.no", 
+			B.image				as img,
+			E.name				as "emp.name",
+			E.phone				as "emp.phone"
+		from employee E, branch B
+		where E.no = B.employee_no
+		and B.no = #{no}
+	</select>
+	
+	<!-- 지점사원 등록 -->
+	<insert id="insertBranchEmp" parameterType="BranchEmp">
+		insert into br_employees (no, phone, grade, password, name, retiredate, branch_no, images, birth, email, address )
+		values ("my_seq.nextval, #{phone}, #{grade}, #{password}, #{name}, sysdate, #{branch.no}, #{images}, #{birth}, #{email}, #{address})
+	</insert>
 </mapper>
