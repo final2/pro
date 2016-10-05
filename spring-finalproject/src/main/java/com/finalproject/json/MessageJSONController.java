@@ -14,23 +14,48 @@ import com.finalproject.dao.MessageDao;
 import com.finalproject.model.Employee;
 import com.finalproject.model.LargeCategory;
 import com.finalproject.model.Message;
+import com.finalproject.model.PageMessage;
+import com.finalproject.model.PageVo;
+import com.finalproject.service.MessageService;
 
 @RestController
 public class MessageJSONController {
 	
 	@Autowired MessageDao messageDao;
 	
+	@RequestMapping(value="/getemplist/", method=RequestMethod.GET)
+	public List<Employee> getAllEmployeelist(){
+		return messageDao.getEmployeeList();
+	}
 	@RequestMapping(value="/getreceivelist/{no}", method=RequestMethod.GET)
-	public List<Message> getReceiveList(@PathVariable("no") int no){
-		return messageDao.getReceiveMessages(no);	
+	public @ResponseBody List<Message> getReceiveList(@PathVariable("no")int pno, Employee emp){
+		System.out.println("로그인아이디값"+emp.getNo());
+		System.out.println("로그인아이디값"+emp.getDept());
+		System.out.println("로그인아이디값"+emp.getName());
+		PageMessage pm = new PageMessage();
+		pm.setNo(emp.getNo());
+		
+		if(pno < 1) {
+			pno=1;
+		}
+		int rows = 5;
+		int pages = 5;
+		int beginIndex = (pno - 1)* rows + 1;
+		int endIndex = pno*rows;
+		
+		int totalMessage = messageDao.getTotalReceive(emp.getNo());
+		System.out.println("토탈페이지"+totalMessage);
+		PageVo pageVo = new PageVo(rows, pages, pno, totalMessage);
+		
+		pageVo.setBeginIndex(beginIndex);
+		pageVo.setEndIndex(endIndex);
+		pm.setPageVo(pageVo);
+		
+		return messageDao.getReceiveMessages(pm);	
 	}
 	@RequestMapping(value="/getsendlist/{no}", method=RequestMethod.GET)
 	public List<Message> getSendList(@PathVariable("no") int no){
 		return messageDao.getSendMessages(no);
-	}
-	@RequestMapping(value="/getemplist/", method=RequestMethod.GET)
-	public List<Employee> getAllEmployeelist(){
-		return messageDao.getEmployeeList();
 	}
 	@RequestMapping(value="/empbyno/{no}", method=RequestMethod.GET)
 	public Employee getEmp(@PathVariable("no") int no){
