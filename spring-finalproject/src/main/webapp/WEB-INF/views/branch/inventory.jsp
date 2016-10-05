@@ -85,12 +85,11 @@ $(function() {
 				success:function(result) {					
 					$("tbody").empty();
 					
-					console.log(k);
-					if (k == 'pt') {
+					if (k.indexOf("pt") != -1) {
 						console.log("본사");
 						$.ajax({
 							type:"GET",
-							url:"/FinalProject/json/pt/",
+							url:"/FinalProject/json/pt/key/" + k + "/q/" + $q,
 							dataType:"json",
 							success:function(result) {
 								$.each(result, function(index, tr) {
@@ -149,13 +148,14 @@ $(function() {
 	<div class="row inven-search">
 		<div class="col-sm-6 col-sm-offset-3">
 			<form role="form" class="form-inline">
-				<div class="form-group col-sm-3">
+				<div class="form-group col-sm-4">
 					<select title="검색조건" id="inven-search" class="form-control">
 						<option value>검색조건</option>
 						<option value="name">상품명</option>
 						<option value="qty">수량</option>
 						<option value="cat">소분류명</option>
-						<option value="pt">본사물품</option>
+						<option value="ptname">본사-상품명</option>
+						<option value="ptcat">본사-소분류</option>
 					</select>
 				</div>
 				

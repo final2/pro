@@ -66,6 +66,8 @@ public interface BranchService {
 	
 	List<Product> getAllProductsFromCompany();
 	
+	List<Product> getProductsByKeyword(Map<String, Object> map);
+	
 	BranchOrder getBranchOrderByIsCartNo(int no);
 	
 	List<BranchInventory> getInvenByKeyword(Map<String, Object> map);

@@ -44,6 +44,7 @@ public interface BranchDao {
 	void updateBranchOrderDetail(BranchOrderDetail detail);
 	Product getProductByNo(int no);
 	List<Product> getAllProductsFromCompany();
+	List<Product> getProductsByKeyword(Map<String, Object> map);
 	BranchOrder getBranchOrderByIsCartNo(int no);
 	
 	List<BranchInventory> getInvenByKeyword(Map<String, Object> map);

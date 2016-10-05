@@ -194,7 +194,7 @@
 		and
 			A.branch_no = #{value}
 		and 
-			qty &lt;= 100
+			qty &lt; 100
 		order by
 			qty asc
 	</select>
@@ -211,6 +211,7 @@
 		values(mybranch_seq.nextval, #{qty}, #{order.no}, #{product.no})
 	</insert>
 	
+	<!-- 재고 : 물품번호로 발주상세 조회하기 -->
 	<select id="getOrderDetailByProNo" parameterType="map" resultType="com.finalproject.model.BranchOrderDetail">
 		select
 			A.no, 
@@ -237,6 +238,7 @@
 			A.product_no = #{productNo}
 	</select>
 	
+	<!-- 재고 : 발주상세 수정하기 -->
 	<update id="updateBranchOrderDetail" parameterType="com.finalproject.model.BranchOrderDetail">
 		update
 			br_order_details
@@ -246,6 +248,7 @@
 			no = #{no}
 	</update>
 	
+	<!-- 재고 : 물품번호로 물품찾기 -->
 	<select id="getProductByNo" parameterType="int" resultType="Product">
 		select 
 			no, name, maker, price, memo, limiteage as "limiteAge", eventcode "event.no", smallcategory_no as "smallCat.no", image
@@ -255,6 +258,7 @@
 			no = #{value}
 	</select>
 	
+	<!-- 재고 : 모든 본사 물품 조회하기 -->
 	<select id="getAllProductsFromCompany" resultType="Product">
 		select 
 			no, name, maker, price, memo, limiteage as "limiteAge", eventcode "event.no", smallcategory_no as "smallCat.no", image
@@ -262,6 +266,7 @@
 			product
 	</select>
 	
+	<!-- 재고 : iscart=N 인 발주 조회하기 -->
 	<select id="getBranchOrderByIsCartNo" parameterType="int" resultType="BrOrder">
 		select
 			no,
@@ -278,6 +283,7 @@
 			branch_no = #{value}
 	</select>
 	
+	<!-- 재고 : 키워드로 재고 조회하기 -->
 	<select id="getInvenByKeyword" parameterType="map" resultType="com.finalproject.model.BranchInventory">
 		select
 			 A.no, 
@@ -301,6 +307,26 @@
 			and A.qty &lt;= #{keyword}
 			</if>
 			<if test="type == 'cat'">
+			and C.name like '%' || #{keyword} || '%'
+			</if>
+		order by
+			B.name		
+	</select>
+	
+	<!-- 재고 : 키워드로 본사물품 조회하기 -->
+	<select id="getProductsByKeyword" parameterType="map" resultType="Product">
+		select
+			 B.no, 
+			 B.name,
+			 C.name as "smallCat.name"
+		from 
+			product B, smallcategory C
+		where 
+			B.smallcategory_no = C.no
+			<if test="type == 'ptname'">
+			and B.name like '%' || #{keyword} || '%'	
+			</if>
+			<if test="type == 'ptcat'">
 			and C.name like '%' || #{keyword} || '%'
 			</if>
 		order by

@@ -210,6 +210,19 @@ public class BranchJSONController {
 		return brService.getInvenByKeyword(map);
 	}
 	
+	// 검색 키워드 받아서 본사 물품 조회하기
+	@RequestMapping(value="/pt/key/{key}/q/{q}", method=RequestMethod.GET)
+	public List<Product> getProductsByKeyword(@PathVariable("key") String key, 
+									@PathVariable("q") String q) {
+		
+		Map<String, Object> map = new HashMap<>();
+
+		map.put("keyword", q);
+		map.put("type", key);
+		
+		return brService.getProductsByKeyword(map);
+	}
+	
 	// 발주 내역 조회하기
 	@RequestMapping(value="/or/{brno}", method=RequestMethod.GET)
 	public List<BranchOrder> getOrdersByBranchNo(@PathVariable("brno") int brno) {

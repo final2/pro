@@ -55,6 +55,11 @@ public class BranchServiceImpl implements BranchService {
 	}
 	
 	@Override
+	public List<Product> getProductsByKeyword(Map<String, Object> map) {
+		return branchDao.getProductsByKeyword(map);
+	}
+	
+	@Override
 	public List<BranchInventory> getBranchInvenByProductNo(Map<String, Object> map) {
 		return branchDao.getBranchInvenByProductNo(map);
 	}
