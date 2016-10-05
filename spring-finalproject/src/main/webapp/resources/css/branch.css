@@ -54,7 +54,7 @@ body { font-family: 'Nanum Gothic', sans-serif; }
 }
 .navbar-branch .container-fluid { padding-right:0; }
 .navbar-branch .navbar-brand img { display:inline-block; width:65px; }
-.navbar-branch .navbar-time { float:left; margin-top:12px; color:#e2e2e2; text-align:center; }
+.navbar-branch .navbar-time { float:left; margin-top:12px; color:#fff; text-align:center; }
 .navbar-branch .navbar-time p { margin-top:8px; }
 .navbar-branch li a { color:#fff; border-left:solid 1px #90cee8; border-right:solid 3px #49a4e6; padding:25px; font-size:15px; }
 .navbar-branch li a:hover { background-color:#3d93d9; color:#fff; }
@@ -82,9 +82,13 @@ body { font-family: 'Nanum Gothic', sans-serif; }
 #sales-btn-list li { position:relative; width:20%; float:left; padding:10px; cursor:pointer; border:solid 1px #fff; background-color:#808080; text-align:center; color:#fff; font-size:14px;}
 #sales-btn-list li:hover { background-color:#707070; }
 #pt-remove-btn { cursor:pointer; }
+.input-for-label {position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip:rect(0,0,0,0); border: 0; }}
+#user-info div { text-align:center; }
 
 /* 재고 */
 .inven-search { margin-top:20px; }
+.inven-search .col-sm-4 { overflow:hidden; padding-right:5px; }
+.inven-search select { float:right; }
 .inven-keyword { padding:0; }
 .form-inline .inven-keyword input { width:100%; }
 .inven-list { margin-top:20px; }

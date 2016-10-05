@@ -9,6 +9,7 @@
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" href="../resources/bootstrap/css/bootstrap.css">
 <link rel="stylesheet" type="text/css" href="../resources/css/branch.css">
+<link rel="stylesheet" type="text/css" href="../resources/css/buttons.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="../resources/jquery/jquery.js" ></script>
@@ -170,7 +171,8 @@ $(function() {
 				var $tbody = $(".sales-left tbody").empty();
 				
 				$.each(detailList, function(index, item) {
-					$tbody.append("<tr id='sales-pt-"+item.product.no+"'><td>"+1+"</td><td>"
+					var no = index + 1;
+					$tbody.append("<tr id='sales-pt-"+item.product.no+"'><td>"+no+"</td><td>"
 							+item.product.name+"</td><td>"
 							+formatNumber(item.product.price)+"</td><td><input type='text' value='"+item.qty+"' name='qty-"+item.product.no+"' /></td>"
 							+"<td><a id='remove-btn-"+item.product.no+"'><span class='glyphicon glyphicon-remove'></span></a></td></tr>");
@@ -224,10 +226,12 @@ $(function() {
 	});
 	
 	// 결제버튼 클릭시, 구매자정보 입력 후 결제정보 저장
-	$(".modal-footer").on("click", "#pay-btn", function() {
-		var payment = $("input[name='payment']").val();
-		var gender = $("input[name='gender']").val();
-		var ages = $("input[name='ages']").val();
+	$("#user-info").submit(function(event) {
+		event.preventDefault();
+		
+		var payment = $("input[name='payment']:checked").val();
+		var gender = $("input[name='gender']:checked").val();
+		var ages = $("input[name='ages']:checked").val();
 		
 		console.log(detailList);
 		var jsonData = JSON.stringify(detailList);
@@ -282,7 +286,41 @@ $(function() {
 				}
 			}
 		})
-	})
+	});
+	
+	$("label").click(function() {
+		var id = $(this).attr("for");
+		
+		if ($("input[id='"+id+"']").attr("checked") == 'checked') {
+			$("input[id='"+id+"']").removeAttr("checked");
+			$("input[id='"+id+"']").siblings("input").attr("checked");
+			$(this).removeClass("action-button-active");
+			$(this).siblings("label").addClass("action-button-active");
+		} else {
+			$(this).addClass("action-button-active");
+			$(this).siblings("label").removeClass("action-button-active");
+			$("input[id='"+id+"']").attr("checked");
+			$("input[id='"+id+"']").siblings("input").removeAttr("checked");
+		}
+		
+	});
+	
+	$("#label-02 label").click(function() {
+		var id = $(this).attr("for");
+		
+		if ($("input[id='"+id+"']").attr("checked") == 'checked') {
+			$("input[id='"+id+"']").removeAttr("checked");
+			$("input[id='"+id+"']").siblings("input").attr("checked");
+			$(this).removeClass("circ-button-active");
+			$(this).siblings("label").addClass("circ-button-active");
+		} else {
+			$(this).addClass("circ-button-active");
+			$(this).siblings("label").removeClass("circ-button-active");
+			$("input[id='"+id+"']").attr("checked");
+			$("input[id='"+id+"']").siblings("input").removeAttr("checked");
+		}
+		
+	});
 });
 </script>
 <title>지점 - 판매</title>
@@ -371,30 +409,32 @@ $(function() {
 		          <button type="button" class="close" data-dismiss="modal">&times;</button>
 		          <h4 class="modal-title">구매자 정보 입력하기</h4>
 		        </div>
+		        <form role="form" id="user-info">
 		        <div class="modal-body">
 		        	<div>
 		        		<h4>지불방법</h4>
-		        		<label class="radio-inline"><input type="radio" name="payment" value="M" checked>현금</label>
-						<label class="radio-inline"><input type="radio" name="payment" value="C">신용카드</label>
+		        		<label for="radio-money" class="action-button shadow animate blue action-button-active">현금</label><input type="radio" id="radio-money" class="input-for-label" name="payment" value="M" checked>
+						<label for="radio-card" class="action-button shadow animate green">카드</label><input type="radio" id="radio-card" class="input-for-label" name="payment" value="C">
 		        	</div>
 		        	<div>
 		        		<h4>성별</h4>
-		        		<label class="radio-inline"><input type="radio" name="gender" value="M" checked>남자</label>
-						<label class="radio-inline"><input type="radio" name="gender" value="F">여자</label>
+		        		<label for="radio-male" class="action-button shadow animate red action-button-active">남자</label><input type="radio" id="radio-male" class="input-for-label" name="gender" value="M" checked>
+						<label for="radio-female" class="action-button shadow animate yellow">여자</label><input type="radio" id="radio-female" class="input-for-label" name="gender" value="F">
 		        	</div>
-		        	<div>
+		        	<div id="label-02">
 		        		<h4>연령별</h4>
-		        		<label class="radio-inline"><input type="radio" name="ages" value="10" checked>10대</label>
-						<label class="radio-inline"><input type="radio" name="ages" value="20">20대</label>
-						<label class="radio-inline"><input type="radio" name="ages" value="30">30대</label>
-						<label class="radio-inline"><input type="radio" name="ages" value="40">40대</label>
-						<label class="radio-inline"><input type="radio" name="ages" value="50">50대 이상</label>
+		        		<label for="radio-10" class="circ-button circ-button-active">10</label><input type="radio" id="radio-10" class="input-for-label" name="ages" value="10" checked>
+						<label for="radio-20" class="circ-button">20</label><input type="radio" id="radio-20" class="input-for-label" name="ages" value="20">
+						<label for="radio-30" class="circ-button">30</label><input type="radio" id="radio-30" class="input-for-label" name="ages" value="30">
+						<label for="radio-40" class="circ-button">40</label><input type="radio" id="radio-40" class="input-for-label" name="ages" value="40">
+						<label for="radio-50" class="circ-button">50</label><input type="radio" id="radio-10" class="input-for-label" name="ages" value="50">
 		        	</div>
 		        </div>
 		        <div class="modal-footer">
 		          <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
-		          <button type="button" id="pay-btn" class="btn btn-primary">결제</button>
+		          <button type="submit" id="pay-btn" class="btn btn-primary">결제</button>
 		        </div>
+		        </form>
 		      </div>
 		      
 		    </div>
