@@ -30,7 +30,6 @@ public class BrEmpUserDetailsService implements UserDetailsService {
 			throw new UsernameNotFoundException("사용자가 없습니다.");
 		}
 		BranchEmp emp = brEmps.get(0);
-		emp.setGrade(emp.getGrade());
 		
 		return new BrEmpUserDetails(emp);
 	}

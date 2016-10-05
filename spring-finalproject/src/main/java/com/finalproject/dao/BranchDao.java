@@ -64,4 +64,7 @@ public interface BranchDao {
 	// 지점 - 이벤트
 	List<Product> getProductsByEventCode(int eventcode);
 	List<Product> getAllEventProducts();
+	
+	// 지점 - 사용자 등록
+	void addBranchEmp(BranchEmp brEmp);
 }

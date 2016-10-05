@@ -16,6 +16,7 @@
 			A.name, 
 			A.retiredate, 
 			A.branch_no as "branch.no", 
+			B.name as "branch.name",
 			A.images, 
 			A.birth
 		from 
@@ -495,4 +496,12 @@
 		or 
 			eventcode = 2 	
 	</select>
+	
+	<!-- 사용자등록 : 아르바이트생 등록하기 -->
+	<insert id="addBranchEmp" parameterType="BranchEmp">
+		insert into 
+			br_employees(no, email, address, phone, grade, password, name, branch_no, images, birth)
+		values
+			(mybranch_seq.nextval, #{email,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{grade,jdbcType=CHAR}, #{password,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{branch.no}, #{images,jdbcType=VARCHAR}, #{birth,jdbcType=DATE})
+	</insert>
 </mapper>

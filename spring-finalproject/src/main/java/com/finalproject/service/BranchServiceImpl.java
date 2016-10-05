@@ -203,4 +203,9 @@ public class BranchServiceImpl implements BranchService {
 	public List<Product> getAllEventProducts() {
 		return branchDao.getAllEventProducts();
 	}
+	
+	@Override
+	public void addBranchEmp(BranchEmp brEmp) {
+		branchDao.addBranchEmp(brEmp);
+	}
 }

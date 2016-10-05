@@ -106,15 +106,15 @@ $(function() {
 			
 			<div class="tab-con">
 				<ul id="event-tab-1">
-				
+					<!-- 1+1 물품리스트 -->
 				</ul>
 				
 				<ul id="event-tab-2">
-				
+					<!-- 2+1 물품리스트 -->
 				</ul>
 				
 				<ul id="event-tab-3">
-				
+					<!-- 전체 물품리스트 -->
 				</ul>
 			</div>
 		</div>

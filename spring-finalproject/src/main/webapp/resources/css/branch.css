@@ -128,3 +128,14 @@ body { font-family: 'Nanum Gothic', sans-serif; }
 .event-flag1 { position:absolute; right:0; top:0; width:50px; heigth:50px; border-radius:50%; background-color:#e85831; color:#fff; }
 .event-flag2 {  position:absolute; right:0; top:0; width:50px; heigth:50px; border-radius:50%; background-color:#219c6c; color:#fff; }
 .event-price { font-weight:bold; font-size:15px; }
+
+/* 사용자 등록 */
+.addemp-con { padding:20px; }
+.addemp-con h3 { text-align:center; margin-top:0; }
+.addemp-con table { width:80%; margin:0 auto; }
+.addemp-con input[type="file"] { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip:rect(0,0,0,0); border: 0; }
+.addemp-con .form-group { overflow:hidden; margin-bottom:5px; }
+.addemp-con .col-xs-6 { padding:0 3px; }
+.addemp-con .col-xs-4 { padding:0 3px; }
+#img_preview { display:inline-block; width:100%; }
+#add-btn-box { margin-top:20px; text-align:center; }

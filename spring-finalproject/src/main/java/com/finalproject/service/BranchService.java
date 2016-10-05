@@ -95,4 +95,6 @@ public interface BranchService {
 	List<Product> getProductsByEventCode(int eventcode);
 	
 	List<Product> getAllEventProducts();
+	
+	void addBranchEmp(BranchEmp brEmp);
 }

@@ -2,6 +2,8 @@ package com.finalproject.web;
 
 
 
+import java.io.File;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,10 +14,14 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.finalproject.model.Branch;
+import com.finalproject.model.BranchEmp;
 import com.finalproject.model.BranchInventory;
 import com.finalproject.model.BranchOrder;
 import com.finalproject.model.BranchOrderDetail;
@@ -121,4 +127,59 @@ public class BranchController {
 	public String event() {
 		return "branch/event";
 	}
+	
+	// 지점 - 사용자등록
+	@RequestMapping("/branch/branchaddemp.do")
+	public String addemp() {
+		return "branch/addemp";
+	}
+	
+	private static String UPLOAD_DIRECTORY = "C:/Users/JHTA/git/pro/spring-finalproject/src/main/webapp/resources/image/brempimg";
+	
+	@RequestMapping(value="/branch/upload.do", method=RequestMethod.POST)
+	public String upload(@RequestParam("email") String email,
+						@RequestParam("phone") String phone,
+						@RequestParam("grade") String grade,
+						@RequestParam("name") String name,
+						@RequestParam("password") String password,
+						@RequestParam("brno") int brno,
+						@RequestParam("birth") Date birth,
+						@RequestParam("address1") String address1,
+						@RequestParam("address2") String address2,
+						@RequestParam("images") MultipartFile images)
+		throws Exception {
+		
+		BranchEmp brEmp = new BranchEmp();
+		brEmp.setEmail(email);
+		String addr = address1 + " " + address2;
+		brEmp.setAddress(addr);
+		brEmp.setPhone(phone);
+		brEmp.setGrade(grade);
+		brEmp.setName(name);
+		brEmp.setPassword(password);
+		brEmp.setBirth(birth);
+		
+		Branch branch = brService.getBranchByNo(brno);
+		brEmp.setBranch(branch);
+		
+		if (!images.isEmpty()) {
+			String filename = images.getOriginalFilename();
+			
+			// 업로드된 파일 데이타
+			byte[] bytes = images.getBytes();
+			// 업로드된 파일을 저장할 데릭토리와 파일명
+			File file = new File(UPLOAD_DIRECTORY, filename);
+			
+			// 파일 데이타를 지정한 파일로 저장
+			FileCopyUtils.copy(bytes, file);
+			
+			// 지점회원정보에 이미지 이름 저장
+			brEmp.setImages(filename);
+		}
+		
+		brService.addBranchEmp(brEmp);
+		
+		return "redirect:/branch/branchaddemp.do";
+	}
+	
 }
