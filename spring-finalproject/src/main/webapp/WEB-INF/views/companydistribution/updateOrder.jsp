@@ -22,12 +22,12 @@
 			<h1>발주 신청서 수정</h1>
 			<hr>
 			
-			<form action="updateOrder.do?no=${orders.no}" method="post" role="form">
+			<form action="updateOrder.do" method="post" role="form">
 			<table class="table table-bordered">
 				<thead>
 					<tr>
 						<th>발주번호</th>
-						<td>${orders.no }<input type="hidden" name="hqOrder.no" class="form-control" value="${orders.no }" /> </td>
+						<td>${orders.no }<input type="hidden" name="orderNo" class="form-control" value="${orders.no }" /> </td>
 						<th>발주신청일자</th>
 						<td><fmt:formatDate value="${orders.regdate }" pattern="yyyy-MM-dd"/><input type="hidden" name="orderDate" class="form-control" value="${orders.regdate }" /></td>
 					</tr>
@@ -55,7 +55,7 @@
 					<c:forEach var="details" items="${details}">
 						<tr>
 							<td style="width:25%">${details.product.no }
-								<input type="hidden" name="productNo" class="form-control" value="${details.product.no }" />
+								<input type="hidden" name="no" class="form-control" value="${details.product.no }" />
 							</td>
 							<td style="width:25%">${details.product.name }
 								<input type="hidden" name="productName" class="form-control" value="${details.product.name }" />

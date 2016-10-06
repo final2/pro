@@ -184,8 +184,30 @@ public class DistributionController {
 		return "companydistribution/updateOrder";
 	}
 	@RequestMapping(value="/updateOrder.do", method=RequestMethod.POST)
-	public String updateOrder(HqOrderDetail hqOrderDetail) {
-		distributionService.updateOrder(hqOrderDetail);
+	public String updateOrder(OrderForm orderForm) {
+		
+		HqOrderDetail hqOrderDetail = new HqOrderDetail();
+		HqOrder hqOrder = new HqOrder();
+		hqOrder.setNo(orderForm.getOrderNo());
+		
+		int[] no = orderForm.getNo();
+		int[] price = orderForm.getPrice();
+		int[] qty = orderForm.getQty();
+		
+		for(int i=0; i<no.length; i++) {
+
+			if(qty[i] != 0) {
+				hqOrderDetail.setQty(qty[i]);
+				hqOrderDetail.setHqOrder(hqOrder);
+				
+				Product product = new Product();
+				product.setNo(no[i]);
+				product.setPrice(price[i]);
+				hqOrderDetail.setProduct(product);
+				
+				distributionService.updateOrder(hqOrderDetail);
+			}
+		}
 		return "redirect:/hqOrderDetail.do?no="+hqOrderDetail.getHqOrder().getNo();
 	}
 

@@ -36,7 +36,7 @@
 			no = #{value}
 	</select>
 	
-	<!-- 발주 신청시 사용 -->
+	<!-- 거래처 번호로 상품 조회 / 발주 신청시 사용 -->
 	<select id="getClientDetailsByNo" parameterType="int" resultType="ClDetail">
 		select
 			c.qty			as qty,
@@ -83,6 +83,7 @@
 	</select>
 	
 <!-- 발주 ======================================================================================================= -->
+	<!-- 발주 신청시 발주 번호 생성 -->
 	<select id="getOrderNo" resultType="int">
 		select
 			myorder_seq.nextval
@@ -90,7 +91,7 @@
 			dual
 	</select>
 	
-	<!-- 발주 조회 -->
+	<!-- 발주 신청 리스트 조회 -->
 	<select id="getHqOrders" resultType="HqOrder">
 		select
 			h.no			as no,
@@ -106,7 +107,7 @@
 			regdate desc
 	</select>
 	
-	<!-- 발주 신청 -->
+	<!-- 발주 신청(발주번호, 거래처 이름, 입고여부, 신청일 저장) -->
 	<insert id="addNewOrder" parameterType="HqOrder">
 		insert into hq_order
 			(no, client_no, isconfirm, regdate)
@@ -114,6 +115,7 @@
 			(${no}, #{client.no}, 'N', sysdate)
 	</insert>
 	
+	<!-- 발주 신청(신청일, 수량, 발주번호, 상품번호, 가격 저장) -->
 	<insert id="addNewProductOrder" parameterType="HOD">
 		insert into hq_order_detail
 			(no, regdate, qty, hq_order_no, product_no, price)
@@ -135,6 +137,8 @@
 			h.client_no = c.no
 			and h.no = #{value}
 	</select>
+	
+	<!-- 발주번호로 상품정보 조회 -->
 	<select id="getOrderDetailByNo" parameterType="int" resultType="HOD">
 		select
 			d.no			as no,
@@ -168,6 +172,7 @@
 			set
 				qty = #{qty}
 			where
-				hq_order_no = #{no}
+				hq_order_no = #{hqOrder.no}
+				and product_no = #{product.no}
 	</update>
 </mapper>

@@ -30,6 +30,7 @@ public class DistributionServiceImpl implements DistributionService{
 	public Client getClientsByNo(int no) {
 		return distributionDao.getClientsByNo(no);
 	}
+	
 	// 발수 신청시 사용(품번,품명,가격)
 	@Override
 	public List<ClientDetail> getClientDetailsByNo(int no) {
@@ -59,31 +60,39 @@ public class DistributionServiceImpl implements DistributionService{
 	public void updateClient(Client client) {
 		distributionDao.updateClient(client);
 	}
+	
 /* 발주 ========================================================================================================== */
-	// 발주 조회
+	// 발주 리스트 조회
 	@Override
 	public List<HqOrder> getHqOrderLists() {
 		return distributionDao.getHqOrders();
 	}
-	// 발주 신청
+	
+	// 발주 신청(발주 번호 생성)
 	@Override
 	public int orderNo() {
 		return distributionDao.getOrderNo();
 	}
+	
+	// 발주 신청(발주번호, 신청일, 거래처명 저장)
 	@Override
 	public void NewOrder(HqOrder hqOrder) {
 		distributionDao.addNewOrder(hqOrder);
 	}
+	
+	// 발주 신청(신청한 상품목록 저장)
 	@Override
 	public void NewProductOrder(HqOrderDetail hqOrderDetail) {
 		distributionDao.addNewProductOrder(hqOrderDetail);
 	}
+	
 	// 번호로 발주 정보 조회
 	@Override
 	public HqOrder getOrderByNo(int no) {
 		return distributionDao.getOrderByNo(no);
 	}
-	// 번호로 발주 상세 정보 조회
+	
+	// 발주번호로 신청한 상품 조회 
 	@Override
 	public List<HqOrderDetail> getOrderDetailByNo(int no) {
 		return distributionDao.getOrderDetailByNo(no);
@@ -95,7 +104,7 @@ public class DistributionServiceImpl implements DistributionService{
 		distributionDao.updateOrder(hqOrderDetail);		
 	}
 	
-	// 입고 여부 변경
+	// 입고 확인
 	@Override
 	public void updateCon(HqOrder hqOrder) {
 		distributionDao.updateCon(hqOrder);
