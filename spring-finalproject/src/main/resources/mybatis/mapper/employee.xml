@@ -12,7 +12,7 @@
 			phone, 
 			email, 
 			address, 
-			birth, 
+			to_date(birth, 'yyyy-MM-dd') 	as birth,  
 			department 	as dept, 
 			position, 
 			salary, 
@@ -43,29 +43,34 @@
 	
 	<!-- 현재 사원번호 확인하기 -->
 	<select id="empSeqCheck" resultType="int">
-		select LAST_NUMBER from user_sequences
-		where SEQUENCE_NAME = 'MY_SEQ'
+		select my_seq.nextval from dual
 	</select>
 	
 	<!-- 사원등록 -->
-	<insert id="insertEmployee" parameterType="RegisterEmp">
+	<insert id="insertEmployee" parameterType="Employee">
 		insert into employee (no, name, phone, email, address, birth, department, position, salary, photo, hiredate, password, retiredate, remarks )
 		<!-- values (myemp_seq.nextval, #{name}, #{phone}, #{email}, #{address}, #{birth}, #{dept}, #{position}, 0, #{photo}, sysdate, #{password}, null, '-') -->
-		values (my_seq.nextval, #{name}, #{phone}, #{email}, #{address}, to_char(#{birth}, 'yyyy-mm-dd'), #{dept}, #{position}, #{salary}, #{photo}, sysdate, #{password}, null, '-')
+		values (#{no}, #{name}, #{phone}, #{email}, #{address}, to_char(#{birth}, 'yyyy-mm-dd'), #{dept}, #{position}, #{salary}, #{photo}, sysdate, #{password}, null, '-')
 	</insert>
 	
 	<!-- 사원등록 시 학력 정보 등록 -->
-	<insert id="insertCareer" parameterType="Career">
-		insert into Career (no, school, major, employee_no)
+	<insert id="insertAddCareer" parameterType="Career">
+		insert into career (no, school, major, employee_no)
 		<!-- values (myempopt_seq.nextval, #{school}, #{major}, #{empNo}) -->
-		values (my_seq.nextval, #{school}, #{major}, #{emp )
+		values (my_seq.nextval, #{school}, #{major}, #{empNo} )
 	</insert>
 	
 	<!-- 사원등록 시 자격증 정보 등록 -->
-	<!-- <insert id="insertAddLicenses" parameterType="Licenses"></insert> -->
+	<insert id="insertAddLicenses" parameterType="Licenses">
+		insert into licenses (no, license, license_office, employee_no)
+		values (my_seq.nextval, #{license}, #{licenseOffice}, #{empNo}) 
+	</insert>
 	
 	<!-- 사원등록 시 어학능력 정보 등록 -->
-	<!-- <insert id="insertAddLanguages" parameterType="Languages"></insert> -->
+	<insert id="insertAddLanguages" parameterType="Languages">
+		insert into languages (no, language, grade, employee_no)
+		values (my_seq.nextval, #{language}, #{grade}, #{empNo})
+	</insert>
 		
 	<!-- 사원 급여 등록 -->
 	<insert id="insertSalary" parameterType="AccountBook">
@@ -92,7 +97,7 @@
 			phone, 
 			email, 
 			address, 
-			to_date(birth, 'yyyy-mm-dd') 	as birth, 
+			to_date(birth, 'yyyy-MM-dd') 	as birth, 
 			department 						as dept, 
 			position, 
 			photo, 
@@ -110,6 +115,41 @@
 		from employee E, branch B
 		where E.no = B.employee_no
 		and E.no = #{no}
+	</select>
+	
+	<!-- 사원번호 학력 조회하기 -->
+	<select id="getCareerListByNo" parameterType="int" resultType="Career">
+		select
+			no,
+			school,
+			major,
+			employee_no		as empNo,
+			term
+		from career
+		where employee_no = #{empNo}
+		order by term desc
+	</select>
+	
+	<!-- 사원번호 자격증 조회하기 -->
+	<select id="getLicenseListByNo" parameterType="int" resultType="Licenses">
+		select
+			no,
+			license,
+			license_office	as licenseOffice,
+			employee_no		as empNo
+		from licenses
+		where employee_no = #{empNo}			
+	</select>
+	
+	<!-- 사원번호 어학능력 조회하기 -->
+	<select id="getLanguageListByNo" parameterType="int" resultType="Languages">
+		select
+			no,
+			language,
+			grade,
+			employee_no		as empNo
+		from languages
+		where employee_no = #{empNo}
 	</select>
 	
 	<!-- 지점 등록 -->
