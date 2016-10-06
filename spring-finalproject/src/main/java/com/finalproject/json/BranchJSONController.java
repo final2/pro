@@ -297,6 +297,14 @@ public class BranchJSONController {
 			detail.setProduct(product);
 			detail.setQty(d.getQty());
 			brService.addBranchSalesDetail(detail);
+			
+			int productNo = d.getProduct().getNo();
+			BranchInventory inven = brService.getInventoryByProductNo(productNo);
+
+			if(inven != null && inven.getProduct().getNo() == d.getProduct().getNo()) {
+				inven.setQty(inven.getQty() - d.getQty());
+				brService.updateInventory(inven);
+			}
 		}
 		return brService.getBranchSalesDetailBySalesNo(sale.getNo());
 	}
@@ -335,6 +343,17 @@ public class BranchJSONController {
 		} else {
 			sales.setIsreturned("Y");
 			brService.updateBranchSales(sales);
+			
+			List<BranchSalesDetail> list = brService.getBranchSalesDetailBySalesNo(salesno);
+			for (BranchSalesDetail d : list) {
+				int productNo = d.getProduct().getNo();
+				BranchInventory inven = brService.getInventoryByProductNo(productNo);
+
+				if(inven != null && inven.getProduct().getNo() == d.getProduct().getNo()) {
+					inven.setQty(inven.getQty() + d.getQty());
+					brService.updateInventory(inven);
+				}
+			}
 			return sales;
 		}
 	}
