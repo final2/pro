@@ -73,43 +73,103 @@
 	</style>
 	
 	<!-- 규석씨 api키값 	bf6fd53fddf7f8f7309b459f43aceb86 -->
+	<!-- cfdcd22439144d2fe4a21b6375bed0fa -->
+	<!-- a7c0dab8230936242d3ea7be3a24efc5 boram -->
 <!-- 지도 및 테이블 데이타 갱신 관련 -->
-<script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=bf6fd53fddf7f8f7309b459f43aceb86&libraries=services"></script>
+<script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=a7c0dab8230936242d3ea7be3a24efc5&libraries=services"></script>
 <script type="text/javascript">
 // 지도 보이기
 $(function() {
 	
 	displayMap("lotto");
+	
 	function displayMap(selectedId) {
 		var id = selectedId || "lotto";
-		var map = makeMap();
+		
 		
 		$.ajax({
 			type:"GET",
 			url:"store.do?id=" + id,
 			dataType:"json",
 			success:function(data){
-				console.log(data);
 				$("tbody").empty();	
 				$("#id a").addClass("active");
-				// 테이블에 입력값 넣기
-				$.each(data, function(index, item) {
-					$("tbody").append("<tr><td>"+item.name+"</td><td>"+item.address+"</td><td>"+item.phone+"</td></tr>")
-					
-					$.ajax({
-						url:"json/geo.do",
-						data:{address:item.address},
-						dataType:"json",
-						success: function(geo) {
-							
-							addMarker(map, item, geo.lat, geo.lng)
+				$(".pagination").empty();
+				
+				/* 페이지네이션 구현을 구해 준비 */
+				var totalRows= Object.keys(data).length;
+				var rows=7;
+				var totalPages = parseInt(totalRows/rows)+1;
+				var pages= 5;
+				var pageNo=1;
+				var beginIndex=(pageNo-1)*rows +1;
+				var endIndex = pageNo*rows;
+				var totalBlocks= parseInt(totalPages/pages);
+			//	var beginPage = (block-1)*pages + 1;
+			//	var endPage = block * pages;
 
-						}
-					});	
-				})
+				/* 페이지네이션 구현 */
+					
+					for(var i=1 ; i<= totalPages; i++){
+						
+						$(".pagination").append("<li><a>"+i+"</a></li>");
+						
+					}
+					$(".pagination li:first").addClass("active");
+				var map = makeMap();
+				for( beginIndex-1 ; beginIndex<=endIndex ; beginIndex++){
+					$("tbody").append("<tr><td>"+data[beginIndex].name+"</td><td>"+data[beginIndex].address+"</td><td>"+data[beginIndex].phone+"</td></tr>");
+					(function(j) {
+						
+						$.ajax({
+							url:"json/geo.do",
+							data:{address:data[j].address},
+							dataType:"json",
+							success: function(geo) {
+								addMarker(map, data[j], geo.lat, geo.lng)
+	
+							}
+						});	
+					})(beginIndex)
+					
+				}
+				
+				$(".pagination").on('click','a',function() {
+					$("tbody").empty();	
+					$(".pagination").find("li").removeClass("active");
+					$(this).parent("li").addClass("active");
+					pageNo = $(this).text();
+					
+					console.log(pageNo);
+					
+					rebeginIndex=rows*(pageNo-1)-1;
+					endIndex=rebeginIndex+rows;
+					var map = makeMap();
+					for( beginIndex ; rebeginIndex < endIndex ; rebeginIndex++){
+						$("tbody").append("<tr><td>"+data[rebeginIndex].name+"</td><td>"+data[rebeginIndex].address+"</td><td>"+data[rebeginIndex].phone+"</td></tr>");
+						(function(k) {
+							
+							$.ajax({
+								url:"json/geo.do",
+								data:{address:data[k].address},
+								dataType:"json",
+								success: function(geo) {
+									//var map = makeMap();
+									addMarker(map, data[k], geo.lat, geo.lng);
+				
+								}
+							});	
+						})(rebeginIndex)
+						
+					}
+				});
+				
 			}
 		}); 
 	}
+	
+
+	
 	
  	function makeOverListener(map, marker, infowindow) {
 	    return function() {
@@ -144,7 +204,7 @@ $(function() {
 		var marker = new daum.maps.Marker({
 	        map: map, // 마커를 표시할 지도
 	        position: new daum.maps.LatLng(lat, lng), // 마커를 표시할 위치
-	        title : store.name, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+	        title : store, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
 	    });
 		
         daum.maps.event.addListener(marker, 'click', function() {
@@ -219,121 +279,58 @@ $(function() {
 <title>지점 유형별 안내</title>
 </head>
 <body>
-<div class="container" style="w3-center">
-	<div class="w3-display-container" style="max-width:1080px;">
-	<!-- 상단 메뉴바 -->
-	<nav class="w3-top" style="position:static" >
-	 <ul class="w3-navbar w3-theme-d2 w3-left-align w3-large" style="height:100px">
-	  <li class="w3-hide-medium w3-hide-large w3-opennav w3-right">
-	    <a class="w3-hover-white w3-large w3-theme-d2" href="javascript:void(0);" onclick="openNav()"><i class="fa fa-bars"></i></a>
-	  </li>
-	  <li><a href="main.do" class="w3-black"><img alt="logo" src="resources/image/logo2.png" width="60px" />BigStore</a></li>
-	   <li class="w3-hide-small w3-dropdown-hover w3-right">
-	    <a href="#" title="Notifications">서비스유형별안내 <i class="fa fa-caret-down"></i></a>
-	    <div class="w3-dropdown-content w3-white w3-card-4">
-	      <a href="lotto.do">Lotto판매</a>
-	      <a href="atm.do">ATM</a>
-	<!--       <a href="parcelService.do">편의서비스</a> -->
-	      <a href="delivery.do">택배서비스</a>
-	      <a href="makefood.do">직접조리식품</a>
-	    </div>
-	  </li>
-	    <li class="w3-hide-small w3-right"><a href="announcement.do" class="w3-hover-white">공지사항</a></li>
-	  <li class="w3-hide-small w3-right"><a href="intro.do" class="w3-hover-white">회사소개</a></li>
-	  <li class="w3-hide-small w3-right"><a href="#" class="w3-hover-teal" title="Search"><i class="fa fa-search"></i></a></li>
-	 </ul>
-	
-	<!-- Navbar on small screens -->
-	<div id="navDemo" class="w3-hide w3-hide-large w3-hide-medium w3-top" style="margin-top:43px;">
-	  <ul class="w3-navbar w3-left-align w3-large w3-theme">
-	    <li><a href="intro.do">회사소개</a></li>
-	    <li><a href="announcement.do">공지사항</a></li>
-	    <li class="w3-dropdown-hover">
-	    <a href="#" title="Notifications">서비스유형별안내 <i class="fa fa-caret-down"></i></a>
-	    <div class="w3-dropdown-content w3-light-grey w3-card-4">
-	      <span title="lotto.do">Lotto판매</span>
-	      <a href="atm.do">ATM</a>
-	<!--       <a href="parcelService.do">편의서비스</a> -->
-	      <a href="delivery.do">택배서비스</a>
-	      <a href="makefood.do">직접조리식품</a>
-	    </div>
-	      </li>
-	      <li class="w3-dropdown-hover">
-	        <a href="#" title="Notifications">상품안내 <i class="fa fa-caret-down"></i></a>
-	        <div class="w3-dropdown-content w3-light-grey w3-card-4">
-	          <a href="oneplus.do?no=1">1+1상품</a>
-	          <a href="twoplus.do?no=2">2+1상품</a>
-	          <a href="event.do">덤증정상품</a>
-	          <a href="event.do">선물추첨상품</a>
-	        </div>
-	      </li>
-	  </ul>
+<div id="mainview" >
+	<div id="header" class="w3-display-container">
+		<%@ include file="navbar.jsp" %>
 	</div>
-	</nav>
-	<!-- 상단메뉴바 관련 script -->	
-	<script>
-	function w3_open() {
-	    var x = document.getElementById("mySidenav");
-	    x.style.width = "300px";
-	    x.style.textAlign = "center";
-	    x.style.fontSize = "40px";
-	    x.style.paddingTop = "10%";
-	    x.style.display = "block";
-	}
-	function w3_close() {
-	    document.getElementById("mySidenav").style.display = "none";
-	}
-	
-	// Used to toggle the menu on smaller screens when clicking on the menu button
-	function openNav() {
-	    var x = document.getElementById("navDemo");
-	    if (x.className.indexOf("w3-show") == -1) {
-	        x.className += " w3-show";
-	    } else {
-	        x.className = x.className.replace(" w3-show", "");
-	    }
-	}
-	</script>
-	
-	<!-- 메뉴 하단부 시작  양옆 패딩값은 0으로 하고 위아래약간의 마진을 두었다-->	
-	<div class="w3-container w3-padding-0   " >
-	
-<!-- sub메뉴 -->
-	<ul class="topnav" id="store-gubun">
-  		<li id="LOTTO" ><span class="active">Lotto판매점</span></li>
-  		<li id="ATM"><span>ATM 설치점</span></li>
-  		<li id="PARCELSERVICE"><span>택배 가능점</span></li>
-  		<li id="FRESHFOOD"><span >조리식품판매점</span></li>
-  		<!-- <li class="right"><a href="#about">About</a></li> -->
-	</ul>
-	
 
-<!-- sub메뉴 하단 표시부 -->
-	<div  class="w3-container w3-padding-0 w3-margin-0" style="height:100%;">
-		<!-- 판매점 리스트 -->
-		<div id="panelTab" class="w3-half" style="height:100%;overflow:auto;">
-			<table class="w3-table w3-striped w3-bordered w3-border" >
-				<thead>
-				<tr>
-				  <th class="w3-center">판매점명</th>
-				  <th class="w3-center">주소</th>
-				  <th class="w3-center">전화번호</th>
-				</tr>
-				</thead>
-				<tbody>
-					<!-- 판매점 리스트 -->
-				</tbody>
-			</table>	
+	<div id="content">
+		<!-- 메뉴 하단부 시작  양옆 패딩값은 0으로 하고 위아래약간의 마진을 두었다-->	
+		<!-- sub메뉴 -->
+		<div class="w3-container w3-padding-0   " >
+			<ul class="topnav" id="store-gubun">
+		  		<li id="LOTTO" ><span class="active">Lotto판매점</span></li>
+		  		<li id="ATM"><span>ATM 설치점</span></li>
+		  		<li id="PARCELSERVICE"><span>택배 가능점</span></li>
+		  		<li id="FRESHFOOD"><span >조리식품판매점</span></li>
+		  		<!-- <li class="right"><a href="#about">About</a></li> -->
+			</ul>
+		</div>	
+	
+	<!-- sub메뉴 하단 표시부 -->
+		<div  class="w3-container w3-padding-0 w3-margin-0" style="height:100%;">
+			<!-- 판매점 리스트 -->
+			<div id="panelTab" class="w3-half" style="height:100%;overflow:auto;">
+				<table class="w3-table w3-striped w3-bordered w3-border" >
+					<thead>
+					<tr>
+					  <th class="w3-center">판매점명</th>
+					  <th class="w3-center">주소</th>
+					  <th class="w3-center">전화번호</th>
+					</tr>
+					</thead>
+					<tbody>
+						<!-- 판매점 리스트 -->
+					</tbody>
+				</table>
+				</div>	
+			<!-- 지도표시하기 -->
+			<div id="mapContainer" class="w3-container w3-half w3-padding-0" style="height:540px">
+				<div id="map" style="width:100%;height:100%;"></div>
+			</div>
 		</div>
-		<!-- 지도표시하기 -->
-		<div id="mapContainer" class="w3-container w3-half w3-padding-0" style="height:540px">
-			<div id="map" style="width:100%;height:100%;"></div>
+				
+		<div class="row text-center">
+			<ul class="pagination">
+
+  			</ul>
 		</div>
 	</div>
-		</div>
-	<!-- Footer 영역-->
-		<%@ include file="footer.jsp" %>
+		<!-- footer -->
+	<div id="footer">
+		<%@ include file="footer.jsp" %>	
 	</div>
 </div>
+
 </body>
 </html>

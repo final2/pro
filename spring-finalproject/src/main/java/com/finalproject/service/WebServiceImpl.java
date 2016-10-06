@@ -47,4 +47,10 @@ public class WebServiceImpl implements WebService{
 		return websiteDao.getAllBranch();
 	}
 
+	@Override
+	public int getTotalRows(String type) {
+		
+		return websiteDao.getTotalRows(type);
+	}
+
 }

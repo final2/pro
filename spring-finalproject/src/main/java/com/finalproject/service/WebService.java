@@ -26,4 +26,5 @@ public interface WebService {
 	// 유형별 지점정보 불러오기 
 	List<Branch> getBranchByType(String type);
 	
+	int getTotalRows(String type);
 }

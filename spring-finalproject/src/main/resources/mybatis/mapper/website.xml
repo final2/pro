@@ -87,6 +87,17 @@
 			B.employee_no=e.no
 			and 
 			${value} = 'Y'
+		order by b.ADDRESS desc
+	</select>
+	
+	<!-- pagenation 구현을 위한 totalRows 구하기 -->
+	<select id="getTotalRows" parameterType="string" resultType="int">
+		select 
+			count(*)
+		form 
+			branch
+		where 
+			${value} ='Y'
 	</select>
 	
 	<!-- 번호로 지점찾기 -->

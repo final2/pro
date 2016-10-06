@@ -21,6 +21,7 @@ public class GeoServiceImpl implements GeoService {
 		
 		String url = "https://apis.daum.net/local/geo/addr2coord";
 		//url += "?apikey=bf6fd53fddf7f8f7309b459f43aceb86";
+		//url += "?apikey=a7c0dab8230936242d3ea7be3a24efc5";
 		url += "?apikey=cfdcd22439144d2fe4a21b6375bed0fa";
 		url += "&q=" + URLEncoder.encode(address, "utf-8");
 		
