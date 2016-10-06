@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
 
 <nav class="w3-top" style="position:static;" >
-			 <ul class="w3-navbar w3-theme-d2 w3-left-align w3-large" style="height:100px; padding:7px">
+			 <ul class="w3-navbar w3-theme-d2 w3-left-align w3-large" style="height:70px; padding:7px">
 			    <li class="w3-hide-medium w3-hide-large w3-opennav w3-right">
 			      <a class="w3-hover-white w3-large w3-theme-d2" href="javascript:void(0);" onclick="openNav()"><i class="fa fa-bars"></i></a>
 			    </li>
@@ -15,7 +15,7 @@
 			    <li id="infoStore" class="w3-hide-small w3-right"><a href="searchBranch.do" class="w3-hover-white">서비스유형별안내</a></li>
 			    <li class="w3-hide-small w3-right"><a href="announcement.do" class="w3-hover-white">공지사항</a></li>
 			  <li class="w3-hide-small w3-right"><a href="intro.do" class="w3-hover-white">회사소개</a></li>
-			  <li class="w3-hide-small w3-right"><a href="#" class="w3-hover-teal" title="Search"><i class="fa fa-search"></i></a></li>
+			  <!-- <li class="w3-hide-small w3-right"><a href="#" class="w3-hover-teal" title="Search"><i class="fa fa-search"></i></a></li> -->
 			 </ul>
 			
 			<!-- Navbar on small screens -->

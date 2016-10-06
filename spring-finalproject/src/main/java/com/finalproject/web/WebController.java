@@ -42,10 +42,8 @@ public class WebController {
 	// 지점유형별 검색
 	@RequestMapping("store.do")
 	public @ResponseBody List<Branch> store(@RequestParam(name="id") String id){
-
 		return webservice.getBranchByType(id);
 	}
-	
 
 	// 지점상세검색
 	@RequestMapping("branchdetail.do")
@@ -79,19 +77,7 @@ public class WebController {
 		model.addAttribute("boardDetail",board);
 		return "website/webboarddetail";
 	}
-/*	//문의사항
-	@RequestMapping("qnamail.do")
-	public String qnamail(){
-		return "website/qnamail";
-	}*/
-	
-	//지점검색
-	@RequestMapping("searchName.do")
-	public String searchbranch(Model model){
-		
-		
-		return "website/searchbranch";
-	}
+
 	//지점유형별검색
 	@RequestMapping("searchtype.do")
 	public String searchtype(){
@@ -99,9 +85,11 @@ public class WebController {
 	}
 	
 	@RequestMapping("/searchbranch.do")
-	public String list(Criteria criteria,
+	public String searchbranch(Criteria criteria,
 		@RequestParam(name="pno", required=false, defaultValue="1")int pageNo,
 		Model model) {
+		
+		System.out.println("넘어온문자는"+criteria.getKeyword());
 		
 		// 페이지 번호가 1보다 작으면 1페이지로 리다이렉트
 		if (pageNo < 1) {
@@ -114,6 +102,7 @@ public class WebController {
 		
 		// 전체 데이타 건수 조회하기
 		int totalRows = webservice.getTotalRows(criteria);
+		System.out.println("totalRows"+totalRows);
 		
 		// 페이지 내비게이션 정보 생성하기
 		PageVo pagination = new PageVo(rows, pages, pageNo, totalRows);
@@ -126,12 +115,13 @@ public class WebController {
 		// 데이타 조회하기
 		criteria.setBeginIndex(beginIndex);
 		criteria.setEndIndex(endIndex);
-		List<Branch> branches = webservice.getAllBranch();
+		List<Branch> branches = webservice.getSearchBranch(criteria);
+		System.out.println("branches 사이즈"+branches.size());
 		
 		// 화면에 값 전달하기
 		model.addAttribute("branches", branches);
 		model.addAttribute("navi", pagination);
 		
-		return "searchbranch";
+		return "website/searchbranch";
 	}
 }

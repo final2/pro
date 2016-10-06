@@ -20,7 +20,7 @@
 	}
 		 
  	#mainview #header {
-		height: 100px;
+		height: 70px;
 		background-color: white;
 	} 
 		 
