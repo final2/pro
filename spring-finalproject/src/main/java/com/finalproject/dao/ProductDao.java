@@ -27,4 +27,6 @@ public interface ProductDao {
 	int getTotalProduct(ProductSearch productSearch);
 	//클라이언트 명 불러오기
 	Client getClientByNo(int clientNo);
+	//제품 상세 정보
+	Product getProductByNo(int no);
 }

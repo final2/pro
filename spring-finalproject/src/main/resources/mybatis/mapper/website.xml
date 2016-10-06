@@ -120,55 +120,32 @@
 			B.employee_no=e.no and
 			b.NO = #{value}
 	</select>	
-
-	<!-- 찾기 -->
-<!-- 		<select id="getBranchByName" parameterType="string" resultType="Branch">
-		select 
-			b.NO 				as no,
-			b.NAME 				as name,
-			b.PHONE				as phone,
-			b.ADDRESS 			as address,
-			b.ATM 				as atm, 
-			b.FRESHFOOD 		as freshFood,
-			b.IMAGE 			as img, 
-			b.LOTTO 			as lotto,
-			b.PARCELSERVICE 	as parcelService,
-			b.LIFESERVICE 		as lifeService,
-			B.EMPLOYEE_NO 		as "emp.no"
-		from 
-			BRANCH B,EMPLOYEE E
-		where
-			B.employee_no=e.no and
-			b.NAME like '%'|| #{value} ||'%'
-	</select>	 -->
-	
-	<!-- 주소로 찾기 -->
-<!-- 		<select id="getBranchByAddress" parameterType="string" resultType="Branch">
-		select 
-			b.NO 				as no,
-			b.NAME 				as name,
-			b.PHONE				as phone,
-			b.ADDRESS 			as address,
-			b.ATM 				as atm, 
-			b.FRESHFOOD 		as freshFood,
-			b.IMAGE 			as img, 
-			b.LOTTO 			as lotto,
-			b.PARCELSERVICE 	as parcelService,
-			b.LIFESERVICE 		as lifeService,
-			B.EMPLOYEE_NO 		as "emp.no"
-		from 
-			BRANCH B,EMPLOYEE E
-		where
-			B.employee_no=e.no and
-			b.ADDRESS like '%'|| #{value} ||'%'
-	</select> -->
 	
 	<!-- 찾기 -->
 	<select id="getSearchBranch" parameterType="Criteria" resultType="Branch">
-		select no,name,phone,address,atm,freshfood,lotto,parcelService
+		select 	NO 					as no,
+				NAME 				as name,
+				PHONE				as phone,
+				ADDRESS 			as address,
+				ATM 				as atm, 
+				FRESHFOOD 			as freshFood,
+				IMAGE 				as img, 
+				LOTTO 				as lotto,
+				PARCELSERVICE 		as parcelService,
+				LIFESERVICE 		as lifeService
 		from(
 		
-			select row_number() over (order by no desc) rn,no,name,phone,address,atm,freshfood,lotto,parcelService
+			select row_number() over (order by no desc) rn,
+				NO ,					
+				NAME, 				
+				PHONE,
+				ADDRESS ,
+				ATM , 
+				FRESHFOOD,
+				IMAGE, 
+				LOTTO,
+				PARCELSERVICE,
+				LIFESERVICE 
 			from BRANCH
 			<where>
 				<if test="opt != null and keyword != null">
@@ -181,7 +158,7 @@
 					</if>
 			</where>
 		)
-		where rn >= #{beginIndex} and rn &lt; #{endIndex}
+		where rn >= #{beginIndex} and rn &lt;= #{endIndex}
 	</select>
 	
 	<select id="getTotalRows" parameterType="Criteria" resultType="int">

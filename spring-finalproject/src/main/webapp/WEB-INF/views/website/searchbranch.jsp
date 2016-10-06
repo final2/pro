@@ -21,7 +21,7 @@
 	}
 		 
  	#mainview #header {
-		height: 100px;
+		height: 70px;
 		background-color: white;
 	} 
 		 
@@ -104,8 +104,24 @@ $(function() {
 					</tr>
 					</thead>
 					<tbody>
-						<!-- 판매점 리스트 -->
-						<td></td>
+					<c:if test="${empty branches }">
+						<tr>
+							<td colspan="4" class="text-center">
+								<strong>검색 결과가 존재하지 않습니다.</strong>
+							</td>
+						</tr>
+					</c:if>
+					<c:forEach var="branch" items="${branches }">
+						<tr>
+							<td>${branch.name }</td>
+							<td>${branch.address }</td>
+							<td>${branch.phone }</td>
+							<td class="w3-center">${branch.lotto }</td>
+							<td class="w3-center">${branch.atm }</td>
+							<td class="w3-center">${branch.parcelService }</td>
+							<td class="w3-center">${branch.freshFood }</td>
+						</tr>
+					</c:forEach>
 					</tbody>
 				</table>
 			</div>	
@@ -113,8 +129,49 @@ $(function() {
 		</div>
 				
 		<div class="row text-center">
+			<form id="searchform" class="form-inline" method="get" action="searchbranch.do">
+				<input type="hidden" name="pno" value="${navi.pageNo }" />
+				<div class="form-group">
+					<label class="sr-only" for="opt"></label>
+					<select class="form-control" name="opt" id="opt">
+						<option value="name"  ${param.opt eq 'name'? 'selected=selected' : ''}> 지점명</option>
+						<option value="address" ${param.opt eq 'address'? 'selected=selected' : ''}> 주소</option>
+					</select>
+				</div>
+				<div class="form-group">
+					<label class="sr-only" for="keyword"></label>
+					<input type="text" class="form-control" name="keyword" id="keyword" value="${param.keyword }">
+				</div>
+				<button class="btn  btn-primary">조회</button>
+			</form>
+		</div>
+		
+				<div class="row text-center">
 			<ul class="pagination">
-
+			<c:if test="${navi.pageNo gt 1 }">
+    			<li>
+      				<a href="list.do?pno=${navi.pageNo - 1 }" aria-label="Previous">
+        				<span aria-hidden="true">&laquo;</span>
+      				</a>
+    			</li>
+    		</c:if>
+    		<c:forEach var="num" begin="${navi.beginPage }" end="${navi.endPage }">
+    			<c:choose>
+    				<c:when test="${navi.pageNo eq num }">
+    					<li class="active"><a href="list.do?pno=${num }">${num }</a></li>
+    				</c:when>
+    				<c:otherwise>
+					    <li><a href="list.do?pno=${num }">${num }</a></li>
+    				</c:otherwise>
+    			</c:choose>
+    		</c:forEach>
+    		<c:if test="${navi.pageNo lt navi.totalPages}">
+    			<li>
+      				<a href="list.do?pno=${navi.pageNo + 1 }" aria-label="Next">
+        				<span aria-hidden="true">&raquo;</span>
+      				</a>
+    			</li>
+    		</c:if>
   			</ul>
 		</div>
 	</div>

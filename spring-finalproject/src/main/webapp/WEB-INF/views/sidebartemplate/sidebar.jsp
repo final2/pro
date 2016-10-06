@@ -53,13 +53,8 @@
        					<li><a href="product.do">물품 등록</a></li>
        				</ul>	
        			</li>
-       			<li><a href="">출고 관리</a></li>
-       			<li>
-       				<a>거래처 관리 <span class="caret"></span></a>
-       				<ul class="in-bar">
-       					<li><a href="clientList.do">거래처  조회</a></li>
-       				</ul>
-       			</li>
+       			<li><a href="hqOrder.do">출고 관리</a></li>
+       			<li><a href="clientList.do">거래처 관리 </a></li>
        		</ul>   		
        </li>
        <li class="list">

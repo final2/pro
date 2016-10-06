@@ -33,6 +33,7 @@ public class ProductController {
 		return "companynotice/productForm";
 	}
 	
+	// 제품 등록
 	@RequestMapping(value="/product.do", method=RequestMethod.POST)
 	public String productAdd(ProductRegister productRegister, @RequestParam("image")MultipartFile upfile ) throws Exception {
 		Product product = new Product();
@@ -98,8 +99,62 @@ public class ProductController {
 		return "companynotice/productList";
 	}
 	
+	// 제품 상세 보기
 	@RequestMapping(value="/productDetail.do", method=RequestMethod.GET) 
-	public String productDetail() {
+	public String productDetail(int no, int maker, int smallCat, int eventCode, String limiteAge, Model model) {
+		
+		Product product = productService.getProductByNo(no);
+
+		model.addAttribute("product", product);
+		
 		return "companynotice/productDetail";
+	}
+	
+	// 제품 수정 페이지 이동
+	@RequestMapping(value="/updateProduct.do", method=RequestMethod.GET)
+	public String updateForm(int no, int maker, int smallCat, int eventCode, String limiteAge, Model model) {
+		
+		Product product = productService.getProductByNo(no);
+		
+		model.addAttribute("product", product);
+		
+		return "companynotice/productUpdate";
+	}
+	
+	// 제품 수정
+	@RequestMapping(value="/updateProduct.do", method=RequestMethod.POST)
+	public String updateProduct(ProductRegister productRegister, @RequestParam("image")MultipartFile upfile,
+			int no, int maker, int smallCat, int eventCode, String limiteAge, Model model) throws Exception {
+		
+		System.out.println(productRegister);
+		
+		Product product = new Product();
+		
+		Client client = productService.getClientByNo(productRegister.getClientNo());
+		Event event = new Event();
+		event.setNo(productRegister.getEvent());
+		SmallCategory smallCategory = new SmallCategory();
+		smallCategory.setNo(productRegister.getSmallCat());
+		
+		product.setName(productRegister.getName());
+		product.setPrice(productRegister.getPrice());
+		product.setMemo(productRegister.getMemo());
+		product.setLimiteAge(productRegister.getLimiteAge());
+		product.setSmallCat(smallCategory);
+		product.setEvent(event);
+		product.setMaker(client.getName());
+		product.setClientNo(client.getNo());
+		
+		
+		if(!upfile.isEmpty()) {
+			Files.copy(upfile.getInputStream(), Paths.get("C:\\Users\\YoungRok\\git\\pro\\spring-finalproject\\src\\main\\webapp\\resources\\image", upfile.getOriginalFilename()));
+		
+			product.setImage(upfile.getOriginalFilename());
+		} else {
+			product.setImage(productRegister.getImageurl());
+		}
+		
+		return " ";
+		//return "redirect:/productDetail.do?no=" + no +"&maker="+ maker +"&smallCat="+ smallCat +"&eventCode="+ eventCode +"&limiteAge="+ limiteAge;
 	}
 }

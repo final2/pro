@@ -176,8 +176,16 @@ ul.pagination li a:hover:not(.active) {background-color: #ddd;}
 								<div class="col-sm-3">
 									<label>연령 제한</label>
 									<select class="form-control" id="limite-age" name="limiteAge">
-										<option value="N">없음</option>
-										<option value="Y">청소년 이용 불가</option>
+										<c:choose>
+											<c:when test="${product.limiteAge == 'Y' }">
+												<option value="N">없음</option>
+												<option value="Y" selected='selected'>청소년 구매불가</option>										
+											</c:when>
+											<c:otherwise>
+												<option value="N" selected='selected'>없음</option>
+												<option value="Y">청소년 구매불가</option>
+											</c:otherwise>
+										</c:choose>
 									</select>
 								</div>
 							</div>
@@ -215,6 +223,7 @@ ul.pagination li a:hover:not(.active) {background-color: #ddd;}
 									<td>${product.maker}</td>
 									<td>${product.smallCat.name}</td>
 									<c:url var="Detail" value="productDetail.do">
+										<c:param name="no" value="${product.no }" />
 										<c:param name="pn" value="${param.pn }" />
 										<c:param name="maker" value="${productSearch.maker}" />
 										<c:param name="smallCat" value="${productSearch.smallCat}" />

@@ -33,6 +33,7 @@
 		from todaywork
 		where employee_no = #{value}
 		and to_char(regdate, 'yyyy-MM-dd') = to_char(sysdate, 'yyyy-MM-dd')
+		order by no desc
 	</select>
 	<!-- 날짜 별 가져오기 -->
 	<select id="getTodayPlanListByDate" parameterType="TP" resultType="TP">
@@ -46,6 +47,7 @@
 		from todaywork
 		where employee_no = #{empNo}
 		and to_char(regdate, 'yyyy-MM-dd') = to_char(#{regdate}, 'yyyy-MM-dd')
+		order by no desc
 	</select>
 	<!-- 최근에 추가한 할 일 5개 -->
 	<select id="getNewPlanList" parameterType="int" resultType="TP">

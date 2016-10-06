@@ -2,6 +2,7 @@ package com.finalproject.model;
 
 public class ProductRegister {
 
+	private int no;
 	private String name;
 	private int clientNo;
 	private int price;
@@ -9,7 +10,14 @@ public class ProductRegister {
 	private String limiteAge;
 	private int event;
 	private int smallCat;
-	
+	private String imageurl;
+
+	public int getNo() {
+		return no;
+	}
+	public void setNo(int no) {
+		this.no = no;
+	}
 	public String getName() {
 		return name;
 	}
@@ -52,10 +60,18 @@ public class ProductRegister {
 	public void setSmallCat(int smallCat) {
 		this.smallCat = smallCat;
 	}
+	public String getImageurl() {
+		return imageurl;
+	}
+	public void setImageurl(String imageurl) {
+		this.imageurl = imageurl;
+	}
 	@Override
 	public String toString() {
-		return "ProductRegister [name=" + name + ", clientNo=" + clientNo + ", price=" + price + ", memo=" + memo
-				+ ", limiteAge=" + limiteAge + ", event=" + event + ", smallCat=" + smallCat + "]";
+		return "ProductRegister [no=" + no + ", name=" + name + ", clientNo=" + clientNo + ", price=" + price
+				+ ", memo=" + memo + ", limiteAge=" + limiteAge + ", event=" + event + ", smallCat=" + smallCat
+				+ ", imageurl=" + imageurl + "]";
 	}
+	
 
 }

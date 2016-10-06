@@ -65,70 +65,56 @@ $(function() {
 		})
 	});
 	
-	// 재고 - 검색
-	$("#inven-search").change(function() {
-		var k = $("#inven-search option:selected").val();
+	// 재고 - 검색		
+	$("form").submit(function(event) {
+		event.preventDefault();
 		
-		$("form").submit(function(event) {
-			event.preventDefault();
-			
-			var $q = $("input[name='keyword']").val();
-			if (!$q) {
-				$("input[name='keyword']").focus().attr("placeholder", "검색할 값을 입력하세요.");
-				return;
-			}
-			
-			$.ajax({
-				type:"POST",
-				url:"/FinalProject/json/inv/" + brno + "/key/" + k + "/q/" + $q,
-				contentType:"application/json",
-				success:function(result) {					
-					$("tbody").empty();
+		var k = $("#inven-search option:selected").val();
+		var $q = $("input[name='keyword']").val();
+		if (!$q) {
+			$("input[name='keyword']").focus().attr("placeholder", "검색할 값을 입력하세요.");
+			return;
+		}
+		
+		$.ajax({
+			type:"POST",
+			url:"/FinalProject/json/inv/" + brno + "/key/" + k + "/q/" + $q,
+			contentType:"application/json",
+			success:function(result) {					
+				$("tbody").empty();
+				
+				if (k.indexOf("pt") != -1) {
 					
-					if (k.indexOf("pt") != -1) {
-						console.log("본사");
-						$.ajax({
-							type:"GET",
-							url:"/FinalProject/json/pt/key/" + k + "/q/" + $q,
-							dataType:"json",
-							success:function(result) {
-								$.each(result, function(index, tr) {
-									var no = index + 1;
-									
-									$tbody.append("<tr><td>"+no+"</td><td>"
-											+tr.name+"</td><td></td><td><input type='hidden' value='"+tr.no+"' />"
-											+"<input type='number' min='0' value='0' name='qty-"+no+"' /></td></tr>");
-									
-									if ( tr.qty < 20) {
-										$("input[name='qty-"+no+"']").parent().addClass("red").siblings().addClass("red");
-									}
-								})
-							}
-						})
-					} else {
-						$.ajax({
-							type:"GET",
-							url:"/FinalProject/json/inv/" + brno + "/key/" + k + "/q/" + $q,
-							dataType:"json",
-							success:function(result) {
-								$.each(result, function(index, tr) {
-									var no = index + 1;
-									
-									$tbody.append("<tr><td>"+no+"</td><td>"+tr.product.name+"</td><td>"+tr.qty
-											+"</td><td><input type='hidden' value='"+tr.product.no+"' />"
-											+"<input type='number' min='0' value='0' name='qty-"+no+"' /></td></tr>");
-									
-									if ( tr.qty < 20) {
-										$("input[name='qty-"+no+"']").parent().addClass("red").siblings().addClass("red");
-									}
-								})
-							}
-						});
-					}
+					$.each(result, function(index, tr) {
+						var no = index + 1;
+						
+						$tbody.append("<tr><td>"+no+"</td><td>"
+								+tr.name+"</td><td></td><td><input type='hidden' value='"+tr.no+"' />"
+								+"<input type='number' min='0' value='0' name='qty-"+no+"' /></td></tr>");
+						
+						if ( tr.qty < 20) {
+							$("input[name='qty-"+no+"']").parent().addClass("red").siblings().addClass("red");
+						}
+					});
+						
+				} else {
+					
+					$.each(result, function(index, tr) {
+						var no = index + 1;
+						
+						$tbody.append("<tr><td>"+no+"</td><td>"+tr.product.name+"</td><td>"+tr.qty
+								+"</td><td><input type='hidden' value='"+tr.product.no+"' />"
+								+"<input type='number' min='0' value='0' name='qty-"+no+"' /></td></tr>");
+						
+						if ( tr.qty < 20) {
+							$("input[name='qty-"+no+"']").parent().addClass("red").siblings().addClass("red");
+						}
+					});
 				}
-			})
+			}
 		})
-	})
+	});
+	
 	
 })
 </script>

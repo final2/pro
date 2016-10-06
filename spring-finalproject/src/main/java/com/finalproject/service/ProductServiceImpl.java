@@ -33,4 +33,8 @@ public class ProductServiceImpl implements ProductService {
 	public Client getClientByNo(int clientNo) {
 		return productDao.getClientByNo(clientNo);
 	}
+	@Override
+	public Product getProductByNo(int no) {
+		return productDao.getProductByNo(no);
+	}
 }
