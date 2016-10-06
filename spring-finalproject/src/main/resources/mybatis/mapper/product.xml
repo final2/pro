@@ -98,4 +98,24 @@
 					</if>) A
 		where A.rank >= #{beginIndex} and A.rank &lt;= #{endIndex}
 	</select>
+	
+	<select id="getProductByNo" parameterType="int" resultType="Product">
+		select 
+			p.no		as no,
+			p.name	as name,
+			p.maker	as maker,
+			p.price	as price,
+			p.memo	as memo,
+			p.limiteage	as limiteAge,
+			p.eventcode	as "event.no",
+			p.smallcategory_no	as "smallCat.no",
+			p.image	as image,
+			p.client_no	as clientNo,
+			s.name	as "smallCat.name"
+		from product p, smallcategory s
+		where p.smallcategory_no = s.no
+		and p.no = #{value}
+			
+	</select>
+	
 </mapper>

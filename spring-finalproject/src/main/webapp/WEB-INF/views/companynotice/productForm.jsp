@@ -39,56 +39,6 @@ $(function() {
 		
 	});
 	
-	
-	/* $("form").submit(function(event) {
-		event.preventDefault();
-		
-		var name = $("#name").val().trim();
-		var image = $("#image").val();
-		var clientNo = $("#maker").val();
-		var maker = $("#maker option:selected").text();
-		var smallCat = $("#smallCat").val();
-		var event = $("#event").val();
-		var limiteAge = $("#limite-age").val();
-		var price = $("#price").val().trim();
-		var memo = $("#memo").val();
-		
-		if(name == '') {
-			alert("상품명을 입력해주세요.");
-			return false;
-		}
-		if(price == '') {
-			alert("가격을 입력해주세요.");
-			return false
-		}
-		var product = {};
-		product["name"] = name;
-		product["image"] = image;
-		product["maker"] = maker;
-		product["price"] = price;
-		product["memo"] = memo;
-		product["limiteAge"] = limiteAge;
-		product["event"] = {'no':event}; 
-		product["smallCat"] = {'no':smallCat};
-		product["clientNo"] = clientNo;
-		
-		var jsonData = JSON.stringify(product);
-		
-		$.ajax({
-			type:'POST',
-			url:'json/product/add',
-			contentType:'application/json',
-			data:jsonData,
-			success:function() {
-				alert("successed");
-				$("#name").val("");
-				$("#price").val("");
-				$("#memo").val("");
-				$("select").find(":first-child").attr("selected", "selected")
-			}
-		})
-	})*/	
-	
 	$("button#add").click(function() {
 		if($("#name").val().trim() == '') {
 			alert("상품명을 입력해주세요.");
@@ -109,11 +59,37 @@ $(function() {
 		$("#memo").val("");
 		$("select").find(":first-child").attr("selected", "selected");
 	});
+	
+	function readURL(input) {
+		var url = input.value;
+		var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
+		if (input.files && input.files[0] && (ext == "gif" || ext == "png" || ext == "jpeg" || ext == "jpg")) {
+		    var reader = new FileReader();
+	
+		    reader.onload = function (e) {
+		        $('#imgview')
+			        .attr('src', e.target.result);
+	                //.css('height', '100%');
+		    }
+		    
+		    //alert(url);
+		    reader.readAsDataURL(input.files[0]);
+		}
+		else{
+		     $('#imgview').attr('src', '/FinalProject/resources/image/no-image.png');
+		  }
+	}
+	
+	$("#image").change(function() {
+		readURL(this);	
+	})
+	
+	
 });	
 </script>
 <style type="text/css">
 h1 {color: white;}
-div.row{margin:10px}
+th {text-align:center; vertical-align:middle !important;}
 </style>
 </head>
 <body>
@@ -125,7 +101,60 @@ div.row{margin:10px}
 		<%@ include file="backgroundVideo.jsp" %>
 		<div class="container">
 			<h1>물품 등록</h1>
-			<div class="well">
+			
+			<form id="form" role="form" action="product.do" method="post" enctype="multipart/form-data">
+				<div class="well">
+					<table class="table">
+						<colgroup>
+							<col width="10%">
+							<col width="40%">
+							<col width="10%">
+							<col width="40%">
+						</colgroup>
+						<tr>
+							<th>제품 명</th>
+							<td><input type="text" id="name" name="name" class="form-control" required="required" /></td>
+							<td rowspan="3" colspan="2" style="text-align:center;"><img id="imgview" style="width:80%; height:auto;" src=""></td>
+						</tr>
+						<tr>
+							<th>가격</th>
+							<td><input type="number" id="price" name="price" class="form-control" required="required"/>	</td>
+						</tr>
+						<tr>
+							<th rowspan="2" style="vertical-align:top !important;">메모</th>
+							<td rowspan="2"><textarea id="memo" name="memo" rows="12" class="form-control"></textarea></td>
+						</tr>
+						<tr>
+							<th>사진 등록</th>
+							<td><input type="file" id="image" name="image" class="form-control" accept="image/gif, image/jpeg, image/png"/></td>
+						</tr>
+						<tr>
+							<th>제조사</th>
+							<td><select id="maker" name="clientNo" class="form-control"> </select></td>
+							<th>제품 분류</th>
+							<td><select id="smallCat" name="smallCat" class="form-control"></select></td>
+						</tr>
+						<tr>
+							<th>이벤트</th>
+							<td><select id="event" name="event" class="form-control"></select></td>
+							<th>연령 제한</th>
+							<td>
+								<select id="limite-age" name="limiteAge" class="form-control">
+									<option value="N">없음</option>
+									<option value="Y">청소년 구매불가</option>
+								</select>
+							</td>
+						</tr>				
+					</table>
+				</div>
+				<div style="text-align:right;">
+					<a id="reset" class="btn btn-default">취소</a>
+					<button id="add" class="btn btn-default">등록</button>
+				</div>
+			</form>
+			
+			
+			<!-- <div class="well">
 				<form id="form" role="form" action="product.do" method="post" enctype="multipart/form-data">
 					<div class="row">
 						<div class="col-sm-8">
@@ -159,7 +188,7 @@ div.row{margin:10px}
 							<label>연령제한</label>
 							<select id="limite-age" name="limiteAge" class="form-control">
 								<option value="N">없음</option>
-								<option value="Y">청소년 이용불가</option>
+								<option value="Y">청소년 구매불가</option>
 							</select>
 						</div>
 					</div>
@@ -182,7 +211,7 @@ div.row{margin:10px}
 						</div>
 					</div>		
 				</form>
-			</div>
+			</div> -->
 		</div>
 	</div>
 </div>

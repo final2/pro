@@ -184,6 +184,8 @@ $(function() {
 			dataType:'json',
 			success:function(result) {
 				alert("오늘의 할 일이 추가되었습니다.")
+				$("#title").val("");
+				$("#contents").val("");
 				var $tbody = $('.todayList');
 				$tbody.empty();
 				

@@ -10,10 +10,12 @@ public interface ProductService {
 
 		//물품 등록
 		void addProduct(Product product);
-		//제품 Page별 List
+		//물품 Page별 List
 		List<Product> getProductPageList(ProductSearch productSearch);
-		//제품 총 수 불러오기
+		//물품 총 수 불러오기
 		int getTotalProduct(ProductSearch productSearch);
 		//해당 브랜드명 불러오기
 		Client getClientByNo(int clientNo);
+		//물품 디테일
+		Product getProductByNo(int no);
 }
