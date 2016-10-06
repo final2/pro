@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.finalproject.model.Criteria;
+import com.finalproject.model.PageVo;
 import com.finalproject.model.Branch;
 import com.finalproject.model.Product;
 import com.finalproject.model.WebBoard;
@@ -82,14 +84,54 @@ public class WebController {
 	public String qnamail(){
 		return "website/qnamail";
 	}*/
+	
 	//지점검색
-	@RequestMapping("searchbranch.do")
-	public String searchbranch(){
+	@RequestMapping("searchName.do")
+	public String searchbranch(Model model){
+		
+		
 		return "website/searchbranch";
 	}
 	//지점유형별검색
 	@RequestMapping("searchtype.do")
 	public String searchtype(){
 		return "website/searchtype";
+	}
+	
+	@RequestMapping("/searchbranch.do")
+	public String list(Criteria criteria,
+		@RequestParam(name="pno", required=false, defaultValue="1")int pageNo,
+		Model model) {
+		
+		// 페이지 번호가 1보다 작으면 1페이지로 리다이렉트
+		if (pageNo < 1) {
+			return "redirect:/searchbranch.do?pno=1";
+		}
+		int rows = 10;
+		int pages = 5;
+		int beginIndex = (pageNo - 1)*rows + 1;
+		int endIndex = pageNo*rows;
+		
+		// 전체 데이타 건수 조회하기
+		int totalRows = webservice.getTotalRows(criteria);
+		
+		// 페이지 내비게이션 정보 생성하기
+		PageVo pagination = new PageVo(rows, pages, pageNo, totalRows);
+		
+		// 페이지번호가 너무 크면 맨 마지막 페이지로 리다이렉트
+		//if (pageNo > pagination.getTotalPages()) {
+		//	return "redirect:/list.do?pno=" + pagination.getTotalPages();
+		//}
+
+		// 데이타 조회하기
+		criteria.setBeginIndex(beginIndex);
+		criteria.setEndIndex(endIndex);
+		List<Branch> branches = webservice.getAllBranch();
+		
+		// 화면에 값 전달하기
+		model.addAttribute("branches", branches);
+		model.addAttribute("navi", pagination);
+		
+		return "searchbranch";
 	}
 }

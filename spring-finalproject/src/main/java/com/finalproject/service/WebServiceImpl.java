@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.finalproject.dao.WebsiteDao;
 import com.finalproject.model.Branch;
+import com.finalproject.model.Criteria;
 import com.finalproject.model.Product;
 import com.finalproject.model.WebBoard;
 
@@ -47,10 +48,16 @@ public class WebServiceImpl implements WebService{
 		return websiteDao.getAllBranch();
 	}
 
+
 	@Override
-	public int getTotalRows(String type) {
-		
-		return websiteDao.getTotalRows(type);
+	public List<Branch> getSearchBranch(Criteria criteria) {
+		return websiteDao.getSearchBranch(criteria);
 	}
+
+	@Override
+	public int getTotalRows(Criteria criteria) {
+		return websiteDao.getTotalRows(criteria);
+	}
+
 
 }

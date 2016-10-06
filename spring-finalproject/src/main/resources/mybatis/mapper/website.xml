@@ -91,14 +91,14 @@
 	</select>
 	
 	<!-- pagenation 구현을 위한 totalRows 구하기 -->
-	<select id="getTotalRows" parameterType="string" resultType="int">
+<!-- 	<select id="getTotalRows" parameterType="string" resultType="int">
 		select 
 			count(*)
 		form 
 			branch
 		where 
 			${value} ='Y'
-	</select>
+	</select> -->
 	
 	<!-- 번호로 지점찾기 -->
 	<select id="getBranchByNo" parameterType="int" resultType="Branch">
@@ -121,5 +121,83 @@
 			b.NO = #{value}
 	</select>	
 
-
+	<!-- 찾기 -->
+<!-- 		<select id="getBranchByName" parameterType="string" resultType="Branch">
+		select 
+			b.NO 				as no,
+			b.NAME 				as name,
+			b.PHONE				as phone,
+			b.ADDRESS 			as address,
+			b.ATM 				as atm, 
+			b.FRESHFOOD 		as freshFood,
+			b.IMAGE 			as img, 
+			b.LOTTO 			as lotto,
+			b.PARCELSERVICE 	as parcelService,
+			b.LIFESERVICE 		as lifeService,
+			B.EMPLOYEE_NO 		as "emp.no"
+		from 
+			BRANCH B,EMPLOYEE E
+		where
+			B.employee_no=e.no and
+			b.NAME like '%'|| #{value} ||'%'
+	</select>	 -->
+	
+	<!-- 주소로 찾기 -->
+<!-- 		<select id="getBranchByAddress" parameterType="string" resultType="Branch">
+		select 
+			b.NO 				as no,
+			b.NAME 				as name,
+			b.PHONE				as phone,
+			b.ADDRESS 			as address,
+			b.ATM 				as atm, 
+			b.FRESHFOOD 		as freshFood,
+			b.IMAGE 			as img, 
+			b.LOTTO 			as lotto,
+			b.PARCELSERVICE 	as parcelService,
+			b.LIFESERVICE 		as lifeService,
+			B.EMPLOYEE_NO 		as "emp.no"
+		from 
+			BRANCH B,EMPLOYEE E
+		where
+			B.employee_no=e.no and
+			b.ADDRESS like '%'|| #{value} ||'%'
+	</select> -->
+	
+	<!-- 찾기 -->
+	<select id="getSearchBranch" parameterType="Criteria" resultType="Branch">
+		select no,name,phone,address,atm,freshfood,lotto,parcelService
+		from(
+		
+			select row_number() over (order by no desc) rn,no,name,phone,address,atm,freshfood,lotto,parcelService
+			from BRANCH
+			<where>
+				<if test="opt != null and keyword != null">
+						<if test="opt == 'name'">
+							name like '%' || #{keyword} || '%'
+						</if>
+						<if test="opt == 'address'">
+							and address like '%' || #{keyword} || '%'
+						</if>
+					</if>
+			</where>
+		)
+		where rn >= #{beginIndex} and rn &lt; #{endIndex}
+	</select>
+	
+	<select id="getTotalRows" parameterType="Criteria" resultType="int">
+		select count(*)
+		from BRANCH
+		<where>
+			<if test="opt != null and keyword != null">
+					<if test="opt == 'name'">
+						name like '%' || #{keyword} || '%'
+					</if>
+					<if test="opt == 'address'">
+						and address like '%' || #{keyword} || '%'
+					</if>
+				</if>
+		</where>
+	</select>
+	
+	
 </mapper>

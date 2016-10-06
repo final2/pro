@@ -7,9 +7,8 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" href="resources/bootstrap/css/bootstrap.css">
-<link rel="stylesheet" type="text/css" href="resources/css/branch.css">
-<script type="text/javascript" src="resources/jquery/jquery.js" ></script>
-	<style>
+<script type="text/javascript" src="resources/jquery/jquery.js"></script>
+<style>
 	html,body {margin: 0; padding:0; height:100%;  }
 	#mainview {
 		margin: auto;
@@ -40,139 +39,83 @@
 		height: 130px;
 		background-color: silver;
 	}
+</style>
+<script type="text/javascript">
+$(function() {
+	$("button").click(function(event) {
+		event.preventDefault();
+		
+		$(":input[name='pno']").val(1);		
+		$("#searchform").submit()
+		
+		return false;
+	});
+	
+	$("ul.pagination a:not([aria-label])").on("click", function() {
+		$(":input[name='pno']").val($(this).text());
+		
+		$("#searchform").submit();
+		return false;
+	});
+	
+	$("ul.pagination a[aria-label]").on("click", function() {
+		var currentPno = $(":input[name='pno']").val();
+		
+		if ($(this).attr("aria-label") == "Previous") {
+			$(":input[name='pno']").val(currentPno - 1);
+		} else if ($(this).attr("aria-label") == "Next") {
+			$(":input[name='pno']").val(parseInt(currentPno) + 1);
+		}
+		
+		$("#searchform").submit();
+		return false;
+	});
+});
+</script>
 
-	</style>
-
-<title>Introduce BigStore</title>
-
+<title>지점찾기</title>
 </head>
-<body id="mypage">
+<body>
 <div id="mainview" >
 	<div id="header" class="w3-display-container">
 		<%@ include file="navbar.jsp" %>
 	</div>
-		
+
 	<div id="content">
-		
-		<div class="w3-container w3-padding-0 w3-margin-top w3-margin-bottom">
-			<h1>상품 목록</h1>
-		<div class="row">
-			<table class="table">
-				<thead>
+
+	
+	<!-- sub메뉴 하단 표시부 -->
+		<div  class="w3-container w3-padding-0 w3-margin-0" style="height:100%;">
+			<!-- 판매점 리스트 -->
+			<div id="panelTab" style="height:100%;overflow:auto;">
+				<table class="w3-table w3-striped w3-bordered w3-border" >
+					<thead>
 					<tr>
-						<th>상품번호</th>
-						<th>이름</th>
-						<th>제조사</th>
-						<th>가격</th>
+					  <th class="w3-center" rowspan="2" align="center">판매점명</th>
+					  <th class="w3-center" rowspan="2" align="center">주소</th>
+					  <th class="w3-center" rowspan="2" align="center">전화번호</th>
+					  <th class="w3-center" colspan="4">편의정보</th>
+					 </tr>
+					 <tr>
+					  <th class="w3-center">Lotto</th>
+					  <th class="w3-center">ATM</th>
+					  <th class="w3-center">택배서비스</th>
+					  <th class="w3-center">직접조리식품</th>
 					</tr>
-				</thead>
-				<tbody>
-					<c:if test="${empty products }">
-						<tr>
-							<td colspan="4" class="text-center">
-								<strong>검색 결과가 존재하지 않습니다.</strong>
-							</td>
-						</tr>
-					</c:if>
-					<c:forEach var="product" items="${products }">
-						<tr>
-							<td>${product.no }</td>
-							<td>${product.name }</td>
-							<td>${product.maker }</td>
-							<td>${product.price }</td>
-						</tr>
-					</c:forEach>
-				</tbody>
-			</table>
+					</thead>
+					<tbody>
+						<!-- 판매점 리스트 -->
+						<td></td>
+					</tbody>
+				</table>
+			</div>	
+
 		</div>
-		
-		<div class="row text-center">
-			<form id="searchform" class="form-inline" method="get" action="list.do">
-				<input type="hidden" name="pno" value="${navi.pageNo }" />
-				<div class="form-group">
-					<label class="sr-only" for="opt"></label>
-					<select class="form-control" name="opt" id="opt">
-						<option value="name"  ${param.opt eq 'name'? 'selected=selected' : ''}> 상품이름</option>
-						<option value="maker" ${param.opt eq 'maker'? 'selected=selected' : ''}> 제조사</option>
-					</select>
-				</div>
-				<div class="form-group">
-					<label class="sr-only" for="keyword"></label>
-					<input type="text" class="form-control" name="keyword" id="keyword" value="${param.keyword }">
-				</div>
-				<button class="btn  btn-primary">조회</button>
-			</form>
-		</div>
-		
+				
 		<div class="row text-center">
 			<ul class="pagination">
-			<c:if test="${navi.pageNo gt 1 }">
-    			<li>
-      				<a href="list.do?pno=${navi.pageNo - 1 }" aria-label="Previous">
-        				<span aria-hidden="true">&laquo;</span>
-      				</a>
-    			</li>
-    		</c:if>
-    		<c:forEach var="num" begin="${navi.beginPage }" end="${navi.endPage }">
-    			<c:choose>
-    				<c:when test="${navi.pageNo eq num }">
-    					<li class="active"><a href="list.do?pno=${num }">${num }</a></li>
-    				</c:when>
-    				<c:otherwise>
-					    <li><a href="list.do?pno=${num }">${num }</a></li>
-    				</c:otherwise>
-    			</c:choose>
-    		</c:forEach>
-    		<c:if test="${navi.pageNo lt navi.totalPages}">
-    			<li>
-      				<a href="list.do?pno=${navi.pageNo + 1 }" aria-label="Next">
-        				<span aria-hidden="true">&raquo;</span>
-      				</a>
-    			</li>
-    		</c:if>
+
   			</ul>
-		</div>
-		
-		
-		
-		
-		
-		
-		
-		
-		
-			<!-- 공지테이블 -->
-<%-- 			<div class="w3-container w3-teal">
-	  			<h1>공지사항</h1>
-			</div>
-			<table class="w3-table w3-striped w3-bordered w3-border">
-				<colgroup>
-					<col width="20%">
-					<col width="50%">
-					<col width="30%">
-				</colgroup>
-				<thead>
-					<tr>
-					  <th>번호</th>
-					  <th>제목</th>
-					  <th>날자</th>
-					</tr>
-				</thead>
-				<tbody> --%>
-				<!-- 반복 -->
-<%-- 					<c:forEach var="webboard" items="${announcementList}">
-						<!-- detail 들어갈때 보내는 전송값 -->
-						<c:url var="detailNo" value="webBoardDetail.do">
-							<c:param name="no" value="${webboard.no }" />
-						</c:url>
-						<tr>
-							<td>${webboard.no }</td>
-							<td><a href="${detailNo }">${webboard.title }</a></td>
-							<td><fmt:formatDate value="${webboard.regdate }" pattern="yyyy.MM.dd hh:mm"/></td>
-						</tr>
-					</c:forEach>
-				</tbody>
-			</table> --%>
 		</div>
 	</div>
 		<!-- footer -->
@@ -180,5 +123,6 @@
 		<%@ include file="footer.jsp" %>	
 	</div>
 </div>
+
 </body>
 </html>

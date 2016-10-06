@@ -2,6 +2,7 @@ package com.finalproject.dao;
 
 import java.util.List;
 
+import com.finalproject.model.Criteria;
 import com.finalproject.model.Branch;
 import com.finalproject.model.Product;
 import com.finalproject.model.WebBoard;
@@ -28,4 +29,12 @@ public interface WebsiteDao {
 	
 	int getTotalRows(String type);
 	
+	// 지점명으로 찾기
+	List<Branch> getBranchByName(String name);
+	
+	// 주소로 찾기
+	List<Branch> getBranchByAddress(String name);
+	
+	int getTotalRows(Criteria criteria);
+	List<Branch> getSearchBranch(Criteria criteria);
 }
