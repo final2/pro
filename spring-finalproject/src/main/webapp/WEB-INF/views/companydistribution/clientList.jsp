@@ -1,3 +1,5 @@
+
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -9,7 +11,53 @@
 <link rel="stylesheet" type="text/css" href="resources/bootstrap/css/bootstrap.css">
 <link href="resources/bootstrap/css/simple-sidebar.css" rel="stylesheet">
 <script type="text/javascript" src="resources/jquery/jquery.js"></script>
+<script type="text/javascript">
+$(function() {
+	$("#btn").click(function() {
+		$("#name").val("");
+		$("#add").attr("disabled", "disabled");
+		$(".modal-body p").hide();		
+	});
+	
+	$('#button').attr("disabled", "disabled");
+	$("form").submit(function() {
+		if(!$(":input[name='name']").val()) {
+			$(".modal-body p").hide();
+			$(".non").show();
+			$(":input[name='name']").focus();
+			return false;
+		}
+		return true;
+	});
+		
+	$("#ck").click(function() {
+		var nameck = $("#name").val();
+		if(nameck == "") {
+			return false;
+		}
+		$.ajax({
+			url:"json/nameck.do",
+			data:{name:nameck},
+			dataType:"json",
+			success:function(data) {
+				if(data.size == 1){
+					$(".same").show();
+					$("#name").val("");
+					idnotoverlap = false;
+				} else {
+					$(".ok").show();
+					$("#add").removeAttr("disabled");
+					idnotoverlap = true;
+				}
+			}
+		});
+		
+	});
+});
+</script>
 <style>
+.non, .same{color: red;}
+.ok{color: blue;}
 th,td {text-align:center;}
 </style>
 <title>Big Store</title>
@@ -57,7 +105,7 @@ th,td {text-align:center;}
 				</tbody>
 			</table>
 			<div class="pull-right">
-				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">거래처 등록</button>
+				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" id="btn">거래처 등록</button>
 			</div>
 			
 			<div class="text-center">
@@ -102,11 +150,15 @@ th,td {text-align:center;}
 						<form action="addClient.do" method="post" role="form">
 							<div class="modal-body">
 								<label>거래처 명 : </label>
-								<input type="text" name="name" class="form-control" />
+								<button type="button" id="ck" class="btn btn-info btn-xs pull-right">중복확인</button>
+								<input type="text" name="name" id="name" class="form-control" />
+								<p class="non"><strong>거래처명</strong>을 입력하세요.</p>
+								<p class="same">등록된<strong>거래처</strong>입니다.</p>
+								<p class="ok">등록 가능합니다.</p>
 							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
-								<input type="submit" class="btn btn-primary" value="등록" />
+								<input type="submit" class="btn btn-primary" id="add" value="등록" />
 							</div>
 						</form>
 					</div>

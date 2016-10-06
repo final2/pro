@@ -28,6 +28,9 @@ public interface DistributionDao {
 	// 거래처 등록
 	void insertClient(Client client);
 	
+	// 중복 체크
+	Client getNameCheck(String name);
+	
 	// 거래처 수정
 	void updateClient(Client client);
 

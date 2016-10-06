@@ -55,6 +55,12 @@ public class DistributionServiceImpl implements DistributionService{
 		distributionDao.insertClient(client);
 	}
 	
+	// 중복 체크
+	@Override
+	public Client getNameCheck(String name) {
+		return distributionDao.getNameCheck(name);
+	}
+	
 	// 거래처 수정
 	@Override
 	public void updateClient(Client client) {

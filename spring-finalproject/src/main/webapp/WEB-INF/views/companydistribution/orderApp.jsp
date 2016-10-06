@@ -15,6 +15,8 @@ th,td {text-align:center;}
 </style>
 <script type="text/javascript">
 $(function(){
+	
+	$("#order").attr("disabled", "disabled");
 	$("#client").change(function() {
 		
 		var clno = $("#client option:selected").val();
@@ -33,7 +35,7 @@ $(function(){
 							  +"<td>"+pro.product.no+"<input type='hidden' name='no' class='form-control' value='"+pro.product.no+"'/></td>"
 							  +"<td>"+pro.product.name+"</td>"
 						   	  +"<td>"+pro.product.price+"<input type='hidden' name='price' class='form-control' value='"+pro.product.price+"'/></td>"
-							  +"<td><input type='number' name='qty' class='form-control' value = '0'/></td>"
+							  +"<td><input type='number' name='qty' id='qty' class='form-control' value = '0'/></td>"
 							  +"</tr>")
 				}); 
 			}
@@ -84,7 +86,7 @@ $(function(){
 					</tbody>
 				</table>
 				<div class="pull-right">
-					<input type="submit" class="btn btn-primary" value="신청" />
+					<input type="submit" id="order" class="btn btn-primary" value="신청" />
 					<a href="hqOrder.do" class="btn btn-danger">취소</a>
 				</div>
 			</form>
