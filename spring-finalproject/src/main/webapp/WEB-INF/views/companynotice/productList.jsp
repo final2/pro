@@ -177,7 +177,7 @@ ul.pagination li a:hover:not(.active) {background-color: #ddd;}
 									<label>연령 제한</label>
 									<select class="form-control" id="limite-age" name="limiteAge">
 										<c:choose>
-											<c:when test="${product.limiteAge == Y }">
+											<c:when test="${product.limiteAge == 'Y' }">
 												<option value="N">없음</option>
 												<option value="Y" selected='selected'>청소년 구매불가</option>										
 											</c:when>
