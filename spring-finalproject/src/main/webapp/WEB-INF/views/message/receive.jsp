@@ -15,9 +15,12 @@ $(function(){
 				<th class="text-center" style="vertical-align:middle">날짜</th>
 			</tr>
 		</thead>
-		<tbody id=recivelist>
+		<tbody id=receivelist>
 		</tbody>
 	</table>
-
+	<div class="row text-center">
+		<ul class="pagination" id="page">
+		</ul>
+	</div>
 </body>
 </html>

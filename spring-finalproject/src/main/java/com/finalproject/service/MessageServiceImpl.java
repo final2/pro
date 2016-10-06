@@ -1,6 +1,7 @@
 package com.finalproject.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,8 +21,8 @@ public class MessageServiceImpl implements MessageService{
 	}
 
 	@Override
-	public List<Employee> getAllEmployeeList() {
-		return messageDao.getEmployeeList();
+	public List<Employee> getAllEmployeeList(int no) {
+		return messageDao.getEmployeeList(no);
 	}
 
 	@Override
@@ -39,12 +40,17 @@ public class MessageServiceImpl implements MessageService{
 	}
 
 	@Override
-	public List<Message> getSendMessageList(int no) {
-		return messageDao.getSendMessages(no);
+	public List<Message> getSendMessageList(PageMessage pm) {
+		return messageDao.getSendMessages(pm);
 	}
 
 	@Override
 	public int getTotalReceiveList(int no) {
 		return messageDao.getTotalReceive(no);
+	}
+
+	@Override
+	public List<Employee> searchEmployee(Map<String, Object> map) {
+		return messageDao.searchEmployee(map);
 	}
 }

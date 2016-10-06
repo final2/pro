@@ -1,9 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <script type="text/javascript">
-var loginUserNo = ${LoginUser.no};
-var pno = 1;
 $(function() {
+var loginUserNo = ${LoginUser.no};
 	/* 초기화면 */
 	$('#bodyreceive').hide();
 	$('#bodysend').hide();
@@ -21,21 +20,17 @@ $(function() {
 	
 	/* 받은쪽지 클릭시 */
 	$('#receive').click(function(){
-		var $tbody = $('#recivelist');
+		var $navi = $('#page');
+		var pno = $('#pNo').val();
+		var $tbody = $('#receivelist');
 		$tbody.empty();
-		$('#bodylist').hide();
-		$('#bodysend').hide();
-		$('#bodywritemessage').hide();
-		$('#bodymessagedetail').hide();
-		$('#bodyreceive').show();
+		$navi.empty();
 		$.ajax({
 			type:"GET",
 			url:"/FinalProject/json/getreceivelist/"+pno,
 			dataType:"json",
 			success:function(result) {
-				console.log(result);
 				$.each(result, function(index, rm) {
-					/* 사원번호로 사원이름불러오기 */
 					$.ajax({
 						type:"GET",
 						url:"/FinalProject/json/empbyno/"+rm.from,
@@ -54,20 +49,82 @@ $(function() {
 				});
 			}
 		});
-		
-	});
-	/* 보낸쪽지 클릭시 */
-	$('#send').click(function(){
-		var $tbody = $('#sendlist');
-		$tbody.empty();
-		$('#bodywritemessage').hide();
-		$('#bodylist').hide();
-		$('#bodyreceive').hide();
-		$('#bodymessagedetail').hide();
-		$('#bodysend').show();
 		$.ajax({
 			type:"GET",
-			url:"/FinalProject/json/getsendlist/"+loginUserNo,
+			url:"/FinalProject/json/receivetotal/"+pno,
+			dataType:"json",
+			success:function(result){
+				$navi.empty();
+				if(pno > 1){
+					$navi.append(
+						"<li>"+
+						"<span class='glyphicon glyphicon-menu-left' id='minus' ara-hidden='true'></span>"+
+						"</li>"
+					);				
+				}
+				$.each(result, function(index, page){
+					var pNo = $('#pNo').val();
+					var no = index+1;
+					if(page.beginPage<=no && index<page.endPage){
+						if(no==pNo){
+							$navi.append(
+								"<li class='active'>"+
+								"<span id='page-"+no+"' ara-hidden='true' >"+no+"</span>"+
+								"</li>"
+							);
+						}else{
+							$navi.append(
+								"<li>"+
+								"<span id='page-"+no+"' ara-hidden='true'>"+no+"</span>"+
+								"</li>"
+							);
+						}
+					}
+					if(page.totalPages>1 && page.totalPages>pno && no==page.endPage){
+						$navi.append(
+							"<li>"+
+							"<span class='glyphicon glyphicon-menu-right' id='plus' ara-hidden='true'></span>"+
+							"</li>"
+						);				
+					}
+				});
+			}
+		});
+		$('#bodylist').hide();
+		$('#bodysend').hide();
+		$('#bodywritemessage').hide();
+		$('#bodymessagedetail').hide();
+		$('#bodyreceive').show();
+	});
+	$('#page').on("click", "span[id^=page-]", function(){
+		var nowpNo = $(this).attr("id").replace("page-","")
+		$('#pNo').val(nowpNo)
+		$('#receive').trigger("click"); 
+	});
+	$('#page').on("click", "span[id^=plus]", function(){
+		var nowpNo = $('#pNo').val();
+		
+		var nextNo = parseInt(nowpNo)+1
+		$('#pNo').val(nextNo)
+		$('#receive').trigger("click"); 
+	});
+	$('#page').on("click", "span[id^=minus]", function(){
+		var nowpNo = $('#pNo').val();
+		var beforeNo = nowpNo-1
+		$('#pNo').val(beforeNo)
+		$('#receive').trigger("click"); 
+	});
+	
+	/* 보낸쪽지 클릭시 */
+	$('#send').click(function(){
+		var $navi = $('#page2');
+		var pno = $('#pNo2').val();
+		var $tbody = $('#sendlist');
+		$tbody.empty();
+		$navi.empty();
+		$.ajax({
+			type:"GET",
+			url:"/FinalProject/json/getsendlist/"+pno,
 			dataType:"json",
 			success:function(result) {
 				$.each(result, function(index, sm) {
@@ -77,7 +134,6 @@ $(function() {
 						url:"/FinalProject/json/empbyno/"+sm.to,
 						dataType:"json",
 						success:function(emp){
-
 							$tbody.append(
 								"<tr id='messageNo-"+sm.no+"'>"+
 								"<td class='text-center' style='vertical-align:middle'><span class='glyphicon glyphicon-envelope'></span></td>" +
@@ -91,8 +147,71 @@ $(function() {
 				});
 			}
 		});
-		
+		$.ajax({
+			type:"GET",
+			url:"/FinalProject/json/sendtotal/"+pno,
+			dataType:"json",
+			success:function(result){
+				$navi.empty();
+				if(pno > 1){
+					$navi.append(
+						"<li>"+
+						"<span class='glyphicon glyphicon-menu-left' id='minus' ara-hidden='true'></span>"+
+						"</li>"
+					);				
+				}
+				$.each(result, function(index, page){
+					var pNo = $('#pNo2').val();
+					var no = index+1;
+					if(page.beginPage<=no && index<page.endPage){
+						if(no==pNo){
+							$navi.append(
+								"<li class='active'>"+
+								"<span id='page-"+no+"' ara-hidden='true' >"+no+"</span>"+
+								"</li>"
+							);
+						}else{
+							$navi.append(
+								"<li>"+
+								"<span id='page-"+no+"' ara-hidden='true'>"+no+"</span>"+
+								"</li>"
+							);
+						}
+					}
+					if(page.totalPages>1 && page.totalPages>pno && no==page.endPage){
+						$navi.append(
+							"<li>"+
+							"<span class='glyphicon glyphicon-menu-right' id='plus' ara-hidden='true'></span>"+
+							"</li>"
+						);				
+					}
+				});
+			}
+		});
+		$('#bodywritemessage').hide();
+		$('#bodylist').hide();
+		$('#bodyreceive').hide();
+		$('#bodymessagedetail').hide();
+		$('#bodysend').show();
 	});
+	$('#page2').on("click", "span[id^=page-]", function(){
+		var nowpNo = $(this).attr("id").replace("page-","")
+		$('#pNo2').val(nowpNo)
+		$('#send').trigger("click"); 
+	});
+	$('#page2').on("click", "span[id^=plus]", function(){
+		var nowpNo = $('#pNo2').val();
+		var nextNo = parseInt(nowpNo)+1
+		$('#pNo2').val(nextNo)
+		$('#send').trigger("click"); 
+	});
+	$('#page2').on("click", "span[id^=minus]", function(){
+		var nowpNo = $('#pNo2').val();
+		var beforeNo = nowpNo-1
+		$('#pNo2').val(beforeNo)
+		$('#send').trigger("click"); 
+	});
+	
 	$('#writemessage').click(function(){
 		$('#bodylist').hide();
 		$('#bodyreceive').hide();
@@ -133,6 +252,8 @@ $(function() {
 	    		</div>
 	    		<!-- 쪽지함 center -->
 	     		<div class="modal-body">
+					<input type="text" class="hidden" id="pNo" value="1" />
+					<input type="text" class="hidden" id="pNo2" value="1" />
 	     			<div id=bodylist>
 	     			   <%@ include file="list.jsp" %>
 	     			</div>

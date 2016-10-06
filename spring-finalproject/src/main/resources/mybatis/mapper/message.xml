@@ -31,18 +31,33 @@
 		from messenger
 	where to_no=#{value}
 	</select>
+	<select id="getTotalSend" parameterType="int" resultType="int">
+	select count(*)  
+		from messenger
+	where from_no=#{value}
+	</select>
 	<select id="getSendMessages" parameterType="int"  resultType="Message">
-		select
+		select 
 			no, 
 			from_no 	as	"from", 
 			to_no		as	"to", 
 			contents, 
 			receiving, 
 			regdate
-		from
-			messenger
-		where from_no=#{value}
-		order by regdate desc
+		from (
+			select
+				row_number() over (order by no desc) rn,
+				no, 
+				from_no,  
+				to_no, 
+				contents, 
+				receiving, 
+				regdate
+			from messenger
+			where from_no=#{no}
+			order by regdate desc
+		)
+		where rn >= #{pageVo.beginIndex} and rn &lt;=#{pageVo.endIndex}
 	</select>
 	<select id="getMessagesByNo" parameterType="int" resultType="Message">
 		select
@@ -56,7 +71,7 @@
 			messenger
 		where no=#{value}
 	</select>
-	<select id="getEmployeeList" resultType="Employee">
+	<select id="getEmployeeList" parameterType="int" resultType="Employee" >
 		select
 			no, 
 			name, 
@@ -75,6 +90,7 @@
 			loginstate	as loginState
 		from 
 			Employee
+		where not no=#{value}
 		order by loginstate desc
 	</select>
 	<select id="getEmp" parameterType="int" resultType="Employee">
@@ -101,6 +117,40 @@
 		insert into messenger (no, from_no, to_no, contents, receiving, regdate)
 		values (my_seq.nextval, #{from}, #{to}, #{contents}, 'n', sysdate)
 	</insert>
+	<select id="searchEmployee" parameterType="map" resultType="Employee">
+		select 
+			no, 
+			name, 
+			phone, 
+			email, 
+			address, 
+			to_date(birth, 'yyyy-MM-dd') as birth, 
+			department	as	"dept", 
+			position, 
+			salary, 
+			photo, 
+			hiredate, 
+			password, 
+			retiredate, 
+			remarks 
+		from 
+			Employee
+		where
+			not no=#{no}
+			<if test="opt != null and keyword != null">
+				<if test="opt=='name'">
+					and name like '%' || #{keyword} || '%'
+				</if>
+				<if test="opt=='position'">
+					and position like '%' || #{keyword} || '%'
+				</if>
+				<if test="opt=='department'">
+					and department like '%' || #{keyword} || '%'
+				</if>
+			</if>
+
+			
+	</select>
 </mapper>
 
 

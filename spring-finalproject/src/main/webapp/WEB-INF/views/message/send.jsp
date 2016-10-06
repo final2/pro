@@ -19,3 +19,7 @@ $(function(){
 			<!-- sendlist -->
 		</tbody>
 	</table>
+	<div class="row text-center">
+		<ul class="pagination" id="page2">
+		</ul>
+	</div>
