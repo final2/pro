@@ -304,13 +304,21 @@
 			and B.name like '%' || #{keyword} || '%'	
 			</if>
 			<if test="type == 'qty'">
-			and A.qty &lt;= #{keyword}
+			and A.qty &lt; #{keyword}
 			</if>
 			<if test="type == 'cat'">
 			and C.name like '%' || #{keyword} || '%'
 			</if>
 		order by
-			B.name		
+			<if test="type == 'name'">
+			B.name
+			</if>
+			<if test="type == 'qty'">
+			A.qty
+			</if>	
+			<if test="type == 'cat'">
+			B.name
+			</if>	
 	</select>
 	
 	<!-- 재고 : 키워드로 본사물품 조회하기 -->
@@ -398,7 +406,8 @@
 			ages = #{ages},
 			gender = #{gender},
 			payment = #{payment},
-			issaled = 'Y'
+			issaled = #{issaled},
+			isreturned = #{isreturned}
 		where
 			no = #{no}
 	</update>
@@ -432,6 +441,46 @@
 			<if test="issaled == 'N'">
 			and issaled = 'N'
 			</if>
+	</select>
+	
+	<select id="getBranchSalesIsReturnedByBranchNo" parameterType="int" resultType="com.finalproject.model.BranchSales">
+		select
+			A.no,
+			A.regdate,
+			A.ages,
+			A.gender,
+			A.issaled,
+			A.isreturned,
+			A.payment,
+			A.br_employee_no as "brEmp.no",
+			B.name as "brEmp.name",
+			A.branch_no as "branch.no"
+		from
+			br_sales A, br_employees B
+		where
+			A.br_employee_no = B.no
+		and
+			A.branch_no = #{value}
+		and
+			A.isreturned = 'Y'
+	</select>
+	
+	<!-- 판매 : 판매번호로 판매 조회하기 -->
+	<select id="getBranchSalesBySalesNo" parameterType="int" resultType="com.finalproject.model.BranchSales">
+		select
+			no,
+			regdate,
+			ages,
+			gender,
+			issaled,
+			isreturned,
+			payment,
+			br_employee_no as "brEmp.no",
+			branch_no as "branch.no"
+		from
+			br_sales
+		where
+			no = #{value}
 	</select>
 	
 	<!--  -->

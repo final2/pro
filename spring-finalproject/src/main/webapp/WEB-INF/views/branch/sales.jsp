@@ -18,6 +18,7 @@
 $(function() {
 	var brno = $(".container").attr("id").replace("brno-", "");
 	var empno = $("body").attr("id").replace("emp-", "");
+	$("#return-error").hide();
 	
 	// 화면 띄우자마자 물품목록 띄우기
 	$.ajax({
@@ -321,6 +322,35 @@ $(function() {
 		}
 		
 	});
+	
+	// 반품하기
+	$("#sales-return").submit(function(event) {
+		event.preventDefault();
+		var salesno = $("input[name='return']").val();
+		
+		var $q = $("input[name='return']").val();
+		if (!$q) {
+			$("input[name='return']").focus();
+			return;
+		}
+		
+		$.ajax({
+			type:"POST",
+			url:"/FinalProject/json/sales/update/" + salesno,
+			contentType:"application/json",
+			dataType:"json",
+			success:function(result) {
+				window.location.href="branchsales.do";
+			},
+			error:function() {
+				$("#return-error").show();
+			}
+		});
+	});
+	
+	$("input[name='return']").on("keydown", function() {
+		$("#return-error").hide();
+	});
 });
 </script>
 <title>지점 - 판매</title>
@@ -396,6 +426,7 @@ $(function() {
 				<li id="all-cancel-btn">일괄 취소</li>
 				<li>보류</li>
 				<li data-toggle="modal" data-target="#myModal">결제</li>
+				<li data-toggle="modal" data-target="#myReturn">반품</li>
 			</ul>
 		</div>
 		
@@ -439,6 +470,31 @@ $(function() {
 		      
 		    </div>
 		  </div>
+		</div>
+		
+		<div class="modal fade" id="myReturn" role="dialog">
+			<div class="modal-dialog modal-sm">
+				<div class="modal-content">
+					<div class="modal-body">
+						<form role="form" id="sales-return">
+							<div>
+								<input type="text" name="return" class="form-control" placeholder="반품할 판매번호를 입력하세요." />						
+							</div>
+							
+							<div class="btn-left">
+								<button type="button" class="btn form-control btn-default" data-dismiss="modal">취소</button>
+							</div>
+							<div class="btn-right">
+								<button type="submit" class="btn form-control btn-warning">반품하기</button>
+							</div>
+							
+							<div id="return-error" class="alert alert-danger"">
+								<p>판매번호를 다시 확인하세요.</p>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
 		</div>
 </div>
 </body>

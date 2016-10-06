@@ -61,6 +61,8 @@ public interface BranchDao {
 	BranchEmp getBrEmpByNo(int empno);
 	void updateBranchSalesDetail(BranchSalesDetail salesDetail);
 	void updateBranchSales (BranchSales branchSales);
+	BranchSales getBranchSalesBySalesNo(int salesno);
+	List<BranchSales> getBranchSalesIsReturnedByBranchNo(int brno);
 	
 	// 지점 - 이벤트
 	List<Product> getProductsByEventCode(int eventcode);

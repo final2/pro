@@ -263,22 +263,6 @@ public class BranchJSONController {
 		return brService.getOrdersByRegDate(map);
 	}
 	
-	//
-	@RequestMapping(value="/sales/add/{empno}", method=RequestMethod.GET)
-	public List<BranchSalesDetail> getBranchSalesDetailBySalesNo(@PathVariable("empno") int empno) {
-		
-		Map<String, Object> map = new HashMap<>();
-		map.put("empNo", empno);
-		map.put("issaled", 'N');
-		
-		BranchSales sale = brService.getBranchSalesByNotIsSaled(map);
-		if (sale == null) {
-			return null;
-		} else {
-			return brService.getBranchSalesDetailBySalesNo(sale.getNo());
-		}
-	}
-	
 	// 판매 결제시 판매등록하기
 	@RequestMapping(value="/sales/add/{empno}/pay/{pay}/gen/{gen}/age/{age}", method=RequestMethod.POST)
 	public List<BranchSalesDetail> addBranchSales(@RequestBody List<BranchSalesDetail> detailList, 
@@ -340,4 +324,30 @@ public class BranchJSONController {
 	
 		return brService.getBranchSalesByDate(map);
 	}
+	
+	// 반품 업데이트
+	@RequestMapping(value="/sales/update/{salesno}", method=RequestMethod.POST)
+	public BranchSales updateBranchSales(@PathVariable("salesno") int salesno) {
+		BranchSales sales = brService.getBranchSalesBySalesNo(salesno);
+		
+		if (sales == null) {
+			return null;
+		} else {
+			sales.setIsreturned("Y");
+			brService.updateBranchSales(sales);
+			return sales;
+		}
+	}
+	
+	@RequestMapping(value="/sales/return/{brno}", method=RequestMethod.GET)
+	public List<BranchSales> getBranchSalesIsReturnedByBranchNo(@PathVariable("brno") int brno) {
+		return brService.getBranchSalesIsReturnedByBranchNo(brno);
+	}
+	
+	//
+	@RequestMapping(value="/sales/return/d/{salesno}", method=RequestMethod.GET)
+	public List<BranchSalesDetail> getBranchSalesDetailBySalesNo(@PathVariable("salesno") int salesno) {
+		return brService.getBranchSalesDetailBySalesNo(salesno);
+	}
+	
 }

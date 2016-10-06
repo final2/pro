@@ -101,4 +101,8 @@ public interface BranchService {
 	void addBranchEmp(BranchEmp brEmp);
 	
 	List<BranchSales> getBranchSalesByDate(Map<String, Object> map);
+	
+	BranchSales getBranchSalesBySalesNo(int salesno);
+	
+	List<BranchSales> getBranchSalesIsReturnedByBranchNo(int brno);
 }

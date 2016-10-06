@@ -85,6 +85,9 @@ body { font-family: 'Nanum Gothic', sans-serif; }
 #pt-remove-btn { cursor:pointer; }
 .input-for-label {position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip:rect(0,0,0,0); border: 0; }}
 #user-info div { text-align:center; }
+#myReturn .modal-body { overflow:hidden; }
+.modal-body .btn-left { float:left; width:49%; }
+.modal-body .btn-right { float:right; width:49%; }
 
 /* 재고 */
 .inven-search { margin-top:20px; }
@@ -112,11 +115,16 @@ body { font-family: 'Nanum Gothic', sans-serif; }
 #tab-2 table th { text-align:center; }
 #tab-2 table td a { cursor:pointer; }
 #tab-2 form { margin-bottom:20px; }
+#tab-3 table { width:80%; margin:0 auto; }
+#tab-3 table th { text-align:center; }
+#tab-3 table td a { cursor:pointer; }
 
 #order-detail { position:absolute; top:50px; left:auto; width:500px; background-color:#fff; }
 .modal-body div { width:100%; overflow:hidden; margin-bottom:15px; }
 .modal-body p.order-number { width:200px; float:left; }
 .modal-body p.order-date { width:200px; float:left; }
+.modal-body p.return-number { width:200px; float:left; }
+.modal-body p.return-date { width:200px; float:right; }
 .modal-body #order-send-btn { float:right; margin-right:20px; }
 .modal-body table tfoot td { background-color:#efefef; font-weight:bold; }
 

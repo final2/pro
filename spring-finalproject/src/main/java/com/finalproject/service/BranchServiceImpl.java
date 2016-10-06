@@ -218,4 +218,14 @@ public class BranchServiceImpl implements BranchService {
 	public List<BranchSales> getBranchSalesByDate(Map<String, Object> map) {
 		return branchDao.getBranchSalesByDate(map);
 	}
+	
+	@Override
+	public BranchSales getBranchSalesBySalesNo(int salesno) {
+		return branchDao.getBranchSalesBySalesNo(salesno);
+	}
+	
+	@Override
+	public List<BranchSales> getBranchSalesIsReturnedByBranchNo(int brno) {
+		return branchDao.getBranchSalesIsReturnedByBranchNo(brno);
+	}
 }

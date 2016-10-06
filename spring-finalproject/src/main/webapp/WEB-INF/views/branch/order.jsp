@@ -146,7 +146,6 @@ $(function() {
 	
 	// 발주번호 클릭시 발주 상세내역 조회하기
 	$("#tab-2").on("click", "a[id^='order-']", function() {
-		console.log($(this).attr("id"));
 		var no = $(this).attr("id").replace("order-", "");
 		
 		$(".order-number").empty();
@@ -163,7 +162,7 @@ $(function() {
 			url:"/FinalProject/json/or/d/" + no,
 			dataType:"json",
 			success:function(result) {
-				var $tbody = $(".modal-body tbody").empty();
+				var $tbody = $("#myModal tbody").empty();
 				
 				var sum = 0;
 				var orsum = 0;
@@ -216,36 +215,87 @@ $(function() {
 				dataType:"json",
 				success:function(result){
 					// 날짜 검색이 이루어진 발주내역 가져오기
-					$.ajax({
-						type:"GET",
-						url:"/FinalProject/json/or/"+brno+"/d1/"+$date1+"/d2/" + $date2,
-						dataType:"json",
-						success:function(result) {
-							var $tbody2 = $("#tab-2 tbody").empty();
-							var iscomplete = "";
-							
-							$.each(result, function(index, tr) {
-								if (tr.iscomplete == 'Y') {
-									iscomplete = "완료";
-								} else {
-									iscomplete = "진행중"
-								}
-								
-								var note = tr.note;
-								if (tr.note == null) {
-									note = "";
-								}
-								
-								$tbody2.append("<tr><td class='regdate'>"+tr.regdate+"</td><td><a type='button' data-toggle='modal' data-target='#myModal' id='order-"+tr.no+"'>"
-									+tr.no+"</a></td><td class='is-complete'>"+iscomplete+"</td><td>"
-									+note+"</td></tr>");
-								
-							})
+					
+					var $tbody2 = $("#tab-2 tbody").empty();
+					var iscomplete = "";
+					
+					$.each(result, function(index, tr) {
+						if (tr.iscomplete == 'Y') {
+							iscomplete = "완료";
+						} else {
+							iscomplete = "진행중"
 						}
-					});
+						
+						var note = tr.note;
+						if (tr.note == null) {
+							note = "";
+						}
+						
+						$tbody2.append("<tr><td class='regdate'>"+tr.regdate+"</td><td><a type='button' data-toggle='modal' data-target='#myModal' id='order-"+tr.no+"'>"
+							+tr.no+"</a></td><td class='is-complete'>"+iscomplete+"</td><td>"
+							+note+"</td></tr>");
+						
+					})
 				}
 			});
 		}
+	});
+	
+	// 반품내역 조회하기
+	$.ajax({
+		type:"GET",
+		url:"/FinalProject/json/sales/return/" + brno,
+		dataType:"json",
+		success:function(result) {
+			var $tbody3 = $("#tab-3 tbody:first").empty();
+			var iscomplete = "";
+			
+			$.each(result, function(index, tr) {
+				var no = index + 1;
+				$tbody3.append("<tr><td>"+no+"</td><td class='regdate'>"
+						+tr.regdate+"</td><td>"
+						+tr.brEmp.name+"</td><td><a type='button' data-toggle='modal' data-target='#myModal2' id='return-"+tr.no+"'>"
+						+tr.no+"</a></td></tr>");
+				
+			})
+		}
+	});
+	
+	// 판매번호 클릭시 판매 상세내역 조회하기
+	$("#tab-3").on("click", "a[id^='return-']", function() {
+		var salesno = $(this).attr("id").replace("return-", "");
+		console.log("ee")
+		$(".return-number").empty();
+		$(".return-date").empty();
+		
+		$(".return-number").append("판매번호: "+salesno);
+		$(".return-date").append("판매일자: "+$(this).parent().parent().find("td[class='regdate']").text());
+		
+		$.ajax({
+			type:"GET",
+			url:"/FinalProject/json/sales/return/d/" + salesno,
+			dataType:"json",
+			success:function(result) {
+				var $tbody2 = $("#myModal2 tbody").empty();
+				
+				var sum = 0;
+				var resum = 0;
+				
+				$.each(result, function(index, tr) {
+					sum = tr.qty * tr.product.price;
+					
+					$tbody2.append("<tr><td>"+tr.product.no+"</td><td>"
+							+tr.product.name+"</td><td>"
+							+tr.qty+"</td><td>"
+							+formatNumber(tr.product.price)+"</td><td>"
+							+formatNumber(sum)+"</td></tr>");
+					resum += sum;
+				});
+				
+				$(".re-sum").empty().append(formatNumber(resum));
+				
+			}
+		});
 	});
 });
 </script>
@@ -345,7 +395,7 @@ $(function() {
 						</tbody>
 					</table>
 					
-					<!-- Modal -->
+					<!-- 발주번호 클릭시 상세내역 모달 -->
 					<div id="myModal" class="modal fade" role="dialog">
 					  <div class="modal-dialog modal-lg">
 					
@@ -393,8 +443,73 @@ $(function() {
 					</div>
 				</div>
 				
-				<div id="tab-3">
-				
+				<div id="tab-3">			
+					<table class="table table-bordered">
+						<colgroup>
+							<col width="10%" />
+							<col width="30%" />
+							<col width="30%" />
+							<col width="30%" />
+						</colgroup>
+						<thead>
+							<tr>
+								<th>번호</th>
+								<th>판매일자</th>
+								<th>담당자</th>
+								<th>판매번호</th>
+							</tr>
+						</thead>
+						
+						<tbody>
+							<!-- 반품내역 리스트 -->
+						</tbody>
+					</table>
+					
+					<!-- 판매번호 클릭시 상새내역 모달 -->
+					<div id="myModal2" class="modal fade" role="dialog">
+					  <div class="modal-dialog modal-lg">
+					
+					    <!-- Modal content-->
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <button type="button" class="close" data-dismiss="modal">&times;</button>
+					        <h4 class="modal-title">판매 상세내역</h4>
+					      </div>
+					      <div class="modal-body">
+					      	<div>
+					      		<p class="return-number"></p>
+					      		<p class="return-date"></p>
+					      	</div>
+					      	<table class="table table-bordered">
+					      		<thead>
+					      			<tr>
+					      				<th>제품번호</th>
+					      				<th>제품명</th>
+					      				<th>수량</th>
+					      				<th>가격</th>
+					      				<th>금액</th>
+					      			</tr>
+					      		</thead>
+					      		
+					      		<tbody>
+					      			<!-- 판매 상세내역 -->
+					      		</tbody>
+					      		
+					      		<tfoot>
+									<tr>
+										<td colspan="2">금액 합계</td>
+										<td colspan="3" class="re-sum"></td>
+									</tr>
+								</tfoot>
+					      	</table>
+					      </div>
+					      <div class="modal-footer">
+					        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					      </div>
+					    </div>
+					
+					  </div>
+					</div>
 				</div>
 			</div>
 		</div>
