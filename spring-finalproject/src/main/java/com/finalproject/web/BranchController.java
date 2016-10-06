@@ -182,4 +182,10 @@ public class BranchController {
 		return "redirect:/branch/branchaddemp.do";
 	}
 	
+	// 지점 - 결산
+	@RequestMapping("/branch/branchaccount.do")
+	public String account() {
+		return "branch/account";
+	}
+	
 }

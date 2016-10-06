@@ -33,7 +33,7 @@ window.onload = printTime;
 	      <li class="${current_page eq 'branchinven' ? 'active' : '' }"><a href="branchinven.do">재고</a></li>
 	      <li class="${current_page eq 'branchevnet' ? 'active' : '' }"><a href="branchevent.do">행사물품</a></li>
 	      <sec:authorize access="hasRole('MANAGER')">
-	      <li><a href="#">결산</a></li>
+	      <li class="${current_page eq 'branchaccount' ? 'active' : '' }"><a href="branchaccount.do">결산</a></li>
 	      <li class="${current_page eq 'branchorder' ? 'active' : '' }"><a href="branchorder.do">발주</a></li>
 	      <li class="${current_page eq 'branchaddemp' ? 'active' : '' }"><a href="branchaddemp.do">사용자등록</a></li>
 	      </sec:authorize>

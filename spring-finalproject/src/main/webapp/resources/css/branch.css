@@ -1,5 +1,6 @@
 @CHARSET "UTF-8";
 @import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+@import 'https://fonts.googleapis.com/css?family=Lalezar';
 
 /*  
  * @ RESET CSS
@@ -104,7 +105,7 @@ body { font-family: 'Nanum Gothic', sans-serif; }
 #order-tabmenu li.active { background-color:#999; color:#fff; text-shadow:#000 1px 1px 2px; }
 .tab-con { border:solid 1px #ddd; text-align:center; padding:20px; }
 #tab-1 .order-btn { text-align:right; }
-#tab-1 table { margin-top:20px; }
+#tab-1 table { margin:0 auto; margin-top:20px; width:90%; }
 #tab-1 table th { text-align:center; }
 #tab-1 table tfoot td { background-color:#efefef; font-weight:bold; }
 #tab-2 table { width:80%; margin:0 auto; }
@@ -143,3 +144,12 @@ body { font-family: 'Nanum Gothic', sans-serif; }
 .addemp-con .col-xs-4 { padding:0 3px; }
 #img_preview { display:inline-block; width:100%; }
 #add-btn-box { margin-top:20px; text-align:center; }
+
+
+/* 결산 */
+.account-con { padding:20px; text-align:center; }
+.account-con table { width:80%; margin:0 auto; }
+.account-con table th { text-align:center; }
+.account-con table tfoot td { background-color:#efefef; font-weight:bold; }
+.account-con button { display:inline; vertical-align:super;}
+#today { font-size:40px; color:#888; padding:0 25px; font-family: 'Lalezar', cursive;}

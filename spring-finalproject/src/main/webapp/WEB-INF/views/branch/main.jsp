@@ -35,7 +35,7 @@
 			<sec:authorize access="hasRole('MANAGER')">
 			<div class="row main-btn">
 				<div class="col-sm-4">
-					<a class="btn btn-primary btn-lg btn-block">결산</a>
+					<a class="btn btn-primary btn-lg btn-block" href="branchaccount.do">결산</a>
 				</div>
 				<div class="col-sm-4">
 					<a class="btn btn-primary btn-lg btn-block" href="branchorder.do">발주</a>

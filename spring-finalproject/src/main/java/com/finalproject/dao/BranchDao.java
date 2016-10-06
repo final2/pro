@@ -68,4 +68,7 @@ public interface BranchDao {
 	
 	// 지점 - 사용자 등록
 	void addBranchEmp(BranchEmp brEmp);
+	
+	// 지점 - 결산
+	List<BranchSales> getBranchSalesByDate(Map<String, Object> map);
 }

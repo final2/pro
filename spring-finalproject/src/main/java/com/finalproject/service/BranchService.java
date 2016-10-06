@@ -99,4 +99,6 @@ public interface BranchService {
 	List<Product> getAllEventProducts();
 	
 	void addBranchEmp(BranchEmp brEmp);
+	
+	List<BranchSales> getBranchSalesByDate(Map<String, Object> map);
 }

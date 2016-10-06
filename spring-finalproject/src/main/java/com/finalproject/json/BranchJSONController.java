@@ -329,4 +329,15 @@ public class BranchJSONController {
 		return brService.getAllEventProducts();
 	}
 	
+	// 날짜별로 판매목록 조회하기
+	@RequestMapping(value="/acct/{brno}/date/{date}", method=RequestMethod.GET)
+	public List<BranchSales> getBranchSalesByDate(@PathVariable("brno") int brno,
+													@PathVariable("date") String date) {
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("branchNo", brno);
+		map.put("date", date);
+	
+		return brService.getBranchSalesByDate(map);
+	}
 }

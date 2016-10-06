@@ -213,4 +213,9 @@ public class BranchServiceImpl implements BranchService {
 	public void addBranchEmp(BranchEmp brEmp) {
 		branchDao.addBranchEmp(brEmp);
 	}
+	
+	@Override
+	public List<BranchSales> getBranchSalesByDate(Map<String, Object> map) {
+		return branchDao.getBranchSalesByDate(map);
+	}
 }

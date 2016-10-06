@@ -530,4 +530,39 @@
 		values
 			(mybranch_seq.nextval, #{email,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{grade,jdbcType=CHAR}, #{password,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{branch.no}, #{images,jdbcType=VARCHAR}, #{birth,jdbcType=DATE})
 	</insert>
+	
+	<!-- 결산 : 날짜별로 판매목록 조회하기 -->
+	<select id="getBranchSalesByDate" parameterType="map" resultType="com.finalproject.model.BranchSales">
+		select
+			A.no, 
+			A.regdate, 
+			A.ages, 
+			A.gender,
+			A.issaled, 
+			A.isreturned, 
+			A.payment, 
+			A.br_employee_no as "brEmp.no", 
+			A.branch_no as "branch.no",
+			B.name as "brEmp.name",
+			"psum"
+		from
+			br_sales A, br_employees B, (select
+											Z.br_sales_no,
+											sum(Z.qty * Y.price) as "psum"
+										from
+											br_sales_detail Z, product Y
+										where
+											Z.product_no = Y.no
+										group by 
+											br_sales_no) C
+		where
+			A.br_employee_no = B.no
+		and
+			A.no = C.br_sales_no
+		and
+			A.branch_no = #{branchNo}
+		and
+			A.regdate between to_date('${date}', 'YY-MM-DD')
+			and to_date('${date}', 'YY-MM-DD')+1
+	</select>
 </mapper>

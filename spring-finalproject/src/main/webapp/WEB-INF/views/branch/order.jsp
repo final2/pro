@@ -377,11 +377,11 @@ $(function() {
 					      		</tbody>
 					      		
 					      		<tfoot>
-							<tr>
-								<td colspan="2">금액 합계</td>
-								<td colspan="3" class="or-sum"></td>
-							</tr>
-						</tfoot>
+									<tr>
+										<td colspan="2">금액 합계</td>
+										<td colspan="3" class="or-sum"></td>
+									</tr>
+								</tfoot>
 					      	</table>
 					      </div>
 					      <div class="modal-footer">

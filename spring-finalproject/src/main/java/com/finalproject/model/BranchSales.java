@@ -17,6 +17,7 @@ public class BranchSales {
 	private String payment;
 	private BranchEmp brEmp;
 	private Branch branch;
+	private int psum;
 	
 	public int getNo() {
 		return no;
@@ -71,6 +72,12 @@ public class BranchSales {
 	}
 	public void setBranch(Branch branch) {
 		this.branch = branch;
+	}
+	public int getPsum() {
+		return psum;
+	}
+	public void setPsum(int psum) {
+		this.psum = psum;
 	}
 	
 	
