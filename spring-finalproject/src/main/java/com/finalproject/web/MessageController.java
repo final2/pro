@@ -10,5 +10,8 @@ public class MessageController {
 	public String message() {
 		return "message/message";
 	}
-
+	@RequestMapping("chart.do")
+	public String chart() {
+		return "chart/main";
+	}
 }
