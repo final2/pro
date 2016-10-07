@@ -63,7 +63,7 @@
 <script type="text/javascript">
 $(function() {
 	eventProduct(1);
-	
+	$("#leftMenu a:first").css("active");
 	$("#leftMenu a").click(function() {
 				
 		$(this).siblings().find("a").removeClass("active");
@@ -93,8 +93,10 @@ $(function() {
 		});
 	}
 	 /* 셀렉트 옵션 선택시 페이지 이동 */
-	$("select").change(function() {
+	$("#branch-type-box").change(function() {
+		var type = $(this).val();
 		
+		location.href = "searchBranch.do?type="+type;
 	});
 	
 	 
@@ -180,12 +182,12 @@ $(function() {
 		        <li class="w3-theme-l2">
 		          <p class="w3-xlarge">서비스유형별검색</p>
 		        </li>
-		          <select class="w3-select" name="option" onchange="location.href=this.value">
+		          <select class="w3-select"id="branch-type-box" name="option" >
 		            <option value="" disabled selected>선택하세요</option>
-		            <option value=""id="LOTTO">Lotto판매</option>
-		            <option value=""id="ATM">ATM</option>
-		            <option value=""id="PARCELSERVICE">택배서비스</option>
-		            <option value=""id="FRESHFOOD">직접조리식품</option>
+		            <option value="LOTTO" >Lotto판매</option>
+		            <option value="ATM" >ATM</option>
+		            <option value="PARCELSERVICE" >택배서비스</option>
+		            <option value="FRESHFOOD" >직접조리식품</option>
 		          </select>
 		      </ul>
 		    </div> 

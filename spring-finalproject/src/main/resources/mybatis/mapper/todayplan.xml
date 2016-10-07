@@ -9,6 +9,7 @@
 	<insert id="addTodayPlan" parameterType="TP">
 		insert into todaywork(no, todaywork_title, todaywork_contents, regdate, employee_no, successed)
 		values(my_seq.nextval, #{title}, #{contents}, sysdate, #{empNo}, 'N')
+
 	</insert>
 	<!-- 오늘의 할일 삭제 -->
 	<delete id="removeTodayPlan" parameterType="int">

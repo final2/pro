@@ -221,6 +221,7 @@ $(function() {
 });
 </script>
 <style>
+h1{color:white;}
 th,td{text-align:center;}
 input[type=text] {border-radius:5px;}
 #title {width:20%}
@@ -235,6 +236,7 @@ input[type=text] {border-radius:5px;}
 		<!-- Background 불러오기 -->
 		<%@ include file="backgroundVideo.jsp" %>
 		<div class="container">
+		<h1>오늘의 할 일</h1>
 			<div class="panel panel-default" style="opacity:0.8">
 				<div class="panel panel-heading well">
 					<div>

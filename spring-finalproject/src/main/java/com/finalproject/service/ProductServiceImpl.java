@@ -21,6 +21,14 @@ public class ProductServiceImpl implements ProductService {
 		productDao.insertProduct(product);
 	}
 	@Override
+	public void addProductDetail(Product product) {
+		productDao.insertProductDetail(product);
+	}
+	@Override
+	public int getProductByName(Product product) {
+		return productDao.getProductByName(product);
+	}
+	@Override
 	public List<Product> getProductPageList(ProductSearch productSearch) {
 		return productDao.getProductPageList(productSearch);
 	}

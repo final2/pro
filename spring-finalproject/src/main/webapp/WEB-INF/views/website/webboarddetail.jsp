@@ -9,7 +9,7 @@
 <link rel="stylesheet" type="text/css" href="resources/bootstrap/css/bootstrap.css">
 <link rel="stylesheet" type="text/css" href="resources/css/branch.css">
 <script type="text/javascript" src="resources/jquery/jquery.js" ></script>
-	<style>
+<style>
 	html,body {margin: 0; padding:0; height:100%;  }
 	#mainview {
 		margin: auto;
@@ -22,7 +22,7 @@
 	}
 		 
  	#mainview #header {
-		height: 100px;
+		height: 70px;
 		background-color: white;
 	} 
 		 
@@ -40,8 +40,13 @@
 		height: 130px;
 		background-color: silver;
 	}
-
-	</style>
+	
+	th {
+		font-size:150%;
+		text-align:center;
+		font-family: "궁서체";
+	}
+</style>
 <title>Introduce BigStore</title>
 
 </head>
@@ -55,15 +60,15 @@
 		<div class="w3-container w3-padding-0">
 			<!-- 공지테이블 상세 -->
 			<div class="w3-container w3-teal">
-	  			<h1>${boardDetail.title }</h1>
+	  			<h3>${boardDetail.title }</h3>
 			</div>
 			<table class="w3-table w3-striped w3-bordered w3-border">
-				<tr>
+			<%-- 	<tr>
 				  <th>제목</th>
 				  </tr>
 				  <tr>
-					<td>${boardDetail.title }</td>
-				</tr>
+					<td><span style="color:blue;text-align:center;font-size:120%;">${boardDetail.title }</span></td>
+				</tr> --%>
 				<tr>
 				  <th>내용</th>
 					</tr>
@@ -77,8 +82,8 @@
 					<td><fmt:formatDate value="${boardDetail.regdate }" pattern="yyyy.MM.dd hh:mm"/></td>
 				</tr>
 			</table>
-			<div align="center" class="w3-container">
-				<a href="announcement.do"><input type="button" class="btn btn-primary" value="목록"></a>
+			<div align="center" class="w3-container w3-padding-top">
+				<a href="announcement.do"><input type="button" class="btn btn-primary" value="목록가기"></a>
 			</div>
 		</div>
 	</div>
