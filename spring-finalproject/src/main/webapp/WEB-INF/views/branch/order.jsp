@@ -345,7 +345,7 @@ $(function() {
 								<th>제조사</th>
 								<th>수량</th>
 								<th>단가</th>
-								<th>금액</th>
+								<th>합계</th>
 								<th><input type="checkbox" name="allcheck" /></th>
 							</tr>
 						</thead>
@@ -356,7 +356,7 @@ $(function() {
 						
 						<tfoot>
 							<tr>
-								<td colspan="3">금액 합계</td>
+								<td colspan="3">총 합계</td>
 								<td colspan="4" class="wor-sum"></td>
 							</tr>
 						</tfoot>
@@ -418,7 +418,7 @@ $(function() {
 					      				<th>제품명</th>
 					      				<th>수량</th>
 					      				<th>가격</th>
-					      				<th>금액</th>
+					      				<th>합계</th>
 					      			</tr>
 					      		</thead>
 					      		
@@ -428,7 +428,7 @@ $(function() {
 					      		
 					      		<tfoot>
 									<tr>
-										<td colspan="2">금액 합계</td>
+										<td colspan="2">총 합계</td>
 										<td colspan="3" class="or-sum"></td>
 									</tr>
 								</tfoot>

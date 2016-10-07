@@ -20,7 +20,7 @@ window.onload = printTime;
 <nav class="navbar-branch">
 	  <div class="container-fluid">
 	    <div class="navbar-header">
-	      <a class="navbar-brand" href="#"><img src="../resources/image/logo1.png" /></a>
+	      <a class="navbar-brand" href="branchsales.do"><img src="../resources/image/logo1.png" /></a>
 	    </div>
 	    
 	    <div class="navbar-time">
@@ -30,6 +30,7 @@ window.onload = printTime;
 	    
 	    <ul class="nav navbar-nav pull-right">
 	      <li class="${current_page eq 'branchsales' ? 'active' : '' }"><a href="branchsales.do">판매</a></li>
+	      <li class="${current_page eq 'branchwait' ? 'active' : '' }"><a href="branchwait.do">보류</a></li>
 	      <li class="${current_page eq 'branchinven' ? 'active' : '' }"><a href="branchinven.do">재고</a></li>
 	      <li class="${current_page eq 'branchevnet' ? 'active' : '' }"><a href="branchevent.do">행사물품</a></li>
 	      <sec:authorize access="hasRole('MANAGER')">

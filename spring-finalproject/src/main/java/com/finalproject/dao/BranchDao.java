@@ -34,7 +34,7 @@ public interface BranchDao {
 	BranchOrder getBranchOrderByNo(int no);
 	void updateBranchOrder(BranchOrder order);
 	void updateInventory(BranchInventory brInven);
-	BranchInventory getInventoryByProductNo(int no);
+	BranchInventory getInventoryByProductNo(Map<String, Object> map);
 	
 	// 지점 - 재고
 	List<BranchInventory> getAllInvenByBranchNo(int no);
@@ -73,4 +73,8 @@ public interface BranchDao {
 	
 	// 지점 - 결산
 	List<BranchSales> getBranchSalesByDate(Map<String, Object> map);
+	
+	// 지점 - 보류
+	void deleteBranchSales(int salesno);
+	void deleteBranchSalesDetail(int salesno);
 }

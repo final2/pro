@@ -49,7 +49,7 @@ public interface BranchService {
 	
 	void updateInventory(BranchInventory brInven);
 	
-	BranchInventory getInventoryByProductNo(int no);
+	BranchInventory getInventoryByProductNo(Map<String, Object> map);
 	
 	BranchOrderDetail getOrderDetailByNo(int no);
 	
@@ -105,4 +105,8 @@ public interface BranchService {
 	BranchSales getBranchSalesBySalesNo(int salesno);
 	
 	List<BranchSales> getBranchSalesIsReturnedByBranchNo(int brno);
+	
+	void deleteBranchSales(int salesno);
+	
+	void deleteBranchSalesDetail(int salesno);
 }

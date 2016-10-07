@@ -95,8 +95,8 @@ public class BranchServiceImpl implements BranchService {
 	}
 
 	@Override
-	public BranchInventory getInventoryByProductNo(int no) {
-		return branchDao.getInventoryByProductNo(no);
+	public BranchInventory getInventoryByProductNo(Map<String, Object> map) {
+		return branchDao.getInventoryByProductNo(map);
 	}
 
 	@Override
@@ -227,5 +227,15 @@ public class BranchServiceImpl implements BranchService {
 	@Override
 	public List<BranchSales> getBranchSalesIsReturnedByBranchNo(int brno) {
 		return branchDao.getBranchSalesIsReturnedByBranchNo(brno);
+	}
+	
+	@Override
+	public void deleteBranchSales(int salesno) {
+		branchDao.deleteBranchSales(salesno);
+	}
+	
+	@Override
+	public void deleteBranchSalesDetail(int salesno) {
+		branchDao.deleteBranchSalesDetail(salesno);
 	}
 }

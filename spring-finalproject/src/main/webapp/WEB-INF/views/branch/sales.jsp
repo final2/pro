@@ -180,7 +180,6 @@ $(function() {
 					
 					removeProduct();
 				});
-					
 			}
 		});
 	});
@@ -234,7 +233,6 @@ $(function() {
 		var gender = $("input[name='gender']:checked").val();
 		var ages = $("input[name='ages']:checked").val();
 		
-		console.log(detailList);
 		var jsonData = JSON.stringify(detailList);
 		$.ajax({
 			type:"POST",
@@ -248,6 +246,7 @@ $(function() {
 		})
 	})
 	
+	// 품목번호로 물품 추가하기
 	$("#each-pt-add").submit(function(event) {
 		event.preventDefault();
 		var inputPno = $("input[name='each-pno']").val();
@@ -351,6 +350,43 @@ $(function() {
 	$("input[name='return']").on("keydown", function() {
 		$("#return-error").hide();
 	});
+	
+	// 보류하기
+	$("#sales-wait-btn").on("click", function() {
+		var jsonData = JSON.stringify(detailList);
+		$.ajax({
+			type:"POST",
+			url:"/FinalProject/json/wsales/" + empno,
+			contentType:"application/json",
+			data:jsonData,
+			dataType:"json",
+			success:function(result) {
+				alert("보류하기에 저장하였습니다.")
+				window.location.href="branchsales.do";
+			},
+			error:function() {
+				console.log("err");
+			}
+		});
+	});
+	
+	var $holdinglist = $(".hidden-list").val();
+	console.log($holdinglist)
+	if ($holdinglist != 'null') {
+		var jsonData = JSON.parse($holdinglist.replace(/-/g, "\""));
+		detailList = jsonData;
+		
+		$.each(detailList, function(index, item) {
+			var no = index + 1;
+			$tbody.append("<tr id='sales-pt-"+item.product.no+"'><td>"+no+"</td><td>"
+					+item.product.name+"</td><td>"
+					+formatNumber(item.product.price)+"</td><td><input type='text' value='"+item.qty+"' name='qty-"+item.product.no+"' /></td>"
+					+"<td><a id='remove-btn-"+item.product.no+"'><span class='glyphicon glyphicon-remove'></span></a></td></tr>");
+			
+			removeProduct();
+		});
+	}
+
 });
 </script>
 <title>지점 - 판매</title>
@@ -360,6 +396,11 @@ $(function() {
 	<sec:authentication var="empno" property="principal.brEmp.no"/>
 </sec:authorize>
 <body id="emp-${empno }">
+<% 
+	String jsonData = request.getParameter("holdinglist");
+	System.out.println(jsonData);
+%>
+<input type="hidden" class="hidden-list" value="<%=jsonData %>"/>
 <div class="wrapper container" id="brno-${brno }">
 	<div class="row">
 		<div class="col-sm-12">
@@ -424,7 +465,7 @@ $(function() {
 			
 			<ul id="sales-btn-list">
 				<li id="all-cancel-btn">일괄 취소</li>
-				<li>보류</li>
+				<li id="sales-wait-btn">보류</li>
 				<li data-toggle="modal" data-target="#myModal">결제</li>
 				<li data-toggle="modal" data-target="#myReturn">반품</li>
 			</ul>
@@ -441,30 +482,30 @@ $(function() {
 		          <h4 class="modal-title">구매자 정보 입력하기</h4>
 		        </div>
 		        <form role="form" id="user-info">
-		        <div class="modal-body">
-		        	<div>
-		        		<h4>지불방법</h4>
-		        		<label for="radio-money" class="action-button shadow animate blue action-button-active">현금</label><input type="radio" id="radio-money" class="input-for-label" name="payment" value="M" checked>
-						<label for="radio-card" class="action-button shadow animate green">카드</label><input type="radio" id="radio-card" class="input-for-label" name="payment" value="C">
-		        	</div>
-		        	<div>
-		        		<h4>성별</h4>
-		        		<label for="radio-male" class="action-button shadow animate red action-button-active">남자</label><input type="radio" id="radio-male" class="input-for-label" name="gender" value="M" checked>
-						<label for="radio-female" class="action-button shadow animate yellow">여자</label><input type="radio" id="radio-female" class="input-for-label" name="gender" value="F">
-		        	</div>
-		        	<div id="label-02">
-		        		<h4>연령별</h4>
-		        		<label for="radio-10" class="circ-button circ-button-active">10</label><input type="radio" id="radio-10" class="input-for-label" name="ages" value="10" checked>
-						<label for="radio-20" class="circ-button">20</label><input type="radio" id="radio-20" class="input-for-label" name="ages" value="20">
-						<label for="radio-30" class="circ-button">30</label><input type="radio" id="radio-30" class="input-for-label" name="ages" value="30">
-						<label for="radio-40" class="circ-button">40</label><input type="radio" id="radio-40" class="input-for-label" name="ages" value="40">
-						<label for="radio-50" class="circ-button">50</label><input type="radio" id="radio-10" class="input-for-label" name="ages" value="50">
-		        	</div>
-		        </div>
-		        <div class="modal-footer">
-		          <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
-		          <button type="submit" id="pay-btn" class="btn btn-primary">결제</button>
-		        </div>
+			        <div class="modal-body">
+			        	<div>
+			        		<h4>지불방법</h4>
+			        		<label for="radio-money" class="action-button shadow animate blue action-button-active">현금</label><input type="radio" id="radio-money" class="input-for-label" name="payment" value="M" checked>
+							<label for="radio-card" class="action-button shadow animate green">카드</label><input type="radio" id="radio-card" class="input-for-label" name="payment" value="C">
+			        	</div>
+			        	<div>
+			        		<h4>성별</h4>
+			        		<label for="radio-male" class="action-button shadow animate red action-button-active">남자</label><input type="radio" id="radio-male" class="input-for-label" name="gender" value="M" checked>
+							<label for="radio-female" class="action-button shadow animate yellow">여자</label><input type="radio" id="radio-female" class="input-for-label" name="gender" value="F">
+			        	</div>
+			        	<div id="label-02">
+			        		<h4>연령별</h4>
+			        		<label for="radio-10" class="circ-button circ-button-active">10</label><input type="radio" id="radio-10" class="input-for-label" name="ages" value="10" checked>
+							<label for="radio-20" class="circ-button">20</label><input type="radio" id="radio-20" class="input-for-label" name="ages" value="20">
+							<label for="radio-30" class="circ-button">30</label><input type="radio" id="radio-30" class="input-for-label" name="ages" value="30">
+							<label for="radio-40" class="circ-button">40</label><input type="radio" id="radio-40" class="input-for-label" name="ages" value="40">
+							<label for="radio-50" class="circ-button">50</label><input type="radio" id="radio-10" class="input-for-label" name="ages" value="50">
+			        	</div>
+			        </div>
+			        <div class="modal-footer">
+			          <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+			          <button type="submit" id="pay-btn" class="btn btn-primary">결제</button>
+			        </div>
 		        </form>
 		      </div>
 		      

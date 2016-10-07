@@ -159,13 +159,15 @@
 	</update>
 	
 	<!-- 발주 : 물품번호로 재고찾기 -->
-	<select id="getInventoryByProductNo" parameterType="int" resultType="com.finalproject.model.BranchInventory">
+	<select id="getInventoryByProductNo" parameterType="map" resultType="com.finalproject.model.BranchInventory">
 		select
 			 no, qty, branch_no as "branchNo", product_no as "product.no"
 		from 
 			branch_inventory
-		where 
-			product_no = #{value}
+		where
+			branch_no = #{branchNo}
+		and 
+			product_no = #{productNo}
 	</select>
 	
 	<!-- 발주 : 재고 수정하기 -->
@@ -392,7 +394,7 @@
 	
 	<insert id="addBranchSales" parameterType="com.finalproject.model.BranchSales">
 		insert into br_sales (no, regdate, ages, gender, issaled, isreturned, payment, br_employee_no, branch_no)
-		values(mybranch_seq.nextval, sysdate, #{ages}, #{gender}, 'N', 'N', #{payment}, #{brEmp.no}, #{branch.no})
+		values(mybranch_seq.nextval, sysdate, #{ages,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR}, 'N', 'N', #{payment,jdbcType=VARCHAR}, #{brEmp.no}, #{branch.no})
 	</insert>
 	
 	<insert id="addBranchSalesDetail" parameterType="com.finalproject.model.BranchSalesDetail">
@@ -614,4 +616,14 @@
 			A.regdate between to_date('${date}', 'YY-MM-DD')
 			and to_date('${date}', 'YY-MM-DD')+1
 	</select>
+	
+	<delete id="deleteBranchSales" parameterType="int">
+		delete from br_sales
+		where no = #{value}
+	</delete>
+	
+	<delete id="deleteBranchSalesDetail" parameterType="int">
+		delete from br_sales_detail
+		where br_sales_no = #{value}
+	</delete>
 </mapper>

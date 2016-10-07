@@ -7,7 +7,7 @@
 <link rel="stylesheet" type="text/css" href="../resources/bootstrap/css/bootstrap.css">
 <link rel="stylesheet" type="text/css" href="../resources/css/branch.css">
 <script type="text/javascript" src="../resources/jquery/jquery.js" ></script>
-<title>지점</title>
+<title>지점 - 로그인</title>
 </head>
 <body>
 <div class="container login-box">

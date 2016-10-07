@@ -211,7 +211,7 @@ public class BranchJSONController {
 	}
 	
 	// 검색 키워드 받아서 본사 물품 조회하기
-	@RequestMapping(value="/pt/key/{key}/q/{q}", method=RequestMethod.GET)
+	@RequestMapping(value="/pt/key/{key}/q/{q}", method=RequestMethod.POST)
 	public List<Product> getProductsByKeyword(@PathVariable("key") String key, 
 									@PathVariable("q") String q) {
 		
@@ -288,6 +288,7 @@ public class BranchJSONController {
 		sale = brService.getBranchSalesByNotIsSaled(map);
 		sale.setIssaled("Y");
 		brService.updateBranchSales(sale);
+		
 		List<BranchSalesDetail> list = detailList;
 		for (BranchSalesDetail d : list) {
 			BranchSalesDetail detail = new BranchSalesDetail();
@@ -298,8 +299,11 @@ public class BranchJSONController {
 			detail.setQty(d.getQty());
 			brService.addBranchSalesDetail(detail);
 			
-			int productNo = d.getProduct().getNo();
-			BranchInventory inven = brService.getInventoryByProductNo(productNo);
+			Map<String, Object> map2 = new HashMap<>();
+			map2.put("branchNo", branch.getNo());
+			map2.put("productNo", d.getProduct().getNo());
+			
+			BranchInventory inven = brService.getInventoryByProductNo(map2);
 
 			if(inven != null && inven.getProduct().getNo() == d.getProduct().getNo()) {
 				inven.setQty(inven.getQty() - d.getQty());
@@ -346,8 +350,11 @@ public class BranchJSONController {
 			
 			List<BranchSalesDetail> list = brService.getBranchSalesDetailBySalesNo(salesno);
 			for (BranchSalesDetail d : list) {
-				int productNo = d.getProduct().getNo();
-				BranchInventory inven = brService.getInventoryByProductNo(productNo);
+				Map<String, Object> map2 = new HashMap<>();
+				map2.put("branchNo", d.getBranchSales().getBranch().getNo());
+				map2.put("productNo", d.getProduct().getNo());
+				
+				BranchInventory inven = brService.getInventoryByProductNo(map2);
 
 				if(inven != null && inven.getProduct().getNo() == d.getProduct().getNo()) {
 					inven.setQty(inven.getQty() + d.getQty());
@@ -358,15 +365,70 @@ public class BranchJSONController {
 		}
 	}
 	
+	// 지점번호로 반품목록 조회
 	@RequestMapping(value="/sales/return/{brno}", method=RequestMethod.GET)
 	public List<BranchSales> getBranchSalesIsReturnedByBranchNo(@PathVariable("brno") int brno) {
 		return brService.getBranchSalesIsReturnedByBranchNo(brno);
 	}
 	
-	//
+	// 판매번호로 판매리스트 조회하기
 	@RequestMapping(value="/sales/return/d/{salesno}", method=RequestMethod.GET)
 	public List<BranchSalesDetail> getBranchSalesDetailBySalesNo(@PathVariable("salesno") int salesno) {
 		return brService.getBranchSalesDetailBySalesNo(salesno);
 	}
 	
+	@RequestMapping(value="/wsales/{empno}", method=RequestMethod.POST)
+	public List<BranchSalesDetail> addDetailSForWaitingSales(@RequestBody List<BranchSalesDetail> detailList,
+											@PathVariable("empno") int empno) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("empNo", empno);
+		map.put("issaled", 'N');
+		
+		BranchEmp emp = brService.getBrEmpByNo(empno);
+		Branch branch = brService.getBranchByNo(emp.getBranch().getNo());
+
+		BranchSales sale = new BranchSales();
+		sale.setBrEmp(emp);
+		sale.setBranch(branch);
+		brService.addBranchSales(sale);
+		
+		sale = brService.getBranchSalesByNotIsSaled(map);
+		List<BranchSalesDetail> list = detailList;
+		for (BranchSalesDetail d : list) {
+			BranchSalesDetail detail = new BranchSalesDetail();
+			detail.setBranchSales(sale);
+			
+			Product product = brService.getProductByNo(d.getProduct().getNo());
+			detail.setProduct(product);
+			detail.setQty(d.getQty());
+			brService.addBranchSalesDetail(detail);
+		}
+				
+		return brService.getBranchSalesDetailBySalesNo(sale.getNo());
+	}
+	
+	@RequestMapping(value="/wsales/{empno}", method=RequestMethod.GET)
+	public List<BranchSalesDetail> getDetailSForWaitingSales(@PathVariable("empno") int empno) {
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("empNo", empno);
+		map.put("issaled", 'N');
+		
+		BranchSales sale = brService.getBranchSalesByNotIsSaled(map);
+		
+		if (sale == null) {
+			return null;
+		}
+		return brService.getBranchSalesDetailBySalesNo(sale.getNo());
+	}
+	
+	@RequestMapping(value="/wsales/del/{salesno}/holding/{holdinglist}", method=RequestMethod.POST)
+	public String deleteHoldingSales(@PathVariable("salesno") int salesno,
+									@PathVariable("holdinglist") String holdinglist) {
+		
+		brService.deleteBranchSalesDetail(salesno);
+		brService.deleteBranchSales(salesno);
+		
+		return holdinglist;
+	}
 }

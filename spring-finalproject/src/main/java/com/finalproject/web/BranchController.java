@@ -4,7 +4,9 @@ package com.finalproject.web;
 
 import java.io.File;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -99,8 +101,11 @@ public class BranchController {
 		BranchOrder order = brService.getBranchOrderByNo(no);
 		
 		for (BranchOrderDetail d : detailList){
-			int productNo = d.getProduct().getNo();
-			BranchInventory inven = brService.getInventoryByProductNo(productNo);
+			Map<String, Object> map2 = new HashMap<>();
+			map2.put("branchNo", d.getOrder().getBranchNo());
+			map2.put("productNo", d.getProduct().getNo());
+			
+			BranchInventory inven = brService.getInventoryByProductNo(map2);
 
 			if(inven != null && inven.getProduct().getNo() == d.getProduct().getNo()) {
 				inven.setQty(inven.getQty() + d.getQty());
@@ -188,4 +193,10 @@ public class BranchController {
 		return "branch/account";
 	}
 	
+	// 지점 - 보류
+	@RequestMapping("/branch/branchwait.do")
+	public String waitProduct() {
+		return "branch/wait";
+	}
+
 }

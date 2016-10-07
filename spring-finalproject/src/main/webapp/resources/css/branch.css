@@ -54,10 +54,10 @@ body { font-family: 'Nanum Gothic', sans-serif; }
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#64b6e3', endColorstr='#3d93d9',GradientType=0 ); /* IE6-9 */	
 }
 .navbar-branch .container-fluid { padding-right:0; }
-.navbar-branch .navbar-brand img { display:inline-block; width:65px; }
+.navbar-branch .navbar-brand img { display:inline-block; width:60px; }
 .navbar-branch .navbar-time { float:left; margin-top:12px; color:#fff; text-align:center; }
 .navbar-branch .navbar-time p { margin-top:8px; }
-.navbar-branch li a { color:#fff; border-left:solid 1px #90cee8; border-right:solid 3px #49a4e6; padding:25px; font-size:15px; }
+.navbar-branch li a { color:#fff; border-left:solid 1px #90cee8; border-right:solid 3px #49a4e6; padding:25px 24px; font-size:15px; }
 .navbar-branch li a:hover { background-color:#3d93d9; color:#fff; }
 .navbar-branch li.active a { background-color:#3d93d9; color:#fff; }
 
@@ -88,6 +88,12 @@ body { font-family: 'Nanum Gothic', sans-serif; }
 #myReturn .modal-body { overflow:hidden; }
 .modal-body .btn-left { float:left; width:49%; }
 .modal-body .btn-right { float:right; width:49%; }
+
+/* 보류 */
+.holding-con { padding:20px; }
+.holding-con table { margin:0 auto; margin-top:20px; width:90%; }
+.holding-con table th { text-align:center; }
+.holding-con table tfoot td { background-color:#efefef; font-weight:bold; }
 
 /* 재고 */
 .inven-search { margin-top:20px; }
