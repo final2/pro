@@ -128,7 +128,7 @@ $(function() {
 
 		</div>
 				
-		<div class="row text-center">
+		<div class="row text-center w3-padding-top">
 			<form id="searchform" class="form-inline" method="get" action="searchbranch.do">
 				<input type="hidden" name="pno" value="${navi.pageNo }" />
 				<div class="form-group">

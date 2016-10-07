@@ -12,10 +12,10 @@
 			    </li>
 			    <li><a href="main.do" class="w3-black"><img alt="logo" src="resources/image/logo2.png" width="60px" />BigStore</a></li>
 
-			    <li id="infoStore" class="w3-hide-small w3-right"><a href="searchBranch.do" class="w3-hover-white">서비스유형별안내</a></li>
+			    <li id="infoStore" class="w3-hide-small w3-right"><a href="searchBranch.do?type=LOTTO" class="w3-hover-white">서비스유형별안내</a></li>
 			    <li class="w3-hide-small w3-right"><a href="announcement.do" class="w3-hover-white">공지사항</a></li>
 			  <li class="w3-hide-small w3-right"><a href="intro.do" class="w3-hover-white">회사소개</a></li>
-			  <!-- <li class="w3-hide-small w3-right"><a href="#" class="w3-hover-teal" title="Search"><i class="fa fa-search"></i></a></li> -->
+			  <li class="w3-hide-small w3-right"><a href="searchbranch.do" class="w3-hover-teal" title="Search"><i class="fa fa-search"></i></a></li>
 			 </ul>
 			
 			<!-- Navbar on small screens -->
