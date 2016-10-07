@@ -15,6 +15,9 @@ import com.finalproject.model.Branch;
 import com.finalproject.model.BranchEmp;
 import com.finalproject.model.Career;
 import com.finalproject.model.Employee;
+import com.finalproject.model.EmployeeDetail;
+import com.finalproject.model.Languages;
+import com.finalproject.model.Licenses;
 import com.finalproject.model.RegisterEmp;
 
 
@@ -30,9 +33,31 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 	
 	@Override
-	public void registerEmployee(Employee emp) {
+	public void registerEmployee(Employee emp, List<Career> careerList, List<Licenses> licensesList,
+			List<Languages> languageList) {
+		
+		int seq = empDao.empSeqCheck();
+		
+		emp.setNo(seq);
 		empDao.insertEmployee(emp);
+		
+		for (Career career : careerList) {
+			career.setEmpNo(seq);
+			empDao.insertAddCareer(career);
+		}
+		
+		for (Licenses license : licensesList) {
+			license.setEmpNo(seq);
+			empDao.insertAddLicenses(license);
+		}
+		
+		for (Languages language : languageList) {
+			language.setEmpNo(seq);
+			empDao.insertAddLanguages(language);
+		}
+		
 	}
+	
 	
 	@Override
 	public void insertSalary(AccountBook accountBook) {
@@ -46,17 +71,34 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
-	public Employee getEmployeeByNo(int empNo) {
+	public EmployeeDetail getEmployeeByEmpNo(int empNo) {
+		
+		EmployeeDetail empDetail = new EmployeeDetail();
+		
 		Employee emp = empDao.getEmployeeByNo(empNo);
+		List<Career> careerList = empDao.getCareerListByNo(empNo);
+		List<Licenses> licenseList = empDao.getLicenseListByNo(empNo);
+		List<Languages> languageList = empDao.getLanguageListByNo(empNo);
+		
 		if (emp.getRetireDate() == null) {
 						
 			emp.setWorkingStatus("재직");
 		}
 		
-		return emp;
+		empDetail.setEmp(emp);
+		empDetail.setCareerList(careerList);
+		empDetail.setLicenseList(licenseList);
+		empDetail.setLanguageList(languageList);
+		
+		return empDetail;
 		
 	}
 	
+	@Override
+	public void insertBranch(Branch branch) {
+		empDao.insertBranch(branch);
+	}
+
 	@Override
 	public List<Branch> getAllBranch() {
 		List<Branch> branchNames = empDao.getAllBranch();
@@ -104,9 +146,5 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return savedEmp;
 	}
 	
-	@Override
-	public void insertBranch(Branch branch) {
-		empDao.insertBranch(branch);
-	}
 
 }

@@ -10,7 +10,7 @@
 <link href="/FinalProject/resources/bootstrap/css/simple-sidebar.css" rel="stylesheet">
 <script src="/FinalProject/resources/bootstrap/js/bootstrap.min.js"></script>
 <style>
-	.container {position:relative; top:150px;}
+	.container {position:relative; top:60px;}
 	.container:after {clear:both; content:""; display:block;}
 
 	.empBox {width:75%; margin:15px auto 15px auto;}
@@ -20,30 +20,32 @@
 	select {padding:4px !important; vertical-align:middle;}
 	select > option { vertical-align:middle; display:block;}
 	 
-	.empct {margin-top:10px;}
+	.empct {margin-top:20px;}
 	.empct:after {clear:both; content:""; display:block;}
-	.empct > .row {margin-bottom:25px; clear:both;}
+	.empct > .row {margin-bottom:30px; clear:both;}
 	.empct > .row:after {clear:both; content:""; display:block;}
 	.empct > .empctLast {margin-bottom:10px !important;}
 	.row > label {vertical-align:middle; margin-top:2px;}
 	.empct > .row > p { -webkit-appearance: textfield; background-color: white; -webkit-rtl-ordering: logical; -webkit-user-select: text;
     cursor: auto; padding: 1px; border-width: 2px; border-style: inset; border-color: initial; border-image: initial; padding:2px 8px; margin:0 !important;}
 	
+	.empAddct {margin-bottom:30px;}
 	.empct2 { margin-top:20px;}
 	
 	.empAddct > .empaddL {width:13.9%; float:left; padding:0 15px 0 15px;}
 	.empAddct > .empaddI {width:86.1%; padding:0 15px 0 15px;}
 	
-	.empctrow > .empcareerL, .empctrow > .emplicensesL, .empctrow > .empLanguagesL {width:13.9%; float:left; padding:0 15px 0 15px;}
-	.empctrow > .empcareerI, .empctrow > .emplicensesI, .empctrow > .empLanguagesI {width:86.1%; padding:0 15px 0 15px; float:left;}
+	.empctrow > .empcareerL, .empctrow > .emplicensesL, .empctrow > .emplanguagesL {width:13.9%; float:left; padding:0 15px 0 15px;}
+	.empctrow > .empcareerI, .empctrow > .emplicensesI, .empctrow > .emplanguagesI {width:86.1%; padding:0 15px 0 15px; float:left;}
+	.empctrow > .empcareerI label, .empctrow > .emplicensesI label, .empctrow > .emplanguagesI label {text-align:right;}
 	
 	.empctrow {margin-bottom:7px !important;}
 	.empctrow:after {clear:both; content:""; display:block;}
 	
-	.ptBox {width:70%; height:200px; text-align:center;}
-	.ptImg {width:100%; height:100%; overflow:hidden;  text-align:center; border:1px solid #ddd; margin-bottom:0 !important;}
+	.ptBox {width:63%; height:180px; text-align:center; margin-top:10px;}
+	.ptImg {width:100%; height:100%; overflow:hidden; border:2px solid #c2c2c2; box-sizing: border-box; background:#fff; margin-bottom:0 !important;}
 	.ptImg:after {clear:both; content:""; display:block; }
-	.ptImg > #thumnail {height:100% !important; vertical-align:middle;  display:block !important; margin:0 auto;text-align:center; border:1px solid #ddd;}
+	.ptImg > #thumnail {width:auto !important; height:100% !important; vertical-align:middle; }
 	.photoBtn {width:99%;}
 	.photoBtn label { width:100%; vertical-align: middle; cursor: pointer; text-align:center;}
 	/* 파일 필드 숨기기 */
@@ -76,12 +78,6 @@ $(function() {
 
 	today = yyyy+'-'+mm+'-'+dd;
 	
-	
-	$(".empBox").submit(function() {
-		
-		
-	});
-	
 	function readURL(input) {
 		var url = input.value;
 		var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
@@ -91,11 +87,12 @@ $(function() {
 		    reader.onload = function (e) {
 		        $('#thumnail')
 			        .attr('src', e.target.result)
-	                .css('height', '100%');
+	                .css('height', '100%').css('display', 'block').css('margin', '0 auto'). css('text-align', 'center');
 		    }
 		    
 		    //alert(url);
 		    reader.readAsDataURL(input.files[0]);
+		    
 		}
 		else{
 		     $('#thumnail').attr('src', '/FinalProject/resources/image/no-image.png');
@@ -108,7 +105,7 @@ $(function() {
 	});
 	
 	/* 학력 */
-	/* $("#careerAddBox").on("click", ".careerBtnBox .careerMinus", function() {
+	$("#careerAddBox").on("click", ".careerBtnBox .careerMinus", function() {
 		$(this).parents(".empctrow").hide();
 	})
 	
@@ -124,17 +121,23 @@ $(function() {
 		html += 	"<div class='empcareerI careerBoxR'>";
 		html += 		"<div class='col-sm-4'>";
 		html += 			"<div class='row'>";
-		html += 				"<label class='col-sm-4'>학교명</label>";
-		html += 				"<input type='text' name='career' class='col-sm-8'/>";
+		html += 				"<label class='col-sm-4'>기간</label>";
+		html += 				"<input type='text' name='terms' class='col-sm-8'/>";
 		html += 			"</div>";
 		html += 		"</div>";
-		html += 		"<div class='col-sm-4 col-sm-offset-1'>";
+		html += 		"<div class='col-sm-4'>";
+		html += 			"<div class='row'>";
+		html += 				"<label class='col-sm-4'>학교명</label>";
+		html += 				"<input type='text' name='schools' class='col-sm-8'/>";
+		html += 			"</div>";
+		html += 		"</div>";
+		html += 		"<div class='col-sm-3'>";
 		html += 			"<div class='row'>";
 		html += 				"<label class='col-sm-4'>전공</label>";
-		html += 				"<input type='text' name='career' class='col-sm-8'/>";
+		html += 				"<input type='text' name='majors' class='col-sm-8'/>";
 		html += 			"</div>";
 		html += 		"</div>";
-		html += 		"<div class='col-sm-1 col-sm-offset-2 careerBtnBox'>";
+		html += 		"<div class='col-sm-1 careerBtnBox'>";
 		html += 			"<div class='careerMinus'>";
 		html += 				"<span class='glyphicon glyphicon-minus'></span>";
 		html += 			"</div>";
@@ -144,11 +147,11 @@ $(function() {
 		
 		$careerAddBox.append(html);
 		
-	}); */
+	});
 	
 	
 	/* 자격증 */
-	/* $("#licensesAddBox").on("click", ".licensesBtnBox .licensesMinus", function() {
+	$("#licensesAddBox").on("click", ".licensesBtnBox .licenseMinus", function() {
 		$(this).parents(".empctrow").hide();
 	})
 	
@@ -157,37 +160,38 @@ $(function() {
 		var $licensesAddBox = $("#licensesAddBox");
 		$licensesAddBox.show();
 		
-		$licensesAddBox.append("<div class='empctrow'>"
-								+"<div class='emplicensesL'>"
-									+"<label></label>"
-								+"</div>"
-								+"<div class='emplicensesI licensesBoxR'>"
-									+"<div class='row'>"
-										+"<div class='col-sm-4'>"
-											+"<div class='row'>"
-												+"<label class='col-sm-4'>자격증</label>"
-												+"<input type='text' name='licenses' class='col-sm-8'/>"
-											+"</div>"
-										+"</div>"
-										+"<div class='col-sm-4 col-sm-offset-1'>"
-											+"<div class='row'>"
-											+"<label class='col-sm-4'>기관명</label>"
-											+"<input type='text' name='licenses' class='col-sm-8'/>"
-											+"</div>"
-										+"</div>"
-										+"<div class='col-sm-1 col-sm-offset-2 licensesBtnBox'>"
-											+"<div class='licensesMinus'>"
-												+"<span class='glyphicon glyphicon-minus'></span>"
-											+"</div>"
-										+"</div>"
-									+"</div>"
-								+"</div>"
-							+"</div>");
+		var html = "";
+		html += "<div class='empctrow'>";
+		html +=		"<div class='emplicensesL'>";
+		html +=			"<label></label>";
+		html +=		"</div>";
+		html +=		"<div class='emplicensesI licensesBoxR'>";
+		html +=			"<div class='col-sm-6'>";
+		html +=				"<div class='row'>";
+		html +=					"<label class='col-sm-5'>종류 및 등급</label>";
+		html +=					"<input type='text' name='licenses' class='col-sm-7'/>";
+		html +=				"</div>";
+		html +=			"</div>";
+		html +=			"<div class='col-sm-5'>";
+		html +=				"<div class='row'>";
+		html +=					"<label class='col-sm-4'>기관명</label>";
+		html +=					"<input type='text' name='licenseOffices' class='col-sm-8'/>";
+		html +=				"</div>";
+		html +=			"</div>";
+		html +=			"<div class='col-sm-1 licensesBtnBox'>";
+		html +=				"<div class='licenseMinus'>";
+		html +=					"<span class='glyphicon glyphicon-minus'></span>";
+		html +=				"</div>";
+		html +=			"</div>";
+		html +=		"</div>";
+		html +=	"</div>";
+		
+		$licensesAddBox.append(html);
 		
 	});
-	 */
+	
 	/* 어학능력 */
-	/* $("#languagesAddBox").on("click", ".languagesBtnBox .languagesMinus", function() {
+	$("#languagesAddBox").on("click", ".languagesBtnBox .languagesMinus", function() {
 		$(this).parents(".empctrow").hide();
 	})
 	
@@ -196,36 +200,35 @@ $(function() {
 		var $languagesAddBox = $("#languagesAddBox");
 		$languagesAddBox.show();
 		
-		$languagesAddBox.append("<div class='empctrow'>"
-								+"<div class='emplanguagesL'>"
-									+"<label></label>"
-								+"</div>"
-								+"<div class='emplanguagesI languagesBoxR'>"
-									+"<div class='row'>"
-										+"<div class='col-sm-4'>"
-											+"<div class='row'>"
-												+"<label class='col-sm-4'>외국어명</label>"
-												+"<input type='text' name='languages' class='col-sm-8'/>"
-											+"</div>"
-										+"</div>"
-										+"<div class='col-sm-4 col-sm-offset-1'>"
-											+"<div class='row'>"
-											+"<label class='col-sm-4'>비고</label>"
-											+"<input type='text' name='languages' class='col-sm-8'/>"
-											+"</div>"
-										+"</div>"
-										+"<div class='col-sm-1 col-sm-offset-2 languagesBtnBox'>"
-											+"<div class='languagesMinus'>"
-												+"<span class='glyphicon glyphicon-minus'></span>"
-											+"</div>"
-										+"</div>"
-									+"</div>"
-								+"</div>"
-							+"</div>"
-		);
+		var html = "";
+		html += "<div class='empctrow'>";
+		html +=		"<div class='emplanguagesL'>";
+		html +=			"<label></label>";
+		html +=		"</div>";
+		html +=		"<div class='emplanguagesI languagesBoxR'>";
+		html +=			"<div class='col-sm-6'>";
+		html +=				"<div class='row'>";
+		html +=					"<label class='col-sm-5'>외국어명</label>";
+		html +=					"<input type='text' name='languages' class='col-sm-7'/>";
+		html +=				"</div>";
+		html +=			"</div>";
+		html +=			"<div class='col-sm-5'>";
+		html +=				"<div class='row'>";
+		html +=					"<label class='col-sm-4'>점수</label>";
+		html +=					"<input type='text' name='grades' class='col-sm-8'/>";
+		html +=				"</div>";
+		html +=			"</div>";
+		html +=			"<div class='col-sm-1 languagesBtnBox'>";
+		html +=				"<div class='languagesMinus'>";
+		html +=					"<span class='glyphicon glyphicon-minus'></span>";
+		html +=				"</div>";
+		html +=			"</div>";
+		html +=		"</div>";
+		html +=	"</div>";
+		
+		$languagesAddBox.append(html);
 		
 	});
-	 */
 	
 });
 </script>
@@ -240,10 +243,10 @@ $(function() {
 				<form role="form" action="insertemp.do" method="post" class="empBox row" enctype="multipart/form-data">
 					<div class="row">
 						<div class="col-md-5 empct">
-							<div class="row">
+							<%-- <div class="row">
 								<label class="col-sm-4">사원번호</label>
 								<input class="col-sm-8" type="text" value="${empNo }" name="empNo" readonly />  
-							</div>
+							</div> --%>
 							<div class="row">
 								<label class="col-sm-4">비밀번호</label>
 								<input  class="col-sm-8" type="password" name="password"/>
@@ -307,7 +310,7 @@ $(function() {
 							<input class="empaddI" type="text" name="address"/>
 						</div>
 					</div> <!-- row3 end -->
-					<!-- <div class="empct2">
+					<div class="empct2">
 						<div class="row">
 							<div class="empctrow">
 								<div class="empcareerL">
@@ -316,17 +319,23 @@ $(function() {
 								<div class="empcareerI careerBoxR">
 									<div class="col-sm-4">
 										<div class="row">
-											<label class="col-sm-4">학교명</label>
-											<input type="text" name="carees" class="col-sm-8"/>
+											<label class="col-sm-4">기간</label>
+											<input type="text" name="schools" class="col-sm-8"/>
 										</div>
 									</div>
-									<div class="col-sm-4 col-sm-offset-1">
+									<div class="col-sm-4">
+										<div class="row">
+											<label class="col-sm-4">학교명</label>
+											<input type="text" name="schools" class="col-sm-8"/>
+										</div>
+									</div>
+									<div class="col-sm-3">
 										<div class="row">
 											<label class="col-sm-4">전공</label>
-											<input type="text" name="carees" class="col-sm-8"/>
+											<input type="text" name="majors" class="col-sm-8"/>
 										</div>
 									</div>
-									<div class="col-sm-1  col-sm-offset-2 careerBtnBox">
+									<div class="col-sm-1 careerBtnBox">
 										<div class="careerAdd">
 											<span class="glyphicon glyphicon-plus"></span>
 										</div>
@@ -334,64 +343,72 @@ $(function() {
 								</div>
 							</div>
 						</div>
-						추가되는 구간
+						<!-- 추가되는 구간 -->
 						<div  id="careerAddBox" class="row">
-						</div> 추가 끝나는 구간
-					</div> --><!-- row4 end -->
-					<!-- <div class="empct row">
-						<div class="empctrow">
-							<label class="emplicensesL">자격증</label>
-							<div class="emplicensesI licensesBoxR">
-								<div class="col-sm-4">
-									<div class="row">
-										<label class="col-sm-4">자격증</label>
-										<input type="text" name="licenses" class="col-sm-8"/>
-									</div>
+						</div> <!-- 추가 끝나는 구간 -->
+					</div> <!-- row4 end -->
+					<div class="empct2">
+						<div class="row">
+							<div class="empctrow">
+								<div class="empcareerL">
+									<label>자격증</label>
 								</div>
-								<div class="col-sm-4 col-sm-offset-1">
-									<div class="row">
-										<label class="col-sm-4">기관명</label>
-										<input type="text" name="licenses" class="col-sm-8"/>
+								<div class="empcareerI careerBoxR">
+									<div class="col-sm-6">
+										<div class="row">
+											<label class="col-sm-5">종류 및 등급</label>
+											<input type="text" name="licenses" class="col-sm-7"/>
+										</div>
 									</div>
-								</div>
-								<div class="col-sm-1  col-sm-offset-2 licensesBtnBox">
-									<div class="licensesAdd">
-										<span class="glyphicon glyphicon-plus"></span>
+									<div class="col-sm-5">
+										<div class="row">
+											<label class="col-sm-4">기간명</label>
+											<input type="text" name="licenseOffices" class="col-sm-8"/>
+										</div>
+									</div>
+									<div class="col-sm-1 careerBtnBox">
+										<div class="licensesAdd">
+											<span class="glyphicon glyphicon-plus"></span>
+										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-						추가되는 구간
+						<!-- 추가되는 구간 -->
 						<div  id="licensesAddBox" class="row">
-						</div> 추가 끝나는 구간
-					</div> --> <!-- row5 end -->
-					<!-- <div class="empct row">
-						<div class="empctrow">
-							<label class="empLanguagesL">어학능력</label>
-							<div class="empLanguagesI languagesBoxR">
-								<div class="col-sm-4">
-									<div class="row">
-										<label class="col-sm-4">자격증</label>
-										<input type="text" name="language" class="col-sm-8"/>
-									</div>
+						</div> <!-- 추가 끝나는 구간 -->
+					</div> <!-- row5 end -->
+					<div class="empct2">
+						<div class="row">
+							<div class="empctrow">
+								<div class="empcareerL">
+									<label>어학능력</label>
 								</div>
-								<div class="col-sm-4 col-sm-offset-1">
-									<div class="row">
-										<label class="col-sm-4">기관명</label>
-										<input type="text" name="language" class="col-sm-8"/>
+								<div class="empcareerI careerBoxR">
+									<div class="col-sm-6">
+										<div class="row">
+											<label class="col-sm-5">외국어명</label>
+											<input type="text" name="languages" class="col-sm-7"/>
+										</div>
 									</div>
-								</div>
-								<div class="col-sm-1  col-sm-offset-2 languagesBtnBox">
-									<div class="languagesAdd">
-										<span class="glyphicon glyphicon-plus"></span>
+									<div class="col-sm-5">
+										<div class="row">
+											<label class="col-sm-4">점수</label>
+											<input type="text" name="grades" class="col-sm-8"/>
+										</div>
+									</div>
+									<div class="col-sm-1 careerBtnBox">
+										<div class="languagesAdd">
+											<span class="glyphicon glyphicon-plus"></span>
+										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-						추가되는 구간
+						<!-- 추가되는 구간 -->
 						<div  id="languagesAddBox" class="row">
-						</div> 추가 끝나는 구간
-					</div>  --><!-- row6 end -->
+						</div> <!-- 추가 끝나는 구간 -->
+					</div> <!-- row6 end -->
 					
 					<div class="formBtnBox">
 						<div class="formBtn">

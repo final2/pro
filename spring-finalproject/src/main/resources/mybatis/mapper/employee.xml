@@ -43,13 +43,12 @@
 	
 	<!-- 현재 사원번호 확인하기 -->
 	<select id="empSeqCheck" resultType="int">
-		select my_seq.nextval from dual
+		select myemp_seq.nextval from dual
 	</select>
 	
 	<!-- 사원등록 -->
 	<insert id="insertEmployee" parameterType="Employee">
 		insert into employee (no, name, phone, email, address, birth, department, position, salary, photo, hiredate, password, retiredate, remarks )
-		<!-- values (myemp_seq.nextval, #{name}, #{phone}, #{email}, #{address}, #{birth}, #{dept}, #{position}, 0, #{photo}, sysdate, #{password}, null, '-') -->
 		values (#{no}, #{name}, #{phone}, #{email}, #{address}, to_char(#{birth}, 'yyyy-mm-dd'), #{dept}, #{position}, #{salary}, #{photo}, sysdate, #{password}, null, '-')
 	</insert>
 	
@@ -57,19 +56,19 @@
 	<insert id="insertAddCareer" parameterType="Career">
 		insert into career (no, school, major, employee_no)
 		<!-- values (myempopt_seq.nextval, #{school}, #{major}, #{empNo}) -->
-		values (my_seq.nextval, #{school}, #{major}, #{empNo} )
+		values (myempopt_seq.nextval, #{school}, #{major}, #{empNo} )
 	</insert>
 	
 	<!-- 사원등록 시 자격증 정보 등록 -->
 	<insert id="insertAddLicenses" parameterType="Licenses">
 		insert into licenses (no, license, license_office, employee_no)
-		values (my_seq.nextval, #{license}, #{licenseOffice}, #{empNo}) 
+		values (myempopt_seq.nextval, #{license}, #{licenseOffice}, #{empNo}) 
 	</insert>
 	
 	<!-- 사원등록 시 어학능력 정보 등록 -->
 	<insert id="insertAddLanguages" parameterType="Languages">
 		insert into languages (no, language, grade, employee_no)
-		values (my_seq.nextval, #{language}, #{grade}, #{empNo})
+		values (myempopt_seq.nextval, #{language}, #{grade}, #{empNo})
 	</insert>
 		
 	<!-- 사원 급여 등록 -->
@@ -101,6 +100,7 @@
 			department 						as dept, 
 			position, 
 			photo, 
+			salary,
 			retiredate						as retireDate, 
 			hiredate						as hireDate,
 			remarks
@@ -138,7 +138,8 @@
 			license_office	as licenseOffice,
 			employee_no		as empNo
 		from licenses
-		where employee_no = #{empNo}			
+		where employee_no = #{empNo}	
+		order by no		
 	</select>
 	
 	<!-- 사원번호 어학능력 조회하기 -->
@@ -150,18 +151,20 @@
 			employee_no		as empNo
 		from languages
 		where employee_no = #{empNo}
+		order by no desc
 	</select>
 	
 	<!-- 지점 등록 -->
 	<insert id="insertBranch" parameterType="Branch">
 		insert into branch (no, name, phone, address, atm, freshfood, lotto, parcelservice, lifeservice, image, employee_no )
-		values(mybranch_seq.nextval, #{name}, #{phone}, #{address}, #{atm}, #{freshFood}, #{lotto}, #{parcelService}, #{lifeService}, #{img}, #{emp.no})
+		values(my_seq.nextval, #{name}, #{phone}, #{address}, #{atm}, #{freshFood}, #{lotto}, #{parcelService}, #{lifeService}, #{img}, #{emp.no})
 	</insert>
 	
 	<!-- 모든 지점 조회 -->
 	<select id="getAllBranch" resultType="Branch">
 		select name
 		from branch		
+		order by no desc
 	</select>
 	
 	<!-- 모든 지점 리스트 -->
@@ -182,6 +185,7 @@
 			E.phone				as "emp.phone"
 		from employee E, branch B
 		where E.no = B.employee_no
+		order by B.no desc
 	</select>
 	
 	<!-- 담당자와 모든 지점 리스트 -->

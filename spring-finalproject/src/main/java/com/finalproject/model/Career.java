@@ -3,6 +3,7 @@ package com.finalproject.model;
 public class Career {
 
 	private int no;
+	private String term;
 	private String school;
 	private String major;
 	private int empNo;
@@ -12,6 +13,12 @@ public class Career {
 	}
 	public void setNo(int no) {
 		this.no = no;
+	}
+	public String getTerm() {
+		return term;
+	}
+	public void setTerm(String term) {
+		this.term = term;
 	}
 	public String getSchool() {
 		return school;
