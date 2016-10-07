@@ -46,6 +46,7 @@
        <mapper resource="mybatis/mapper/website.xml"/>
        <mapper resource="mybatis/mapper/distribution.xml"/>
        <mapper resource="mybatis/mapper/employee.xml"/>       
-       <mapper resource="mybatis/mapper/message.xml"/>
+       <mapper resource="mybatis/mapper/message.xml"/>    
+       <mapper resource="mybatis/mapper/chart.xml"/>
    </mappers>
 </configuration>
