@@ -102,12 +102,19 @@ public class BranchController {
 		
 		for (BranchOrderDetail d : detailList){
 			Map<String, Object> map2 = new HashMap<>();
-			map2.put("branchNo", d.getOrder().getBranchNo());
+			map2.put("branchNo", order.getBranchNo());
 			map2.put("productNo", d.getProduct().getNo());
-			
-			BranchInventory inven = brService.getInventoryByProductNo(map2);
 
-			if(inven != null && inven.getProduct().getNo() == d.getProduct().getNo()) {
+			BranchInventory inven = brService.getInventoryByProductNo(map2);
+			if (inven == null) {
+				inven = new BranchInventory();
+				inven.setQty(d.getQty());
+				inven.setBranchNo(order.getBranchNo());
+				
+				Product product = brService.getProductByNo(d.getProduct().getNo());
+				inven.setProduct(product);
+				brService.addInventory(inven);
+			} else if (inven.getProduct().getNo() == d.getProduct().getNo()) {
 				inven.setQty(inven.getQty() + d.getQty());
 				brService.updateInventory(inven);
 			} else {

@@ -74,6 +74,10 @@ $(function() {
 			}
 		});
 	});
+	
+	$("#holding-delete-btn").on("click", function() {
+		
+	});
 });
 </script>
 <title>지점 - 보류</title>
@@ -115,7 +119,7 @@ $(function() {
 				</tfoot>
 			</table>
 			
-			<div>
+			<div class="holding-btn-box">
 				<button class="btn btn-success" id="holding-to-sales-btn">판매로 이동</button>
 
 				<button class="btn btn-default" id="holding-delete-btn">보류 삭제</button>

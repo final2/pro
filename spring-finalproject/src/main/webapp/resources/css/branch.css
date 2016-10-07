@@ -94,6 +94,7 @@ body { font-family: 'Nanum Gothic', sans-serif; }
 .holding-con table { margin:0 auto; margin-top:20px; width:90%; }
 .holding-con table th { text-align:center; }
 .holding-con table tfoot td { background-color:#efefef; font-weight:bold; }
+.holding-btn-box { margin-top:20px; text-align:center; }
 
 /* 재고 */
 .inven-search { margin-top:20px; }
