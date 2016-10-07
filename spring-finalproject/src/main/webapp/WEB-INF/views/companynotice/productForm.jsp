@@ -114,7 +114,7 @@ th {text-align:center; vertical-align:middle !important;}
 						<tr>
 							<th>제품 명</th>
 							<td><input type="text" id="name" name="name" class="form-control" required="required" /></td>
-							<td rowspan="3" colspan="2" style="text-align:center;"><img id="imgview" style="width:80%; height:auto;" src=""></td>
+							<td rowspan="3" colspan="2" style="text-align:center;"><img id="imgview" style="width:80%; height:300px;" src=""></td>
 						</tr>
 						<tr>
 							<th>가격</th>

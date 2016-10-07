@@ -16,6 +16,7 @@ $(function() {
 	ProductSearch['smallCat'] = ${productSearch.smallCat};
 	ProductSearch['eventCode'] = ${productSearch.eventCode};
 	ProductSearch['limiteAge'] = "${productSearch.limiteAge}";
+	ProductSearch['dummy'] = new Date().getTime();
 	
 	var jsonData = JSON.stringify(ProductSearch);
 	$.ajax({
@@ -30,6 +31,7 @@ $(function() {
 			var $smallCat = $("#smallCat");
 			var $event = $("#event");
 			var ps = data.productSearch;
+			console.log(data);
 			$.each(data.clients, function(index, client) {
 				if(ps.maker == client.no) {
 					$maker.append("<option value="+client.no+" selected='selected'>"+client.name+"</option>");				
@@ -177,12 +179,19 @@ ul.pagination li a:hover:not(.active) {background-color: #ddd;}
 									<label>연령 제한</label>
 									<select class="form-control" id="limite-age" name="limiteAge">
 										<c:choose>
-											<c:when test="${product.limiteAge == 'Y' }">
+											<c:when test="${param.limiteAge eq 'Y' }">
+												<option value="null">선택</option>
 												<option value="N">없음</option>
 												<option value="Y" selected='selected'>청소년 구매불가</option>										
 											</c:when>
-											<c:otherwise>
+											<c:when test="${param.limiteAge eq 'N' }">
+												<option value="null">선택</option>
 												<option value="N" selected='selected'>없음</option>
+												<option value="Y" >청소년 구매불가</option>										
+											</c:when>
+											<c:otherwise>
+												<option value="null" selected='selected'>선택</option>
+												<option value="N">없음</option>
 												<option value="Y">청소년 구매불가</option>
 											</c:otherwise>
 										</c:choose>
@@ -192,7 +201,7 @@ ul.pagination li a:hover:not(.active) {background-color: #ddd;}
 							<div class="row">
 								<div style="text-align:right; margin:10px 15px 0 0" >
 									<input type="hidden" name="pn" value="${pageVo.pageNo }" />
-									<button id="surch" class="btn btn-xs btn-default">검색</button>
+									<button id="search" class="btn btn-xs btn-default">검색</button>
 									<button id="reset" class="btn btn-xs btn-default">초기화</button>
 								</div>
 							</div>

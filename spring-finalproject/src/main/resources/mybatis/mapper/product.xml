@@ -5,7 +5,20 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
     
 <mapper namespace="com.finalproject.dao.ProductDao">
-
+	
+	<select id="getProductByName" parameterType="Product" resultType="int">
+		select
+			no	as no
+		from product
+		where name = #{name}
+		and maker = #{maker}
+		and price = #{price}
+	</select>
+	<!-- 제품 상세 등록 -->
+	<insert id="insertProductDetail" parameterType="Product">
+		insert into client_detail(no, qty, client_no, product_no)
+		values(my_seq.nextval, 1000000, #{clientNo}, #{no})
+	</insert>
 	<!-- 제품 등록 -->
 	<insert id="insertProduct" parameterType="Product">
 		insert into Product
@@ -19,6 +32,7 @@
 			no 		as no, 
 			name	as name
 		from client
+		where isadmit = 'Y'
 	</select>
 	<!-- 제조사 명 불러오기 -->
 	<select id="getClientByNo" parameterType="int" resultType="Client">
@@ -58,7 +72,7 @@
 			<if test="eventCode != 0">
 				and eventcode = #{eventCode}
 			</if>
-			<if test="limiteAge != null">
+			<if test="limiteAge != null and limiteAge != 'null'">
 				and limiteage = #{limiteAge}
 			</if>
 		</where>
@@ -93,7 +107,7 @@
 					<if test="eventCode != 0">
 						and p.eventcode = #{eventCode}
 					</if>
-					<if test="limiteAge != null">
+					<if test="limiteAge != null and limiteAge != 'null'">
 						and p.limiteage = #{limiteAge}
 					</if>) A
 		where A.rank >= #{beginIndex} and A.rank &lt;= #{endIndex}

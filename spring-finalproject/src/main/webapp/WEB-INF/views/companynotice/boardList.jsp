@@ -10,7 +10,6 @@
 <link rel="stylesheet" type="text/css" href="resources/bootstrap/css/bootstrap.css">
 <script type="text/javascript" src="resources/jquery/jquery.js"></script>
 <script type="text/javascript">
-
 </script>
 <style>
 h1 {color: white;}
@@ -88,7 +87,7 @@ ul.pagination li a:hover:not(.active) {background-color: #ddd;}
 					</tbody>
 				</table>
 			</div>
-			<c:if test="$LoginUser.dept eq 'director'">			
+			<c:if test="${LoginUser.position eq 'director'}">			
 				<div class="text-right">
 					<a href="boardForm.do" class="btn btn-default">글쓰기</a>
 				</div>

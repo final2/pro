@@ -13,6 +13,10 @@ public interface ProductDao {
 
 	//물품 등록
 	void insertProduct(Product product);
+	//제품 상세 등록
+	void insertProductDetail(Product product);
+	//제품 이름으로 제품 번호 불러오기
+	int getProductByName(Product product);
 	//전체 물픔 조회
 	List<Product> getProductList();
 	//클라이언트 조회

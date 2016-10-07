@@ -37,13 +37,13 @@ td{text-align:left; vertical-align:middle !important}
 						<col width="50%">
 					</colgroup>
 					<tr>
-						<td rowspan="8" class="imgBox">
+						<td rowspan="8" class="imgBox" style="text-align:center;">
 							<c:choose>
 								<c:when test="${fn:startsWith(product.image, 'http')}">
-									<img src="${product.image}"> 
+									<img style="width:90%; height:400px;" src="${product.image}"> 
 								</c:when>
 								<c:otherwise>
-									<img src="/FinalProject/resources/image/${product.image }">
+									<img style="width:90%; height:400px;" src="/FinalProject/resources/image/${product.image }">
 								</c:otherwise>
 							</c:choose>
 						</td>							
