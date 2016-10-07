@@ -49,8 +49,9 @@ thead td,th{text-align:center;}
 				<c:url var="updateFormURL" value="boardUpdateForm.do">
 					<c:param name="no" value="${board.no }" />
 					<c:param name="pn" value="${param.pn }" />
+					<c:param name="rn" value="${param.rn }" />
 				</c:url>
-				<c:if test="UserLogin.dept eq 'director' ">
+				<c:if test="${LoginUser.position eq 'director'}">
 					<a href="${updateFormURL }" class="btn btn-default">수정</a>
 					<a href="boardDelete.do" class="btn btn-default">삭제</a>
 				</c:if>

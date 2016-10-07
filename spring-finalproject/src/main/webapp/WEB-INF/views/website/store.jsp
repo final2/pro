@@ -80,11 +80,18 @@
 <script type="text/javascript">
 // 지도 보이기
 $(function() {
+	/* 서브메뉴 선택 */	
+	$("#store-gubun li").click(function() {
+		$(this).siblings().find("span").removeClass("active");
+		$(this).find("span").addClass("active");
+		displayMap($(this).attr("id"));
+		
+	}); 
 	
-	displayMap("lotto");
+	$("#"+'${param.type}').trigger('click');
 	
 	function displayMap(selectedId) {
-		var id = selectedId || "lotto";
+		var id = selectedId || "LOTTO";
 		
 		
 		$.ajax({
@@ -206,7 +213,7 @@ $(function() {
 	        position: new daum.maps.LatLng(lat, lng), // 마커를 표시할 위치
 	        title : store, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
 	    });
-		
+		// 마커를 클릭했을때 
         daum.maps.event.addListener(marker, 'click', function() {
         	// 지점번호
         	var no = store.no;
@@ -216,10 +223,21 @@ $(function() {
         		dataType:"json",
         		success: function(detail) {
         			
+        			var detailContent ="";
+        			detailContent = "<table class='w3-table w3-striped w3-bordered w3-border'>";
+        			detailContent += "<tr><th class='background-color:#fff'><h3>지점상세안내</h3></th></tr>";
+        			detailContent += "</tr><tr><th>지점명</th></tr>";
+        			detailContent += "<tr><td><span style='font-size:130%;'>"+detail.name+"</span></td></tr>";
+        			detailContent += "<tr><th>지점전화번호</th></tr>";
+        			detailContent += "<tr><td>"+phoneFomatter(detail.phone)+"</td></tr>";
+        			detailContent += "<tr><th>지점주소</th></tr>";
+        			detailContent += "<tr><td>"+detail.address+"</td></tr></table>";
+        			
+        			
+        			
+        			
         			$("#panelTab").empty();
-        			$("#panelTab").append(
-        				"<table class='w3-table w3-striped w3-bordered w3-border'><tr><th><h3>지점상세안내</h3></th></tr><tr><th>지점명</th></tr><tr><td>"+detail.name+"</td></tr><tr><th>지점전화번호</th></tr><tr><td>"+phoneFomatter(detail.phone)+"</td></tr><tr><th>지점주소</th></tr><tr><td>"+detail.address+"</td></tr></table>"	
-        			)
+        			$("#panelTab").append(detailContent);
         		}
         	});
         	
@@ -234,13 +252,8 @@ $(function() {
         daum.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
 	}
 	
-/* 서브메뉴 선택 */	
-	$("#store-gubun li").click(function() {
-		$(this).siblings().find("span").removeClass("active");
-		$(this).find("span").addClass("active");
-		displayMap($(this).attr("id"));
-		
-	}); 
+
+	
 	
 	
 	function phoneFomatter(num,type){

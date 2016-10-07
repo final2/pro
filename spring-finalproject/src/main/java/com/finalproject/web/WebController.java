@@ -80,7 +80,10 @@ public class WebController {
 
 	//지점유형별검색
 	@RequestMapping("searchtype.do")
-	public String searchtype(){
+	public String searchtype(@RequestParam(name="type") String type,Model model){
+		System.out.println(type);
+		List<Branch> branches = webservice.getBranchByType(type);
+		model.addAttribute("branchByType", branches);
 		return "website/searchtype";
 	}
 	

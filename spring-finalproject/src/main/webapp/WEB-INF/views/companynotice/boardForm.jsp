@@ -27,8 +27,8 @@ h1 {color: white;}
 		<div class="container" style="margin-top:10px">
 		<h1>공지사항 작성</h1>
 		<hr>
-		<div class="well" style="opacity:0.8">
-			<form action="boardForm.do" method="post" role="form">
+		<form action="boardForm.do" method="post" role="form">
+			<div class="well" style="opacity:0.8">
 				<div class="form-group">
 					<label>제목</label>
 					<input type="text" name="title" class="form-control">
@@ -37,12 +37,12 @@ h1 {color: white;}
 					<label>내용</label>
 					<textarea class="ckeditor" name="content"></textarea>
 				</div>
-				<div class="pull-right">
+			</div>
+				<div style="text-align:right;">
 					<a href="boardList.do?pn=1" class="btn btn-default">취소</a>
 					<input type="submit" class="btn btn-default" value="작성">
 				</div>
-			</form>
-		</div>
+		</form>
 		</div>
 	</div>
 </div>

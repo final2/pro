@@ -6,6 +6,9 @@
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" href="resources/bootstrap/css/bootstrap.css">
 <script type="text/javascript" src="resources/jquery/jquery.js"></script>
+<style type="text/css">
+h1{color:white;}
+</style>
 </head>
 <body>
 <div id="wrapper">

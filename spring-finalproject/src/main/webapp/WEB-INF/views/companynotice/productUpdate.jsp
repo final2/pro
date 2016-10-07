@@ -138,10 +138,10 @@ th {text-align:center; vertical-align:middle !important}
 							<td rowspan="3" colspan="2" style="text-align:center">
 								<c:choose>
 									<c:when test="${fn:startsWith(product.image, 'http')}">								
-										<img id="imgview" style="width:80%; height:300px;" src="${product.image }">
+										<img id="imgview" style="width:90%; height:300px;" src="${product.image }">
 									</c:when>
 									<c:otherwise>
-										<img id="imgview" style="width:80%; height:300px;" src="/FinalProject/resources/image/${product.image }">
+										<img id="imgview" style="width:90%; height:300px;" src="/FinalProject/resources/image/${product.image }">
 									</c:otherwise>
 								</c:choose>
 							</td>

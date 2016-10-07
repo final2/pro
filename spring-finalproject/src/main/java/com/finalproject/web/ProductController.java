@@ -33,6 +33,7 @@ public class ProductController {
 		return "companynotice/productForm";
 	}
 	
+	
 	// 제품 등록
 	@RequestMapping(value="/product.do", method=RequestMethod.POST)
 	public String productAdd(ProductRegister productRegister, @RequestParam("image")MultipartFile upfile ) throws Exception {
@@ -60,6 +61,9 @@ public class ProductController {
 		}
 		
 		productService.addProduct(product);
+		int no  = productService.getProductByName(product);
+		product.setNo(no);
+		productService.addProductDetail(product);
 		
 		return "redirect:/product.do";
 	}
