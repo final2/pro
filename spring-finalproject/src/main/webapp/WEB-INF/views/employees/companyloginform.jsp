@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -8,6 +9,7 @@
 <script type="text/javascript" src="resources/jquery/jquery.js"></script>
 <style>
 	body { background:#3f4249;}
+	.login-alert {width:1000px; margin:0 auto;margin-top:80px;}
 	.login-ct {width:700px; height:500px; position:absolute; top:50%; margin-top:-250px;  left:50%; margin-left:-350px; background:#fff; padding:20px 0;}
 	.login-logo {width:90%; margin:0 auto; border-bottom:8px solid #e8e8e8; margin-bottom:20px; position:relative;}
 	.login-logo:after {clear:both; content:""; display:block;}
@@ -26,8 +28,8 @@
 $(function() {
 	
 	$(".loginform").submit(function() {
-		var empId = $("input[name='empID']").val().replace(/ /g, '');;
-		var empPwd = $("input[name='empPWD']").val().replace(/ /g, '');;
+		var empId = $("input[name='no']").val().replace(/ /g, '');
+		var empPwd = $("input[name='password']").val().replace(/ /g, '');
 		
 		if(!empId) {
 			alert("id를 입력해주세요.");
@@ -46,6 +48,13 @@ $(function() {
 <title>Big Store</title>
 </head>
 <body>
+	<div class="container login-alert">
+		<c:if test="${param.error eq 'req' }"> 
+			<div class="alert alert-danger">
+				<strong>에러!</strong> 로그인이 필요한 서비스입니다.
+			</div>
+		</c:if>
+	</div>
 	<div class="container login-ct">
 		<div class="login-logo">
 			<div class="logo-img">

@@ -10,8 +10,22 @@
 <link href="resources/bootstrap/css/simple-sidebar.css" rel="stylesheet">
 <script type="text/javascript" src="resources/jquery/jquery.js"></script>
 <script type="text/javascript">
+$(function() {
+	$("#btn").click(function() {
+		$(".modal-body p").hide();
+	})
+	$("form").submit(function() {
+		if(!$(":input[name='name']").val()) {
+			$(".non").show();
+			$(":input[name='name']").focus();
+			return false;
+		}
+		return true;
+	});
+});
 </script>
 <style>
+.non{color: red;}
 tbody th {text-align:center;}
 </style>
 </head>
@@ -59,7 +73,7 @@ tbody th {text-align:center;}
 					</tbody>
 			</table>
 			<div class="pull-right">
-				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">수정</button>
+				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" id="btn" >수정</button>
 				<a href="clientList.do" class="btn btn-primary">확인</a>
 			</div>
 			
@@ -82,7 +96,8 @@ tbody th {text-align:center;}
 								</div>
 								<div>
 									<label>거래처 명</label>
-									<input type="text" name="name" class="form-control" value="${clients.name}">
+									<input type="text" name="name" id="name" class="form-control" value="${clients.name}">
+									<p class="non"><strong>거래처명</strong>을 입력하세요.</p>
 								</div>
 								<div>
 									<label>거래 여부</label><br />
@@ -91,12 +106,12 @@ tbody th {text-align:center;}
 								</div>
 							</div>
 							<div class="modal-footer">
-								<input type="submit" class="btn btn-primary" value="확인" />
+								<input type="submit" class="btn btn-primary" id="add" value="확인" />
 								<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
 							</div>
 						</form>
 					</div>
-      
+					
 				</div>
 			</div>
 		</div>

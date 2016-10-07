@@ -5,7 +5,11 @@ import java.util.List;
 import com.finalproject.model.AccountBook;
 import com.finalproject.model.Branch;
 import com.finalproject.model.BranchEmp;
+import com.finalproject.model.Career;
 import com.finalproject.model.Employee;
+import com.finalproject.model.EmployeeDetail;
+import com.finalproject.model.Languages;
+import com.finalproject.model.Licenses;
 import com.finalproject.model.RegisterEmp;
 
 public interface EmployeeService {
@@ -14,13 +18,13 @@ public interface EmployeeService {
 	int empSeqCheck();
 	
 	// 사원등록
-	void registerEmployee(Employee emp);
+	void registerEmployee(Employee emp, List<Career> careerList, List<Licenses> licensesList, List<Languages> languageList);
 	
 	// 모든 사원 조회
 	List<Employee> getAllEmployees();
 	
 	// 사원번호로 해당사원 조회
-	Employee getEmployeeByNo(int empNo);
+	EmployeeDetail getEmployeeByEmpNo(int empNo);
 	
 	// 사원 급여대장 등록
 	void insertSalary(AccountBook accountBook);

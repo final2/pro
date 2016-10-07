@@ -12,6 +12,16 @@
 			(myclient_seq.nextval, #{name}, 'Y')
 	</insert>
 	
+	<!-- 등록시 중복 체크 -->
+	<select id="getNameCheck" parameterType="string" resultType="Client">
+		select
+			name
+		from
+			client
+		where
+			name = #{value}
+	</select>
+	
 	<!-- 거래처 리스트 / 발주 신청시 거래처명 -->
 	<select id="getClients" resultType="Client">
 		select

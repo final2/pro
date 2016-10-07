@@ -20,7 +20,8 @@ $(function() {
 			dataType:"json",
 			success:function(result) { 
 				 var text1 = result.confirm;
-				$("#yn").text("입고 완료"); 
+				$("#yn").text("입고 완료");
+				$("#confirm").hide();
 			},
 			error: function(xhr, status, error){
 				console.log(error)
@@ -91,7 +92,11 @@ th,td {text-align:center;}
 				</tbody>
 			</table>
 			<div class="pull-left">
-				<button type="button" id="confirm" class="btn btn-default" value="${orders.no }">입고 확인</button>
+				<c:choose>
+					<c:when test="${orders.confirm == 'N'}">
+						<button type="button" id="confirm" class="btn btn-default" value="${orders.no }" >입고 확인</button>
+					</c:when>
+				</c:choose>
 			</div>
 			<div class="pull-right">
 				<c:url var="updateOrderURL" value="updateOrder.do">

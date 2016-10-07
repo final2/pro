@@ -7,6 +7,8 @@ import com.finalproject.model.Branch;
 import com.finalproject.model.BranchEmp;
 import com.finalproject.model.Career;
 import com.finalproject.model.Employee;
+import com.finalproject.model.Languages;
+import com.finalproject.model.Licenses;
 
 public interface EmployeeDao {
 
@@ -15,7 +17,11 @@ public interface EmployeeDao {
 	// 사원등록시 사원정보 등록
 	void insertEmployee(Employee emp);
 	// 사원등록시 사원학력 등록
-	void insertCareer(Career career);
+	void insertAddCareer(Career career);
+	// 사원등록시 사원자격증 등록
+	void insertAddLicenses(Licenses license);
+	// 사원등록시 사원어학능력 등록
+	void insertAddLanguages(Languages language);
 	// 사원 급여대장 등록
 	void insertSalary(AccountBook accountBook);
 	
@@ -23,6 +29,13 @@ public interface EmployeeDao {
 	List<Employee> getAllEmployees();
 	// 사원번호로 해당사원 조회
 	Employee getEmployeeByNo(int empNo);
+	// 사원번호로 학력 조회
+	List<Career> getCareerListByNo(int empNo);
+	// 사원번호로 자격증 조회
+	List<Licenses> getLicenseListByNo(int empNo);
+	// 사원번호로 어학능력 조회
+	List<Languages> getLanguageListByNo(int empNo);
+	
 	//List<Branch> getBranchListByEmpNo(int empNo);
 	
 	// 로그인시 사원번호 확인

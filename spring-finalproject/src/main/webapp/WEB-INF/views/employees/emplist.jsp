@@ -10,7 +10,7 @@
 <link href="/FinalProject/resources/bootstrap/css/simple-sidebar.css" rel="stylesheet">
 <script src="/FinalProject/resources/bootstrap/js/bootstrap.min.js"></script>
 <style>
-	.container {position:relative; top:150px;}
+	.container {position:relative; top:60px;}
 	.container:after {clear:both; content:""; display:block;}
 
 	.empBox {width:100%; margin:15px auto 15px auto;}
