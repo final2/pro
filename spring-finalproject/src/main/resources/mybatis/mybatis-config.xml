@@ -35,6 +35,7 @@
       	<typeAlias type="com.finalproject.model.SmallCategory" alias="SC" />
 		<typeAlias type="com.finalproject.model.TodayPlan" alias="TP"/>
       	<typeAlias type="com.finalproject.model.WebBoard" alias="Wboard" />
+      	<typeAlias type="com.finalproject.model.SalesBrPr" alias="SBP" />
 	</typeAliases>
 
 	<mappers> 
