@@ -3,6 +3,8 @@ package com.finalproject.service;
 import java.util.List;
 import java.util.Map;
 
+import com.finalproject.model.Employee;
+import com.finalproject.model.Message;
 import com.finalproject.model.NoticeBoard;
 import com.finalproject.model.PageBoardDetail;
 import com.finalproject.model.PageVo;
@@ -28,4 +30,8 @@ public interface NoticeService {
 	NoticeBoard getBoardRank(PageBoardDetail pageBoardDetail);
 	// 페이지번호당 공지 글 불러오기
 	List<NoticeBoard> getBeginEndBoard(PageVo pageVo);
+	// 로그인한 사용자의 오늘 받은 메시지 중 최신 5개 불러오기
+	List<Message> getReceiveMessages (int no);
+	// 사원번호에 해당하는 사원 정보 불러오기
+	Employee getEmpByNo(int no);
 }

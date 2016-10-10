@@ -100,7 +100,7 @@ th {text-align:center; vertical-align:middle !important;}
 		<!-- Background 불러오기 -->
 		<%@ include file="backgroundVideo.jsp" %>
 		<div class="container">
-			<h1>물품 등록</h1>
+			<h1>상품 등록</h1>
 			
 			<form id="form" role="form" action="product.do" method="post" enctype="multipart/form-data">
 				<div class="well">

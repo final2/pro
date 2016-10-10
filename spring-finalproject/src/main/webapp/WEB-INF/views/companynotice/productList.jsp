@@ -149,11 +149,14 @@ ul.pagination li a:hover:not(.active) {background-color: #ddd;}
 <div id="wrapper">
 	<%@ include file="/WEB-INF/views/sidebartemplate/sidebar.jsp" %>
 	<a href="#menu-toggle" class="btn btn-default btn-xs" id="menu-toggle">side bar</a>
+	<div class="modal fade" id="messenger" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+		<%@ include file="../message/messagebutton.jsp" %>
+	</div>
 	<div id="page-context-wrapper">
 		<!-- Background 불러오기 -->
 		<%@ include file="backgroundVideo.jsp" %>
 		<div class="container">
-			<h1>물품 리스트</h1>
+			<h1>상품 리스트</h1>
 			<div class="panel panel-default well" style="opacity:0.8">
 				<div class="panel panel-heading" style="height:10%">
 						<form role="form" id="searchform" action="productList.do" method="get">

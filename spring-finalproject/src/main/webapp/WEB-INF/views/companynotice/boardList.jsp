@@ -45,16 +45,16 @@ ul.pagination li a:hover:not(.active) {background-color: #ddd;}
 <body>
 <div id="wrapper">
 	<%@ include file="/WEB-INF/views/sidebartemplate/sidebar.jsp" %>
-	<%-- <!-- 메신저 modal창 -->
+	<!-- 메신저 modal창 -->
 	<div class="modal fade" id="messenger" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
 		<%@ include file="../message/messagebutton.jsp" %>
-	</div> --%>
+	</div>
 	<a href="#menu-toggle" class="btn btn-default btn-xs" id="menu-toggle">side bar</a>
 	<div id="page-context-wrapper">
 		<!-- Background 불러오기 -->
 		<%@ include file="backgroundVideo.jsp" %>
 		<div class="container">	
-			<h1>공지 사항</h1>
+			<h1>공지사항</h1>
 			<div class="well" style="opacity:0.8">
 			
 				<table class="table table-hover">
@@ -87,7 +87,7 @@ ul.pagination li a:hover:not(.active) {background-color: #ddd;}
 					</tbody>
 				</table>
 			</div>
-			<c:if test="${LoginUser.position eq 'director'}">			
+			<c:if test="${LoginUser.position eq '부장'}">			
 				<div class="text-right">
 					<a href="boardForm.do" class="btn btn-default">글쓰기</a>
 				</div>

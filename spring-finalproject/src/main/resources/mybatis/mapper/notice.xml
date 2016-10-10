@@ -97,4 +97,52 @@
 		where rank >= #{pageVo.beginIndex} and rank &lt;= #{pageVo.endIndex}
 		and rank = #{noticeBoard.boardRank}
 	</select>
+	
+	<!-- 오늘 받은 메시지 불러오기 -->
+	<select id="getReceiveMessageList" parameterType="int"  resultType="Message">
+		select 
+			no, 
+			from_no 	as	"from", 
+			to_no		as	"to", 
+			contents, 
+			receiving, 
+			regdate
+		from (
+			select
+				row_number() over (order by no desc) rn,
+				no, 
+				from_no,  
+				to_no, 
+				contents, 
+				receiving, 
+				regdate
+			from messenger
+			where to_no=#{value}
+			and to_char(regdate, 'yyyy-MM-dd') = to_char(sysdate, 'yyyy-MM-dd')
+			order by regdate desc
+		)
+		where rn &lt;= 5 
+	</select>
+	
+	<select id="getEmpByNo" parameterType="int" resultType="Employee">
+		select 
+			no, 
+			name, 
+			phone, 
+			email, 
+			address, 
+			to_date(birth, 'yyyy-MM-dd') as birth, 
+			department	as	"dept", 
+			position, 
+			salary, 
+			photo, 
+			hiredate, 
+			password, 
+			retiredate, 
+			remarks 
+		from 
+			Employee
+		where no=#{value}
+	</select>
+	
 </mapper>

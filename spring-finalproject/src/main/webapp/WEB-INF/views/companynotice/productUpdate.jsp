@@ -114,7 +114,7 @@ th {text-align:center; vertical-align:middle !important}
 		<!-- Background 불러오기 -->
 		<%@ include file="backgroundVideo.jsp" %>
 		<div class="container">
-			<h1>제품 수정</h1>
+			<h1>상품 정보 수정</h1>
 			<c:url var="update" value="updateProduct.do">
 				<c:param name="no" value="${param.no }" /> 
 				<c:param name="pn" value="${param.pn }" />

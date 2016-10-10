@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.finalproject.dao.NoticeDao;
+import com.finalproject.model.Employee;
+import com.finalproject.model.Message;
 import com.finalproject.model.NoticeBoard;
 import com.finalproject.model.PageBoardDetail;
 import com.finalproject.model.PageVo;
@@ -61,5 +63,14 @@ public class NoticeServiceImpl implements NoticeService {
 	public NoticeBoard getBoardRank(PageBoardDetail pageBoardDetail) {
 		return noticeDao.getBoardRank(pageBoardDetail);
 	}
-	
+	// 로그인한 사용자의 오늘 받은 메시지 중 최신 5개 불러오기
+	@Override
+	public List<Message> getReceiveMessages(int no) {
+		return noticeDao.getReceiveMessageList(no);
+	}
+	// 사원번호에 해당하는 사원 정보 불러오기
+	@Override
+	public Employee getEmpByNo(int no) {
+		return noticeDao.getEmpByNo(no);
+	}
 }
