@@ -371,10 +371,13 @@ $(function() {
 	});
 	
 	var $holdinglist = $(".hidden-list").val();
-	console.log($holdinglist)
 	if ($holdinglist != 'null') {
-		var jsonData = JSON.parse($holdinglist.replace(/-/g, "\""));
+		var str = $holdinglist.replace(/-/g, "\"");
+		
+		var jsonData = JSON.parse(str);
 		detailList = jsonData;
+		
+		var $tbody = $(".sales-left tbody").empty();
 		
 		$.each(detailList, function(index, item) {
 			var no = index + 1;

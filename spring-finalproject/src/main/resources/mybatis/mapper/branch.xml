@@ -36,19 +36,21 @@
 	</select>
 	
 	<!-- 판매 : 대분류 찾기(지점별, 재고에 있는 물품별) -->
-	<select id="getAllLargeCatsByBranch" resultType="LC">
-		select 
-			distinct(D.no)
-		from
-			branch_inventory A, product B, smallcategory C, largecategory D
-		where
-			A.product_no = B.no
-		and
-			B.smallcategory_no = C.no
-		and
-			C.largecategory_no = D.no
-		and
-			A.branch_no = #{value}
+	<select id="getAllLargeCatsByBranch" parameterType="int" resultType="LC">
+		select *
+		from (select
+				D.no as "no"
+			from
+				branch_inventory A, product B, smallcategory C, largecategory D
+			where
+				A.branch_no = 1
+			and
+				A.product_no = B.no
+			and
+				B.smallcategory_no = C.no
+			and
+				C.largecategory_no = D.no) X
+		group by "no"
 	</select>
 	
 	<!-- 판매 : 소분류 찾기 -->

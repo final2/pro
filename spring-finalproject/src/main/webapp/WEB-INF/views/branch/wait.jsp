@@ -48,10 +48,10 @@ $(function() {
 			$(".holding-sum").empty().append(formatNumber(resum));
 			$(".holding-con").attr("id", "holding-" + salesno);
 			
-			jsonData = JSON.stringify(result).replace(/\"/g, "-");
+			jsonData = JSON.stringify(result);
 		},
 		error:function() {
-			console.log("데이타 없다요")
+			console.log("데이타 없다요");
 		}
 	});
 	
@@ -59,24 +59,34 @@ $(function() {
 	$("#holding-to-sales-btn").on("click", function() {
 		salesno = $(".holding-con").attr("id").replace("holding-", "");
 		
+		console.log("jsonData",jsonData);
 		$.ajax({
 			type:"POST",
-			url:"/FinalProject/json/wsales/del/" + salesno + "/holding/" + jsonData,
+			url:"/FinalProject/json/wsales/del/" + salesno,
 			contentType:"application/json",
+			data:jsonData,
 			dataType:"json",
 			success:function(result) {
-				console.log("성공할리가 없다.")
-			},
-			error:function(result) {
-				var holdinglist = result.responseText;
-
+				var holdinglist = JSON.stringify(result).replace(/\"/g, "-");
+				
 				window.location.href = "branchsales.do?holdinglist=" + holdinglist;
 			}
 		});
 	});
 	
+	// 보류삭제 클릭시 삭제하기
 	$("#holding-delete-btn").on("click", function() {
-		
+		$.ajax({
+			type:"POST",
+			url:"/FinalProject/json/wsales/del/" + salesno,
+			contentType:"application/json",
+			data:jsonData,
+			dataType:"json",
+			success:function(result) {
+				console.log("보류 삭제 success");
+				window.location.href="branchwait.do";
+			}
+		});
 	});
 });
 </script>

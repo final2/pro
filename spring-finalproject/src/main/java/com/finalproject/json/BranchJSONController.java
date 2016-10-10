@@ -305,7 +305,7 @@ public class BranchJSONController {
 			
 			BranchInventory inven = brService.getInventoryByProductNo(map2);
 
-			if(inven != null && inven.getProduct().getNo() == d.getProduct().getNo()) {
+			if(inven.getProduct().getNo() == d.getProduct().getNo()) {
 				inven.setQty(inven.getQty() - d.getQty());
 				brService.updateInventory(inven);
 			}
@@ -422,13 +422,13 @@ public class BranchJSONController {
 		return brService.getBranchSalesDetailBySalesNo(sale.getNo());
 	}
 	
-	@RequestMapping(value="/wsales/del/{salesno}/holding/{holdinglist}", method=RequestMethod.POST)
-	public String deleteHoldingSales(@PathVariable("salesno") int salesno,
-									@PathVariable("holdinglist") String holdinglist) {
-		
+	// 보류 목록을 판매로 이동하기
+	@RequestMapping(value="/wsales/del/{salesno}", method=RequestMethod.POST)
+	public List<BranchSalesDetail> deleteHoldingSales(@RequestBody List<BranchSalesDetail> detailList,
+									@PathVariable("salesno") int salesno) {
 		brService.deleteBranchSalesDetail(salesno);
 		brService.deleteBranchSales(salesno);
 		
-		return holdinglist;
+		return detailList;
 	}
 }

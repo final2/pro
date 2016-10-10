@@ -304,7 +304,9 @@ $(function() {
 <body>
 <sec:authorize access="isAuthenticated()">
 	<sec:authentication var="brno" property="principal.brEmp.branch.no"/>
+	<sec:authentication var="empno" property="principal.brEmp.no"/>
 </sec:authorize>
+<body id="emp-${empno }">
 <div class="wrapper container" id="brno-${brno }">
 	<div class="row">
 		<div class="col-sm-12">
