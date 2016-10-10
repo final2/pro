@@ -12,10 +12,11 @@
 <script type="text/javascript">
 $(function() {
 	$("#btn").click(function() {
+
 		$(".modal-body p").hide();
 	})
 	$("form").submit(function() {
-		if(!$(":input[name='name']").val()) {
+		if($.trim(!$(":input[name='name']").val())) {
 			$(".non").show();
 			$(":input[name='name']").focus();
 			return false;
@@ -26,7 +27,7 @@ $(function() {
 </script>
 <style>
 .non{color: red;}
-tbody th {text-align:center;}
+th,td {text-align:center;}
 </style>
 </head>
 <body>
@@ -47,7 +48,7 @@ tbody th {text-align:center;}
 						</tr>
 						<tr>
 							<th>거래처 명</th>
-							<td>${clients.name }</td>
+								<td>${clients.name }</td>
 							<th>거래 여부</th>
 							<c:choose>
 								<c:when test="${clients.isAdmit == 'Y'}">
@@ -96,7 +97,7 @@ tbody th {text-align:center;}
 								</div>
 								<div>
 									<label>거래처 명</label>
-									<input type="text" name="name" id="name" class="form-control" value="${clients.name}">
+										<input type="text" name="name" id="name" class="form-control" value="${clients.name}">
 									<p class="non"><strong>거래처명</strong>을 입력하세요.</p>
 								</div>
 								<div>

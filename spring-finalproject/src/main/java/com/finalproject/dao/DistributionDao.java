@@ -4,12 +4,33 @@ import java.util.List;
 
 import com.finalproject.model.Client;
 import com.finalproject.model.ClientDetail;
+import com.finalproject.model.HqInventory;
 import com.finalproject.model.HqOrder;
 import com.finalproject.model.HqOrderDetail;
 import com.finalproject.model.PageVo;
 
 public interface DistributionDao {
 
+/* 본사 =========================================================================================================== */	
+	// 재고 리스트
+	List<HqInventory> getInvenLists();
+	
+	// 재고 생성
+	void addInven(HqInventory hqInventory);
+	
+	// 입고확인시 재고 증가 
+	void updateInven(HqInventory hqInventory);
+	
+	// 거래처 재고 감소
+	void updateQty(ClientDetail clientDetail);
+	
+	// 발주번호로 정보 조회
+	List<HqInventory> getOrderDetailByOrderNo(int orderNo);
+	
+	// 재고 여부
+	int getCount(int productNo);
+	
+	
 /* 거래처 ========================================================================================================= */
 	// 거래처 리스트 / 발주 신청시 거래처명
 	List<Client> getClients();
@@ -51,4 +72,7 @@ public interface DistributionDao {
 	
 	// 입고 여부 변경
 	void updateCon(HqOrder hqOrder);
+	
+	// 번호로 제품정보 조회
+	List<HqInventory> getInvenByNo(int no);
 }
