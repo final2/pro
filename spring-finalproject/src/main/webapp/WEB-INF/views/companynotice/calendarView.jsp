@@ -37,7 +37,6 @@ $(function() {
 								start: calendar.startDate,
 								end: calendar.endDate,
 								className: calendar.employee.no.toString(),
-								editable:true,
 								color : '#00ff7f'
 							});
 						} else {

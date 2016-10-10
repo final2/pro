@@ -100,7 +100,7 @@ th {text-align:center; vertical-align:middle !important;}
 		<!-- Background 불러오기 -->
 		<%@ include file="backgroundVideo.jsp" %>
 		<div class="container">
-			<h1>물품 등록</h1>
+			<h1>상품 등록</h1>
 			
 			<form id="form" role="form" action="product.do" method="post" enctype="multipart/form-data">
 				<div class="well">
@@ -112,12 +112,12 @@ th {text-align:center; vertical-align:middle !important;}
 							<col width="40%">
 						</colgroup>
 						<tr>
-							<th>제품 명</th>
+							<th>제품 명 *</th>
 							<td><input type="text" id="name" name="name" class="form-control" required="required" /></td>
 							<td rowspan="3" colspan="2" style="text-align:center;"><img id="imgview" style="width:80%; height:300px;" src=""></td>
 						</tr>
 						<tr>
-							<th>가격</th>
+							<th>가격 *</th>
 							<td><input type="number" id="price" name="price" class="form-control" required="required"/>	</td>
 						</tr>
 						<tr>

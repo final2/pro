@@ -96,8 +96,6 @@ $(function() {
 						<thead>
 							<tr>
 								<th><h3>오늘의 일정</h3></th>
-								<%-- <c:url var="todayplan" value="todayplan.do">
-								</c:url> --%>
 								<td><a href="todayplan.do" class="pull-right">더보기</a></td>
 							</tr>
 							<tr>
@@ -135,8 +133,8 @@ $(function() {
 				<div class="disdiv well" style="opacity:0.8">
 					<table class="table table-hover">
 						<colgroup>
-							<col width="60%">
-							<col width="40%">
+							<col width="30%">
+							<col width="70%">
 						</colgroup>
 						<thead>
 							<tr>
@@ -144,15 +142,17 @@ $(function() {
 								<td><a href="message.do" class="pull-right">더보기</a></td>
 							</tr>
 							<tr>
-								<th style="text-align:center">제목</th>
-								<th style="text-align:center">날짜</th>
+								<th style="text-align:center">보낸 사람 </th>
+								<th style="text-align:center">내용</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td>제목 리스트</td>
-								<td>날짜 리스트</td>
-							</tr>
+							<c:forEach var="messageEmp" items="${messageList}">
+								<tr>
+									<td>${messageEmp.employee.name }</td>
+									<td>${messageEmp.message.contents }</td>
+								</tr>
+							</c:forEach>
 						</tbody>
 					</table>
 				</div>

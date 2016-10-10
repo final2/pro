@@ -14,6 +14,23 @@ function printTime() {
     setTimeout("printTime()", 1000);
 }
 
+$(function() {
+	$(".wait-badge").hide();
+	var empno = $("body").attr("id").replace("emp-", "");
+	console.log
+	$.ajax({
+		type:"GET",
+		url:"/FinalProject/json/wsales/" + empno,
+		dataType:"json",
+		success:function(result) {
+			$(".wait-badge").show();	
+		},
+		error:function() {
+			$(".wait-badge").hide();
+		}
+	});
+});
+
 window.onload = printTime;
 </script>
 
@@ -30,7 +47,7 @@ window.onload = printTime;
 	    
 	    <ul class="nav navbar-nav pull-right">
 	      <li class="${current_page eq 'branchsales' ? 'active' : '' }"><a href="branchsales.do">판매</a></li>
-	      <li class="${current_page eq 'branchwait' ? 'active' : '' }"><a href="branchwait.do">보류</a></li>
+	      <li class="${current_page eq 'branchwait' ? 'active' : '' }"><a href="branchwait.do">보류 <span class="wait-badge"></span></a></li>
 	      <li class="${current_page eq 'branchinven' ? 'active' : '' }"><a href="branchinven.do">재고</a></li>
 	      <li class="${current_page eq 'branchevnet' ? 'active' : '' }"><a href="branchevent.do">행사물품</a></li>
 	      <sec:authorize access="hasRole('MANAGER')">

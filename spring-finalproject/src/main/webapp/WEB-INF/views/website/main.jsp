@@ -7,7 +7,7 @@
 <link rel="stylesheet" type="text/css" href="resources/bootstrap/css/bootstrap.css">
 <link rel="stylesheet" type="text/css" href="resources/css/branch.css">
 <script type="text/javascript" src="resources/jquery/jquery.js" ></script>
-	<style>
+<style>
 	html,body {margin: 0; padding:0; height:100%;  }
 	#mainview {
 		margin: auto;
@@ -56,14 +56,14 @@
 	    padding: 15px;
 	    text-align: center;
 	}
-	</style>
+</style>
 
 <title>Welcome BigStore</title>
-<link rel="BigStore" href="resources/image/bs2.ico" />
 <script type="text/javascript">
 $(function() {
 	eventProduct(1);
 	$("#leftMenu a:first").css("active");
+
 	$("#leftMenu a").click(function() {
 				
 		$(this).siblings().find("a").removeClass("active");
@@ -83,11 +83,11 @@ $(function() {
 			success:function(result){
 	 			var $ul=$('#eventList');
 				$ul.empty();
-				
+				$("#productDetail").empty();
 				$.each(result, function(index, pd) {
-					$ul.append("<div class='w3-quarter'><p class='hidden' value='"+pd.no
-							+"'></p><img src='"+pd.image+"' style='width:45%; ' class='w3-circle w3-hover-opacity'/><p>"
-							+pd.price+"</p><p>"+pd.name+"</p></div>");
+					$ul.append("<div class='w3-quarter' style='text-align:center'><input type='hidden' value='"+pd.no
+							+"'/><img src='"+pd.image+"' style='width:45%; ' class='w3-circle w3-hover-opacity'/><p>"
+							+comma(pd.price)+" 원</p><p>"+pd.name+"</p></div>");
 				} );
 			}
 		});
@@ -100,13 +100,33 @@ $(function() {
 	});
 	
 	 
-	$("#search").click(function() {
-		
-		
-		
-		
-		
+	$("#eventList").on('click','img',function(){
+		$("#productDetail").empty();
+		var pno = parseInt($(this).prev().val());
+		console.log(pno);
+		$.ajax({
+			type:"GET",
+			url:"getProduct.do",
+			data:{no:pno},
+			dataType:"json",
+			success:function(result1){
+				var pd = "";
+				pd +="<div class='w3-display-container' style='text-align:center;'>"
+				pd +="<input type='hidden' value='"+result1.no+"'>";
+				pd +="<img src='"+result1.image+"' style='width:25%; ' class='w3-circle w3-hover-opacity'/>";
+				pd +="<p>"+comma(result1.price)+" 원</p>";
+				pd +="<p>"+result1.name+"</p>";
+				pd +="<p>"+result1.memo+"</p>";
+				pd +="<p>"+result1.maker+"</p>";
+				pd +="</div>";
+				$("#productDetail").append(pd);
+			}
+		});
 	});
+	function comma(str) {
+	    str = String(str);
+	    return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+	}
 });
 </script>
 </head>
@@ -123,11 +143,13 @@ $(function() {
 			<!-- 메뉴쪽-->
 		    <div class="w3-col" style="width:20%;min-height:300px;max-height:600px;">
 		         <nav id="leftMenu" class="w3-sidenav w3-teal w3-card-2 w3-xlarge" style="width:200px;height:300px;position:static!important">
-		              <!-- <a href="oneplus.do?no=1" style="margin-top:10px;" >1+1상품</a> -->
+
+		              <p href="#" style="margin:6px; color:#F38701;text-align: center;text-shadow: 2px 2px #666666; " >이벤트 안내</p>
+
 		              <a id="1" href="#" style="margin:6px;">1+1상품</a>
 		              <a id="2" href="#" style="margin:6px;">2+1상품</a>
 		              <a id="3" href="#" style="margin:6px;">덤증정상품</a>
-		              <a id="9" href="#" style="margin:6px;">선물추첨상품</a>
+		              <a id="4" href="#" style="margin:6px;">선물추첨상품</a>
 		         </nav>
 		    </div>
 			<!-- 좌측메뉴바 끝-->
@@ -141,7 +163,9 @@ $(function() {
 		        </div>
 		    </div>
 		</div>
-	
+		<div id="productDetail">
+			
+		</div>
 		<!-- 검색창 -->
 		<div class="w3-row-padding w3-center w3-padding-10 w3-panel w3-padding-xlarge">
 		    
@@ -158,7 +182,7 @@ $(function() {
 				</div>
 				<div class="form-group">
 					<label class="sr-only" for="keyword"></label>
-					<input type="text" class="form-control" name="keyword" id="keyword" value="${param.keyword }">
+					<input type="text" class="form-control" name="keyword" id="keyword" value="${param.keyword }" required="required">
 				</div>
 				<button class="btn  btn-primary">조회</button>
 			</form>

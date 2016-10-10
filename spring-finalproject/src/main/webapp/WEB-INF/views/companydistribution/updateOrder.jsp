@@ -10,6 +10,9 @@
 <script type="text/javascript" src="resources/jquery/jquery.js"></script>
 <link href="resources/bootstrap/css/simple-sidebar.css" rel="stylesheet">
 <script src="resources/bootstrap/js/bootstrap.min.js"></script>
+<style>
+th,td {text-align:center;}
+</style>
 <title>Big Store</title>
 </head>
 <body>

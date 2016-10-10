@@ -4,7 +4,7 @@ public class HqInventory {
 
 	private int no;
 	private int qty;
-	private int clientNo;
+	private Client client;
 	private Product product;
 	
 	public int getNo() {
@@ -19,11 +19,11 @@ public class HqInventory {
 	public void setQty(int qty) {
 		this.qty = qty;
 	}
-	public int getClientNo() {
-		return clientNo;
+	public Client getClient() {
+		return client;
 	}
-	public void setClientNo(int clientNo) {
-		this.clientNo = clientNo;
+	public void setClient(Client client) {
+		this.client = client;
 	}
 	public Product getProduct() {
 		return product;
@@ -34,7 +34,7 @@ public class HqInventory {
 	
 	@Override
 	public String toString() {
-		return "HqInventory [no=" + no + ", qty=" + qty + ", clientNo=" + clientNo + ", product=" + product + "]";
+		return "HqInventory [no=" + no + ", qty=" + qty + ", client=" + client + ", product=" + product + "]";
 	}
-
+	
 }

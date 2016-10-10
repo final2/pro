@@ -59,5 +59,10 @@ public class WebServiceImpl implements WebService{
 		return websiteDao.getTotalRows(criteria);
 	}
 
+	@Override
+	public Product getProductByNo(int no) {
+		return websiteDao.getProductByNo(no);
+	}
+
 
 }

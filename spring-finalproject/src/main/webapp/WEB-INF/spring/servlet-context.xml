@@ -53,6 +53,7 @@
 			<mvc:exclude-mapping path="/searchbranch.do"/>
 			<mvc:exclude-mapping path="/searchtype.do"/>
 			<mvc:exclude-mapping path="/send.do"/>
+			<mvc:exclude-mapping path="/getProduct.do"/>
 			
 			<bean class="com.finalproject.web.interceptor.LoginCheckInterceptor"></bean>
 		</mvc:interceptor>

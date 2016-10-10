@@ -49,7 +49,6 @@ public class WebController {
 	@RequestMapping("branchdetail.do")
 	public @ResponseBody Branch branchDetail(@RequestParam(name="no") int no){
 		return webservice.getBranchByNo(no);
-		
 	}
 	//회사소개
 	@RequestMapping("intro.do")
@@ -63,6 +62,13 @@ public class WebController {
 		model.addAttribute("announcementList", boardList);
 		return "website/announcement";
 	}
+	//공지사항세부
+	@RequestMapping("webBoardDetail.do")
+	public String webBoardDetail(@RequestParam(name="no") int no,Model model){
+		WebBoard board= webservice.getBoardByNo(no);
+		model.addAttribute("boardDetail",board);
+		return "website/webboarddetail";
+	}
 	//이벤트상품조회
 	@RequestMapping("oneplus.do")
 	public String oneplus(@RequestParam(name="no") int no,Model model){
@@ -70,12 +76,10 @@ public class WebController {
 		model.addAttribute("eventList",eventList);
 		return "website/oneplus";
 	}
-	//공지사항세부
-	@RequestMapping("webBoardDetail.do")
-	public String webBoardDetail(@RequestParam(name="no") int no,Model model){
-		WebBoard board= webservice.getBoardByNo(no);
-		model.addAttribute("boardDetail",board);
-		return "website/webboarddetail";
+	// 상품 상세 조회
+	@RequestMapping("getProduct.do")
+	public @ResponseBody Product product(@RequestParam(name="no") int no){
+		return webservice.getProductByNo(no);
 	}
 
 	//지점유형별검색

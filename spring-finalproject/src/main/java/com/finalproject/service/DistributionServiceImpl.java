@@ -4,20 +4,59 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.finalproject.dao.DistributionDao;
 import com.finalproject.model.Client;
 import com.finalproject.model.ClientDetail;
+import com.finalproject.model.HqInventory;
 import com.finalproject.model.HqOrder;
 import com.finalproject.model.HqOrderDetail;
 import com.finalproject.model.PageVo;
 
 @Service
+@Transactional
 public class DistributionServiceImpl implements DistributionService{
 
 	@Autowired
 	private DistributionDao distributionDao;
 
+/* 본사 =========================================================================================================== */	
+	// 재고 리스트
+	@Override
+	public List<HqInventory> getInvenLists() {
+		return distributionDao.getInvenLists();
+	}
+	
+	// 입고확인
+	@Override
+	public void addInventory(int orderNo) {
+		// 주문번호에 해당하는 모든 상품정보 조회(상품번호, 회사번호, 수량)
+		// 이벤토리에 정보가 있으면 개수증가 없으면 생성
+		// 클라이언트 재고 감소
+		List<HqInventory> inventories = distributionDao.getOrderDetailByOrderNo(orderNo);
+		
+		for (HqInventory inventory : inventories) {
+			int productNo = inventory.getProduct().getNo();
+			int count = distributionDao.getCount(productNo);
+			if( count == 0) {
+				distributionDao.addInven(inventory);
+			} else {
+				distributionDao.updateInven(inventory);
+			}
+			ClientDetail clientDetail = new ClientDetail();
+			clientDetail.setQty(inventory.getQty());
+			clientDetail.setProduct(inventory.getProduct());
+			
+			distributionDao.updateQty(clientDetail);
+		}
+			HqOrder hqOrder = new HqOrder();
+			hqOrder.setNo(orderNo);
+			
+			distributionDao.updateCon(hqOrder);
+		
+	}
+	
 /* 거래처 ========================================================================================================= */
 	// 거래처 리스트 / 발주 신청시 거래처명
 	@Override
@@ -114,5 +153,11 @@ public class DistributionServiceImpl implements DistributionService{
 	@Override
 	public void updateCon(HqOrder hqOrder) {
 		distributionDao.updateCon(hqOrder);
+	}
+	
+	// 번호로 제품정보 조회
+	@Override
+	public List<HqInventory> getInvenByNo(int no) {
+		return distributionDao.getInvenByNo(no);
 	}
 }

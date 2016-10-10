@@ -43,10 +43,20 @@ public class BranchServiceImpl implements BranchService {
 	public List<SmallCategory> getSmallCatsByLargeNo(int no) {
 		return branchDao.getSmallCatsByLargeNo(no);
 	}
+	
+	@Override
+	public List<SmallCategory> getSmallCatsByBranchNo(int no) {
+		return branchDao.getSmallCatsByBranchNo(no);
+	}
 
 	@Override
 	public List<Product> getProductsBySmallNo(int no) {
 		return branchDao.getProductsBySmallNo(no);
+	}
+	
+	@Override
+	public List<Product> getProductsBySmallCategoryAndBranchNo(Map<String, Object> map) {
+		return branchDao.getProductsBySmallCategoryAndBranchNo(map);
 	}
 	
 	@Override

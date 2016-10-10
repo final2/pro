@@ -32,7 +32,7 @@ public class BranchJSONController {
 	
 	// 전체 대분류 조회
 	@RequestMapping(value="/lcat/", method=RequestMethod.GET)
-	public List<LargeCategory> getAllLargeCatsByBranch() {
+	public List<LargeCategory> getAllLargeCats() {
 		return brService.getAllLargeCats();
 	}
 	
@@ -43,9 +43,13 @@ public class BranchJSONController {
 	}
 	
 	// 소분류 번호로 물품 조회
-	@RequestMapping(value="/pt/{no}", method=RequestMethod.GET)
-	public List<Product> getProductsBySmallNo(@PathVariable("no") int no) {
-		return brService.getProductsBySmallNo(no);
+	@RequestMapping(value="/pt/{brno}/sc/{scno}", method=RequestMethod.GET)
+	public List<Product> getProductsBySmallCategoryAndBranchNo(@PathVariable("brno") int brno,
+																@PathVariable("scno") int scno) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("branchNo", brno);
+		map.put("smallCat", scno);
+		return brService.getProductsBySmallCategoryAndBranchNo(map);
 	}
 	
 	// 모든 물품 조회
@@ -304,11 +308,9 @@ public class BranchJSONController {
 			map2.put("productNo", d.getProduct().getNo());
 			
 			BranchInventory inven = brService.getInventoryByProductNo(map2);
-
-			if(inven != null && inven.getProduct().getNo() == d.getProduct().getNo()) {
-				inven.setQty(inven.getQty() - d.getQty());
-				brService.updateInventory(inven);
-			}
+			System.out.println(inven);
+			inven.setQty(inven.getQty() - d.getQty());
+			brService.updateInventory(inven);
 		}
 		return brService.getBranchSalesDetailBySalesNo(sale.getNo());
 	}
@@ -422,13 +424,13 @@ public class BranchJSONController {
 		return brService.getBranchSalesDetailBySalesNo(sale.getNo());
 	}
 	
-	@RequestMapping(value="/wsales/del/{salesno}/holding/{holdinglist}", method=RequestMethod.POST)
-	public String deleteHoldingSales(@PathVariable("salesno") int salesno,
-									@PathVariable("holdinglist") String holdinglist) {
-		
+	// 보류 목록을 판매로 이동하기
+	@RequestMapping(value="/wsales/del/{salesno}", method=RequestMethod.POST)
+	public List<BranchSalesDetail> deleteHoldingSales(@RequestBody List<BranchSalesDetail> detailList,
+									@PathVariable("salesno") int salesno) {
 		brService.deleteBranchSalesDetail(salesno);
 		brService.deleteBranchSales(salesno);
 		
-		return holdinglist;
+		return detailList;
 	}
 }

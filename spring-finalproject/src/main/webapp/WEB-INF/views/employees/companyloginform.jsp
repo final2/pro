@@ -19,8 +19,9 @@
 	.login-box {width:90%; margin:0 auto;}
 	.login-left {width:33%; height:320px; float:left; overflow:hidden; border-radius:5px;}
 	.login-left > img {height:100%; vertical-align:middle; margin-left:-52%;}
-	.loginform {width:67%; float:right; margin-top:25px;}
+	.loginform {width:67%; float:right; }
 	.login-right { width:95%; float:right; background:#fff; border: 1px solid transparent; border-radius: 2px; }
+	.login-right .errorBox {height:59px; margin:20px 0 15px 0;}
 	.login-right > .row > label {margin-right:15px;}
 	.login-right > .row-mid {margin:15px -15px 30px -15px;}
 	
@@ -62,11 +63,13 @@ $(function() {
 			</div>
 			<form role="form" method="post" action="companylogin.do" class="loginform" >
 				<div class="login-right">
-					<c:if test="${param.error eq 'req' }"> 
-						<div class="alert alert-danger">
-							<strong>에러!</strong> 로그인이 필요한 서비스입니다.
-						</div>
-					</c:if>
+					<div class="errorBox">
+						<c:if test="${param.error eq 'req' }"> 
+							<div class="alert alert-danger">
+								<strong>로그인</strong>이 필요한 서비스입니다.!
+							</div>
+						</c:if>
+					</div>
 					<div class="row">
 						<label class="col-sm-3">ID</label>
 						<input type="text" name="no" class="col-sm-8"/>

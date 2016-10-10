@@ -78,21 +78,22 @@
 <!-- 지도 및 테이블 데이타 갱신 관련 -->
 <script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=a7c0dab8230936242d3ea7be3a24efc5&libraries=services"></script>
 <script type="text/javascript">
-// 지도 보이기
 $(function() {
+	$("a[href*='searchBranch.do']").addClass("active");
+	
 	/* 서브메뉴 선택 */	
 	$("#store-gubun li").click(function() {
 		$(this).siblings().find("span").removeClass("active");
 		$(this).find("span").addClass("active");
 		displayMap($(this).attr("id"));
-		
 	}); 
 	
+	// 외부에서 링크로 페이지 들어올때 타입을 확인해서 표현하기 위해 사용
 	$("#"+'${param.type}').trigger('click');
 	
+	// 선택된 유형에 따라 정보 불러오기
 	function displayMap(selectedId) {
 		var id = selectedId || "LOTTO";
-		
 		
 		$.ajax({
 			type:"GET",
@@ -127,18 +128,15 @@ $(function() {
 				for( beginIndex-1 ; beginIndex<=endIndex ; beginIndex++){
 					$("tbody").append("<tr><td>"+data[beginIndex].name+"</td><td>"+data[beginIndex].address+"</td><td>"+data[beginIndex].phone+"</td></tr>");
 					(function(j) {
-						
 						$.ajax({
 							url:"json/geo.do",
 							data:{address:data[j].address},
 							dataType:"json",
 							success: function(geo) {
 								addMarker(map, data[j], geo.lat, geo.lng)
-	
 							}
 						});	
 					})(beginIndex)
-					
 				}
 				
 				$(".pagination").on('click','a',function() {
@@ -163,20 +161,14 @@ $(function() {
 								success: function(geo) {
 									//var map = makeMap();
 									addMarker(map, data[k], geo.lat, geo.lng);
-				
 								}
 							});	
 						})(rebeginIndex)
-						
 					}
 				});
-				
 			}
 		}); 
 	}
-	
-
-	
 	
  	function makeOverListener(map, marker, infowindow) {
 	    return function() {

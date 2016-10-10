@@ -25,9 +25,11 @@ public interface BranchService {
 	
 	// 대분류 번호로 소분류 조회하기
 	List<SmallCategory> getSmallCatsByLargeNo(int no);
+	List<SmallCategory> getSmallCatsByBranchNo(int no);
 	
 	// 소분류 번호로 물품 조회하기
 	List<Product> getProductsBySmallNo(int no);
+	List<Product> getProductsBySmallCategoryAndBranchNo(Map<String, Object> map);
 	
 	// 물품번호로 재고조회하기
 	List<BranchInventory> getBranchInvenByProductNo(Map<String, Object> map);

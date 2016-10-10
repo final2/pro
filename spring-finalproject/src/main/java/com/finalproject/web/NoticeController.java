@@ -1,7 +1,9 @@
 package com.finalproject.web;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,15 +12,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.finalproject.model.Employee;
+import com.finalproject.model.Message;
+import com.finalproject.model.MessageEmp;
 import com.finalproject.model.NoticeBoard;
 import com.finalproject.model.PageBoardDetail;
 import com.finalproject.model.PageVo;
-import com.finalproject.model.Product;
-import com.finalproject.model.ProductPageVo;
-import com.finalproject.model.ProductSearch;
-import com.finalproject.model.TodayPlan;
 import com.finalproject.service.NoticeService;
-import com.finalproject.service.ProductService;
 
 @Controller
 public class NoticeController {
@@ -31,11 +31,30 @@ public class NoticeController {
 		binder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd hh:mm"), false));
 	}*/
 	
-	//Notice메인, 최신 공지사항 불러오기
+	//Notice메인, 최신 공지사항 불러오기, 받은 메시지 불러오기
 	@RequestMapping(value="/notice.do", method=RequestMethod.GET)
-	public String main(Model model) {
+	public String main(Model model, HttpSession session) {
+		
+		Employee emp = (Employee)session.getAttribute("LoginUser");
+
 		List<NoticeBoard> noticeBoardList = noticeService.getLatestBoard();
+		List<Message> getMessageByNo = noticeService.getReceiveMessages(emp.getNo());
+		
+		List<MessageEmp> reciveMessage = new ArrayList<>();
+		if(getMessageByNo != null) {			
+			MessageEmp messageEmp;
+			for(Message message : getMessageByNo) {
+				messageEmp = new MessageEmp();
+				Employee employee = noticeService.getEmpByNo(message.getFrom());
+				messageEmp.setEmployee(employee);
+				messageEmp.setMessage(message);
+				
+				reciveMessage.add(messageEmp);
+			}
+		}
+		
 		model.addAttribute("boardList", noticeBoardList);
+		model.addAttribute("messageList", reciveMessage);
 		
 		return "companynotice/notice";
 	}

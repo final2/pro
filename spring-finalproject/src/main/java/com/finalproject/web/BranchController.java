@@ -99,13 +99,15 @@ public class BranchController {
 		
 		List<BranchOrderDetail> detailList = brService.getOrderDetailsByOrderNo(no);
 		BranchOrder order = brService.getBranchOrderByNo(no);
-		
+		System.out.println("detailList"+detailList.get(0));
+		System.out.println("order"+ order.getBranchNo());
 		for (BranchOrderDetail d : detailList){
 			Map<String, Object> map2 = new HashMap<>();
 			map2.put("branchNo", order.getBranchNo());
 			map2.put("productNo", d.getProduct().getNo());
-
+			
 			BranchInventory inven = brService.getInventoryByProductNo(map2);
+			
 			if (inven == null) {
 				inven = new BranchInventory();
 				inven.setQty(d.getQty());
@@ -114,18 +116,20 @@ public class BranchController {
 				Product product = brService.getProductByNo(d.getProduct().getNo());
 				inven.setProduct(product);
 				brService.addInventory(inven);
-			} else if (inven.getProduct().getNo() == d.getProduct().getNo()) {
-				inven.setQty(inven.getQty() + d.getQty());
-				brService.updateInventory(inven);
 			} else {
-				inven = new BranchInventory();
-				inven.setQty(d.getQty());
-				inven.setBranchNo(order.getBranchNo());
-				
-				Product product = brService.getProductByNo(d.getProduct().getNo());
-				inven.setProduct(product);
-				brService.addInventory(inven);
-			}
+				if (inven.getProduct().getNo() == d.getProduct().getNo()) {
+					inven.setQty(inven.getQty() + d.getQty());
+					brService.updateInventory(inven);
+				} else {
+					inven = new BranchInventory();
+					inven.setQty(d.getQty());
+					inven.setBranchNo(order.getBranchNo());
+					
+					Product product = brService.getProductByNo(d.getProduct().getNo());
+					inven.setProduct(product);
+					brService.addInventory(inven);
+				}
+			} 
 		}
 		
 		order.setIscomplete("Y");		

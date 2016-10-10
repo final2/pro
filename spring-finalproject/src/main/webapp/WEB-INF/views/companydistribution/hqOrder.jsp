@@ -58,9 +58,6 @@ th,td {text-align:center;}
 					</tr>
 				</c:forEach>
 			</table>
-			<div class="pull-right">
-				<a href="orderApp.do" class="btn btn-primary">발주 신청</a>
-			</div>
 		</div>
    </div>
 </div>

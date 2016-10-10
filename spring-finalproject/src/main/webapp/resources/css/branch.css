@@ -61,6 +61,8 @@ body { font-family: 'Nanum Gothic', sans-serif; }
 .navbar-branch li a:hover { background-color:#3d93d9; color:#fff; }
 .navbar-branch li.active a { background-color:#3d93d9; color:#fff; }
 
+.wait-badge { display:inline-block; vertical-align:top; width:5px; height:5px; border-radius:50%; background-color:red; }
+
 /* 판매 */
 .sales-left table { margin:5px; }
 .sales-left table th,td { text-align:center; }

@@ -15,10 +15,10 @@ thead td,th{text-align:center;}
 <body>
 <div id="wrapper">
 	<%@ include file="/WEB-INF/views/sidebartemplate/sidebar.jsp" %>
-	<%-- <!-- 메신저 modal창 -->
+	<!-- 메신저 modal창 -->
 	<div class="modal fade" id="messenger" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
 		<%@ include file="../message/messagebutton.jsp" %>
-	</div> --%>
+	</div>
 	<a href="#menu-toggle" class="btn btn-default btn-xs" id="menu-toggle">side bar</a>
 	<div id="page-context-wrapper">
 		<!-- Background 불러오기 -->
@@ -51,7 +51,7 @@ thead td,th{text-align:center;}
 					<c:param name="pn" value="${param.pn }" />
 					<c:param name="rn" value="${param.rn }" />
 				</c:url>
-				<c:if test="${LoginUser.position eq 'director'}">
+				<c:if test="${LoginUser.position eq '부장'}">
 					<a href="${updateFormURL }" class="btn btn-default">수정</a>
 					<a href="boardDelete.do" class="btn btn-default">삭제</a>
 				</c:if>
