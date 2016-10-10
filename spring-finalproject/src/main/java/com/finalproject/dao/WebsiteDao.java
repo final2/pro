@@ -37,4 +37,6 @@ public interface WebsiteDao {
 	
 	int getTotalRows(Criteria criteria);
 	List<Branch> getSearchBranch(Criteria criteria);
+
+	Product getProductByNo(int no);
 }

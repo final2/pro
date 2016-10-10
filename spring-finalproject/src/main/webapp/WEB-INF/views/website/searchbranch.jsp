@@ -39,9 +39,33 @@
 		height: 130px;
 		background-color: silver;
 	}
+	nav li {
+	    float: left;
+	}
+	
+	nav li span {
+	    display: block;
+	    color: white;
+	    text-align: center;
+	    padding: 14px 16px;
+	    text-decoration: none;
+	}
+	
+	nav li span:hover:not(.active) {
+	    background-color: #111;
+	}
+	
+	.active {
+	    background-color: #4CAF50;
+}
+	
 </style>
 <script type="text/javascript">
 $(function() {
+	
+		$("a[href*='searchbranch.do']").addClass("active");
+	
+	
 	$("button").click(function(event) {
 		event.preventDefault();
 		
@@ -140,7 +164,7 @@ $(function() {
 				</div>
 				<div class="form-group">
 					<label class="sr-only" for="keyword"></label>
-					<input type="text" class="form-control" name="keyword" id="keyword" value="${param.keyword }">
+					<input type="text" class="form-control" name="keyword" id="keyword" value="${param.keyword }" >
 				</div>
 				<button class="btn  btn-primary">조회</button>
 			</form>

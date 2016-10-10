@@ -40,8 +40,32 @@
 		height: 130px;
 		background-color: silver;
 	}
-
-	</style>
+	li {
+	    float: left;
+	}
+	
+	li span {
+	    display: block;
+	    color: white;
+	    text-align: center;
+	    padding: 14px 16px;
+	    text-decoration: none;
+	}
+	
+	li span:hover:not(.active) {
+	    background-color: #111;
+	}
+	
+	.active {
+	    background-color: #4CAF50;
+}
+	
+</style>
+<script type="text/javascript">
+$(function() {
+	$("a[href*='announcement.do']").addClass("active");
+});
+</script>
 <title>Introduce BigStore</title>
 
 </head>

@@ -176,5 +176,21 @@
 		</where>
 	</select>
 	
-	
+		<!-- 이벤트 제품 불러오기 -->
+	<select id="getProductByNo" parameterType="int" resultType="Product">
+		select
+			no				as no,
+			name			as name,
+			maker			as maker,
+			price			as price,
+			memo 			as memo,
+		    limiteage 		as limiteAge,
+		    eventcode 		as event,
+		    smallcategory_no as smallCat,
+		    image 			as image
+		from 
+			product
+		where 
+			no = #{value}
+	</select>
 </mapper>
