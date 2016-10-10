@@ -16,7 +16,7 @@
 </style>
 </head>
 <body>
-	<%@ include file="/WEB-INF/views/sidebartemplate/sidebar.jsp" %>
+	<%-- <%@ include file="/WEB-INF/views/sidebartemplate/sidebar.jsp" %> --%>
 	<div class="container error-alert">
 		<h1>에러 페이지</h1>
 		<div class="alert alert-danger">
