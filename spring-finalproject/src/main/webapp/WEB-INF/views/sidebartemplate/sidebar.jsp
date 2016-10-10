@@ -60,7 +60,7 @@
        <li class="list">
        		<a >인사 <span class="caret"></span></a>
        		<ul class="bar">
-       			<li><a href="emplist.do" >사원 조회</a></li>
+       			<li><a href="emplist.do?pno=1" >사원 조회</a></li>
        			<li><a href="insertemp.do" >사원 등록</a></li>
 	       			<c:url var="boardListURL" value="boardList.do">
 						<c:param name="pn" value="1" />
@@ -70,8 +70,8 @@
        			<li>
        				<a>지점 관리<span class="caret"></span></a>
        				<ul class="in-bar">
-       					<li><a href="" class="">지점 조회</a></li>
-       					<li><a href="" class="">지점 등록</a></li>
+       					<li><a href="compbranchlist.do?pno=1" class="">지점 조회</a></li>
+       					<li><a href="insertbranch.do" class="">지점 등록</a></li>
        				</ul>
        			</li>
        		</ul>			
@@ -79,8 +79,9 @@
        <li class="list">
        		<a>급여 <span class="caret"></span></a>
        		<ul class="bar">
-       			<li><a href="" class="">급여 대장</a></li>
-       			<li><a href="" class="">급여 지급</a></li>
+       			<li><a href="compsalary.do?pno=1" >급여 대장</a></li>
+       			<li><a href="insertsalary.do" >급여 지급</a></li>
+       			<li><a href="compattendance.do" >근태 관리</a></li>
        		</ul>		
        </li>
        <li>
