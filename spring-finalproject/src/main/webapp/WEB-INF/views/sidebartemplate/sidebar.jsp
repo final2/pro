@@ -54,7 +54,7 @@
        				</ul>	
        			</li>
        			<li><a href="hqOrder.do">출고 관리</a></li>
-       			<li><a href="inventoryList.do">재고 관리</a></li>
+       			<li><a href="invenList.do">재고 관리</a></li>
        			<li><a href="clientList.do">거래처 관리 </a></li>
        		</ul>   		
        </li>
