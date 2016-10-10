@@ -23,7 +23,7 @@ $(function() {
 	// 화면 띄우자마자 물품목록 띄우기
 	$.ajax({
 		type:"GET",
-		url:"/FinalProject/json/lcat/",
+		url:"/FinalProject/json/lcat/"+brno,
 		dataType:"json",
 		success:function(result) {
 			var $ul = $('#sales-lc');
@@ -180,6 +180,7 @@ $(function() {
 					
 					removeProduct();
 				});
+				console.log(detailList);
 			}
 		});
 	});

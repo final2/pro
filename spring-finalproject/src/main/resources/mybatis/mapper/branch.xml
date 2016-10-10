@@ -37,20 +37,22 @@
 	
 	<!-- 판매 : 대분류 찾기(지점별, 재고에 있는 물품별) -->
 	<select id="getAllLargeCatsByBranch" parameterType="int" resultType="LC">
-		select *
-		from (select
-				D.no as "no"
-			from
-				branch_inventory A, product B, smallcategory C, largecategory D
-			where
-				A.branch_no = 1
-			and
-				A.product_no = B.no
-			and
-				B.smallcategory_no = C.no
-			and
-				C.largecategory_no = D.no) X
-		group by "no"
+		select I.no, I.name
+		from(select "no"
+				from (select
+						D.no as "no"
+					from
+						branch_inventory A, product B, smallcategory C, largecategory D
+					where
+						A.branch_no = #{value}
+					and
+						A.product_no = B.no
+					and
+						B.smallcategory_no = C.no
+					and
+						C.largecategory_no = D.no) X
+				group by "no") J, largecategory I
+		where "no" = I.no
 	</select>
 	
 	<!-- 판매 : 소분류 찾기 -->
@@ -177,9 +179,10 @@
 		update
 			branch_inventory
 		set
-			qty = #{qty},
-			branch_no = #{branchNo}
+			qty = #{qty}
 		where
+			branch_no = #{branchNo}
+		and
 			product_no = #{product.no}
 	</update>
 	
