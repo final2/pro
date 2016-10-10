@@ -10,26 +10,7 @@
 <script type="text/javascript" src="resources/jquery/jquery.js"></script>
 <link href="resources/bootstrap/css/simple-sidebar.css" rel="stylesheet">
 <script src="resources/bootstrap/js/bootstrap.min.js"></script>
-<script type="text/javascript">
-$(function() {
-	$("#confirm").click(function() {
-		var orderNo = $(this).val();
-		$.ajax({
-			type:"GET",
-			url:"/FinalProject/json/con/"+ orderNo,
-			dataType:"json",
-			success:function(result) { 
-				 var text1 = result.confirm;
-				$("#yn").text("입고 완료");
-				$("#confirm").hide();
-			},
-			error: function(xhr, status, error){
-				console.log(error)
-			}
-		}); 
-	});
-});
-</script>
+
 <style>
 th,td {text-align:center;}
 </style>
@@ -48,7 +29,7 @@ th,td {text-align:center;}
 				<thead>
 					<tr>
 						<th>발주번호</th>
-						<td colspan="2">${orders.no }</td>
+						<td colspan="2" id="order-no-td">${orders.no }</td>
 						<th>발주신청일자</th>
 						<td><fmt:formatDate value="${orders.regdate }" pattern="yyyy-MM-dd"/> </td>
 					</tr>
@@ -70,7 +51,7 @@ th,td {text-align:center;}
 					<tr>
 						<th>제품번호</th>
 						<th>제품명</th>
-						<th>수량</th>
+						<th>수량(EA)</th>
 						<th>단가</th>
 						<th>금액</th>
 					</tr>
@@ -94,7 +75,7 @@ th,td {text-align:center;}
 			<div class="pull-left">
 				<c:choose>
 					<c:when test="${orders.confirm == 'N'}">
-						<button type="button" id="confirm" class="btn btn-default" value="${orders.no }" >입고 확인</button>
+						<a href="orderConfirm.do?orderNo=${orders.no }" class="btn btn-default" >입고 확인</a>
 					</c:when>
 				</c:choose>
 			</div>
@@ -102,8 +83,12 @@ th,td {text-align:center;}
 				<c:url var="updateOrderURL" value="updateOrder.do">
 					<c:param name="no" value="${orders.no }"></c:param>
 				</c:url>
-				<a href="${updateOrderURL }" class="btn btn-primary">수정</a>
-				<a href="hqOrder.do" class="btn btn-danger">확인</a>
+				<c:choose>
+					<c:when test="${orders.confirm == 'N'}">
+						<a href="${updateOrderURL }" class="btn btn-primary">수정</a>
+					</c:when>
+				</c:choose>
+				<a href="hqOrder.do" class="btn btn-info">확인</a>
 			</div>
 		</div>
 	</div>

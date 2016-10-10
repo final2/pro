@@ -32,4 +32,6 @@ public interface WebService {
 	List<Branch> getSearchBranch(Criteria criteria);
 		
 	int getTotalRows(Criteria criteria);
+
+	Product getProductByNo(int no);
 }

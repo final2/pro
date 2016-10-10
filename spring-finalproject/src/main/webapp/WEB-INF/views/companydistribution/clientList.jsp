@@ -23,7 +23,6 @@ $(function() {
 	$("form").submit(function() {
 		if(!$(":input[name='name']").val()) {
 			$(".modal-body p").hide();
-			$(".non").show();
 			$(":input[name='name']").focus();
 			return false;
 		}
@@ -31,8 +30,10 @@ $(function() {
 	});
 		
 	$("#ck").click(function() {
-		var nameck = $("#name").val();
+		var nameck = $.trim($("#name").val());
 		if(nameck == "") {
+			$(".modal-body p").hide();
+			$(".non").show();			
 			return false;
 		}
 		$.ajax({
@@ -41,10 +42,12 @@ $(function() {
 			dataType:"json",
 			success:function(data) {
 				if(data.size == 1){
+					$(".modal-body p").hide();
 					$(".same").show();
 					$("#name").val("");
 					idnotoverlap = false;
 				} else {
+					$(".modal-body p").hide();
 					$(".ok").show();
 					$("#add").removeAttr("disabled");
 					idnotoverlap = true;

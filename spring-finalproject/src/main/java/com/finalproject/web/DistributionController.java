@@ -1,21 +1,19 @@
 package com.finalproject.web;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.finalproject.model.Client;
 import com.finalproject.model.ClientDetail;
+import com.finalproject.model.HqInventory;
 import com.finalproject.model.HqOrder;
 import com.finalproject.model.HqOrderDetail;
-import com.finalproject.model.NoticeBoard;
 import com.finalproject.model.OrderForm;
 import com.finalproject.model.PageVo;
 import com.finalproject.model.Product;
@@ -26,6 +24,17 @@ public class DistributionController {
 
 	@Autowired
 	private DistributionService distributionService;
+	
+/* 본사 =========================================================================================================== */
+	// 재고 리스트
+	@RequestMapping("/invenList.do")
+	public String invenLists(Model model) {
+		List<HqInventory> invenList = distributionService.getInvenLists();
+		model.addAttribute("inven", invenList);
+		
+		return "companydistribution/hqInven";
+	}
+		
 
 /* 거래처 ========================================================================================================= */
 	// 거래처 리스트 페이지
@@ -209,6 +218,14 @@ public class DistributionController {
 			}
 		}
 		return "redirect:/hqOrderDetail.do?no="+hqOrderDetail.getHqOrder().getNo();
+	}
+	
+	// 입고여부 확인
+	@RequestMapping("/orderConfirm.do")
+	public String orderConfirm(int orderNo) {
+		distributionService.addInventory(orderNo);
+		return "redirect:/hqOrderDetail.do?no="+orderNo;
+		
 	}
 
 }

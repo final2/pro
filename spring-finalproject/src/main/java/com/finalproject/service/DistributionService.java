@@ -1,16 +1,23 @@
 package com.finalproject.service;
 
 import java.util.List;
-import java.util.Map;
 
 import com.finalproject.model.Client;
 import com.finalproject.model.ClientDetail;
+import com.finalproject.model.HqInventory;
 import com.finalproject.model.HqOrder;
 import com.finalproject.model.HqOrderDetail;
 import com.finalproject.model.PageVo;
 
 public interface DistributionService {
 
+/* 본사 =========================================================================================================== */	
+	// 재고 리스트
+	List<HqInventory> getInvenLists();
+	
+	// 입고확인
+	void addInventory(int orderNo);
+	
 /* 거래처 ========================================================================================================= */
 	// 거래처 리스트 / 발주 신청시 거래처명
 	List<Client> getClientList();
@@ -53,4 +60,8 @@ public interface DistributionService {
 	
 	// 입고 여부 변경
 	void updateCon(HqOrder hqOrder);
+	
+	// 번호로 제품정보 조회
+	List<HqInventory> getInvenByNo(int no);
+		
 }

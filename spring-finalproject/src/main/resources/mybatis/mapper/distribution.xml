@@ -3,6 +3,90 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.finalproject.dao.DistributionDao">
+<!-- 본사 ======================================================================================================= -->
+	<!-- 재고 리스트 -->
+	<select id="getInvenLists" resultType="HI">
+		select
+			i.no			as no, 
+			i.qty			as qty, 
+			i.client_no		as "client.no",
+			i.product_no	as "product.no",
+			c.name			as "client.name",
+			p.name			as "product.name" 
+		from
+			hq_inventory i, client c, product p
+		where
+			i.client_no = c.no and i.product_no = p.no 
+		order by 
+			qty asc
+	</select>
+	
+	<!-- 재고 확인 여부 -->
+	<select id="getCount" parameterType="int" resultType="int">
+		select
+			count(*)
+		from hq_inventory
+			where
+			product_no = #{value}
+	</select>
+	
+	<!-- 인벤 생성 -->
+	<insert id="addInven" parameterType="HI">
+		insert into hq_inventory
+			(no, qty, product_no, client_no)
+		values
+			(my_seq.nextval, #{qty}, #{product.no}, #{client.no})
+	</insert>
+	
+	<!-- 입고확인시 재고 증가 -->
+	<update id="updateInven" parameterType="HI">
+		update hq_inventory
+			set
+				qty = qty + #{qty}
+			where
+				product_no = #{product.no}
+	</update>
+	
+	<!-- 입고확인시 제조사 재고 감소 -->
+	<update id="updateQty" parameterType="ClDetail">
+		update client_detail
+			set
+				qty = qty - #{qty}
+			where
+				product_no = #{product.no}
+
+	</update>
+	
+	<!-- 발주번호로 정보조회 -->
+	<select id="getOrderDetailByOrderNo" parameterType="int" resultType="HI">
+		select 
+			qty, 
+			product_no	as "product.no", 
+			client_no	as "client.no"
+		from
+			hq_order_detail A, product B
+		where
+			A.product_no = B.no
+			and A.hq_order_no = #{value}
+	</select>
+	
+	<!-- 번호로 제품정보 조회 -->
+	<select id="getInvenByNo" parameterType="int" resultType="HI">
+		select
+			C.product_no		as "product.no",
+			P.name				as "product.name",
+			nvl(I.qty, 0) qty,
+			P.price				as "product.price"
+		from
+			client_detail C, hq_inventory I, product P
+		where 
+			C.product_no = I.product_no(+)
+			and P.no = C.product_no
+			and C.client_no = #{value}
+		order by 
+			nvl(I.qty, 0) asc
+	</select>
+
 <!-- 거래처======================================================================================================= -->
 	<!-- 거래처 등록 -->
 	<insert id="insertClient" parameterType="Client">
@@ -46,7 +130,7 @@
 			no = #{value}
 	</select>
 	
-	<!-- 거래처 번호로 상품 조회 / 발주 신청시 사용 -->
+	<!-- 거래처 번호로 상품 조회 -->
 	<select id="getClientDetailsByNo" parameterType="int" resultType="ClDetail">
 		select
 			c.qty			as qty,

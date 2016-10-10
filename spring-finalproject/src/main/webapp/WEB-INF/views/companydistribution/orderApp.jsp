@@ -16,7 +16,6 @@ th,td {text-align:center;}
 <script type="text/javascript">
 $(function(){
 	
-	$("#order").attr("disabled", "disabled");
 	$("#client").change(function() {
 		
 		var clno = $("#client option:selected").val();
@@ -29,13 +28,14 @@ $(function(){
 				
 				var $tr = $("#order-table");
 				$tr.empty();
-				$tr.append("<tr><th style='width:25%'>제품번호</th><th style='width:25%'>제품 명</th><th style='width:25%'>단가</th><th style='width:25%'>수량</th></tr>");
+				$tr.append("<tr><th style='width:20%'>제품번호</th><th style='width:20%'>제품 명</th><th style='width:20%'>단가</th><th style='width:20%'>수량</th><th style='width:20%'>주문수량</th></tr>");
 				$.each(result, function(index, pro) {
 					$tr.append("<tr id='no-"+pro.product.no+"'>"
 							  +"<td>"+pro.product.no+"<input type='hidden' name='no' class='form-control' value='"+pro.product.no+"'/></td>"
 							  +"<td>"+pro.product.name+"</td>"
 						   	  +"<td>"+pro.product.price+"<input type='hidden' name='price' class='form-control' value='"+pro.product.price+"'/></td>"
-							  +"<td><input type='number' name='qty' id='qty' class='form-control' value = '0'/></td>"
+							  +"<td>"+pro.qty+"</td>"
+						   	  +"<td><input type='number' name='qty' id='qty' class='form-control' value = '0'/></td>"
 							  +"</tr>")
 				}); 
 			}
@@ -60,7 +60,7 @@ $(function(){
 					<thead>
 						<tr>
 							<th colspan="2" style="width: 50%">거래처명</th>
-							<td colspan="2" style="width: 50%">
+							<td colspan="3" style="width: 50%">
 								<select id="client" name="clientNo" class="form-control">
 									<option selected>거래처를 선택하세요.</option>
 									<c:forEach var="clients" items="${clientList}">
@@ -76,10 +76,11 @@ $(function(){
 					</thead>
 					<tbody id="order-table">
 						<tr>
-							<th style="width:25%">제품번호</th>
-							<th style="width:25%">제품 명</th>
-							<th style="width:25%">단가</th>
-							<th style="width:25%">수량</th>
+							<th style="width:20%">제품번호</th>
+							<th style="width:20%">제품 명</th>
+							<th style="width:20%">단가</th>
+							<th style="width:20%">수량</th>
+							<th style="width:20%">주문수량</th>
 						</tr>
 						<!-- 입력 -->
 						
