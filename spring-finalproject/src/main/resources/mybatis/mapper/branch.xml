@@ -65,6 +65,23 @@
 			largecategory_no = #{value}
 	</select>
 	
+	<select id="getSmallCatsByBranchNo" parameterType="int" resultType="SC">
+		select I.no, I.name
+		from(select "no"
+				from (select
+						C.no as "no"
+					from
+						branch_inventory A, product B, smallcategory C
+					where
+						A.branch_no = #{value}
+					and
+						A.product_no = B.no
+					and
+						B.smallcategory_no = C.no) X
+				group by "no") J, smallcategory I
+		where "no" = I.no
+	</select>
+	
 	<!-- 판매 : 물품 찾기 -->
 	<select id="getProductsBySmallNo" parameterType="int" resultType="Product">
 		select
@@ -73,6 +90,25 @@
 			product
 		where 
 			smallcategory_no = #{value}
+	</select>
+	
+	<select id="getProductsBySmallCategoryAndBranchNo" parameterType="map" resultType="Product">
+		select
+			B.no,  
+			B.name,
+			B.maker,
+			B.price,
+			C.no as "smallCat.no"
+		from 
+			branch_inventory A, product B, smallcategory C
+		where 
+			A.product_no = B.no
+		and
+			B.smallcategory_no = C.no
+		and
+			A.branch_no = #{branchNo}
+		and
+			C.no = #{smallCat}
 	</select>
 	
 	<!-- 판매 : 물품번호로 재고 조회하기 -->
@@ -200,8 +236,6 @@
 			A.product_no = B.no
 		and
 			A.branch_no = #{value}
-		and 
-			qty &lt; 100
 		order by
 			qty asc
 	</select>

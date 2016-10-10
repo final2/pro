@@ -31,10 +31,9 @@ public class BranchJSONController {
 	@Autowired BranchService brService;
 	
 	// 전체 대분류 조회
-	@RequestMapping(value="/lcat/{brno}", method=RequestMethod.GET)
-	public List<LargeCategory> getAllLargeCatsByBranch(@PathVariable("brno") int brno) {
-		System.out.println(brService.getAllLargeCatsByBranch(brno));
-		return brService.getAllLargeCatsByBranch(brno);
+	@RequestMapping(value="/lcat/", method=RequestMethod.GET)
+	public List<LargeCategory> getAllLargeCats() {
+		return brService.getAllLargeCats();
 	}
 	
 	// 대분류 번호로 소분류 조회
@@ -44,9 +43,13 @@ public class BranchJSONController {
 	}
 	
 	// 소분류 번호로 물품 조회
-	@RequestMapping(value="/pt/{no}", method=RequestMethod.GET)
-	public List<Product> getProductsBySmallNo(@PathVariable("no") int no) {
-		return brService.getProductsBySmallNo(no);
+	@RequestMapping(value="/pt/{brno}/sc/{scno}", method=RequestMethod.GET)
+	public List<Product> getProductsBySmallCategoryAndBranchNo(@PathVariable("brno") int brno,
+																@PathVariable("scno") int scno) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("branchNo", brno);
+		map.put("smallCat", scno);
+		return brService.getProductsBySmallCategoryAndBranchNo(map);
 	}
 	
 	// 모든 물품 조회

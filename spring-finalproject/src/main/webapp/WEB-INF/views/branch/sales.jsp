@@ -23,7 +23,7 @@ $(function() {
 	// 화면 띄우자마자 물품목록 띄우기
 	$.ajax({
 		type:"GET",
-		url:"/FinalProject/json/lcat/"+brno,
+		url:"/FinalProject/json/lcat/",
 		dataType:"json",
 		success:function(result) {
 			var $ul = $('#sales-lc');
@@ -82,9 +82,10 @@ $(function() {
 		var scno = $(this).attr("id").replace("no-", "");
 		$.ajax({
 			type:"GET",
-			url:"/FinalProject/json/pt/" + scno,
+			url:"/FinalProject/json/pt/"+brno +"/sc/" + scno,
 			dataType:"json",
 			success:function(result) {
+				console.log(result)
 				var $ul = $("#sales-pt");
 				$ul.empty();
 				
@@ -180,7 +181,6 @@ $(function() {
 					
 					removeProduct();
 				});
-				console.log(detailList);
 			}
 		});
 	});

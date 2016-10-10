@@ -23,7 +23,9 @@ public interface BranchDao {
 	List<LargeCategory> getAllLargeCats();
 	List<LargeCategory> getAllLargeCatsByBranch(int brno);
 	List<SmallCategory> getSmallCatsByLargeNo(int no);
+	List<SmallCategory> getSmallCatsByBranchNo(int no);
 	List<Product> getProductsBySmallNo(int no);
+	List<Product> getProductsBySmallCategoryAndBranchNo(Map<String, Object> map);
 	List<BranchInventory> getBranchInvenByProductNo(Map<String, Object> map);
 	
 	// 지점 - 발주
