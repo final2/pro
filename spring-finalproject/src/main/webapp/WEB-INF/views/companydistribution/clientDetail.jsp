@@ -78,7 +78,7 @@ th,td {text-align:center;}
 			</table>
 			<div class="pull-right">
 				<c:if test="${LoginUser.dept eq 'PM'}">
-					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" id="btn" >수정</button>
+					<button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal" id="btn" >수정</button>
 				</c:if>
 				<a href="clientList.do" class="btn btn-primary">확인</a>
 			</div>
