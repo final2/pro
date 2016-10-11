@@ -246,7 +246,7 @@
 		insert into hq_order_detail
 			(no, regdate, qty, hq_order_no, product_no, price)
 		values
-			(my_seq.nextval, sysdate, #{qty}, #{hqOrder.no}, #{product.no}, #{product.price})
+			(my_seq.nextval, sysdate, #{qty}, #{hqOrder.no}, #{product.no}, round(#{product.price}*0.7))
 	</insert>
 	
 	<!-- 번호로 발주 정보 조회 -->

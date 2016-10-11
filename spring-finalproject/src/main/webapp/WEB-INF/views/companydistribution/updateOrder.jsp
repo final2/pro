@@ -67,7 +67,7 @@ th,td {text-align:center;}
 								<input type="number" name="qty" class="form-control" value="${details.qty }" />
 							</td>
 							<td style="width:25%">${details.product.price }
-								<input type="hidden" name="price" class="form-control" value="${details.product.price }" />
+								<input type="hidden" name="price" class="form-control" value="${details.product.price}" />
 							</td>
 						</tr>
 					</c:forEach>
