@@ -103,7 +103,6 @@ $(function() {
 	$("#eventList").on('click','img',function(){
 		$("#productDetail").empty();
 		var pno = parseInt($(this).prev().val());
-		console.log(pno);
 		$.ajax({
 			type:"GET",
 			url:"getProduct.do",

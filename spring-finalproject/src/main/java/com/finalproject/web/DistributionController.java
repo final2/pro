@@ -27,25 +27,46 @@ public class DistributionController {
 	
 /* 본사 =========================================================================================================== */
 	// 재고 리스트
-	@RequestMapping("/invenList.do")
+	/*@RequestMapping("/invenList.do")
 	public String invenLists(Model model) {
 		List<HqInventory> invenList = distributionService.getInvenLists();
 		model.addAttribute("inven", invenList);
 		
 		return "companydistribution/hqInven";
+	}*/
+
+	@RequestMapping(value="/invenList.do", method=RequestMethod.GET)
+	public String getBegunEndInvens(@RequestParam(name="pn", required=false, defaultValue="1")int pn, Model model) {
+		
+		if(pn<1) {
+			return "redirect:/hqInven?pn=1";
+
+		}
+		int rows = 10;
+		int pages = 5;
+		int beginIndex = (pn - 1) * rows + 1;
+		int endIndex = pn *rows;
+		
+		int totalInven = distributionService.getTotalInven(pn);
+		
+		PageVo pageVo = new PageVo(rows, pages, pn, totalInven);
+		pageVo.setBeginIndex(beginIndex);
+		pageVo.setEndIndex(endIndex);
+		
+		if(pn > pageVo.getTotalPages()) {
+			return "companydistribution/hqInven?pn=" + pageVo.getTotalPages();
+		}
+		
+		List<HqInventory> invens = distributionService.getBeginEndInvens(pageVo);
+		
+		model.addAttribute("inven", invens);
+		model.addAttribute("pageVo", pageVo);
+		
+		return "companydistribution/hqInven";
 	}
 		
-
 /* 거래처 ========================================================================================================= */
-	// 거래처 리스트 페이지
-	/*@RequestMapping("/clientList.do")
-	public String clientList(Model model) {
-		List<Client> clientList = distributionService.getClientList();
-		model.addAttribute("clientList", clientList);
 		
-		return "companydistribution/clientList";
-	}*/
-	
 	// 거래처 리스트 페이지
 	@RequestMapping(value="/clientList.do", method=RequestMethod.GET)
 	public String getBeginEndClients(@RequestParam(name="pn", required=false, defaultValue="1") int pn, Model model) {
@@ -66,7 +87,7 @@ public class DistributionController {
 		pageVo.setEndIndex(endIndex);
 		
 		if(pn > pageVo.getTotalPages()) {			
-			return "distribution/clientList?pn=" + pageVo.getTotalPages();
+			return "companydistribution/clientList?pn=" + pageVo.getTotalPages();
 		}
 		
 		List<Client> clients = distributionService.getBeginEndClients(pageVo);

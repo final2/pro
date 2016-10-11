@@ -81,8 +81,7 @@ $(function() {
 					var no = index + 1;
 					sum += item.psum;
 					$tbody.append("<tr><td>"+no+"</td><td>"
-							+item.brEmp.name+"</td><td>"
-							+item.no+"</td><td>"
+							+item.brEmp.name+"</td><td><a type='button' data-toggle='modal' data-target='#myModal3' id='sales-"+item.no+"'>"+item.no+"</a></td><td>"
 							+formatNumber(item.psum)+"</td></tr>");
 				});
 				
@@ -92,6 +91,42 @@ $(function() {
 	}
 	
 	salesList();
+	
+	// 판매번호 클릭시 판매 상세내역 조회하기
+	$(".account-con").on("click", "a[id^='sales-']", function() {
+		var salesno = $(this).attr("id").replace("sales-", "");
+		console.log("ee")
+		$(".return-number").empty();
+		$(".return-date").empty();
+		
+		$(".return-number").append("판매번호: "+salesno);
+		
+		$.ajax({
+			type:"GET",
+			url:"/FinalProject/json/sales/return/d/" + salesno,
+			dataType:"json",
+			success:function(result) {
+				var $tbody2 = $("#myModal3 tbody").empty();
+				
+				var sum = 0;
+				var resum = 0;
+				
+				$.each(result, function(index, tr) {
+					sum = tr.qty * tr.product.price;
+					
+					$tbody2.append("<tr><td>"+tr.product.no+"</td><td>"
+							+tr.product.name+"</td><td>"
+							+tr.qty+"</td><td>"
+							+formatNumber(tr.product.price)+"</td><td>"
+							+formatNumber(sum)+"</td></tr>");
+					resum += sum;
+				});
+				
+				$(".re-sum").empty().append(formatNumber(resum));
+				
+			}
+		});
+	});
 	
 	// 날짜 이전버튼
 	$(".account-con").on("click",".back", function(event){
@@ -173,6 +208,52 @@ $(function() {
 					</tr>
 				</tfoot>
 			</table>
+			
+			<!-- 판매번호 클릭시 상새내역 모달 -->
+					<div id="myModal3" class="modal fade" role="dialog">
+					  <div class="modal-dialog modal-lg">
+					
+					    <!-- Modal content-->
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <button type="button" class="close" data-dismiss="modal">&times;</button>
+					        <h4 class="modal-title">판매 상세내역</h4>
+					      </div>
+					      <div class="modal-body">
+					      	<div>
+					      		<p class="return-number"></p>
+					      		<p class="return-date"></p>
+					      	</div>
+					      	<table class="table table-bordered">
+					      		<thead>
+					      			<tr>
+					      				<th>제품번호</th>
+					      				<th>제품명</th>
+					      				<th>수량</th>
+					      				<th>가격</th>
+					      				<th>금액</th>
+					      			</tr>
+					      		</thead>
+					      		
+					      		<tbody>
+					      			<!-- 판매 상세내역 -->
+					      		</tbody>
+					      		
+					      		<tfoot>
+									<tr>
+										<td colspan="2">금액 합계</td>
+										<td colspan="3" class="re-sum"></td>
+									</tr>
+								</tfoot>
+					      	</table>
+					      </div>
+					      <div class="modal-footer">
+					        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					      </div>
+					    </div>
+					
+					  </div>
+					</div>
 		</div>
 	</div>
 </div>

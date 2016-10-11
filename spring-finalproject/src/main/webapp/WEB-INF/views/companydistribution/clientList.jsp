@@ -13,14 +13,15 @@
 <script type="text/javascript" src="resources/jquery/jquery.js"></script>
 <script type="text/javascript">
 $(function() {
-	$("#btn").click(function() {
+	// 모달창 오픈시 기본동작들
+	$('#myModal').on('show.bs.modal', function (e) {
 		$("#name").val("");
 		$("#add").attr("disabled", "disabled");
-		$(".modal-body p").hide();		
+		$(".modal-body p").hide();	
 	});
 	
-	$('#button').attr("disabled", "disabled");
-	$("form").submit(function() {
+	// 등록버튼 기능
+	$("#add").submit(function() {
 		if(!$(":input[name='name']").val()) {
 			$(".modal-body p").hide();
 			$(":input[name='name']").focus();
@@ -28,7 +29,8 @@ $(function() {
 		}
 		return true;
 	});
-		
+	
+	// 중복체크 버튼 기능
 	$("#ck").click(function() {
 		var nameck = $.trim($("#name").val());
 		if(nameck == "") {
@@ -62,6 +64,32 @@ $(function() {
 .non, .same{color: red;}
 .ok{color: blue;}
 th,td {text-align:center;}
+ul.pagination {
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+}
+ul.pagination li {display: inline;}
+ul.pagination li a {
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+    border-radius: 5px;
+}
+ul.pagination li a.active {
+    background-color: #97CCFB;
+    color: white;
+    border-radius: 5px;
+    pointer-events: none;
+    cursor: default;
+}
+ul.pagination li a:hover:not(.active) {background-color: #ddd;}
+ .disabled {
+        pointer-events: none;
+        cursor: default;
+        opacity: 0.6;
+ }
 </style>
 <title>Big Store</title>
 </head>
@@ -108,7 +136,9 @@ th,td {text-align:center;}
 				</tbody>
 			</table>
 			<div class="pull-right">
-				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" id="btn">거래처 등록</button>
+				<c:if test="${LoginUser.dept eq 'PM'}">
+					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" id="btn">거래처 등록</button>
+				</c:if>
 			</div>
 			
 			<div class="text-center">

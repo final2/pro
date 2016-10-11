@@ -248,4 +248,9 @@ public class BranchServiceImpl implements BranchService {
 	public void deleteBranchSalesDetail(int salesno) {
 		branchDao.deleteBranchSalesDetail(salesno);
 	}
+	
+	@Override
+	public BranchEmp getBranchEmpByEmail(String email) {
+		return branchDao.getBranchEmpByEmail(email);
+	}
 }

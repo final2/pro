@@ -30,6 +30,12 @@ public interface DistributionDao {
 	// 재고 여부
 	int getCount(int productNo);
 	
+	// 제품 리스트 총 수량
+	int getTotalInven();
+	
+	// 페이지 번호로 해당 하는 제품 리스트 조회
+	List<HqInventory> getBeginEndInvens(PageVo pageVo);
+		
 	
 /* 거래처 ========================================================================================================= */
 	// 거래처 리스트 / 발주 신청시 거래처명
@@ -40,10 +46,10 @@ public interface DistributionDao {
 	// 발수 신청시 사용(품번,품명,가격)
 	List<ClientDetail> getClientDetailsByNo(int no);
 
-	// 리스트 총 수량
+	// 거래처 리스트 총 수량
 	int getTotalClient();
 	
-	// 페이지 번호에 해당하는 리스트 조회
+	// 페이지 번호에 해당하는 거래처 리스트 조회
 	List<Client> getBeginEndClients(PageVo pageVo);
 
 	// 거래처 등록

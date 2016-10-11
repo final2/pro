@@ -57,6 +57,18 @@ public class DistributionServiceImpl implements DistributionService{
 		
 	}
 	
+	// 제품 리스트 총 수량
+	@Override
+	public int getTotalInven(int pn) {
+		return distributionDao.getTotalInven();
+	}
+	
+	// 페이지 번호로 해당 하는 제품 리스트 조회
+	@Override
+	public List<HqInventory> getBeginEndInvens(PageVo pageVo) {
+		return distributionDao.getBeginEndInvens(pageVo);
+	}
+	
 /* 거래처 ========================================================================================================= */
 	// 거래처 리스트 / 발주 신청시 거래처명
 	@Override

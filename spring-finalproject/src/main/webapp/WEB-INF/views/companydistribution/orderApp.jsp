@@ -33,7 +33,7 @@ $(function(){
 					$tr.append("<tr id='no-"+pro.product.no+"'>"
 							  +"<td>"+pro.product.no+"<input type='hidden' name='no' class='form-control' value='"+pro.product.no+"'/></td>"
 							  +"<td>"+pro.product.name+"</td>"
-						   	  +"<td>"+pro.product.price+"<input type='hidden' name='price' class='form-control' value='"+pro.product.price+"'/></td>"
+						   	  +"<td>"+pro.product.price+"<input type='hidden' name='price' class='form-control' value='"+pro.product.price +"'/></td>"
 							  +"<td>"+pro.qty+"</td>"
 						   	  +"<td><input type='number' name='qty' id='qty' class='form-control' value = '0'/></td>"
 							  +"</tr>")

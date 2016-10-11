@@ -107,7 +107,6 @@ public class BranchController {
 			map2.put("productNo", d.getProduct().getNo());
 			
 			BranchInventory inven = brService.getInventoryByProductNo(map2);
-			
 			if (inven == null) {
 				inven = new BranchInventory();
 				inven.setQty(d.getQty());

@@ -111,4 +111,6 @@ public interface BranchService {
 	void deleteBranchSales(int salesno);
 	
 	void deleteBranchSalesDetail(int salesno);
+	
+	BranchEmp getBranchEmpByEmail(String email);
 }

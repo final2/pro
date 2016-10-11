@@ -84,7 +84,6 @@ $(function() {
 		event.preventDefault();
 		
 		var id = $(this).attr("id");
-		console.log(id);
 		
 		return "website/searchtype.do?type="+id;
 		

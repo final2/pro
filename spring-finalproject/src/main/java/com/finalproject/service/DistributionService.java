@@ -18,6 +18,12 @@ public interface DistributionService {
 	// 입고확인
 	void addInventory(int orderNo);
 	
+	// 제품 리스트 총 수량
+	int getTotalInven(int pn);
+	
+	// 페이지 번호로 해당 하는 제품 리스트 조회
+	List<HqInventory> getBeginEndInvens(PageVo pageVo);
+	
 /* 거래처 ========================================================================================================= */
 	// 거래처 리스트 / 발주 신청시 거래처명
 	List<Client> getClientList();
