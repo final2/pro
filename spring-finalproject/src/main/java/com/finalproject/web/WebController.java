@@ -96,8 +96,6 @@ public class WebController {
 		@RequestParam(name="pno", required=false, defaultValue="1")int pageNo,
 		Model model) {
 		
-		System.out.println("넘어온문자는"+criteria.getKeyword());
-		
 		// 페이지 번호가 1보다 작으면 1페이지로 리다이렉트
 		if (pageNo < 1) {
 			return "redirect:/searchbranch.do?pno=1";
