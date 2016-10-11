@@ -14,6 +14,7 @@ import com.finalproject.model.AccountBook;
 import com.finalproject.model.Branch;
 import com.finalproject.model.BranchEmp;
 import com.finalproject.model.Career;
+import com.finalproject.model.Criteria;
 import com.finalproject.model.Employee;
 import com.finalproject.model.EmployeeDetail;
 import com.finalproject.model.Languages;
@@ -58,7 +59,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 		
 	}
 	
-	
 	@Override
 	public void insertSalary(AccountBook accountBook) {
 		empDao.insertSalary(accountBook);
@@ -68,6 +68,17 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public List<Employee> getAllEmployees() {
 		List<Employee> empList = empDao.getAllEmployees();
 		return empList;
+	}
+	
+	@Override
+	public List<Employee> getEmployees(Criteria criteria) {
+		List<Employee> empList = empDao.getEmployees(criteria);
+		return empList;
+	}
+	
+	@Override
+	public int getTotalEmpRows(Criteria criteria) {
+		return empDao.getTotalEmpRows(criteria);
 	}
 
 	@Override
@@ -95,15 +106,44 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 	
 	@Override
+	public void updateEmployee(Employee emp) {
+		empDao.updateEmployee(emp);
+	}
+	
+	@Override
+	public List<AccountBook> getAccountBooks(Criteria criteria) {
+		List<AccountBook> accountBookList = empDao.getAccountBooks(criteria);
+		return accountBookList;
+	}
+	
+	@Override
+	public int getTotalSalaryRows(Criteria criteria) {
+		return empDao.getTotalSalaryRows(criteria);
+	}
+	@Override
 	public void insertBranch(Branch branch) {
 		empDao.insertBranch(branch);
 	}
 
 	@Override
+	public int getTotalBranchRows(Criteria criteria) {
+		return empDao.getTotalBranchRows(criteria);
+	}
+	
+	@Override
 	public List<Branch> getAllBranch() {
 		List<Branch> branchNames = empDao.getAllBranch();
 		return branchNames;
 	}
+	
+	@Override
+	public List<Branch> getBranch(Criteria criteria) {
+		
+		List<Branch> branchList = empDao.getBranch(criteria);
+		
+		return branchList;
+	}
+	
 	
 	@Override
 	public List<Branch> getAllBranchByEmp() {
@@ -118,8 +158,25 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 	
 	@Override
+	public void updateBranch(Branch branch) {
+		empDao.updateBranch(branch);
+	}
+	
+	@Override
 	public void insertBranchEmp(BranchEmp branchEmp) {
 		empDao.insertBranchEmp(branchEmp);
+	}
+	
+	@Override
+	public List<BranchEmp> getBranchEmpByNo(int branchNo) {
+		List<BranchEmp> branchEmpList = empDao.getBranchEmpByNo(branchNo);
+		return branchEmpList;
+	}
+	
+	@Override
+	public BranchEmp getBranchEmpByBrEmpNo(int brEmpNo) {
+		BranchEmp brEmp = empDao.getBranchEmpByBrEmpNo(brEmpNo);
+		return brEmp;
 	}
 	
 	@Override

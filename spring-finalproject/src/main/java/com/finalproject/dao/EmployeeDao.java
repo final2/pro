@@ -6,6 +6,7 @@ import com.finalproject.model.AccountBook;
 import com.finalproject.model.Branch;
 import com.finalproject.model.BranchEmp;
 import com.finalproject.model.Career;
+import com.finalproject.model.Criteria;
 import com.finalproject.model.Employee;
 import com.finalproject.model.Languages;
 import com.finalproject.model.Licenses;
@@ -27,6 +28,14 @@ public interface EmployeeDao {
 	
 	// 모든 사원 조회
 	List<Employee> getAllEmployees();
+	// 모든 사원 조회
+	List<Employee> getEmployees(Criteria criteria);
+	// 모든 사원 행 수
+	int getTotalEmpRows(Criteria criteria);
+	
+	// 해당 사원정보 수정
+	void updateEmployee(Employee emp);
+	
 	// 사원번호로 해당사원 조회
 	Employee getEmployeeByNo(int empNo);
 	// 사원번호로 학력 조회
@@ -37,6 +46,11 @@ public interface EmployeeDao {
 	List<Languages> getLanguageListByNo(int empNo);
 	
 	//List<Branch> getBranchListByEmpNo(int empNo);
+	
+	// 급여리스트 조회
+	List<AccountBook> getAccountBooks(Criteria criteria);
+	// 급여 리스트 갯수 조회
+	int getTotalSalaryRows(Criteria criteria);
 	
 	// 로그인시 사원번호 확인
 	Employee loginByNo(int empNo);
@@ -50,11 +64,22 @@ public interface EmployeeDao {
 	void insertBranch(Branch branch);
 	// 모든 지점 조회
 	List<Branch> getAllBranch();
+	// 모든 지점 조회
+	List<Branch> getBranch(Criteria criteria);
+	// 모든 지점 행 수
+	int getTotalBranchRows(Criteria criteria);
+	
 	// 담당자와 같이 모든지점 조회
 	List<Branch> getAllBranchByEmp();
 	// 지점번호로 지점 조회
 	Branch getBranchByBranchNo(int branchNo);
+	// 지점정보 수정
+	void updateBranch(Branch branch);
 	
 	// 지점사원 등록
 	void insertBranchEmp(BranchEmp branchEmp);
+	// 지점 번호로 해당 지점 사원 조회
+	List<BranchEmp> getBranchEmpByNo(int branchNo);
+	// 지점사원번호로 지점 사원 조회
+	BranchEmp getBranchEmpByBrEmpNo(int brEmpNo);
 }

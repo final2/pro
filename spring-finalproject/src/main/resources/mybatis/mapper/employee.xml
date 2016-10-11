@@ -43,7 +43,7 @@
 	
 	<!-- 현재 사원번호 확인하기 -->
 	<select id="empSeqCheck" resultType="int">
-		select myemp_seq.nextval from dual
+		select my_seq.nextval from dual
 	</select>
 	
 	<!-- 사원등록 -->
@@ -86,6 +86,60 @@
 			position,
 			remarks
 		from employee
+		where rowid in( select max(rowid) from employee group by department )
+	</select>
+	
+	<!-- 모든 사원 조회하기 -->
+	<select id="getEmployees" parameterType="Criteria" resultType="Employee">
+		select 
+			no, 
+			name, 
+			dept, 
+			position,
+			remarks
+		from (
+			select
+				row_number() over (order by no desc) rn,
+				no, 
+				name,
+				department  as dept,
+				position,
+				remarks
+			from	
+				employee
+		)
+		where
+			rn >= #{beginIndex} and rn &lt;= #{endIndex}
+			<if test="opt != null and keyword != null">
+				<if test="opt == 'empName'">
+					and name like '%' || #{keyword} || '%'
+				</if>
+				<if test="opt == 'department'">
+					and dept like '%' || #{keyword} || '%'
+				</if>
+				<if test="opt == 'position'">
+					and position like '%' || #{keyword} || '%'
+				</if>
+			</if> 
+	</select>
+	
+	<!-- 모든 사원 조회(카운트) -->
+	<select id="getTotalEmpRows" parameterType="Criteria" resultType="int">
+		select count(*)
+		from employee
+		<where>
+			<if test="opt != null and keyword != null">
+				<if test="opt == 'empName'">
+					name like '%' || #{keyword} || '%'
+				</if>
+				<if test="opt == 'department'">
+					department like '%' || #{keyword} || '%'
+				</if>
+				<if test="opt == 'position'">
+					and position like '%' || #{keyword} || '%'
+				</if>
+			</if>
+		</where>
 	</select>
 
 	<!-- 사원번호로 사원정보 가져오기 -->
@@ -154,6 +208,133 @@
 		order by no desc
 	</select>
 	
+	<!-- 사원정보 수정하기 -->
+	<!-- 기본정보 수정-->
+	<update id="updateEmployee" parameterType="Employee">
+		update employee
+		set
+			password 	= #{password},
+			phone 		= #{phone},
+			address 	= #{address},
+			email		= #{email},
+			department	= #{dept},
+			position	= #{position},
+			photo 		= #{photo},
+			salary		= #{salary},
+			retiredate	= #{retiredate},
+			remarks		= #{remarks}
+		where
+			no = #{no}
+	</update>
+	<!-- 학력 수정-->
+	<update id="updateCareer" parameterType="Career">
+		update career
+		set
+			school		= #{school},
+			major		= #{major},
+		where
+			employee_no	= #{empNo}
+	</update>
+	<!-- 자격증 수정 -->
+	<update id="updateLicenses" parameterType="Licenses">
+		update career
+		set
+			license			= #{license},
+			license_office	= #{licenseOffice},
+		where
+			employee_no	= #{empNo}
+	</update>
+	<!-- 어학능력 수정 -->
+	<update id="updateLanguages" parameterType="Languages">
+		update career
+		set
+			language	= #{language},
+			grade		= #{grade},
+		where
+			employee_no	= #{empNo}
+	</update>
+	
+	<!-- 급여대장 조회하기 -->
+	<select id="getAccountBooks" parameterType="Criteria" resultType="AccountBook">
+		select
+			no,
+			paymentdate 		as paymentDate,
+			salary,
+			overtime,
+			insure_health		as insureHealth,
+			insure_longhealth	as insureLonghealth,
+			insure_social		as insureSocial,
+			employee_insure		as employeeInsure,
+			empNo				as "emp.no",		
+			empName				as "emp.name",
+			dept				as "emp.dept"
+		from (
+			select     
+				row_number() over (order by A.no desc) rn,     
+				A.no,     
+				A.paymentdate,     
+				A.salary,     
+				A.overtime,    
+				A.insure_health,     
+				A.insure_longhealth,     
+				A.insure_social,     
+				A.employee_insure,     
+				A.employee_no   as empNo,    
+				E.department   as dept,     E.name     as empName   
+ 			from      
+ 				accountbook A, employee E     
+			where      
+				A.employee_no = E.no  
+			order by 
+				A.paymentdate desc
+		)
+		where
+			rn >= #{beginIndex} and rn &lt;= #{endIndex}
+			<if test="opt != null and keyword != null">
+				<if test="opt == 'name'">
+					and name like '%' || #{keyword} || '%'
+				</if>
+				<if test="opt == 'paymentDate'">
+					and paymentDate = #{keyword}
+				</if>
+				<if test="opt == 'dept'">
+					and dept like '%' || #{keyword} || '%'
+				</if>
+			</if>
+	</select>
+	
+	<!-- 급여 리스트 갯수 조회  -->
+	<select id="getTotalSalaryRows" parameterType="Criteria" resultType="int">
+		select count(*)
+		from accountbook A, employee E
+		<where>
+			<if test="opt != null and keyword != null">
+				<if test="opt == 'name'">
+					A.employee_no = E.no
+					and E.name like '%' || #{keyword} || '%'
+				</if>
+				<if test="opt == 'paymentDate'">
+					A.employee_no = E.no
+					and A.paymentdate = #{keyword}
+				</if>
+				<if test="opt == 'dept'">
+					A.employee_no = E.no
+					and E.department like '%' || #{keyword} || '%'
+				</if>
+			</if>
+		</where>
+	</select>
+	
+	<!-- 근태리스트 갯수 조회 -->
+	<!-- <select id="getTimetable" parameterType="Criteria" resultType="WorkTime">
+		select
+	</select> -->
+	
+	<!-- 근태리스트 갯수 조회 -->
+	<!-- <select id="getTotalTimetablerows">
+		select
+	</select> -->
+	
 	<!-- 지점 등록 -->
 	<insert id="insertBranch" parameterType="Branch">
 		insert into branch (no, name, phone, address, atm, freshfood, lotto, parcelservice, lifeservice, image, employee_no )
@@ -162,9 +343,62 @@
 	
 	<!-- 모든 지점 조회 -->
 	<select id="getAllBranch" resultType="Branch">
-		select name
+		select no, name
 		from branch		
 		order by no desc
+	</select>
+	
+	<!-- 모든 지점 조회 -->
+	<select id="getBranch" parameterType="Criteria" resultType="Branch">
+		select no, name, address, phone, manager_name "emp.name", manager_no "emp.no", manager_phone "emp.phone"
+		from (
+			select
+				row_number() over (order by B.no desc) rn,
+				B.no,
+				B.name ,
+				B.address,
+				B.phone,
+				E.name 		as manager_name,
+				E.no 		as manager_no,
+				E.phone 	as manager_phone
+			from
+				branch B, employee E 
+			where 
+				B.employee_no = E.no
+		)		
+		where
+			rn >= #{beginIndex} and rn &lt;= #{endIndex}
+			<if test="opt == 'branch'">
+				and name like '%' || #{keyword} || '%'
+			</if>
+			<if test="opt == 'address'">
+				and address like '%' || #{keyword} || '%'
+			</if>
+			<if test="opt == 'manager'">
+				and manager_name like '%' || #{keyword} || '%'
+			</if>
+	</select>
+	
+	<!-- 모든 지점 조회 (카운트) -->
+	<select id="getTotalBranchRows" parameterType="Criteria" resultType="int">
+		select count(*)
+		from branch B, employee E
+		<where>
+			<if test="opt != null and keyword != null">
+				<if test="opt == 'branch'">
+					B.employee_no = E.no
+					and B.name like '%' || #{keyword} || '%'
+				</if>
+				<if test="opt == 'manager'">
+					B.employee_no = E.no
+					and E.name like '%' || #{keyword} || '%'
+				</if>
+				<if test="opt == 'address'">
+					B.employee_no = E.no
+					and B.address like '%' || #{keyword} || '%'
+				</if>
+			</if>
+		</where>
 	</select>
 	
 	<!-- 모든 지점 리스트 -->
@@ -209,9 +443,65 @@
 		and B.no = #{no}
 	</select>
 	
+	<!-- 지점정보 수정 -->
+	<update id="updateBranch" parameterType="Branch">
+		update branch
+		set
+			name			= #{name}, 
+			phone			= #{phone}, 
+			address			= #{address}, 
+			atm				= #{atm}, 
+			freshfood		= #{freshFood}, 
+			lotto			= #{lotto}, 
+			parcelservice	= #{parcelService}, 
+			lifeservice		= #{lifeService}, 
+			image			= #{img},
+			employee_no		= #{emp.no} 
+		where no = #{no}
+	</update>
+	
 	<!-- 지점사원 등록 -->
 	<insert id="insertBranchEmp" parameterType="BranchEmp">
 		insert into br_employees (no, phone, grade, password, name, retiredate, branch_no, images, birth, email, address )
 		values ("my_seq.nextval, #{phone}, #{grade}, #{password}, #{name}, sysdate, #{branch.no}, #{images}, #{birth}, #{email}, #{address})
 	</insert>
+	
+	<!-- 지점번호로 지점 사원조회 -->
+	<select id="getBranchEmpByNo" parameterType="int" resultType="BranchEmp">
+		select
+			E.no,
+			E.phone,
+			E.grade,
+			E.password,
+			E.name,
+			E.retiredate		as retireDate,
+			E.images,
+			E.birth,
+			E.email,
+			E.address
+		from br_employees E, branch B 
+		where E.branch_no = B.no
+		and B.no = #{no}
+	</select>
+	
+	<!-- 지점사원번호로 지점사원 조회 -->
+	<select id="getBranchEmpByBrEmpNo" parameterType="int" resultType="BranchEmp">
+		select
+			E.no,
+			E.phone,
+			E.grade,
+			E.password,
+			E.name,
+			E.retiredate		as retireDate,
+			E.images,
+			E.birth,
+			E.email,
+			E.address,
+			E.branch_no			as "branch.no",
+			B.name				as "branch.name"
+		from br_employees E, branch B 
+		where E.branch_no = B.no
+		and E.no = #{no}
+	</select>
+	
 </mapper>

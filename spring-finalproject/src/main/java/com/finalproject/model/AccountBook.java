@@ -5,14 +5,14 @@ import java.util.Date;
 public class AccountBook {
 
 	private int no;
-	private String paymentDate;
-	private int salary;
+	private String paymentDate = "1";
+	private int salary = 0;
 	private int overtime = 0;
 	private int insureHealth = 0;
 	private int insureLonghealth = 0;
 	private int insureSocial = 0;
 	private int employeeInsure = 0;
-	private int empNo;
+	private Employee emp;
 	
 	public AccountBook() {}
 
@@ -80,12 +80,12 @@ public class AccountBook {
 		this.employeeInsure = employeeInsure;
 	}
 
-	public int getEmpNo() {
-		return empNo;
+	public Employee getEmp() {
+		return emp;
 	}
-
-	public void setEmpNo(int empNo) {
-		this.empNo = empNo;
+	
+	public void setEmp(Employee emp) {
+		this.emp = emp;
 	}
 	
 	

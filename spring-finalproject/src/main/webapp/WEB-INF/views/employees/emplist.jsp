@@ -10,12 +10,16 @@
 <link href="/FinalProject/resources/bootstrap/css/simple-sidebar.css" rel="stylesheet">
 <script src="/FinalProject/resources/bootstrap/js/bootstrap.min.js"></script>
 <style>
-	.container {position:relative; top:60px;}
+	.container {position:relative; top:60px; text-align:center;}
 	.container:after {clear:both; content:""; display:block;}
+
+	.container > h1 {text-align:left;}
+	.container > h1 > a {text-decoration:none; color:inherit;}
 
 	.empBox {width:100%; margin:15px auto 15px auto;}
 	.empBox:after {clear:both; content:""; display:block;}
-	
+
+	.row label {height:34px; line-height:34px;}	
 	table { table-layout:fixed; word-break:break-all;}
 	tr {clear:both;}
 	th, td {height:50px; padding:0 !important;}
@@ -23,7 +27,7 @@
 	
 	td > .empBtn {width:100%; height:100%; display:block; background:#f5fbff; vertical-align:middle; line-height:50px; text-decoration:none; color:inherit;}
 	
-	.pageBox {width: 232px; position:absolute; left:50%; top:50%; margin-left:-116px; margin-top:550px;}
+	.pageBox {margin-top:90px;}
 	
 </style>
 </head>
@@ -32,7 +36,27 @@
 	<%@ include file="/WEB-INF/views/sidebartemplate/sidebar.jsp" %>	
 	<div id="page-content-wrapper">
 		<div class="container">
-			<h1>사원 리스트</h1>
+			<h1><a href="emplist.do">사원 리스트</a></h1>
+			<div class="row">
+				<form role="form" action="emplist.do">
+					<div class="col-sm-offset-4 col-sm-2 form-group">
+						<select name="opt" class="form-control">
+							<option value="empName">이름</option>
+							<option value="department">부서명</option>
+							<option value="position">직책</option>
+						</select>
+					</div>
+					<div class="col-sm-6 form-group">
+						<label class="col-sm-2 text-right">검색어</label>
+						<div class="col-sm-9">
+							<input type="text" name="keyword" class="form-control"/>
+						</div>
+						<button type="submit" class="btn btn-primary col-sm-1">
+							<span class="glyphicon glyphicon-search"></span>
+						</button>
+					</div>
+				</form>
+			</div>
 			<table class="table table-bordered empBox table-striped" >
 				<colgroup>
 					<col style="width:22%;">
@@ -64,17 +88,32 @@
 				</c:forEach>
 			</table>
 			
-			<div class="empBox">
-				<ul class="pagination pageBox">
-					<li><a href="#" aria-label="Previous"> <span aria-hidden="true">&laquo;</span></a></li>
-					<li><a href="empdetail.do?pno="1">1</a></li>
-					<li><a href="#">2</a></li>
-					<li><a href="#">3</a></li>
-					<li><a href="#">4</a></li>
-					<li><a href="#">5</a></li>
-					<li><a href="#" aria-label="Next"> <span aria-hidden="true">&raquo;</span></a></li>
-				</ul>
-			</div>
+			<ul class="pagination pageBox">
+			<c:if test="${param.pno gt 1 }">
+   			<li>
+     				<a href="emplist.do?pno=${param.pno - 1 }" aria-label="Previous">
+       				<span aria-hidden="true">&laquo;</span>
+     				</a>
+   			</li>
+	   		</c:if>
+	   		<c:forEach var="num" begin="${navi.beginPage }" end="${navi.endPage }">
+	   			<c:choose>
+	   				<c:when test="${param.pno eq num }">
+	   					<li class="active"><a href="emplist.do?pno=${num }">${num }</a></li>
+	   				</c:when>
+	   				<c:otherwise>
+					    <li><a href="emplist.do?pno=${num }">${num }</a></li>
+	   				</c:otherwise>
+	   			</c:choose>
+	   		</c:forEach>
+	   		<c:if test="${param.pno lt navi.totalPages}">
+	   			<li>
+	     				<a href="emplist.do?pno=${param.pno + 1 }" aria-label="Next">
+	       				<span aria-hidden="true">&raquo;</span>
+	     				</a>
+	   			</li>
+	   		</c:if>
+			</ul>
 		</div>
 	</div>
 </div>

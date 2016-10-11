@@ -19,15 +19,21 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.finalproject.model.AccountBook;
 import com.finalproject.model.Branch;
+import com.finalproject.model.BranchAddForm;
 import com.finalproject.model.BranchEmp;
+import com.finalproject.model.BranchEmpAddForm;
 import com.finalproject.model.Career;
+import com.finalproject.model.Criteria;
 import com.finalproject.model.Employee;
 import com.finalproject.model.EmployeeDetail;
 import com.finalproject.model.EmployeeLoginCheck;
 import com.finalproject.model.Languages;
 import com.finalproject.model.Licenses;
+import com.finalproject.model.PageVo;
 import com.finalproject.model.RegisterEmp;
 import com.finalproject.service.EmployeeService;
+
+
 
 @Controller
 public class EmployeeController {
@@ -53,7 +59,6 @@ public class EmployeeController {
 	public String compLogin(EmployeeLoginCheck employee, HttpSession session) {
 		
 		Employee emp = empService.empLogin(employee.getNo(), employee.getPassword());
-		
 		
 		session.setAttribute("LoginUser", emp);
 		return "redirect:/notice.do";
@@ -88,6 +93,11 @@ public class EmployeeController {
 		
 		Employee emp = (Employee)session.getAttribute("LoginUser");
 		
+		if (emp == null) {
+			
+			throw new RuntimeException("로그인이 필요한 서비스입니다.");
+		}
+		
 		if (!emp.getDept().equals("HR") ) {
 			
 			throw new RuntimeException("사원등록은 인사관리 부서만 접근 가능합니다.");
@@ -99,6 +109,7 @@ public class EmployeeController {
 		model.addAttribute("branchNames", branchNames);
 		
 		return "employees/insertempform";
+		
 	}
 	
 	@RequestMapping(value="/insertemp.do", method=RequestMethod.POST)
@@ -127,32 +138,45 @@ public class EmployeeController {
 		
 		List<Career> careerList = new ArrayList<>();
 		
-		for (int i=0; i<regEmp.getSchools().length; i++) {
-			Career career = new Career();
-			career.setSchool(regEmp.getSchools()[i]);
-			career.setMajor(regEmp.getMajors()[i]);
+		if (regEmp.getTerms() != null && regEmp.getSchools() != null && regEmp.getMajors() != null) {
 			
-			careerList.add(career);
+			for (int i=0; i<regEmp.getSchools().length; i++) {
+				Career career = new Career();
+				career.setTerm(regEmp.getTerms()[i]);
+				career.setSchool(regEmp.getSchools()[i]);
+				career.setMajor(regEmp.getMajors()[i]);
+				
+				careerList.add(career);
+				
+			}
 		}
+		
 		
 		List<Licenses> licensesList = new ArrayList<>();
 		
-		for (int i=0; i<regEmp.getLicenses().length; i++) {
-			Licenses license = new Licenses();
-			license.setLicense(regEmp.getLicenses()[i]);
-			license.setLicenseOffice(regEmp.getLicenseOffices()[i]);
+		if(regEmp.getLicenses() != null && regEmp.getLicenseOffices() != null) {
 			
-			licensesList.add(license);
+			for (int i=0; i<regEmp.getLicenses().length; i++) {
+				Licenses license = new Licenses();
+				license.setLicense(regEmp.getLicenses()[i]);
+				license.setLicenseOffice(regEmp.getLicenseOffices()[i]);
+				
+				licensesList.add(license);
+			}
 		}
+		
 		
 		List<Languages> languageList = new ArrayList<>();
 
-		for (int i=0; i<regEmp.getLanguages().length; i++) {
-			Languages language = new Languages();
-			language.setLanguage(regEmp.getLanguages()[i]);
-			language.setGrade(regEmp.getGrades()[i]);
+		if (regEmp.getLanguages() != null && regEmp.getGrades() != null) {
 			
-			languageList.add(language);
+			for (int i=0; i<regEmp.getLanguages().length; i++) {
+				Languages language = new Languages();
+				language.setLanguage(regEmp.getLanguages()[i]);
+				language.setGrade(regEmp.getGrades()[i]);
+				
+				languageList.add(language);
+			}
 		}
 		
 		empService.registerEmployee(emp, careerList,  licensesList, languageList);
@@ -161,10 +185,31 @@ public class EmployeeController {
 	}
 	
 	@RequestMapping(value="/emplist.do")
-	public String empList(Model model) {
+	public String empList(Criteria criteria, @RequestParam(name="pno", required=false, defaultValue="1") int pageNo, Model model) {
 		
-		List<Employee> empList = empService.getAllEmployees();
+		if(pageNo < 1) {
+			return "redirect:/emplist.do?pno=1";
+		}
+		
+		int rows = 10;
+		int pages = 5;
+		int beginIndex = (pageNo - 1) * rows + 1;
+		int endIndex = pageNo * rows;
+		
+		int totalRows = empService.getTotalEmpRows(criteria);
+		
+		PageVo pagination = new PageVo(rows, pages, pageNo, totalRows);
+		
+		if (pageNo > pagination.getTotalPages()) {
+			return "redirect:/emplist.do?pno=" + pagination.getTotalPages();
+		}
+		
+		criteria.setBeginIndex(beginIndex);
+		criteria.setEndIndex(endIndex);
+		
+		List<Employee> empList = empService.getEmployees(criteria);
 		model.addAttribute("empList", empList);
+		model.addAttribute("navi", pagination);
 		
 		return "employees/emplist";
 	}
@@ -189,6 +234,11 @@ public class EmployeeController {
 	
 	@RequestMapping(value="/empupdate.do", method=RequestMethod.POST)
 	public String empUpdate(EmployeeDetail empDetail) {
+		/*
+		Employee emp = new Employee();
+		emp.setAddress(empDetail.get)
+		empService.updateEmployee(emp);
+		 */
 		
 		return "redirect:/empdetail.do";
 	}
@@ -205,7 +255,21 @@ public class EmployeeController {
 	
 	
 	@RequestMapping(value="/insertbranch.do", method=RequestMethod.POST)
-	public String insertBranch(Branch branch, @RequestParam("img") MultipartFile upfile) throws Exception {
+	public String insertBranch(BranchAddForm brForm, @RequestParam("img") MultipartFile upfile) throws Exception {
+		
+		Branch branch = new Branch();
+		Employee emp = new Employee();
+		emp.setNo(brForm.getEmpNo());
+		
+		branch.setName(brForm.getName());
+		branch.setPhone(brForm.getPhone());
+		branch.setAddress(brForm.getAddress());
+		branch.setAtm(brForm.getAtm());
+		branch.setFreshFood(brForm.getFreshFood());
+		branch.setLotto(brForm.getLotto());
+		branch.setParcelService(brForm.getParcelService());
+		branch.setLifeService(brForm.getLifeService());
+		branch.setEmp(emp);
 		
 		if (!upfile.isEmpty()) {
 			
@@ -221,11 +285,32 @@ public class EmployeeController {
 	}
 	
 	@RequestMapping(value="/compbranchlist.do")
-	public String branchList(Model model) {
+	public String branchList(Criteria criteria, @RequestParam(name="pno", required=false, defaultValue="1") int pageNo, Model model) {
 		
-		List<Branch> branchList = empService.getAllBranchByEmp();
+		if (pageNo < 1) {
+			return "redirect:/compbranchlist.do?pno=1";
+		}
 		
+		int rows = 10;
+		int pages = 5;
+		int beginIndex = (pageNo - 1) * rows + 1;
+		int endIndex = pageNo * rows;
+		
+		int totalRows = empService.getTotalBranchRows(criteria);
+		
+		PageVo pagination = new PageVo(rows, pages, pageNo, totalRows);
+		
+		if(pageNo > pagination.getTotalPages()) {
+			return "redirect:/compbranchlist.do?pno=" + pagination.getTotalPages();
+		}
+		
+		criteria.setBeginIndex(beginIndex);
+		criteria.setEndIndex(endIndex);
+		
+		List<Branch> branchList = empService.getBranch(criteria);
+
 		model.addAttribute("branchList", branchList);
+		model.addAttribute("navi", pagination);
 		
 		return "employees/branchlist"; 
 		
@@ -234,10 +319,56 @@ public class EmployeeController {
 	@RequestMapping(value="/compbranchdetail.do")
 	public String branchDetail(@RequestParam(name="no") int branchNo, Model model) {
 		Branch branch = empService.getBranchByBranchNo(branchNo);
+		List<BranchEmp> brEmpList = empService.getBranchEmpByNo(branchNo);
 		
 		model.addAttribute("branch", branch);
+		model.addAttribute("brEmpList", brEmpList);
 		
 		return "employees/branchdetail";
+	}
+	
+	@RequestMapping(value="/updatebranch.do", method=RequestMethod.GET)
+	public String branchUpdateForm(@RequestParam(name="no") int branchNo, Model model) {
+
+		Branch branch = empService.getBranchByBranchNo(branchNo);
+		List<Employee> empList = empService.getAllEmployees();
+		
+		model.addAttribute("branch", branch);
+		model.addAttribute("empList", empList);
+		
+		return "employees/updatebranchform";
+	}
+	
+	@RequestMapping(value="/updatebranch.do", method=RequestMethod.POST)
+	public String branchUpdateForm(BranchAddForm brForm, @RequestParam("img") MultipartFile upfile) throws Exception {
+		
+		Branch branch = new Branch();
+		Employee emp = new Employee();
+		
+		branch.setNo(brForm.getNo());
+		branch.setName(brForm.getName());
+		branch.setPhone(brForm.getPhone());
+		branch.setAddress(brForm.getAddress());
+		branch.setAtm(brForm.getAtm());
+		branch.setFreshFood(brForm.getFreshFood());
+		branch.setLotto(brForm.getLotto());
+		branch.setLifeService(brForm.getLifeService());
+		branch.setParcelService(brForm.getParcelService());
+
+		emp.setNo(brForm.getEmpNo());
+		branch.setEmp(emp);
+		
+		if (!upfile.isEmpty()) {
+			
+			Files.copy(upfile.getInputStream(), Paths.get("C:\\Users\\yun\\git\\pro\\spring-finalproject\\src\\main\\webapp\\resources\\image\\branchimg", upfile.getOriginalFilename()));
+			
+			branch.setImg(upfile.getOriginalFilename());
+		
+		}
+		
+		empService.updateBranch(branch);
+		
+		return "redirect:/compbranchdetail.do";
 	}
 	
 	@RequestMapping(value="/insertbranchemp.do", method=RequestMethod.GET)
@@ -248,9 +379,79 @@ public class EmployeeController {
 	}
 	
 	@RequestMapping(value="/insertbranchemp.do", method=RequestMethod.POST)
-	public String insertBranchEmp(BranchEmp branchEmp) {
+	public String insertBranchEmp(BranchEmpAddForm branchEmpAdd, @RequestParam("image")  MultipartFile upfile) throws Exception {
+		
+		BranchEmp branchEmp = new BranchEmp();
+		Branch branch = new Branch();
+		
+		branchEmp.setEmail(branchEmpAdd.getEmail());
+		branchEmp.setAddress(branchEmpAdd.getAddress());
+		branchEmp.setPhone(branchEmpAdd.getPhone());
+		branchEmp.setGrade(branchEmpAdd.getGrade());
+		branchEmp.setPassword(branchEmpAdd.getPassword());
+		branchEmp.setName(branchEmpAdd.getName());
+		branch.setNo(branchEmpAdd.getBranchNo());
+		branchEmp.setBranch(branch);
+		branchEmp.setBirth(branchEmpAdd.getBirth());
+		branchEmp.setRemarks(branchEmpAdd.getRemarks());
+		
+		if (!upfile.isEmpty()) {
+			
+			Files.copy(upfile.getInputStream(), Paths.get("C:\\Users\\yun\\git\\pro\\spring-finalproject\\src\\main\\webapp\\resources\\image\\brempimg", upfile.getOriginalFilename()));
+			
+			branchEmp.setImages(upfile.getOriginalFilename());
+		
+		}
+		
 		empService.insertBranchEmp(branchEmp);
+		
 		return "redirect:/branchemplist";
+	}
+	
+	@RequestMapping(value="/branchempdetail.do")
+	public String branchEmpDetail(@RequestParam(name="no") int brEmpNo, Model model) {
+		BranchEmp branchemp = empService.getBranchEmpByBrEmpNo(brEmpNo);
+		
+		model.addAttribute("brEmp", branchemp);
+		
+		return "employees/branchempdetail";
+		
+	}
+	
+	/*@RequestMapping(value="/updatebranchemp.do", method=RequestMethod.GET)
+	public String updateBranchEmpForm(@RequestParam(name="no") int brEmpNo, Model model) {
+		
+		BranchEmp branchemp = empService.getBranchEmpByBrEmpNo(brEmpNo);
+		model.addAttribute("brEmp", branchemp);
+		
+		return "employees/updatebranchempform";
+	}
+	
+	@RequestMapping(value="/updatebranchemp.do", method=RequestMethod.POST)
+	public String updateBranchEmp(BranchAddForm branchemp, @RequestParam(name="images") MultipartFile upfile) throws Exception {
+		
+		//empService.getBranchEmpByBrEmpNo(brEmpNo);
+		
+		return "redirect:/branchempdetail.do";
+	}*/
+	
+	@RequestMapping(value="/updatebranchemp.do", method=RequestMethod.GET)
+	public String updateBranchEmpForm(@RequestParam(name="no") int branchNo, Model model) {
+		Branch branch = empService.getBranchByBranchNo(branchNo);
+		List<BranchEmp> brEmpList = empService.getBranchEmpByNo(branchNo);
+		
+		model.addAttribute("branch", branch);
+		model.addAttribute("brEmpList", brEmpList);
+		
+		return "employees/updatebranchempform";
+	}
+	
+	@RequestMapping(value="/updatebranchemp.do", method=RequestMethod.POST)
+	public String updateBranchEmp(BranchAddForm branchemp, @RequestParam(name="images") MultipartFile upfile) throws Exception {
+		
+		//empService.getBranchEmpByBrEmpNo(brEmpNo);
+		
+		return "redirect:/branchempdetail.do";
 	}
 	
 	@RequestMapping(value="/insertsalary.do", method=RequestMethod.GET)
@@ -264,6 +465,69 @@ public class EmployeeController {
 	@RequestMapping(value="/insertsalary.do", method=RequestMethod.POST)
 	public String insertSalary(AccountBook accountBook) {
 		//empService.
-		return "redirect:/insertsalarylist";
+		return "redirect:/compsalary.do";
+	}
+	
+	@RequestMapping(value="/compsalary.do")
+	public String salaryList(Criteria criteria, @RequestParam(name="pno", required=false, defaultValue="1") int pageNo, Model model) {
+		
+		if (pageNo < 1) {
+			return "redirect:/compsalary.do?pno=1";
+		}
+		
+		int rows = 10;
+		int pages = 5;
+		int beginIndex = (pageNo - 1) * rows + 1;
+		int endIndex = pageNo * rows;
+		
+		int totalRows = empService.getTotalSalaryRows(criteria);
+		
+		PageVo pagination = new PageVo(rows, pages, pageNo, totalRows);
+		
+		if(pageNo > pagination.getTotalPages()) {
+			return "redirect:/compsalary.do?pno=" + pagination.getTotalPages();
+		}
+		
+		criteria.setBeginIndex(beginIndex);
+		criteria.setEndIndex(endIndex);
+		
+		List<AccountBook> accountBookList = empService.getAccountBooks(criteria);
+
+		model.addAttribute("salaryList", accountBookList);
+		model.addAttribute("navi", pagination);
+		
+		return "employees/salarylist";
+	}
+	
+	@RequestMapping(value="/compattendance.do")
+	public String attendanceList(Criteria criteria, @RequestParam(name="pno", required=false, defaultValue="1") int pageNo, Model model) {
+		
+		if (pageNo < 1) {
+			return "redirect:/compsalary.do?pno=1";
+		}
+		
+		int rows = 10;
+		int pages = 5;
+		int beginIndex = (pageNo - 1) * rows + 1;
+		int endIndex = pageNo * rows;
+		
+		int totalRows = empService.getTotalSalaryRows(criteria);
+		
+		PageVo pagination = new PageVo(rows, pages, pageNo, totalRows);
+		
+		if(pageNo > pagination.getTotalPages()) {
+			return "redirect:/compsalary.do?pno=" + pagination.getTotalPages();
+		}
+		
+		criteria.setBeginIndex(beginIndex);
+		criteria.setEndIndex(endIndex);
+		
+		List<AccountBook> accountBookList = empService.getAccountBooks(criteria);
+
+		model.addAttribute("adList", accountBookList);
+		model.addAttribute("navi", pagination);
+		
+		return "employees/attendance";
 	}
 }
+
