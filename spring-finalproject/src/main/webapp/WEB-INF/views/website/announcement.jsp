@@ -58,7 +58,7 @@
 	
 	.active {
 	    background-color: #4CAF50;
-}
+	}
 	
 </style>
 <script type="text/javascript">
