@@ -13,14 +13,15 @@
 <script type="text/javascript" src="resources/jquery/jquery.js"></script>
 <script type="text/javascript">
 $(function() {
-	$("#btn").click(function() {
+	// 모달창 오픈시 기본동작들
+	$('#myModal').on('show.bs.modal', function (e) {
 		$("#name").val("");
 		$("#add").attr("disabled", "disabled");
-		$(".modal-body p").hide();		
+		$(".modal-body p").hide();	
 	});
 	
-	$('#button').attr("disabled", "disabled");
-	$("form").submit(function() {
+	// 등록버튼 기능
+	$("#add").submit(function() {
 		if(!$(":input[name='name']").val()) {
 			$(".modal-body p").hide();
 			$(":input[name='name']").focus();
@@ -28,7 +29,8 @@ $(function() {
 		}
 		return true;
 	});
-		
+	
+	// 중복체크 버튼 기능
 	$("#ck").click(function() {
 		var nameck = $.trim($("#name").val());
 		if(nameck == "") {
@@ -134,7 +136,9 @@ ul.pagination li a:hover:not(.active) {background-color: #ddd;}
 				</tbody>
 			</table>
 			<div class="pull-right">
-				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" id="btn">거래처 등록</button>
+				<c:if test="${LoginUser.dept eq 'PM'}">
+					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" id="btn">거래처 등록</button>
+				</c:if>
 			</div>
 			
 			<div class="text-center">

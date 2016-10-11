@@ -11,10 +11,13 @@
 <script type="text/javascript" src="resources/jquery/jquery.js"></script>
 <script type="text/javascript">
 $(function() {
-	$("#btn").click(function() {
-
-		$(".modal-body p").hide();
-	})
+	// 모달창 오픈시 기능
+	$('#myModal').on('show.bs.modal', function (e) {
+		  $("#name").val('${clients.name}')
+		  $(".modal-body p").hide();
+	});
+	
+	// 수정 버튼 기능
 	$("form").submit(function() {
 		if(!$.trim($("#name").val())) {
 			$(".non").show();
@@ -74,7 +77,9 @@ th,td {text-align:center;}
 					</tbody>
 			</table>
 			<div class="pull-right">
-				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" id="btn" >수정</button>
+				<c:if test="${LoginUser.dept eq 'PM'}">
+					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" id="btn" >수정</button>
+				</c:if>
 				<a href="clientList.do" class="btn btn-primary">확인</a>
 			</div>
 			
@@ -97,7 +102,7 @@ th,td {text-align:center;}
 								</div>
 								<div>
 									<label>거래처 명</label>
-										<input type="text" name="name" id="name" class="form-control" value="${clients.name}">
+									<input type="text" name="name" id="name" class="form-control" value="${clients.name}">
 									<p class="non"><strong>거래처명</strong>을 입력하세요.</p>
 								</div>
 								<div>

@@ -79,7 +79,9 @@ ul.pagination li a:hover:not(.active) {background-color: #ddd;}
 				</tbody>
 			</table>
 			<div class="pull-right">
-				<a href="orderApp.do" class="btn btn-info">발주 신청</a>
+				<c:if test="${LoginUser.dept eq 'PM'}">
+					<a href="orderApp.do" class="btn btn-info">발주 신청</a>
+				</c:if>
 			</div>
 			
 			<div class="text-center">

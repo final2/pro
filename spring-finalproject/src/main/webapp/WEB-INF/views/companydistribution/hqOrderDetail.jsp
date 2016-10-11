@@ -73,21 +73,25 @@ th,td {text-align:center;}
 				</tbody>
 			</table>
 			<div class="pull-left">
-				<c:choose>
-					<c:when test="${orders.confirm == 'N'}">
-						<a href="orderConfirm.do?orderNo=${orders.no }" class="btn btn-default" >입고 확인</a>
-					</c:when>
-				</c:choose>
+				<c:if test="${LoginUser.dept eq 'PM'}">
+					<c:choose>
+						<c:when test="${orders.confirm == 'N'}">
+							<a href="orderConfirm.do?orderNo=${orders.no }" class="btn btn-default" >입고 확인</a>
+						</c:when>
+					</c:choose>
+				</c:if>
 			</div>
 			<div class="pull-right">
 				<c:url var="updateOrderURL" value="updateOrder.do">
 					<c:param name="no" value="${orders.no }"></c:param>
 				</c:url>
-				<c:choose>
-					<c:when test="${orders.confirm == 'N'}">
-						<a href="${updateOrderURL }" class="btn btn-primary">수정</a>
-					</c:when>
-				</c:choose>
+				<c:if test="${LoginUser.dept eq 'PM'}">
+					<c:choose>
+						<c:when test="${orders.confirm == 'N'}">
+							<a href="${updateOrderURL }" class="btn btn-primary">수정</a>
+						</c:when>
+					</c:choose>
+				</c:if>
 				<a href="hqOrder.do" class="btn btn-info">확인</a>
 			</div>
 		</div>
