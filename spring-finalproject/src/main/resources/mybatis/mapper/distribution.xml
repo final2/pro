@@ -5,7 +5,7 @@
 <mapper namespace="com.finalproject.dao.DistributionDao">
 <!-- 본사 ======================================================================================================= -->
 	<!-- 재고 리스트 -->
-	<select id="getInvenLists" resultType="HI">
+	<!-- <select id="getInvenLists" resultType="HI">
 		select
 			i.no			as no, 
 			i.qty			as qty, 
@@ -19,7 +19,7 @@
 			i.client_no = c.no and i.product_no = p.no 
 		order by 
 			qty asc
-	</select>
+	</select> -->
 	
 	<!-- 재고 확인 여부 -->
 	<select id="getCount" parameterType="int" resultType="int">
@@ -85,7 +85,39 @@
 			and C.client_no = #{value}
 		order by 
 			nvl(I.qty, 0) asc
+	</select>	
+	
+	<!-- 제품 리스트 총 수 불러오기 -->
+	<select id="getTotalInven" resultType="int">
+		select 
+			count(*)  
+		from hq_inventory
 	</select>
+	
+	<!-- 페이지당 리스트 불러오기 -->
+	<select id="getBeginEndInvens" parameterType="PV" resultType="HI">
+		select
+			rank,
+			qty, 
+			productNo		as "product.no",
+			clientName		as "client.name",
+			productName		as "product.name"
+		from
+			(select row_number() OVER(order by qty asc) as rank,
+				i.qty			as qty, 
+				i.product_no	as productNo,
+				c.name			as clientName,
+				p.name 			as productName
+			from
+				hq_inventory i, client c, product p
+			where
+				i.client_no = c.no and i.product_no = p.no 
+			order by 
+				rank)
+		where
+			rank >= #{beginIndex} and rank &lt;= #{endIndex}
+	</select>
+	
 
 <!-- 거래처======================================================================================================= -->
 	<!-- 거래처 등록 -->

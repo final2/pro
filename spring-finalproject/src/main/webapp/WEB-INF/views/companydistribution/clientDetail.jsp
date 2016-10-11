@@ -16,9 +16,9 @@ $(function() {
 		$(".modal-body p").hide();
 	})
 	$("form").submit(function() {
-		if($.trim(!$(":input[name='name']").val())) {
+		if(!$.trim($("#name").val())) {
 			$(".non").show();
-			$(":input[name='name']").focus();
+			$("#name").focus();
 			return false;
 		}
 		return true;

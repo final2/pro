@@ -62,6 +62,32 @@ $(function() {
 .non, .same{color: red;}
 .ok{color: blue;}
 th,td {text-align:center;}
+ul.pagination {
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+}
+ul.pagination li {display: inline;}
+ul.pagination li a {
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+    border-radius: 5px;
+}
+ul.pagination li a.active {
+    background-color: #97CCFB;
+    color: white;
+    border-radius: 5px;
+    pointer-events: none;
+    cursor: default;
+}
+ul.pagination li a:hover:not(.active) {background-color: #ddd;}
+ .disabled {
+        pointer-events: none;
+        cursor: default;
+        opacity: 0.6;
+ }
 </style>
 <title>Big Store</title>
 </head>
