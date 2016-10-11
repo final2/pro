@@ -12,6 +12,7 @@
 <script src="resources/bootstrap/js/bootstrap.min.js"></script>
 <style>
 th,td {text-align:center;}
+.price{background-color: #C6FCE7}
 </style>
 <script type="text/javascript">
 $(function(){
@@ -27,20 +28,28 @@ $(function(){
 			success:function(result) { 
 				
 				var $tr = $("#order-table");
+				
 				$tr.empty();
-				$tr.append("<tr><th style='width:20%'>제품번호</th><th style='width:20%'>제품 명</th><th style='width:20%'>단가</th><th style='width:20%'>수량</th><th style='width:20%'>주문수량</th></tr>");
+				$tr.append("<tr><th style='width:20%'>제품번호</th><th style='width:20%'>제품 명</th><th style='width:15%'>소비자가격</th><th style='width:15%' class='price'>공장도가격</th><th style='width:15%'>수량</th><th style='width:15%'>주문수량</th></tr>");
 				$.each(result, function(index, pro) {
+					var price = Math.round(pro.product.price * 0.7);
+					
 					$tr.append("<tr id='no-"+pro.product.no+"'>"
 							  +"<td>"+pro.product.no+"<input type='hidden' name='no' class='form-control' value='"+pro.product.no+"'/></td>"
 							  +"<td>"+pro.product.name+"</td>"
-						   	  +"<td>"+pro.product.price+"<input type='hidden' name='price' class='form-control' value='"+pro.product.price +"'/></td>"
-							  +"<td>"+pro.qty+"</td>"
+						   	  +"<td>"+comma(pro.product.price)+"<input type='hidden' name='price' class='form-control' value='"+pro.product.price +"'/></td>"
+							  +"<td class='price'>"+comma(price)+"</td>"
+						   	  +"<td>"+pro.qty+"</td>"
 						   	  +"<td><input type='number' name='qty' id='qty' class='form-control' value = '0'/></td>"
 							  +"</tr>")
 				}); 
 			}
 		}); 
 	});
+	function comma(str) {
+	    str = String(str);
+	    return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+	}
 });
 </script>
 <title>Big Store</title>
@@ -59,7 +68,7 @@ $(function(){
 				<table class="table table-bordered">
 					<thead>
 						<tr>
-							<th colspan="2" style="width: 50%">거래처명</th>
+							<th colspan="3" style="width: 50%">거래처명</th>
 							<td colspan="3" style="width: 50%">
 								<select id="client" name="clientNo" class="form-control">
 									<option selected>거래처를 선택하세요.</option>
@@ -78,9 +87,10 @@ $(function(){
 						<tr>
 							<th style="width:20%">제품번호</th>
 							<th style="width:20%">제품 명</th>
-							<th style="width:20%">단가</th>
-							<th style="width:20%">수량</th>
-							<th style="width:20%">주문수량</th>
+							<th style="width:15%">소비자가격</th>						
+							<th style="width:15%" class='price'>공장도가격</th>
+							<th style="width:15%">수량</th>
+							<th style="width:15%">주문수량</th>
 						</tr>
 						<!-- 입력 -->
 						
