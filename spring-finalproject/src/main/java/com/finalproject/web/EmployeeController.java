@@ -83,6 +83,30 @@ public class EmployeeController {
 		
 		model.addAttribute("empDetail", empDetail);
 		
+		return "employees/myempdetail";
+		
+	}
+	
+	@RequestMapping(value="/mysalary.do")
+	public String mySalaryList (HttpSession session, Model model ) {
+		
+		Employee emp = (Employee)session.getAttribute("LoginUser");
+		EmployeeDetail empDetail = empService.getEmployeeByEmpNo(emp.getNo());
+		
+		model.addAttribute("empDetail", empDetail);
+		
+		return "employees/empdetail";
+		
+	}
+	
+	@RequestMapping(value="/myattendance.do")
+	public String myAttendanceList (HttpSession session, Model model ) {
+		
+		Employee emp = (Employee)session.getAttribute("LoginUser");
+		EmployeeDetail empDetail = empService.getEmployeeByEmpNo(emp.getNo());
+		
+		model.addAttribute("empDetail", empDetail);
+		
 		return "employees/empdetail";
 		
 	}

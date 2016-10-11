@@ -229,7 +229,6 @@
 							<a href="emplist.do" class="btn btn-default">목록</a>
 						</div>
 					</c:when>
-					
 					<c:otherwise>
 						<div class="formBtn">
 							<a href="emplist.do" class="btn btn-default">목록</a>
