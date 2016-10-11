@@ -87,7 +87,7 @@ ul.pagination li a:hover:not(.active) {background-color: #ddd;}
 					</tbody>
 				</table>
 			</div>
-			<c:if test="${LoginUser.position eq '부장'}">			
+			<c:if test="${LoginUser.dept eq 'HR'}">			
 				<div class="text-right">
 					<a href="boardForm.do" class="btn btn-default">글쓰기</a>
 				</div>

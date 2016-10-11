@@ -5,6 +5,7 @@ import java.nio.file.Paths;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +24,9 @@ import com.finalproject.service.ProductService;
 
 @Controller
 public class ProductController {
+	
+	@Value("${image.file.path}")
+	String imageDirectory;
 
 	@Autowired
 	private ProductService productService;
@@ -55,7 +59,7 @@ public class ProductController {
 		product.setClientNo(client.getNo());
 		
 		if (!upfile.isEmpty()) {
-			Files.copy(upfile.getInputStream(), Paths.get("C:\\Users\\YoungRok\\git\\pro\\spring-finalproject\\src\\main\\webapp\\resources\\image", upfile.getOriginalFilename()));
+			Files.copy(upfile.getInputStream(), Paths.get(imageDirectory, upfile.getOriginalFilename()));
 
 			product.setImage(upfile.getOriginalFilename());
 		}

@@ -17,13 +17,28 @@
 			c.title			as title,
 			c.start_date	as startDate,
 			c.end_date		as endDate,
-			e.no			as "employee.no",
+			c.employee_no	as "employee.no",
+			e.no,
 			e.position		as "employee.position",
 			e.department	as "employee.dept"
 		from calendar c, employee e
 		where c.employee_no = e.no
-		and e.position = 'director'
-		or e.no = #{employee.no}
+		and c.employee_no = #{employee.no}
+	
+		union
+		select 
+			c.no			as no,
+			c.title			as title,
+			c.start_date	as startDate,
+			c.end_date		as endDate,
+			c.employee_no	as "employee.no",
+			e.no,
+			e.position		as "employee.position",
+			e.department	as "employee.dept"
+		from calendar c, employee e
+		where c.employee_no = e.no
+		and e.department = 'HR'
+		and e.position = '부장'
 	</select>
 	
 	<delete id="removeCalendar" parameterType="int">

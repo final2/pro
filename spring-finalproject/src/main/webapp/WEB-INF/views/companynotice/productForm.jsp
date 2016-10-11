@@ -96,6 +96,10 @@ th {text-align:center; vertical-align:middle !important;}
 <div id="wrapper">
 	<%@ include file="/WEB-INF/views/sidebartemplate/sidebar.jsp" %>
 	<a href="#menu-toggle" class="btn btn-default btn-xs" id="menu-toggle">side bar</a>
+	<!-- 메신저 modal창 -->
+	<div class="modal fade" id="messenger" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+		<%@ include file="../message/messagebutton.jsp" %>
+	</div>
 	<div id="page-context-wrapper">
 		<!-- Background 불러오기 -->
 		<%@ include file="backgroundVideo.jsp" %>
@@ -112,12 +116,12 @@ th {text-align:center; vertical-align:middle !important;}
 							<col width="40%">
 						</colgroup>
 						<tr>
-							<th>제품 명 *</th>
+							<th>제품 명<span style="color:red"> *</span></th>
 							<td><input type="text" id="name" name="name" class="form-control" required="required" /></td>
 							<td rowspan="3" colspan="2" style="text-align:center;"><img id="imgview" style="width:80%; height:300px;" src=""></td>
 						</tr>
 						<tr>
-							<th>가격 *</th>
+							<th>가격<span style="color:red"> *</span></th>
 							<td><input type="number" id="price" name="price" class="form-control" required="required"/>	</td>
 						</tr>
 						<tr>

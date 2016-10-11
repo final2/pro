@@ -51,7 +51,7 @@ thead td,th{text-align:center;}
 					<c:param name="pn" value="${param.pn }" />
 					<c:param name="rn" value="${param.rn }" />
 				</c:url>
-				<c:if test="${LoginUser.position eq '부장'}">
+				<c:if test="${LoginUser.dept eq 'HR'}">
 					<a href="${updateFormURL }" class="btn btn-default">수정</a>
 					<a href="boardDelete.do" class="btn btn-default">삭제</a>
 				</c:if>

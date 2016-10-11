@@ -29,18 +29,34 @@
 		      			src="/FinalProject/resources/image/empimg/${LoginUser.photo }" />
      			</div>
 	     		<div class="col-sm-6">
-		     			<div style="height:30px;" class="emp">사원번호</div>
-		     			<div style="height:30px;" class="emp">${LoginUser.no }</div>		     				
+		     			<div style="height:30px;" class="emp">소속 부서</div>
+		     			<c:if test="${LoginUser.dept eq 'HR' }">
+			     			<div style="height:30px;" class="emp">인사과</div>		     				
+		     			</c:if>
+		     			<c:if test="${LoginUser.dept eq 'management' }">
+			     			<div style="height:30px;" class="emp">일반사원</div>		     				
+		     			</c:if>
+		     			<c:if test="${LoginUser.dept eq 'PM' }">
+			     			<div style="height:30px;" class="emp">물류과</div>		     				
+		     			</c:if>
 	    	 			<div style="height:30px;" class="emp">이름</div>
 	    	 			<div style="height:30px;" class="emp">${LoginUser.name }</div>	  
      			</div>
      		</div>
-     		<div>
-    	  		<a href="myprofile.do" style="clear:both">내정보</a>
+    	</li>
+    	<li class="list">
+    		<a>마이페이지 <span class="caret"></span></a>
+    		<ul class="bar">
+    			<li><a href="" >내정보</a></li>
+    			<li><a href="compsalary.do?pno=1" >급여 대장</a></li>
+    			<li><a href="compattendance.do" >근태 관리</a></li>
+    		</ul>
+    	</li>
+    	<li>
+    		<div>
 	      		<a href="" data-toggle="modal" data-target="#messenger">메신저</a>
 	      		<a href="company/logout.do">로그아웃</a>	
      		</div>
-      		
     	</li>
        <hr />
        <li class="list">
@@ -50,19 +66,25 @@
        				<a>물품 관리 <span class="caret"></span></a>
        				<ul class="in-bar">
        					<li><a href="productList.do?pn=1">물품 리스트</a></li>
-       					<li><a href="product.do">물품 등록</a></li>
+       					<c:if test="${LoginUser.dept eq 'PM' }">
+	       					<li><a href="product.do">물품 등록</a></li>
+       					</c:if>
        				</ul>	
        			</li>
-       			<li><a href="hqOrder.do">출고 관리</a></li>
-       			<li><a href="invenList.do">재고 관리</a></li>
-       			<li><a href="clientList.do">거래처 관리 </a></li>
+       			<c:if test="${LoginUser.dept eq 'PM' }">
+	       			<li><a href="hqOrder.do">출고 관리</a></li>
+	       			<li><a href="invenList.do">재고 관리</a></li>
+	       			<li><a href="clientList.do">거래처 관리 </a></li>
+       			</c:if>
        		</ul>   		
        </li>
        <li class="list">
        		<a >인사 <span class="caret"></span></a>
        		<ul class="bar">
        			<li><a href="emplist.do?pno=1" >사원 조회</a></li>
-       			<li><a href="insertemp.do" >사원 등록</a></li>
+       			<c:if test="${LoginUser.dept eq 'HR' }">
+       				<li><a href="insertemp.do" >사원 등록</a></li>
+       			</c:if>
 	       			<c:url var="boardListURL" value="boardList.do">
 						<c:param name="pn" value="1" />
 					</c:url>
@@ -72,18 +94,22 @@
        				<a>지점 관리<span class="caret"></span></a>
        				<ul class="in-bar">
        					<li><a href="compbranchlist.do?pno=1" class="">지점 조회</a></li>
-       					<li><a href="insertbranch.do" class="">지점 등록</a></li>
+       					<c:if test="${LoginUser.dept eq 'HR' }">
+	       					<li><a href="insertbranch.do" class="">지점 등록</a></li>
+       					</c:if>
        				</ul>
        			</li>
        		</ul>			
        </li>
        <li class="list">
-       		<a>급여 <span class="caret"></span></a>
-       		<ul class="bar">
-       			<li><a href="compsalary.do?pno=1" >급여 대장</a></li>
-       			<li><a href="insertsalary.do" >급여 지급</a></li>
-       			<li><a href="compattendance.do" >근태 관리</a></li>
-       		</ul>		
+      		<c:if test="${LoginUser eq 'HR' }">
+	       		<a>급여 <span class="caret"></span></a>
+	       		<ul class="bar">
+	       			<li><a href="compsalary.do?pno=1" >급여 대장</a></li>
+	       			<li><a href="insertsalary.do" >급여 지급</a></li>
+	       			<li><a href="compattendance.do" >근태 관리</a></li>
+	       		</ul>		
+      		</c:if>
        </li>
        <li>
        		<a href="">통계</a>		

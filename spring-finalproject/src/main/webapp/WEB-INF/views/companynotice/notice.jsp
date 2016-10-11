@@ -139,7 +139,7 @@ $(function() {
 						<thead>
 							<tr>
 								<th><h3>쪽지함</h3></th>
-								<td><a href="message.do" class="pull-right">더보기</a></td>
+								<td><a href="" data-toggle="modal" data-target="#messenger" class="pull-right">더보기</a></td>
 							</tr>
 							<tr>
 								<th style="text-align:center">보낸 사람 </th>
