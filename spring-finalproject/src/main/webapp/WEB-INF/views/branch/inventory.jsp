@@ -186,9 +186,11 @@ $(function() {
 				</tbody>
 			</table>
 			
+			<sec:authorize access="hasRole('MANAGER')">
 			<div class="pull-right">
 				<button class="btn btn-default btn-lg" id="addorder-btn">발주 추가</button>
 			</div>
+			</sec:authorize>
 		</div>
 	</div>
 </div>

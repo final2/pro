@@ -536,13 +536,16 @@
 			A.no,
 			A.qty,
 			A.br_sales_no as "branchSales.no",
+			C.branch_no as"branchSales.branch.no",
 			A.product_no as "product.no",
 			B.name as "product.name",
 			B.price as "product.price"
 		from
-			br_sales_detail A, product B
+			br_sales_detail A, product B, br_sales C
 		where
 			A.product_no = B.no
+		and
+			A.br_sales_no = C.no
 		and
 			A.br_sales_no = #{value}
 	</select>
@@ -666,6 +669,8 @@
 			A.br_employee_no = B.no
 		and
 			A.no = C.br_sales_no
+		and
+			A.isreturned = 'N'
 		and
 			A.branch_no = #{branchNo}
 		and

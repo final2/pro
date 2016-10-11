@@ -355,13 +355,10 @@ public class BranchJSONController {
 				Map<String, Object> map2 = new HashMap<>();
 				map2.put("branchNo", d.getBranchSales().getBranch().getNo());
 				map2.put("productNo", d.getProduct().getNo());
-				
-				BranchInventory inven = brService.getInventoryByProductNo(map2);
 
-				if(inven != null && inven.getProduct().getNo() == d.getProduct().getNo()) {
-					inven.setQty(inven.getQty() + d.getQty());
-					brService.updateInventory(inven);
-				}
+				BranchInventory inven = brService.getInventoryByProductNo(map2);
+				inven.setQty(inven.getQty() + d.getQty());
+				brService.updateInventory(inven);
 			}
 			return sales;
 		}
