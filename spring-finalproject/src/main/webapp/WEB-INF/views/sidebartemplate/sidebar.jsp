@@ -7,7 +7,7 @@
 <link href="resources/bootstrap/css/simple-sidebar.css" rel="stylesheet">
 <script src="resources/bootstrap/js/bootstrap.min.js"></script>
 <style type="text/css">
-	#imgdiv {margin-top:10px; margin-bottom:10px;}
+	#imgdiv {margin-top:10px; margin-bottom:20px;}
 	.emp {color: white}
 </style>
 
@@ -18,7 +18,7 @@
     	<li>
     		<div id="imgdiv">
     			<a href="notice.do">
-    				<img alt="logo" src="resources/image/logo2.png" width="200px" height="100px"/>
+    				<img alt="logo" src="resources/image/logo2.png" width="180px"/>
     			</a>
     		</div>
     	</li>
@@ -47,7 +47,7 @@
     	<li class="list">
     		<a>마이페이지 <span class="caret"></span></a>
     		<ul class="bar">
-    			<li><a href="" >내정보</a></li>
+    			<li><a href="myprofile.do" >내정보</a></li>
     			<li><a href="compsalary.do?pno=1" >급여 대장</a></li>
     			<li><a href="compattendance.do" >근태 관리</a></li>
     		</ul>
