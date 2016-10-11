@@ -1,8 +1,6 @@
-package com.finalproject.web;
+package com.finalproject.model;
 
 import java.util.Date;
-
-import com.finalproject.model.Employee;
 
 public class WorkTime {
 
