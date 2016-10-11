@@ -116,7 +116,7 @@ body { font-family: 'Nanum Gothic', sans-serif; }
 #order-tabmenu li { float:left; padding:10px 15px; cursor:pointer; border:solid 1px #ddd; border-bottom:0; border-top-left-radius:5px; border-top-right-radius:5px; }
 #order-tabmenu li.active { background-color:#999; color:#fff; text-shadow:#000 1px 1px 2px; }
 .tab-con { border:solid 1px #ddd; text-align:center; padding:20px; }
-#tab-1 .order-btn { text-align:right; }
+#tab-1 .order-btn { text-align:right; margin-right:10px; }
 #tab-1 table { margin:0 auto; margin-top:20px; width:90%; }
 #tab-1 table th { text-align:center; }
 #tab-1 table tfoot td { background-color:#efefef; font-weight:bold; }
@@ -150,6 +150,7 @@ body { font-family: 'Nanum Gothic', sans-serif; }
 .event-flag1 { position:absolute; right:0; top:0; width:50px; heigth:50px; border-radius:50%; background-color:#e85831; color:#fff; }
 .event-flag2 {  position:absolute; right:0; top:0; width:50px; heigth:50px; border-radius:50%; background-color:#219c6c; color:#fff; }
 .event-price { font-weight:bold; font-size:15px; }
+.tab-con li .event-img { height:200px; }
 
 /* 사용자 등록 */
 .addemp-con { padding:20px; }
@@ -168,5 +169,6 @@ body { font-family: 'Nanum Gothic', sans-serif; }
 .account-con table { width:80%; margin:0 auto; }
 .account-con table th { text-align:center; }
 .account-con table tfoot td { background-color:#efefef; font-weight:bold; }
+.account-con table a { cursor:pointer; }
 .account-con button { display:inline; vertical-align:super;}
 #today { font-size:40px; color:#888; padding:0 25px; font-family: 'Lalezar', cursive;}

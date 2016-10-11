@@ -33,10 +33,18 @@ $(function() {
 		success:function(result) {
 			$.each(result, function(idex, item) {
 				var $tab1 = $("#event-tab-1");
-				$tab1.append("<li><p class='event-flag1'><span>1+1</span></p>"
-						+"<p class='event-img'><img src='"+item.image+"' /></p>"
-						+"<p class='event-name'>"+item.name+"</p>"
-						+"<p class='event-price'>"+formatNumber(item.price)+" 원</p></li>");
+				
+				if (item.image.indexOf('http') == 0) {
+					$tab1.append("<li><p class='event-flag1'><span>1+1</span></p>"
+							+"<p class='event-img'><img src='"+item.image+"' /></p>"
+							+"<p class='event-name'>"+item.name+"</p>"
+							+"<p class='event-price'>"+formatNumber(item.price)+" 원</p></li>");
+				} else {
+					$tab1.append("<li><p class='event-flag1'><span>1+1</span></p>"
+							+"<p class='event-img'><img src='/FinalProject/resources/image/"+item.image+"' /></p>"
+							+"<p class='event-name'>"+item.name+"</p>"
+							+"<p class='event-price'>"+formatNumber(item.price)+" 원</p></li>");
+				}
 			});
 		}
 	});
@@ -49,10 +57,18 @@ $(function() {
 		success:function(result) {
 			$.each(result, function(idex, item) {
 				var $tab2 = $("#event-tab-2");
-				$tab2.append("<li><p class='event-flag2'><span>2+1</span></p>"
-						+"<p class='event-img'><img src='"+item.image+"' /></p>"
-						+"<p class='event-name'>"+item.name+"</p>"
-						+"<p class='event-price'>"+formatNumber(item.price)+" 원</p></li>");
+				
+				if (item.image.indexOf('http') == 0) {
+					$tab2.append("<li><p class='event-flag2'><span>2+1</span></p>"
+							+"<p class='event-img'><img src='"+item.image+"' /></p>"
+							+"<p class='event-name'>"+item.name+"</p>"
+							+"<p class='event-price'>"+formatNumber(item.price)+" 원</p></li>");
+				} else {
+					$tab2.append("<li><p class='event-flag2'><span>2+1</span></p>"
+							+"<p class='event-img'><img src='/FinalProject/resources/image/"+item.image+"' /></p>"
+							+"<p class='event-name'>"+item.name+"</p>"
+							+"<p class='event-price'>"+formatNumber(item.price)+" 원</p></li>");
+				}
 			});
 		}
 	});
@@ -65,14 +81,21 @@ $(function() {
 		success:function(result) {
 			$.each(result, function(idex, item) {
 				var $tab3 = $("#event-tab-3");
-				if (item.event.no == 1) {
-					$tab3.append("<li><p class='event-flag1'><span>1+1</span></p>"
-							+"<p class='event-img'><img src='"+item.image+"' /></p>"
-							+"<p class='event-name'>"+item.name+"</p>"
-							+"<p class='event-price'>"+formatNumber(item.price)+" 원</p></li>");
+				if (item.image.indexOf('http') == 0) {
+					if (item.event.no == 1) {
+						$tab3.append("<li><p class='event-flag1'><span>1+1</span></p>"
+								+"<p class='event-img'><img src='"+item.image+"' /></p>"
+								+"<p class='event-name'>"+item.name+"</p>"
+								+"<p class='event-price'>"+formatNumber(item.price)+" 원</p></li>");
+					} else {
+						$tab3.append("<li><p class='event-flag2'><span>2+1</span></p>"
+								+"<p class='event-img'><img src='"+item.image+"' /></p>"
+								+"<p class='event-name'>"+item.name+"</p>"
+								+"<p class='event-price'>"+formatNumber(item.price)+" 원</p></li>");
+					}
 				} else {
-					$tab3.append("<li><p class='event-flag2'><span>2+1</span></p>"
-							+"<p class='event-img'><img src='"+item.image+"' /></p>"
+					$tab3.append("<li><p class='event-flag1'><span>1+1</span></p>"
+							+"<p class='event-img'><img src='/FinalProject/resources/image/"+item.image+"' /></p>"
 							+"<p class='event-name'>"+item.name+"</p>"
 							+"<p class='event-price'>"+formatNumber(item.price)+" 원</p></li>");
 				}

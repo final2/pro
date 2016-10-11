@@ -42,7 +42,7 @@ public class BranchJSONController {
 		return brService.getSmallCatsByLargeNo(no);
 	}
 	
-	// 소분류 번호로 물품 조회
+	// 소분류 번호와 지점번호로 물품 조회
 	@RequestMapping(value="/pt/{brno}/sc/{scno}", method=RequestMethod.GET)
 	public List<Product> getProductsBySmallCategoryAndBranchNo(@PathVariable("brno") int brno,
 																@PathVariable("scno") int scno) {
@@ -287,6 +287,7 @@ public class BranchJSONController {
 		sale.setGender(gender);
 		sale.setPayment(payment);
 		sale.setBranch(branch);
+		sale.setIssaled("N");
 		brService.addBranchSales(sale);
 		
 		sale = brService.getBranchSalesByNotIsSaled(map);
@@ -308,7 +309,6 @@ public class BranchJSONController {
 			map2.put("productNo", d.getProduct().getNo());
 			
 			BranchInventory inven = brService.getInventoryByProductNo(map2);
-			System.out.println(inven);
 			inven.setQty(inven.getQty() - d.getQty());
 			brService.updateInventory(inven);
 		}
@@ -384,7 +384,7 @@ public class BranchJSONController {
 											@PathVariable("empno") int empno) {
 		Map<String, Object> map = new HashMap<>();
 		map.put("empNo", empno);
-		map.put("issaled", 'N');
+		map.put("issaled", 'W');
 		
 		BranchEmp emp = brService.getBrEmpByNo(empno);
 		Branch branch = brService.getBranchByNo(emp.getBranch().getNo());
@@ -392,6 +392,8 @@ public class BranchJSONController {
 		BranchSales sale = new BranchSales();
 		sale.setBrEmp(emp);
 		sale.setBranch(branch);
+		sale.setIssaled("W");
+		System.out.println(sale.getIssaled());
 		brService.addBranchSales(sale);
 		
 		sale = brService.getBranchSalesByNotIsSaled(map);
@@ -414,7 +416,7 @@ public class BranchJSONController {
 		
 		Map<String, Object> map = new HashMap<>();
 		map.put("empNo", empno);
-		map.put("issaled", 'N');
+		map.put("issaled", 'W');
 		
 		BranchSales sale = brService.getBranchSalesByNotIsSaled(map);
 		

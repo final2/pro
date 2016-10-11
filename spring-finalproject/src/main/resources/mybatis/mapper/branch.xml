@@ -92,6 +92,7 @@
 			smallcategory_no = #{value}
 	</select>
 	
+	<!-- 판매 : 지점번호와 소분류번호로 물품 찾기 -->
 	<select id="getProductsBySmallCategoryAndBranchNo" parameterType="map" resultType="Product">
 		select
 			B.no,  
@@ -109,6 +110,8 @@
 			A.branch_no = #{branchNo}
 		and
 			C.no = #{smallCat}
+		order by
+			B.name
 	</select>
 	
 	<!-- 판매 : 물품번호로 재고 조회하기 -->
@@ -433,7 +436,7 @@
 	
 	<insert id="addBranchSales" parameterType="com.finalproject.model.BranchSales">
 		insert into br_sales (no, regdate, ages, gender, issaled, isreturned, payment, br_employee_no, branch_no)
-		values(mybranch_seq.nextval, sysdate, #{ages,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR}, 'N', 'N', #{payment,jdbcType=VARCHAR}, #{brEmp.no}, #{branch.no})
+		values(mybranch_seq.nextval, sysdate, #{ages,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR}, #{issaled}, 'N', #{payment,jdbcType=VARCHAR}, #{brEmp.no}, #{branch.no})
 	</insert>
 	
 	<insert id="addBranchSalesDetail" parameterType="com.finalproject.model.BranchSalesDetail">
@@ -481,6 +484,9 @@
 			</if>			
 			<if test="issaled == 'N'">
 			and issaled = 'N'
+			</if>
+			<if test="issaled == 'W'">
+			and issaled = 'W'
 			</if>
 	</select>
 	
@@ -620,6 +626,17 @@
 		values
 			(mybranch_seq.nextval, #{email,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{grade,jdbcType=CHAR}, #{password,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{branch.no}, #{images,jdbcType=VARCHAR}, #{birth,jdbcType=DATE})
 	</insert>
+	
+	<select id="getBranchEmpByEmail" parameterType="string" resultType="BranchEmp">
+		select
+			no,
+			email,
+			password
+		from
+			br_employees
+		where
+			email = #{value}
+	</select>
 	
 	<!-- 결산 : 날짜별로 판매목록 조회하기 -->
 	<select id="getBranchSalesByDate" parameterType="map" resultType="com.finalproject.model.BranchSales">

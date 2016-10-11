@@ -85,7 +85,6 @@ $(function() {
 			url:"/FinalProject/json/pt/"+brno +"/sc/" + scno,
 			dataType:"json",
 			success:function(result) {
-				console.log(result)
 				var $ul = $("#sales-pt");
 				$ul.empty();
 				
@@ -148,41 +147,31 @@ $(function() {
 		var price = $(this).find(".sales-pt-price").text();
 		var qty = $(this).find("input[name='qty']").val();
 		
-		$.ajax({
-			type:"GET",
-			url:"/FinalProject/json/inv/" + brno + "/pno/" + pno,
-			dataType:"json",
-			success:function(result) {
-				if (result.length == 0) {
-					alert("재고가 없습니다.")
-				} else {
-					
-					var detail = {};
-					var product = {};
-					product.name = name;
-					product.no = pno;
-					product.price = parseInt(price.split(",").join(""));
-					detail.product = product;
-					detail.qty = 1;
-					
-					addDetail(detail);
-					
-					var total = getTotalSum();
-					$("#sum-box").empty().append(formatNumber(total));
-				}	
-				var $tbody = $(".sales-left tbody").empty();
-				
-				$.each(detailList, function(index, item) {
-					var no = index + 1;
-					$tbody.append("<tr id='sales-pt-"+item.product.no+"'><td>"+no+"</td><td>"
-							+item.product.name+"</td><td>"
-							+formatNumber(item.product.price)+"</td><td><input type='text' value='"+item.qty+"' name='qty-"+item.product.no+"' /></td>"
-							+"<td><a id='remove-btn-"+item.product.no+"'><span class='glyphicon glyphicon-remove'></span></a></td></tr>");
-					
-					removeProduct();
-				});
-			}
+		var detail = {};
+		var product = {};
+		product.name = name;
+		product.no = pno;
+		product.price = parseInt(price.split(",").join(""));
+		detail.product = product;
+		detail.qty = 1;
+		
+		addDetail(detail);
+		
+		var total = getTotalSum();
+		$("#sum-box").empty().append(formatNumber(total));
+		
+		var $tbody = $(".sales-left tbody").empty();
+		
+		$.each(detailList, function(index, item) {
+			var no = index + 1;
+			$tbody.append("<tr id='sales-pt-"+item.product.no+"'><td>"+no+"</td><td>"
+					+item.product.name+"</td><td>"
+					+formatNumber(item.product.price)+"</td><td><input type='text' value='"+item.qty+"' name='qty-"+item.product.no+"' /></td>"
+					+"<td><a id='remove-btn-"+item.product.no+"'><span class='glyphicon glyphicon-remove'></span></a></td></tr>");
+			
+			removeProduct();
 		});
+			
 	});
 	
 	// 수량 직접 변경시 바뀌기
