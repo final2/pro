@@ -64,4 +64,6 @@
 			<bean class="com.finalproject.web.argumentResolver.LoginUserHandlerMethodArgumentResolver" />
 		</mvc:argument-resolvers>
 	</mvc:annotation-driven>
+	
+	<context:property-placeholder location="classpath:/config.properties"/>
 </beans>
