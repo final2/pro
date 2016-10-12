@@ -26,7 +26,7 @@ public class NoticeServiceImpl implements NoticeService {
 	// 공지사항 삭제
 	@Override
 	public void deleteNoticeBoard(int no) {
-		noticeDao.delteBoard(no);
+		noticeDao.deleteBoard(no);
 	}
 	// 공지사항 업데이트
 	@Override
