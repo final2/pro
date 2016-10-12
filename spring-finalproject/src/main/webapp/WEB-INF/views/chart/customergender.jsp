@@ -16,8 +16,12 @@ function drawChart() {
 	var arrayData = [];
 	arrayData.push(["name", "price"]);
 	
-	$.each(jsonData, function(index, item) {	
-		arrayData.push([item.name, item.price]);
+	$.each(jsonData, function(index, item) {
+		if(item.name=="M"){
+			arrayData.push(["남성", item.price]);
+		}else{
+			arrayData.push(["여성", item.price]);
+		}
 	});
 	
 		
@@ -28,7 +32,6 @@ function drawChart() {
       width: "100%",
       height: "100%",
 
-  		pieHole: 0.6
     };
 
     var chart = new google.visualization.PieChart(document.getElementById('FMpiechart'));

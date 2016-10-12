@@ -50,4 +50,9 @@ public class ChartServiceImpl implements ChartService{
 		return chartDao.getBuyAges();
 	}
 
+	@Override
+	public List<SalesBrPr> getBuyCM() {
+		return chartDao.getBuyCM();
+	}
+
 }

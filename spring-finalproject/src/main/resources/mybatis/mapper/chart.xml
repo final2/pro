@@ -102,6 +102,11 @@
 		group by ages
 		order by ages asc
 	</select>
+	<select id="getBuyCM" resultType="SBP">
+		select payment as name, count(*) as price
+		from BR_SALES
+		group by payment
+	</select>
 </mapper>
 
 

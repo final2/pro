@@ -17,7 +17,7 @@ function drawChart() {
 	arrayData.push(["name", "price"]);
 	
 	$.each(jsonData, function(index, item) {	
-		arrayData.push([item.name, item.price]);
+		arrayData.push([item.name+"대", item.price]);
 	});
 	
 		

@@ -14,5 +14,6 @@ public interface ChartDao {
 	List<SalesBrPr> getSalesDay();
 	List<SalesBrPr> getBuyGender();
 	List<SalesBrPr> getBuyAges();
+	List<SalesBrPr> getBuyCM();
 	
 }

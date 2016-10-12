@@ -117,7 +117,7 @@ $(function() {
 				<%@ include file="customergender.jsp" %>
 			</div>
 			<div class="col-sm-3">
-				<!-- 이번달 품목별 top 5(원그래프)  -->
+				<%@ include file="getBuyCM.jsp" %>
 			</div>
 			<div class="col-sm-3">
 				<!-- 이번달 거래순위(원그래프) -->
