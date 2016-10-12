@@ -52,7 +52,7 @@ th,td {text-align:center;}
 						<th>제품번호</th>
 						<th>제품명</th>
 						<th>수량(EA)</th>
-						<th>단가</th>
+						<th>공장도가격</th>
 						<th>금액</th>
 					</tr>
 					<c:set var="sum" value="0" />
