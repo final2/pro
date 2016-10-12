@@ -17,7 +17,7 @@
 	
 		<div class="w3-container w3-padding-10  w3-margin-bottom w3-margin-top" >
 			<div class="w3-container w3-teal">
-	  		<h1>1+1 상품</h1>
+	  		<h1>상품안내</h1>
 			</div>
 			
 	        <div class="w3-display-container  w3-padding-64 w3-center" style="width:100%;min-height:300px;max-height:600px;overflow:auto;">

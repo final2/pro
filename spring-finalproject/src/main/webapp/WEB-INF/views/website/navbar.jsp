@@ -26,20 +26,20 @@
 			    <li class="w3-dropdown-hover">
 			    <a href="#" title="Notifications">서비스유형별안내 <i class="fa fa-caret-down"></i></a>
 			    <div class="w3-dropdown-content w3-light-grey w3-card-4">
-			      <a href="store.do?id=lotto">Lotto판매</a>
-			      <a href="store.do">ATM</a>
+			      <a href="searchBranch.do?type=LOTTO">Lotto판매</a>
+			      <a href="searchBranch.do?type=ATM">ATM</a>
 			<!--       <a href="parcelService.do">편의서비스</a> -->
-			      <a href="store.do">택배서비스</a>
-			      <a href="store.do">직접조리식품</a>
+			      <a href="searchBranch.do?type=PARCELSERVICE">택배서비스</a>
+			      <a href="searchBranch.do?type=FRESHFOOD">직접조리식품</a>
 			    </div>
 			      </li>
 			      <li class="w3-dropdown-hover">
 			        <a href="#" title="Notifications">상품안내 <i class="fa fa-caret-down"></i></a>
 			        <div class="w3-dropdown-content w3-light-grey w3-card-4">
 			          <a href="oneplus.do?no=1">1+1상품</a>
-			          <a href="twoplus.do?no=2">2+1상품</a>
-			          <a href="event.do">덤증정상품</a>
-			          <a href="event.do">선물추첨상품</a>
+			          <a href="oneplus.do?no=2">2+1상품</a>
+			          <a href="oneplus.do?no=3">덤증정상품</a>
+			          <a href="oneplus.do?no=4">선물추첨상품</a>
 			        </div>
 			      </li>
 			  </ul>
