@@ -10,19 +10,23 @@ $(function() {
 			var now = result;
 			var max = 10000000;
 			var etc = max-now;
+			console.log(etc);
 			google.charts.load('current', {'packages':['corechart']});
 		    function drawChart() {
-				var data = google.visualization.arrayToDataTable([
-					['genel', {role:'data'},  { role: 'style' },  {role:'data'},  { role: 'style'} ],
-					['현재매출액',now, 'color: #ff3232', etc, 'color: #e5e4e2']
-				]);
+		    	
+			var data = google.visualization.arrayToDataTable([
+				['genel', 'data', 'data'],
+				['현재매출액',now,  etc]
+			]); 
 
+								
 				var options = {
 					title:"누적매출액",
 			        width: "100%",
 			        height: 450,
 			        legend: { position: 'top', maxLines: 3 },
 			        bar: { groupWidth: '100%' },
+			        colors:['#ff3232','#e5e4e2'],
 			        isStacked: true
 		        };
 
