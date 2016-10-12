@@ -20,7 +20,7 @@ function drawChart(){
 	});
 	var data = new google.visualization.arrayToDataTable(arrayData);
 	var options = {
-		      title: '월별 매출',
+			title:'월별 매출', titleTextStyle:{fontSize:'20'},
 		      width: "100%",
 		      height: 450
 		    };

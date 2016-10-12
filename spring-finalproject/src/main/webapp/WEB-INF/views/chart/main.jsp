@@ -62,11 +62,8 @@ $(function() {
 						<div class="panel-body">
 							<div class="col-sm-3 sub-left">
 							</div>
-							<div class="col-sm-9 sub-right" style="text-align: right">
-								<span class="glyphicon glyphicon-signal" style="font-size:75px; margin-top:25px; margin-left:50px" ></span>
-								<span class="glyphicon glyphicon-calendar" style="font-size:75px; margin-top:25px; margin-left:50px" ></span>
-								<span class="glyphicon glyphicon-copyright-mark" style="font-size:75px; margin-top:25px; margin-left:50px" ></span>
-								<span class="glyphicon glyphicon-align-left" style="font-size:75px;  margin-top:25px; margin-left:50px" ></span>
+							<div class="col-sm-9 sub-right" style="text-align: center">
+								<h1>BigStore Statistics</h1>
 							</div>
 						</div>
 					</div>
@@ -120,7 +117,7 @@ $(function() {
 				<%@ include file="getBuyCM.jsp" %>
 			</div>
 			<div class="col-sm-3">
-				<!-- 이번달 거래순위(원그래프) -->
+				<%@ include file="cartegorysalesyear.jsp" %>
 			</div>
 		</div>
 	</div>

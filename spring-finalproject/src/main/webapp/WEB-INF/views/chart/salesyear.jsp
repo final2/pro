@@ -10,7 +10,6 @@ $(function() {
 			var now = result;
 			var max = 10000000;
 			var etc = max-now;
-			console.log(etc);
 			google.charts.load('current', {'packages':['corechart']});
 		    function drawChart() {
 		    	
@@ -21,7 +20,7 @@ $(function() {
 
 								
 				var options = {
-					title:"누적매출액",
+					title:'현재매출액', titleTextStyle:{fontSize:'20'},
 			        width: "100%",
 			        height: 450,
 			        legend: { position: 'top', maxLines: 3 },

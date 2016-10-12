@@ -1,18 +1,81 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <script type="text/javascript">
-
+$(function() {
+	$.ajax({
+		type:"GET",
+		url:"/FinalProject/json/getsalesyear/",
+		DataType:"json",
+		success:function(result){
+			var $tbody = $('#datatable');
+			var nowyear = Number(result).toLocaleString('en');
+			$tbody.append(
+					"<th class='text-center' style='vertical-align:middle'><h4>올해 총매출</h4>"+nowyear+"</th>"
+					);
+		}
+	});
+	$.ajax({
+		type:"GET",
+		url:"/FinalProject/json/getsalesyear/",
+		DataType:"json",
+		success:function(result){
+			var $tbody = $('#datatable');
+			var profityear = result*0.3;
+			var profityearresult = Number(profityear).toLocaleString('en');
+		
+			$tbody.append(
+					"<th class='text-center' style='vertical-align:middle'><h4>올해 순이익</h4>"+profityearresult+"</th>"
+					);
+		}
+	});
+	$.ajax({
+		type:"GET",
+		url:"/FinalProject/json/getsalesmonth/",
+		DataType:"json",
+		success:function(result){
+			var $tbody = $('#datatable');
+			var nowmonth = Number(result).toLocaleString('en');
+		
+			$tbody.append(
+					"<th class='text-center' style='vertical-align:middle'><h4>이번달 매출</h4>"+nowmonth+"</th>"
+					);
+		}
+	});
+	$.ajax({
+		type:"GET",
+		url:"/FinalProject/json/getsalesmonth/",
+		DataType:"json",
+		success:function(result){
+			var $tbody = $('#datatable');
+			var profitmonth = result*0.3;
+			var profitmonthresult = Number(profitmonth).toLocaleString('en');
+		
+			$tbody.append(
+					"<th class='text-center' style='vertical-align:middle'><h4>이번달 순이익</h4>"+profitmonthresult+"</th>"
+					);
+		}
+	});
+	$.ajax({
+		type:"GET",
+		url:"/FinalProject/json/getsalesdays/",
+		DataType:"json",
+		success:function(result){
+			var $tbody = $('#datatable');
+			var days = Number(result).toLocaleString('en');
+		
+			$tbody.append(
+					"<th class='text-center' style='vertical-align:middle'><h4>금일 매출</h4>"+days+"</th>"
+					);
+		}
+	});
+	
+});
 </script>
 <div class="panel panel-primary">
 	<div class="panel-body" id="">
 		<div class="row">
 			<table class="table table-bordered">
-					<tr>
-						<th class="text-center" style="vertical-align:middle"><h4>총매출</h4>1,543,300</th>
-						<th class="text-center" style="vertical-align:middle"><h4>순이익</h4>813,300</th>
-						<th class="text-center" style="vertical-align:middle"><h4>월매출</h4>904,140</th>
-						<th class="text-center" style="vertical-align:middle"><h4>이번달순이익</h4>454,140</th>
-						<th class="text-center" style="vertical-align:middle"><h4>오늘매출</h4>104,140</th>
+					<tr id="datatable">
 					</tr>
 			</table>
 		</div>

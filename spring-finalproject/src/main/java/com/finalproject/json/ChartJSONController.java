@@ -24,6 +24,45 @@ public class ChartJSONController {
 
 		return chartDao.getSalesYear(year);
 	}
+	@RequestMapping(value="/getcategorysales/", method=RequestMethod.GET)
+	public List<SalesBrPr> getCategorySales(){
+		Calendar oCalendar = Calendar.getInstance( );
+		int no = oCalendar.get(Calendar.YEAR);
+		String year = Integer.toString(no);
+
+		return chartDao.getCategorySales(year);
+	}
+	@RequestMapping(value="/getsalesmonth/", method=RequestMethod.GET)
+	public int getSalesMonth(){
+		Calendar oCalendar = Calendar.getInstance( );
+		int Y = oCalendar.get(Calendar.YEAR);
+		int M = oCalendar.get(Calendar.MONTH)+1;
+		String month;
+		if(M<10){
+			month= "0"+Integer.toString(M);
+		}else{
+			month= Integer.toString(M);
+		}
+		String year = Integer.toString(Y)+month;
+
+		return chartDao.getSalesMonth(year);
+	}
+	@RequestMapping(value="/getsalesdays/", method=RequestMethod.GET)
+	public int getSalesDays(){
+		Calendar oCalendar = Calendar.getInstance( );
+		int Y = oCalendar.get(Calendar.YEAR);
+		int M = oCalendar.get(Calendar.MONTH)+1;
+		int D = oCalendar.get(Calendar.DAY_OF_MONTH);
+		String month;
+		if(M<10){
+			month= "0"+Integer.toString(M);
+		}else{
+			month= Integer.toString(M);
+		}
+		String year = Integer.toString(Y)+month+Integer.toString(D);
+
+		return chartDao.getSalesDays(year);
+	}
 	@RequestMapping(value="/getsalesBr/", method=RequestMethod.GET)
 	public List<SalesBrPr> getSalesBr(){
 		Calendar oCalendar = Calendar.getInstance( );

@@ -18,10 +18,9 @@ function drawChart(){
 	$.each(jsonData, function(index, item) {	
 		arrayData.push([item.name, item.price]);
 	});
-	console.log(arrayData);
 	var data = new google.visualization.arrayToDataTable(arrayData);
 	var options = {
-		      title: '일별 매출',
+			title:'일별매출', titleTextStyle:{fontSize:'20'},
 		      width: "100%",
 		      height: 450
 		    };

@@ -24,7 +24,7 @@ function drawChart() {
     var data = new google.visualization.arrayToDataTable(arrayData);
 
     var options = {
-      title: '구매고객연령비율',
+    		title:'구매고객 연령비율', titleTextStyle:{fontSize:'20'},
       width: "100%",
       height: "100%",
 		pieHole: 0.3

@@ -55,4 +55,19 @@ public class ChartServiceImpl implements ChartService{
 		return chartDao.getBuyCM();
 	}
 
+	@Override
+	public int getSalesMonth(String year) {
+		return chartDao.getSalesMonth(year);
+	}
+
+	@Override
+	public int getSalesDays(String year) {
+		return chartDao.getSalesDays(year);
+	}
+
+	@Override
+	public List<SalesBrPr> getCategorySales(String year) {
+		return chartDao.getCategorySales(year);
+	}
+
 }

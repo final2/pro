@@ -24,7 +24,7 @@
         var data = new google.visualization.arrayToDataTable(arrayData);
 	
         var options = {
-          title: '지점별 매출',
+        		title:'지점별매출', titleTextStyle:{fontSize:'20'},
           width: "100%",
           height: "100%"
         };
