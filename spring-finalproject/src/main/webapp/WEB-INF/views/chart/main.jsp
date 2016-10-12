@@ -8,6 +8,8 @@
 <link rel="stylesheet" type="text/css" href="resources/bootstrap/css/bootstrap.css">
 <script type="text/javascript" src="resources/jquery/jquery.js"></script>
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src="https://www.gstatic.com/charts/loader.js"></script>
+<script src="//www.google.com/jsapi"></script>
 <script type="text/javascript">
 $(function() {
 	function addZeros(num, digit) { 
@@ -42,21 +44,29 @@ $(function() {
 </script>
 </head>
 <body>
-	<div class="container">
+	<div class="container-fluid">
 		
 		<div class="row">
 			<div class="col-sm-3">
-				<div id="clock-box" class="text-center" style="margin-top: 40px;"></div>
+				<div class="panel panel-primary">
+					<div class="panel-body">
+						<div id="clock-box" class="text-center" style="margin-top: 40px;"></div>
+					</div>
+				</div>
 			</div>
 			<div class="col-sm-9">
 				<div class="row">
-					<div class="col-sm-3 sub-left">
-					</div>
-					<div class="col-sm-9 sub-right">
-						<span class="glyphicon glyphicon-signal" style="font-size:75px; margin-top:25px; margin-left:50px" ></span>
-						<span class="glyphicon glyphicon-calendar" style="font-size:75px; margin-top:25px; margin-left:50px" ></span>
-						<span class="glyphicon glyphicon-copyright-mark" style="font-size:75px; margin-top:25px; margin-left:50px" ></span>
-						<span class="glyphicon glyphicon-align-left" style="font-size:75px;  margin-top:25px; margin-left:50px" ></span>
+					<div class="panel panel-primary">
+						<div class="panel-body">
+							<div class="col-sm-3 sub-left">
+							</div>
+							<div class="col-sm-9 sub-right" style="text-align: right">
+								<span class="glyphicon glyphicon-signal" style="font-size:75px; margin-top:25px; margin-left:50px" ></span>
+								<span class="glyphicon glyphicon-calendar" style="font-size:75px; margin-top:25px; margin-left:50px" ></span>
+								<span class="glyphicon glyphicon-copyright-mark" style="font-size:75px; margin-top:25px; margin-left:50px" ></span>
+								<span class="glyphicon glyphicon-align-left" style="font-size:75px;  margin-top:25px; margin-left:50px" ></span>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -65,29 +75,30 @@ $(function() {
 		<div class="row">
 			<div class="col-sm-5">
 				<div class="row">
-					<div class="col-sm-4 ">
+					<div class="col-sm-5" >
 	     			   <%@ include file="salesyear.jsp" %>
 					</div>
-					<div class="col-sm-8">
-						<!-- 
-							해당년도 원그래프(지점별 기여도) top 5 (나머지는 etc)
-
-							해당년도 원그래프(품목별 기여도) TOP 5 (나머지는 etc)
-						 -->
+					<div class="col-sm-7">
+						<div class="row" >
+							<div class="col-sm-12">
+			     			   <%@ include file="salesBr.jsp" %>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-12" >
+			     			   <%@ include file="salesPr.jsp" %>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
 			<div class="col-sm-7">
 				<div class="row">
 					<div class="col-sm-6">
-						<!-- 
-							월별 매출 (막대그래프) (상반기or하반기 택1)
-						 -->
+			     	   <%@ include file="monthSales.jsp" %>
 					</div>
 					<div class="col-sm-6">
-						<!-- 
-							품목별 top5(막대그래프)
-						 -->
+					   <%@ include file="salesDay.jsp" %>
 					</div>
 				</div>
 			</div>
