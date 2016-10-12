@@ -105,30 +105,21 @@ $(function() {
 		</div>
 		
 		<div class="row">
-			<div class="col-sm-3">
-			<!-- 매출 총액 -->
-			</div>
-			<div class="col-sm-3">
-			<!-- 이번년 순이익 -->
-			</div>
-			<div class="col-sm-3">
-			<!-- 이번달 매출액 -->
-			</div>
-			<div class="col-sm-3">
-			<!-- 이번달 순이익 -->
-			</div>
+			<%@include file="datatable.jsp" %>
 		</div>
 		<div class="row">
 			<div class="col-sm-3">
-				<!-- 이번달 지점별 top 5(원그래프) -->
+				<%@ include file="customerage.jsp" %>
 			</div>
 			<div class="col-sm-3">
-				<!-- 이번달 대분류별 매출(원그래프) -->
+				<%@ include file="customersex.jsp" %>
 			</div>
 			<div class="col-sm-3">
+				<%@ include file="example1.jsp" %>
 				<!-- 이번달 품목별 top 5(원그래프)  -->
 			</div>
 			<div class="col-sm-3">
+				<%@ include file="example2.jsp" %>
 				<!-- 이번달 거래순위(원그래프) -->
 			</div>
 		</div>

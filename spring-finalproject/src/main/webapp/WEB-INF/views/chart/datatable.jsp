@@ -1,12 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+<script type="text/javascript">
 
-</body>
-</html>
+</script>
+<div class="panel panel-primary">
+	<div class="panel-body" id="">
+		<div class="row">
+			<table class="table table-bordered">
+					<tr>
+						<th class="text-center" style="vertical-align:middle"><h4>총매출</h4>1,543,300</th>
+						<th class="text-center" style="vertical-align:middle"><h4>순이익</h4>813,300</th>
+						<th class="text-center" style="vertical-align:middle"><h4>월매출</h4>904,140</th>
+						<th class="text-center" style="vertical-align:middle"><h4>이번달순이익</h4>454,140</th>
+						<th class="text-center" style="vertical-align:middle"><h4>오늘매출</h4>104,140</th>
+					</tr>
+			</table>
+		</div>
+	</div>
+</div>
+
+			
