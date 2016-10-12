@@ -112,14 +112,12 @@ $(function() {
 				<%@ include file="customerage.jsp" %>
 			</div>
 			<div class="col-sm-3">
-				<%@ include file="customersex.jsp" %>
+				<%@ include file="customergender.jsp" %>
 			</div>
 			<div class="col-sm-3">
-				<%@ include file="example1.jsp" %>
 				<!-- 이번달 품목별 top 5(원그래프)  -->
 			</div>
 			<div class="col-sm-3">
-				<%@ include file="example2.jsp" %>
 				<!-- 이번달 거래순위(원그래프) -->
 			</div>
 		</div>
