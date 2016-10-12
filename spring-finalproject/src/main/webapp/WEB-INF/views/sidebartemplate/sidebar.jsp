@@ -112,7 +112,7 @@
       		</c:if>
        </li>
        <li>
-       		<a href="">통계</a>		
+       		<a href="chart.do">통계</a>		
        </li>
     </ul>
 </div>

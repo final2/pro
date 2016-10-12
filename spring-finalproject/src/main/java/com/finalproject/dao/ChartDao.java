@@ -12,5 +12,7 @@ public interface ChartDao {
 	int getBuyTotal(String year);
 	List<SalesBrPr> getMonth();
 	List<SalesBrPr> getSalesDay();
-
+	List<SalesBrPr> getBuyGender();
+	List<SalesBrPr> getBuyAges();
+	
 }

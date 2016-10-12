@@ -148,8 +148,6 @@
 					and department like '%' || #{keyword} || '%'
 				</if>
 			</if>
-
-			
 	</select>
 </mapper>
 

@@ -59,4 +59,12 @@ public class ChartJSONController {
 	public List<SalesBrPr> getSalesDay(){
 		return chartDao.getSalesDay();
 	}
+	@RequestMapping(value="/getBuyGender/", method=RequestMethod.GET)
+	public List<SalesBrPr> getBuyGender(){
+		return chartDao.getBuyGender();
+	}
+	@RequestMapping(value="/getBuyAges/", method=RequestMethod.GET)
+	public List<SalesBrPr> getBuyAges(){
+		return chartDao.getBuyAges();
+	}
 }

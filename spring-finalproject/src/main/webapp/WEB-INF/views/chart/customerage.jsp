@@ -7,7 +7,7 @@ function drawChart() {
 
 	var jsonData=$.ajax({
 		type:"GET",
-		url:"/FinalProject/json/getsalesBr/",
+		url:"/FinalProject/json/getBuyAges/",
 		DataType:"json",
 		async:false
 		}).responseJSON;
@@ -24,7 +24,7 @@ function drawChart() {
     var data = new google.visualization.arrayToDataTable(arrayData);
 
     var options = {
-      title: '고객연령',
+      title: '구매고객연령비율',
       width: "100%",
       height: "100%",
 		pieHole: 0.3

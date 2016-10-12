@@ -40,4 +40,14 @@ public class ChartServiceImpl implements ChartService{
 		return chartDao.getSalesDay();
 	}
 
+	@Override
+	public List<SalesBrPr> getBuyGender() {
+		return chartDao.getBuyGender();
+	}
+
+	@Override
+	public List<SalesBrPr> getBuyAges() {
+		return chartDao.getBuyAges();
+	}
+
 }

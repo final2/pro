@@ -7,7 +7,7 @@ function drawChart() {
 
 	var jsonData=$.ajax({
 		type:"GET",
-		url:"/FinalProject/json/getsalesPr/",
+		url:"/FinalProject/json/getBuyGender/",
 		DataType:"json",
 		async:false
 		}).responseJSON;
@@ -24,11 +24,11 @@ function drawChart() {
     var data = new google.visualization.arrayToDataTable(arrayData);
 
     var options = {
-      title: '고객비율',
+      title: '구매자 성비율',
       width: "100%",
       height: "100%",
 
-  		pieHole: 0.3
+  		pieHole: 0.6
     };
 
     var chart = new google.visualization.PieChart(document.getElementById('FMpiechart'));

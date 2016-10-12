@@ -15,7 +15,7 @@ $(function() {
 		    function drawChart() {
 		    	
 			var data = google.visualization.arrayToDataTable([
-				['genel', 'data', 'data'],
+				['genel', '매출액', '목표까지남은금액'],
 				['현재매출액',now,  etc]
 			]); 
 

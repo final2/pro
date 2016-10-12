@@ -91,6 +91,17 @@
 	   group by regdate) T
 	where rn &lt;= 10
 	</select>
+	<select id="getBuyGender" resultType="SBP">
+		select gender as name, count(*) as price
+		from BR_SALES
+		group by gender
+	</select>
+	<select id="getBuyAges" resultType="SBP">
+		select ages as name, count(*) as price
+		from BR_SALES
+		group by ages
+		order by ages asc
+	</select>
 </mapper>
 
 

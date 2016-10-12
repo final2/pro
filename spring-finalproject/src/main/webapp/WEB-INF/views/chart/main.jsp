@@ -44,6 +44,8 @@ $(function() {
 </script>
 </head>
 <body>
+<div id="wrapper">
+	<%@ include file="/WEB-INF/views/sidebartemplate/sidebar.jsp" %>
 	<div class="container-fluid">
 		
 		<div class="row">
@@ -122,5 +124,6 @@ $(function() {
 			</div>
 		</div>
 	</div>
+</div>
 </body>
 </html>
