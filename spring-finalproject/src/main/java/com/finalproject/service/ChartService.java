@@ -1,6 +1,14 @@
 package com.finalproject.service;
 
-public interface ChartService {
-	int getSalesYear();
+import java.util.List;
 
+import com.finalproject.model.SalesBrPr;
+
+public interface ChartService {
+	int getSalesYear(String year);
+	List<SalesBrPr> getSalesBr(String year);
+	List<SalesBrPr> getSalesPr(String year);
+	int getBuyTotal(String year);
+	List<SalesBrPr> getMonth();
+	List<SalesBrPr> getSalesDay();
 }

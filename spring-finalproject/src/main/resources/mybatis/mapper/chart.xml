@@ -3,11 +3,96 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.finalproject.dao.ChartDao">
-	<select id="getSalesYear" resultType="int">
-		select
-		
+	<select id="getSalesYear" parameterType="String" resultType="int">
+		select sum(B.qty *C.price)
+		from 
+			(select no , regdate
+			from br_sales
+			where regdate >= to_date('${value}0101', 'yyyymmdd') and regdate &lt; to_date('${value}0101', 'yyyymmdd')+365)  A, br_sales_detail B, product C
+		where
+		A.no = B.br_sales_no
+		and
+		B.product_no = C.no
 	</select>	
+	
+	<select id="getSalesBr" parameterType="String" resultType="SBP">
+		select F.name, sum("psum") as price
+			from(
+				select*	
+				from(
+					select *
+					from(select
+						Z.br_sales_no,
+						sum(Z.qty * Y.price)as "psum"
+						from
+							br_sales_detail Z, product Y
+						where
+							Z.product_no = Y.no
+						group by
+							br_sales_no) A, br_sales B 
+					where
+					A.br_sales_no = B.no)C , Branch D
+				where C.branch_no = D.no
+				and C.regdate >= to_date('${value}0101', 'yyyymmdd') and C.regdate &lt; to_date('${value}0101', 'yyyymmdd')+365
+				)F
+			group by F.name
+	</select>
+	<select id="getSalesPr" parameterType="String" resultType="SBP">
+		select
+			name, "psum" as price
+		from(
+			select
+				row_number() over (order by "psum" desc) rn, name, "psum"
+			from(
+				select DISTINCT 
+				name, "psum"
+				from(
+					select *
+					from(
+						select
+							Y.name, sum(Z.qty * Y.price)as "psum"
+						from
+							br_sales_detail Z, product Y
+						where
+							Z.product_no = Y.no
+						group by
+							Y.name)A, br_sales B
+					where B.regdate >= to_date('${value}0101', 'yyyymmdd') and B.regdate &lt; to_date('${value}0101', 'yyyymmdd')+365)))
+			where rn >= 1 and rn &lt;=5
+	</select>
+	
+	<select id="getBuyTotal" parameterType="String" resultType="int">
+		select sum(price*qty) as Total
+		from hq_order_detail
+		where regdate  >= to_date('${value}0101', 'yyyymmdd') and regdate  &lt; to_date('${value}0101', 'yyyymmdd')+365
+	</select>
+	
+	<select id="getMonth" resultType="SBP">
+		select regdate as name, "psum" as price
+		from(select distinct row_number() over (order by regdate asc) rn, regdate, sum(D.qty * D.price) "psum"
+		   from (select to_char (A.regdate, 'mm') as regdate, B.qty, C.price
+		      from br_sales A, br_sales_detail B, product C
+		      where
+		         A.no = B.br_sales_no
+		      and
+		         B.product_no = C.no) D
+		   group by regdate) T
+		where rn &lt;= 5
+	</select>
+	<select id="getSalesDay" resultType="SBP">
+	select regdate as name, "psum" as price 
+	from(select distinct row_number() over (order by regdate desc) rn, regdate, sum(D.qty * D.price) "psum"
+	   from (select to_char (A.regdate, 'yyyymmdd') as regdate, B.qty, C.price
+	      from br_sales A, br_sales_detail B, product C
+	      where
+	         A.no = B.br_sales_no
+	      and
+	         B.product_no = C.no) D
+	   group by regdate) T
+	where rn &lt;= 10
+	</select>
 </mapper>
+
 
 
 
