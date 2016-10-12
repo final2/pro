@@ -13,8 +13,8 @@
 	</insert>
 	
 	<!-- 공지사항 삭제 -->
-	<delete id="delteBoard" parameterType="int">
-		delte from hq_board where no = #{value}
+	<delete id="deleteBoard" parameterType="int">
+		delete from hq_board where no = #{value}
 	</delete>
 	
 	<!-- 공지사항 업데이트 -->

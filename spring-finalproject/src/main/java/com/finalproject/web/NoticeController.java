@@ -149,10 +149,17 @@ public class NoticeController {
 	
 	//공지사항 업데이트
 	@RequestMapping(value="/boardUpdateForm.do", method=RequestMethod.POST)
-	public String updateBoard(NoticeBoard noticeBoard) {
+	public String updateBoard(NoticeBoard noticeBoard, int pn, int rn) {
 		noticeService.updateBoard(noticeBoard);
-		return "redirect:/boardDetail.do?no="+noticeBoard.getNo();
+		return "redirect:/boardDetail.do?pn="+pn+"&rn=" + rn;
 	}
+	
+	@RequestMapping(value="/boardDelete.do", method=RequestMethod.GET)
+	public String boardDelete(int no, int pn) {
+		noticeService.deleteNoticeBoard(no);
+		return "redirect:/boardList.do?pn=" + pn;
+	}
+	
 	
 	//TodayPlan 페이지 이동 
 	@RequestMapping(value="/todayplan.do", method=RequestMethod.GET)

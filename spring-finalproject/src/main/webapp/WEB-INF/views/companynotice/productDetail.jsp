@@ -117,7 +117,9 @@ td{text-align:left; vertical-align:middle !important}
 					<c:param name="eventCode" value="${param.eventCode}" />
 					<c:param name="limiteAge" value="${param.limiteAge}" />
 				</c:url>
-				<a class="btn btn-default" href="${update }">수정</a>
+				<c:if test="${LoginUser.dept eq 'PM' }">
+					<a class="btn btn-default" href="${update }">수정</a>
+				</c:if>
 			</div>
 		</div>
 	</div>

@@ -28,7 +28,7 @@ h1{color:white;}
 		<%@ include file="backgroundVideo.jsp" %>
 		<div class="container">
 			<h1>공지사항 수정</h1>
-			<form role="form" action="boardUpdateForm.do" method="post">
+			<form role="form" action="boardUpdateForm.do?pn=${param.pn }&rn=${param.rn}" method="post">
 				<div class="well" style="opacity:0.8;">
 					<div>
 						<label>번호</label>
