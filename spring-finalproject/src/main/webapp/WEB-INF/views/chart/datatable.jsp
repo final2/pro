@@ -72,7 +72,7 @@ $(function() {
 });
 </script>
 <div class="panel panel-primary">
-	<div class="panel-body" id="">
+	<div class="panel-body">
 		<div class="row">
 			<table class="table table-bordered">
 					<tr id="datatable">

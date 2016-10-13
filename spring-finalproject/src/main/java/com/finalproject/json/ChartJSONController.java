@@ -48,7 +48,7 @@ public class ChartJSONController {
 		return chartDao.getSalesMonth(year);
 	}
 	@RequestMapping(value="/getsalesdays/", method=RequestMethod.GET)
-	public int getSalesDays(){
+	public int getSalesDay(){
 		Calendar oCalendar = Calendar.getInstance( );
 		int Y = oCalendar.get(Calendar.YEAR);
 		int M = oCalendar.get(Calendar.MONTH)+1;
@@ -61,7 +61,7 @@ public class ChartJSONController {
 		}
 		String year = Integer.toString(Y)+month+Integer.toString(D);
 
-		return chartDao.getSalesDays(year);
+		return chartDao.getSalesDay(year);
 	}
 	@RequestMapping(value="/getsalesBr/", method=RequestMethod.GET)
 	public List<SalesBrPr> getSalesBr(){
@@ -95,8 +95,8 @@ public class ChartJSONController {
 	}
 
 	@RequestMapping(value="/getSalesDay/", method=RequestMethod.GET)
-	public List<SalesBrPr> getSalesDay(){
-		return chartDao.getSalesDay();
+	public List<SalesBrPr> getSalesDays(){
+		return chartDao.getSalesDays();
 	}
 	@RequestMapping(value="/getBuyGender/", method=RequestMethod.GET)
 	public List<SalesBrPr> getBuyGender(){

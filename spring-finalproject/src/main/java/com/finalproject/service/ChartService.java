@@ -13,7 +13,7 @@ public interface ChartService {
 	List<SalesBrPr> getCategorySales(String year);
 	int getBuyTotal(String year);
 	List<SalesBrPr> getMonth();
-	List<SalesBrPr> getSalesDay();
+	List<SalesBrPr> getSalesDays();
 	List<SalesBrPr> getBuyGender();
 	List<SalesBrPr> getBuyAges();
 	List<SalesBrPr> getBuyCM();
