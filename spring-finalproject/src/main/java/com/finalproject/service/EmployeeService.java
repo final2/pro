@@ -12,6 +12,7 @@ import com.finalproject.model.EmployeeDetail;
 import com.finalproject.model.Languages;
 import com.finalproject.model.Licenses;
 import com.finalproject.model.RegisterEmp;
+import com.finalproject.model.WorkTime;
 
 public interface EmployeeService {
 
@@ -39,6 +40,11 @@ public interface EmployeeService {
 	List<AccountBook> getAccountBooks(Criteria criteria);
 	// 급여리스트 갯수 확인
 	int getTotalSalaryRows(Criteria criteria);
+	
+	// 근태리스트 조회
+	List<WorkTime> getTimetable(Criteria criteria);
+	// 근태 리스트 갯수 조회
+	int getTotalTimetablerows(Criteria criteria);
 	
 	// 로그인 확인
 	Employee empLogin(int empNo, String password);

@@ -303,6 +303,7 @@
 			</if>
 	</select>
 	
+	
 	<!-- 급여 리스트 갯수 조회  -->
 	<select id="getTotalSalaryRows" parameterType="Criteria" resultType="int">
 		select count(*)
@@ -325,15 +326,95 @@
 		</where>
 	</select>
 	
-	<!-- 근태리스트 갯수 조회 -->
-	<!-- <select id="getTimetable" parameterType="Criteria" resultType="WorkTime">
+	<!-- 근태리스트 조회 -->
+	<select id="getTimetablebefore" parameterType="Criteria" resultType="WorkTime">
 		select
-	</select> -->
+			no,
+			attendance,
+			leaving,
+			late,
+			earlyleave,
+			overtime,
+			service_date	as serviceDate,
+			employee_no		as "emp.no",
+			emp_name 		as "emp.name",
+			emp_dept		as "emp.dept"
+		from (
+			select
+				row_number() over (order by T.no desc) rn,
+				T.no,
+				T.attendance,
+				T.leaving,
+				T.late,
+				T.earlyleave,
+				T.overtime,
+				T.service_date,
+				T.employee_no,
+				E.name				as emp_name,
+				E.department		as emp_dept
+			from
+				timetable T, employee E
+			where 
+				T.employee_no = E.no
+		)
+		where
+			rn >= #{beginIndex} and rn &lt;= #{endIndex}
+			<if test="opt != null and keyword != null">
+				<if test="opt == 'dept'">
+					T.emloyee_no = E.no
+					and E.department = #{dept}
+				</if>
+				<if test="opt == 'name'">
+					T.employee_no = E.no
+					and E.name = #{name}
+				</if>
+				<if test="opt == 'service_date">
+					T.employee_no = E.no
+					and T.service_date = #{serviceDate}
+				</if>
+			</if>
+	</select>
+	
+	<!-- 근태리스트 조회 -->
+	<select id="getTimetable" resultType="WorkTime">
+		select
+				T.no,
+				T.attendance,
+				T.leaving,
+				T.late,
+				T.earlyleave,
+				T.overtime,
+				T.service_date		as serviceDate,
+				T.employee_no,
+				E.name				as "emp.name",
+				E.department		as "emp.dept"
+			from
+				timetable T, employee E
+			where 
+				T.employee_no = E.no
+	</select>
 	
 	<!-- 근태리스트 갯수 조회 -->
-	<!-- <select id="getTotalTimetablerows">
-		select
-	</select> -->
+	<select id="getTotalTimetablerows" parameterType="Criteria" resultType="int">
+		select count(*)
+		from timetable T, employee E
+		<where>
+			<if test="opt != null and keyword != null">
+				<if test="opt == 'dept'">
+					T.emloyee_no = E.no
+					and E.department = #{dept}
+				</if>
+				<if test="opt == 'name'">
+					T.employee_no = E.no
+					and E.name = #{name}
+				</if>
+				<if test="opt == 'service_date">
+					T.employee_no = E.no
+					and T.service_date = #{serviceDate}
+				</if>
+			</if>
+		</where>
+	</select>
 	
 	<!-- 지점 등록 -->
 	<insert id="insertBranch" parameterType="Branch">

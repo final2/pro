@@ -11,7 +11,7 @@ public class Branch {
 	private String lotto = "N";
 	private String parcelService = "N";
 	private String lifeService = "N";
-	private String img;
+	private String img = null;
 	private Employee emp;
 	
 	public int getNo() {

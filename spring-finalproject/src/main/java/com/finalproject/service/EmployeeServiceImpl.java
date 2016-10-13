@@ -20,6 +20,7 @@ import com.finalproject.model.EmployeeDetail;
 import com.finalproject.model.Languages;
 import com.finalproject.model.Licenses;
 import com.finalproject.model.RegisterEmp;
+import com.finalproject.model.WorkTime;
 
 
 @Service
@@ -120,6 +121,18 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public int getTotalSalaryRows(Criteria criteria) {
 		return empDao.getTotalSalaryRows(criteria);
 	}
+	
+	@Override
+	public List<WorkTime> getTimetable(Criteria criteria) {
+		List<WorkTime> workTimeList = empDao.getTimetable(criteria);
+		return workTimeList;
+	}
+	
+	@Override
+	public int getTotalTimetablerows(Criteria criteria) {
+		return empDao.getTotalTimetablerows(criteria);
+	}
+	
 	@Override
 	public void insertBranch(Branch branch) {
 		empDao.insertBranch(branch);

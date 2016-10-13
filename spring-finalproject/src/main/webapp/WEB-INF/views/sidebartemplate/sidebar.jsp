@@ -107,7 +107,7 @@
 	       		<ul class="bar">
 	       			<li><a href="compsalary.do?pno=1" >급여 대장</a></li>
 	       			<li><a href="insertsalary.do" >급여 지급</a></li>
-	       			<li><a href="compattendance.do" >근태 관리</a></li>
+	       			<li><a href="compattendance.do?pno=1" >근태 관리</a></li>
 	       		</ul>		
       		</c:if>
        </li>
