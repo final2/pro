@@ -12,7 +12,6 @@
 <title>Insert title here</title>
 <link rel="stylesheet" type="text/css" href="resources/bootstrap/css/bootstrap.css">
 <script type="text/javascript" src="resources/jquery/jquery.js"></script>
-<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <script src="https://www.gstatic.com/charts/loader.js"></script>
 <script src="//www.google.com/jsapi"></script>
 <script type="text/javascript">
@@ -60,7 +59,6 @@ $(function() {
 <div id="wrapper">
 	<%@ include file="/WEB-INF/views/sidebartemplate/sidebar.jsp" %>
 	<div class="container-fluid">
-		
 		<div class="row">
 			<div class="col-sm-3">
 				<div class="panel panel-primary">
