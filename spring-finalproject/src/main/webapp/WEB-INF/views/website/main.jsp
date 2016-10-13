@@ -56,25 +56,28 @@
 	    padding: 15px;
 	    text-align: center;
 	}
+	a.active {
+    color: #323232;
+	}
 </style>
 
 <title>Welcome BigStore</title>
 <script type="text/javascript">
 $(function() {
 	eventProduct(1);
-	$("#leftMenu a:first").css("active");
+	$("#leftMenu a:first").addClass("active");
 
-	$("#leftMenu a").click(function() {
-				
-		$(this).siblings().find("a").removeClass("active");
-		$(this).find("a").addClass("active").css('color','yellow');
+	$("#leftMenu a").on ('click',function() {
+		$(this).siblings().removeClass("active");
+		$(this).addClass("active");
+		
 		eventProduct($(this).attr("id"));
 	}); 
 	
 	
 	function eventProduct(evcode){
 		var code = evcode || "1";
-		$("#code").css("color:blue");
+		$("#code").css("active");
 		
 		$.ajax({
 			type:"GET",
