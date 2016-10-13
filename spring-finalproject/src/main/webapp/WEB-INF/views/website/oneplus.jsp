@@ -25,12 +25,20 @@
 			<!-- 반복 -->
 			<ul style="overflow:hidden">
 				<c:forEach var="product" items="${eventList}">
-				<div class="w3-quarter">
-					<p class="hidden">${product.no }</p>
-					<img src="${product.image }" style="width:45%" class="w3-circle w3-hover-opacity"/>
-					<p>${product.price }</p>
-					<p>${product.name }</p>
-				</div>
+					<div class="w3-quarter">
+						<p class="hidden">${product.no }</p>
+						<c:choose>
+							<c:when test="${product.image.indexOf('http')==0 }">
+								<img src="${product.image }" style="width:45%" class="w3-circle w3-hover-opacity"/>
+							</c:when>
+							<c:otherwise>
+								<img src="/FinalProject/resources/image/${product.image }" style="width:45%" class="w3-circle w3-hover-opacity"/>
+							
+							</c:otherwise>
+						</c:choose>
+						<p>${product.price }</p>
+						<p>${product.name }</p>
+					</div>
 				</c:forEach>
 			</ul>
 

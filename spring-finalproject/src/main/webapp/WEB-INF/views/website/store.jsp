@@ -225,9 +225,6 @@ $(function() {
         			detailContent += "<tr><th>지점주소</th></tr>";
         			detailContent += "<tr><td>"+detail.address+"</td></tr></table>";
         			
-        			
-        			
-        			
         			$("#panelTab").empty();
         			$("#panelTab").append(detailContent);
         		}
@@ -244,10 +241,10 @@ $(function() {
         daum.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
 	}
 	
-
+	// 주소를 클릭시 지도 좌표 이동
 	
 	
-	
+	// 전화번호 자릿수 표현
 	function phoneFomatter(num,type){
 	    
 	    var formatNum = '';
@@ -276,7 +273,6 @@ $(function() {
 	        }
 	    }
 	    return formatNum;
-	    
 	}
 	
 });

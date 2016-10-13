@@ -84,10 +84,18 @@ $(function() {
 	 			var $ul=$('#eventList');
 				$ul.empty();
 				$("#productDetail").empty();
+				
 				$.each(result, function(index, pd) {
-					$ul.append("<div class='w3-quarter' style='text-align:center'><input type='hidden' value='"+pd.no
+					if (pd.image.indexOf('http')==0){
+						
+						$ul.append("<div class='w3-quarter' style='text-align:center'><input type='hidden' value='"+pd.no
 							+"'/><img src='"+pd.image+"' style='width:45%; ' class='w3-circle w3-hover-opacity'/><p>"
 							+comma(pd.price)+" 원</p><p>"+pd.name+"</p></div>");
+					} else {
+						$ul.append("<div class='w3-quarter' style='text-align:center'><input type='hidden' value='"+pd.no
+								+"'/><img src='/FinalProject/resources/image/"+pd.image+"' style='width:45%; ' class='w3-circle w3-hover-opacity'/><p>"
+								+comma(pd.price)+" 원</p><p>"+pd.name+"</p></div>");						
+					}
 				} );
 			}
 		});
