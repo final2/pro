@@ -36,8 +36,8 @@ public class ChartServiceImpl implements ChartService{
 	}
 
 	@Override
-	public List<SalesBrPr> getSalesDay() {
-		return chartDao.getSalesDay();
+	public List<SalesBrPr> getSalesDays() {
+		return chartDao.getSalesDays();
 	}
 
 	@Override

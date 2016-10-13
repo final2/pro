@@ -96,7 +96,7 @@ public class ChartJSONController {
 
 	@RequestMapping(value="/getSalesDay/", method=RequestMethod.GET)
 	public List<SalesBrPr> getSalesDay(){
-		return chartDao.getSalesDay();
+		return chartDao.getSalesDays();
 	}
 	@RequestMapping(value="/getBuyGender/", method=RequestMethod.GET)
 	public List<SalesBrPr> getBuyGender(){

@@ -25,7 +25,7 @@
 		and
 		B.product_no = C.no
 	</select>
-		<select id="getSalesDays" parameterType="String" resultType="int">
+	<select id="getSalesDay" parameterType="String" resultType="int">
 		select sum(B.qty *C.price)
 		from 
 			(select no , regdate
@@ -100,7 +100,7 @@
 		   group by regdate) T
 		where rn &lt;= 5
 	</select>
-	<select id="getSalesDay" resultType="SBP">
+	<select id="getSalesDays" resultType="SBP">
 	select regdate as name, "psum" as price 
 	from(select distinct row_number() over (order by regdate desc) rn, regdate, sum(D.qty * D.price) "psum"
 	   from (select to_char (A.regdate, 'yyyymmdd') as regdate, B.qty, C.price
