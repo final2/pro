@@ -5,7 +5,6 @@
 
 <!-- Bootstrap Core JavaScript -->
 <link href="resources/bootstrap/css/simple-sidebar.css" rel="stylesheet">
-<script src="resources/bootstrap/js/bootstrap.min.js"></script>
 <style type="text/css">
 	#imgdiv {margin-top:10px; margin-bottom:20px;}
 	.emp {color: white}
