@@ -5,7 +5,6 @@
 
 <!-- Bootstrap Core JavaScript -->
 <link href="resources/bootstrap/css/simple-sidebar.css" rel="stylesheet">
-<script src="resources/bootstrap/js/bootstrap.min.js"></script>
 <style type="text/css">
 	#imgdiv {margin-top:10px; margin-bottom:20px;}
 	.emp {color: white}
@@ -34,7 +33,7 @@
 			     			<div style="height:30px; font-size:15px" class="emp">인사과</div>		     				
 		     			</c:if>
 		     			<c:if test="${LoginUser.dept eq 'management' }">
-			     			<div style="height:30px; font-size:15px" class="emp">일반사원</div>		     				
+			     			<div style="height:30px; font-size:15px" class="emp">영업과</div>		     				
 		     			</c:if>
 		     			<c:if test="${LoginUser.dept eq 'PM' }">
 			     			<div style="height:30px; font-size:15px" class="emp">물류과</div>		     				
