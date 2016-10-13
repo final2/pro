@@ -12,7 +12,7 @@
 <script src="resources/bootstrap/js/bootstrap.min.js"></script>
 <style>
 th,td {text-align:center;}
-.price{background-color: #C6FCE7}
+.price{background-color: #EBFBFF}
 </style>
 <script type="text/javascript">
 $(function(){
@@ -40,7 +40,7 @@ $(function(){
 						   	  +"<td>"+comma(pro.product.price)+"<input type='hidden' name='price' class='form-control' value='"+pro.product.price +"'/></td>"
 							  +"<td class='price'>"+comma(price)+"</td>"
 						   	  +"<td>"+pro.qty+"</td>"
-						   	  +"<td><input type='number' name='qty' id='qty' class='form-control' value = '0'/></td>"
+						   	  +"<td><input type='number' name='qty' id='qty' class='form-control' value = '0' style='text-align: right'/></td>"
 							  +"</tr>")
 				}); 
 			}
