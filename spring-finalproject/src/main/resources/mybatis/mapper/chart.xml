@@ -3,11 +3,153 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.finalproject.dao.ChartDao">
-	<select id="getSalesYear" resultType="int">
+	<select id="getSalesYear" parameterType="String" resultType="int">
+		select sum(B.qty *C.price)
+		from 
+			(select no , regdate
+			from br_sales
+			where regdate >= to_date('${value}0101', 'yyyymmdd') and regdate &lt; to_date('${value}0101', 'yyyymmdd')+365)  A, br_sales_detail B, product C
+		where
+		A.no = B.br_sales_no
+		and
+		B.product_no = C.no
+	</select>
+	<select id="getSalesMonth" parameterType="String" resultType="int">
+		select sum(B.qty *C.price)
+		from 
+			(select no , regdate
+			from br_sales
+			where regdate >= to_date('${value}01', 'yyyymmdd') and regdate &lt; to_date('${value}01', 'yyyymmdd')+30)  A, br_sales_detail B, product C
+		where
+		A.no = B.br_sales_no
+		and
+		B.product_no = C.no
+	</select>
+		<select id="getSalesDays" parameterType="String" resultType="int">
+		select sum(B.qty *C.price)
+		from 
+			(select no , regdate
+			from br_sales
+			where regdate like to_date('${value}', 'yyyymmdd'))  A, br_sales_detail B, product C
+		where
+		A.no = B.br_sales_no
+		and
+		B.product_no = C.no
+	</select>
+	<select id="getSalesBr" parameterType="String" resultType="SBP">
+		select F.name, sum("psum") as price
+			from(
+				select*	
+				from(
+					select *
+					from(select
+						Z.br_sales_no,
+						sum(Z.qty * Y.price)as "psum"
+						from
+							br_sales_detail Z, product Y
+						where
+							Z.product_no = Y.no
+						group by
+							br_sales_no) A, br_sales B 
+					where
+					A.br_sales_no = B.no)C , Branch D
+				where C.branch_no = D.no
+				and C.regdate >= to_date('${value}0101', 'yyyymmdd') and C.regdate &lt; to_date('${value}0101', 'yyyymmdd')+365
+				)F
+			group by F.name
+	</select>
+	<select id="getSalesPr" parameterType="String" resultType="SBP">
 		select
-		
-	</select>	
+			name, "psum" as price
+		from(
+			select
+				row_number() over (order by "psum" desc) rn, name, "psum"
+			from(
+				select DISTINCT 
+				name, "psum"
+				from(
+					select *
+					from(
+						select
+							Y.name, sum(Z.qty * Y.price)as "psum"
+						from
+							br_sales_detail Z, product Y
+						where
+							Z.product_no = Y.no
+						group by
+							Y.name)A, br_sales B
+					where B.regdate >= to_date('${value}0101', 'yyyymmdd') and B.regdate &lt; to_date('${value}0101', 'yyyymmdd')+365)))
+			where rn >= 1 and rn &lt;=5
+	</select>
+	
+	<select id="getBuyTotal" parameterType="String" resultType="int">
+		select sum(price*qty) as Total
+		from hq_order_detail
+		where regdate  >= to_date('${value}0101', 'yyyymmdd') and regdate  &lt; to_date('${value}0101', 'yyyymmdd')+365
+	</select>
+	
+	<select id="getMonth" resultType="SBP">
+		select regdate as name, "psum" as price
+		from(select distinct row_number() over (order by regdate asc) rn, regdate, sum(D.qty * D.price) "psum"
+		   from (select to_char (A.regdate, 'mm') as regdate, B.qty, C.price
+		      from br_sales A, br_sales_detail B, product C
+		      where
+		         A.no = B.br_sales_no
+		      and
+		         B.product_no = C.no) D
+		   group by regdate) T
+		where rn &lt;= 5
+	</select>
+	<select id="getSalesDay" resultType="SBP">
+	select regdate as name, "psum" as price 
+	from(select distinct row_number() over (order by regdate desc) rn, regdate, sum(D.qty * D.price) "psum"
+	   from (select to_char (A.regdate, 'yyyymmdd') as regdate, B.qty, C.price
+	      from br_sales A, br_sales_detail B, product C
+	      where
+	         A.no = B.br_sales_no
+	      and
+	         B.product_no = C.no) D
+	   group by regdate) T
+	where rn &lt;= 10
+	</select>
+	<select id="getBuyGender" resultType="SBP">
+		select gender as name, count(*) as price
+		from BR_SALES
+		group by gender
+	</select>
+	<select id="getBuyAges" resultType="SBP">
+		select ages as name, count(*) as price
+		from BR_SALES
+		group by ages
+		order by ages asc
+	</select>
+	<select id="getBuyCM" resultType="SBP">
+		select payment as name, count(*) as price
+		from BR_SALES
+		group by payment
+	</select>
+	<select id="getCategorySales" parameterType="String" resultType="SBP">
+		select D.name as name, sum("psum") as price
+		from(
+			select *
+			from(
+				select DISTINCT smallcategory_no, "psum"
+				from(
+					select
+						Y.smallcategory_no, sum(Z.qty * Y.price)as "psum"
+					from
+						br_sales_detail Z, product Y
+					where
+						Z.product_no = Y.no
+					group by
+						Y.smallcategory_no)A, br_sales F
+				where F.regdate >= to_date('${value}0101', 'yyyymmdd') and F.regdate &lt; to_date('${value}0101', 'yyyymmdd')+365)S, smallCategory B
+			where S.smallcategory_no = B.no)G, largecategory D
+		where G.largeCategory_no=D.no
+		group by D.name
+	</select>
 </mapper>
+
 
 
 

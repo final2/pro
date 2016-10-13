@@ -13,7 +13,7 @@ public interface NoticeDao {
 	// 공지사항 추가
 	void insertBoard(NoticeBoard noticeBoard);
 	// 공지사항 삭제
-	void delteBoard(int no);
+	void deleteBoard(int no);
 	// 공지사항 업데이트
 	void updateBoard(NoticeBoard noticeBoard);
 	// 모든 공지사항 불러오기

@@ -53,7 +53,7 @@ thead td,th{text-align:center;}
 				</c:url>
 				<c:if test="${LoginUser.dept eq 'HR'}">
 					<a href="${updateFormURL }" class="btn btn-default">수정</a>
-					<a href="boardDelete.do" class="btn btn-default">삭제</a>
+					<a href="boardDelete.do?no=${board.no }&pn=${param.pn}" class="btn btn-default">삭제</a>
 				</c:if>
 				<a href="boardList.do" class="btn btn-default">목록</a>
 			</div>

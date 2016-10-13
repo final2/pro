@@ -25,7 +25,6 @@ td{text-align:left; vertical-align:middle !important}
 	<%@ include file="/WEB-INF/views/sidebartemplate/sidebar.jsp" %>
 	<a href="#menu-toggle" class="btn btn-default btn-xs" id="menu-toggle">side bar</a>
 	<!-- 메신저 modal창 -->
-	<a href="#menu-toggle" class="btn btn-default btn-xs" id="menu-toggle">side bar</a>
 	<div class="modal fade" id="messenger" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
 		<%@ include file="../message/messagebutton.jsp" %>
 	</div>
@@ -118,7 +117,9 @@ td{text-align:left; vertical-align:middle !important}
 					<c:param name="eventCode" value="${param.eventCode}" />
 					<c:param name="limiteAge" value="${param.limiteAge}" />
 				</c:url>
-				<a class="btn btn-default" href="${update }">수정</a>
+				<c:if test="${LoginUser.dept eq 'PM' }">
+					<a class="btn btn-default" href="${update }">수정</a>
+				</c:if>
 			</div>
 		</div>
 	</div>

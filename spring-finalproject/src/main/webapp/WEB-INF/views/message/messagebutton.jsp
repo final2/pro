@@ -17,7 +17,6 @@ var loginUserNo = ${LoginUser.no};
 		$('#bodymessagedetail').hide();
 		$('#bodylist').show();
 	});
-	
 	/* 받은쪽지 클릭시 */
 	$('#receive').click(function(){
 		var $navi = $('#page');
