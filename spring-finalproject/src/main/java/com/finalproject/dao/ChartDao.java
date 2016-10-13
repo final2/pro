@@ -8,7 +8,7 @@ public interface ChartDao {
 
 	int getSalesYear(String year);
 	int getSalesMonth(String year);
-	int getSalesDays(String year);
+	int getSalesDay(String year);
 	List<SalesBrPr> getSalesBr(String year);
 	List<SalesBrPr> getSalesPr(String year);
 	List<SalesBrPr> getCategorySales(String year);

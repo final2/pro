@@ -62,7 +62,7 @@ public class ChartServiceImpl implements ChartService{
 
 	@Override
 	public int getSalesDays(String year) {
-		return chartDao.getSalesDays(year);
+		return chartDao.getSalesDay(year);
 	}
 
 	@Override
