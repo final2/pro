@@ -3,6 +3,7 @@ package com.finalproject.web;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -31,6 +32,7 @@ import com.finalproject.model.Languages;
 import com.finalproject.model.Licenses;
 import com.finalproject.model.PageVo;
 import com.finalproject.model.RegisterEmp;
+import com.finalproject.model.WorkTime;
 import com.finalproject.service.EmployeeService;
 
 
@@ -87,27 +89,128 @@ public class EmployeeController {
 		
 	}
 	
-	@RequestMapping(value="/mysalary.do")
-	public String mySalaryList (HttpSession session, Model model ) {
+	@RequestMapping(value="/mycompsalary.do")
+public String salaryList(HttpSession session, Criteria criteria, @RequestParam(name="pno", required=false, defaultValue="1") int pageNo, Model model) {
 		
 		Employee emp = (Employee)session.getAttribute("LoginUser");
-		EmployeeDetail empDetail = empService.getEmployeeByEmpNo(emp.getNo());
 		
-		model.addAttribute("empDetail", empDetail);
+		if (pageNo < 1) {
+			return "redirect:/compsalary.do?pno=1";
+		}
 		
-		return "employees/empdetail";
+		int rows = 10;
+		int pages = 5;
+		int beginIndex = (pageNo - 1) * rows + 1;
+		int endIndex = pageNo * rows;
 		
+		int totalRows = empService.getTotalSalaryRows(criteria);
+		
+		PageVo pagination = new PageVo(rows, pages, pageNo, totalRows);
+		
+		if(pageNo > pagination.getTotalPages()) {
+			return "redirect:/compsalary.do?pno=" + pagination.getTotalPages();
+		}
+		
+		criteria.setBeginIndex(beginIndex);
+		criteria.setEndIndex(endIndex);
+		
+		List<AccountBook> accountBookList = empService.getAccountBooks(criteria);
+
+		List<AccountBook> myAccountBookList = new ArrayList<>();
+		
+		for (AccountBook ab : accountBookList) {
+			if (ab.getEmp().getNo() == emp.getNo()) {
+				AccountBook accountBook = new AccountBook();
+				Employee employee = new Employee();
+				accountBook.setNo(ab.getNo());
+				accountBook.setPaymentDate(ab.getPaymentDate());
+				accountBook.setSalary(ab.getSalary());
+				accountBook.setOvertime(ab.getOvertime());
+				accountBook.setInsureHealth(ab.getInsureHealth());
+				accountBook.setInsureLonghealth(ab.getInsureLonghealth());
+				accountBook.setInsureSocial(ab.getInsureSocial());
+				accountBook.setEmployeeInsure(ab.getEmployeeInsure());
+				employee.setNo(ab.getEmp().getNo());
+				employee.setName(ab.getEmp().getName());
+				accountBook.setEmp(employee);
+				
+				myAccountBookList.add(accountBook);
+			}
+		}
+		
+		model.addAttribute("salaryList", myAccountBookList);
+		model.addAttribute("navi", pagination);
+		
+		return "employees/mysalarylist";
 	}
 	
-	@RequestMapping(value="/myattendance.do")
-	public String myAttendanceList (HttpSession session, Model model ) {
+	@RequestMapping(value="/mycompattendance.do", method=RequestMethod.GET)
+	public String myAttendanceListForm(Criteria criteria, @RequestParam(name="pno", required=false, defaultValue="1") int pageNo, Model model) {
+		
+		if (pageNo < 1) {
+			return "redirect:/mycompattendance.do?pno=1";
+		}
+		
+		int rows = 10;
+		int pages = 5;
+		int beginIndex = (pageNo - 1) * rows + 1;
+		int endIndex = pageNo * rows;
+		
+		int totalRows = empService.getTotalSalaryRows(criteria);
+		
+		PageVo pagination = new PageVo(rows, pages, pageNo, totalRows);
+		
+		if(pageNo > pagination.getTotalPages()) {
+			return "redirect:/mycompattendance.do?pno=" + pagination.getTotalPages();
+		}
+		
+		criteria.setBeginIndex(beginIndex);
+		criteria.setEndIndex(endIndex);
+		
+		
+		List<WorkTime> workTimeList = empService.getTimetable(criteria);
+		
+		model.addAttribute("workTimeList", workTimeList);
+		model.addAttribute("navi", pagination);
+		
+		return "employees/myattendancelist";
+	}
+	
+	@RequestMapping(value="/mycompattendance.do", method=RequestMethod.POST)
+	public String myAttendanceList (HttpSession session, Criteria criteria, 
+			@RequestParam(name="pno", required=false, defaultValue="1") int pageNo, 
+			@RequestParam("attendance") Date attendance, @RequestParam("leaving") Date leaving, Model model ) {
 		
 		Employee emp = (Employee)session.getAttribute("LoginUser");
-		EmployeeDetail empDetail = empService.getEmployeeByEmpNo(emp.getNo());
 		
-		model.addAttribute("empDetail", empDetail);
+		if (pageNo < 1) {
+			return "redirect:/compsalary.do?pno=1";
+		}
 		
-		return "employees/empdetail";
+		int rows = 10;
+		int pages = 5;
+		int beginIndex = (pageNo - 1) * rows + 1;
+		int endIndex = pageNo * rows;
+		
+		int totalRows = empService.getTotalSalaryRows(criteria);
+		
+		PageVo pagination = new PageVo(rows, pages, pageNo, totalRows);
+		
+		if(pageNo > pagination.getTotalPages()) {
+			return "redirect:/compsalary.do?pno=" + pagination.getTotalPages();
+		}
+		
+		criteria.setBeginIndex(beginIndex);
+		criteria.setEndIndex(endIndex);
+		
+		
+		WorkTime workTime = new WorkTime();
+		System.out.println(attendance);
+		
+		//model.addAttribute("empDetail", empDetail);
+		model.addAttribute("navi", pagination);
+		
+		return "employees/myattendancelist";
 		
 	}
 	
@@ -495,39 +598,42 @@ public class EmployeeController {
 	@RequestMapping(value="/compsalary.do")
 	public String salaryList(Criteria criteria, @RequestParam(name="pno", required=false, defaultValue="1") int pageNo, Model model) {
 		
-		if (pageNo < 1) {
-			return "redirect:/compsalary.do?pno=1";
+		if (pageNo != 0) {
+			
+			if (pageNo < 1) {
+				return "redirect:/compsalary.do?pno=1";
+			}
+			
+			int rows = 10;
+			int pages = 5;
+			int beginIndex = (pageNo - 1) * rows + 1;
+			int endIndex = pageNo * rows;
+			
+			int totalRows = empService.getTotalSalaryRows(criteria);
+			
+			PageVo pagination = new PageVo(rows, pages, pageNo, totalRows);
+			
+			if(pageNo > pagination.getTotalPages()) {
+				return "redirect:/compsalary.do?pno=" + pagination.getTotalPages();
+			}
+			
+			criteria.setBeginIndex(beginIndex);
+			criteria.setEndIndex(endIndex);
+			
+			List<AccountBook> accountBookList = empService.getAccountBooks(criteria);
+			
+			model.addAttribute("salaryList", accountBookList);
+			model.addAttribute("navi", pagination);
 		}
-		
-		int rows = 10;
-		int pages = 5;
-		int beginIndex = (pageNo - 1) * rows + 1;
-		int endIndex = pageNo * rows;
-		
-		int totalRows = empService.getTotalSalaryRows(criteria);
-		
-		PageVo pagination = new PageVo(rows, pages, pageNo, totalRows);
-		
-		if(pageNo > pagination.getTotalPages()) {
-			return "redirect:/compsalary.do?pno=" + pagination.getTotalPages();
-		}
-		
-		criteria.setBeginIndex(beginIndex);
-		criteria.setEndIndex(endIndex);
-		
-		List<AccountBook> accountBookList = empService.getAccountBooks(criteria);
-
-		model.addAttribute("salaryList", accountBookList);
-		model.addAttribute("navi", pagination);
 		
 		return "employees/salarylist";
 	}
 	
 	@RequestMapping(value="/compattendance.do")
-	public String attendanceList(Criteria criteria, @RequestParam(name="pno", required=false, defaultValue="1") int pageNo, Model model) {
-		
+	public String attendanceListForm(Criteria criteria, @RequestParam(name="pno", required=false, defaultValue="1") int pageNo, Model model) {
+		/*
 		if (pageNo < 1) {
-			return "redirect:/compsalary.do?pno=1";
+			return "redirect:/compattendance.do?pno=1";
 		}
 		
 		int rows = 10;
@@ -540,18 +646,22 @@ public class EmployeeController {
 		PageVo pagination = new PageVo(rows, pages, pageNo, totalRows);
 		
 		if(pageNo > pagination.getTotalPages()) {
-			return "redirect:/compsalary.do?pno=" + pagination.getTotalPages();
+			return "redirect:/compattendance.do?pno=" + pagination.getTotalPages();
 		}
 		
 		criteria.setBeginIndex(beginIndex);
 		criteria.setEndIndex(endIndex);
+		*/
 		
-		List<AccountBook> accountBookList = empService.getAccountBooks(criteria);
-
-		model.addAttribute("adList", accountBookList);
-		model.addAttribute("navi", pagination);
+		List<WorkTime> workTimeList = empService.getTimetable(criteria);
 		
-		return "employees/attendance";
+		System.out.println("근태: " + workTimeList);
+		
+		model.addAttribute("workTimeList", workTimeList);
+		//model.addAttribute("navi", pagination);
+		
+		return "employees/attendancelist";
 	}
+	
 }
 

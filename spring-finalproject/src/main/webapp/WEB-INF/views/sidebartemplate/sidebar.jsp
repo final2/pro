@@ -29,18 +29,18 @@
 		      			src="/FinalProject/resources/image/empimg/${LoginUser.photo }" />
      			</div>
 	     		<div class="col-sm-6">
-		     			<div style="height:30px;" class="emp">소속 부서</div>
+		     			<div style="height:30px; font-size:10px" class="emp">소속 부서</div>
 		     			<c:if test="${LoginUser.dept eq 'HR' }">
-			     			<div style="height:30px;" class="emp">인사과</div>		     				
+			     			<div style="height:30px; font-size:15px" class="emp">인사과</div>		     				
 		     			</c:if>
 		     			<c:if test="${LoginUser.dept eq 'management' }">
-			     			<div style="height:30px;" class="emp">일반사원</div>		     				
+			     			<div style="height:30px; font-size:15px" class="emp">일반사원</div>		     				
 		     			</c:if>
 		     			<c:if test="${LoginUser.dept eq 'PM' }">
-			     			<div style="height:30px;" class="emp">물류과</div>		     				
+			     			<div style="height:30px; font-size:15px" class="emp">물류과</div>		     				
 		     			</c:if>
-	    	 			<div style="height:30px;" class="emp">이름</div>
-	    	 			<div style="height:30px;" class="emp">${LoginUser.name }</div>	  
+	    	 			<div style="height:30px; font-size:10px; " class="emp">이름</div>
+	    	 			<div style="height:30px; font-size:15px" class="emp">${LoginUser.name }</div>	  
      			</div>
      		</div>
     	</li>
@@ -102,17 +102,17 @@
        		</ul>			
        </li>
        <li class="list">
-      		<c:if test="${LoginUser eq 'HR' }">
+      		<c:if test="${LoginUser.dept eq 'HR' }">
 	       		<a>급여 <span class="caret"></span></a>
 	       		<ul class="bar">
 	       			<li><a href="compsalary.do?pno=1" >급여 대장</a></li>
 	       			<li><a href="insertsalary.do" >급여 지급</a></li>
-	       			<li><a href="compattendance.do" >근태 관리</a></li>
+	       			<li><a href="compattendance.do?pno=1" >근태 관리</a></li>
 	       		</ul>		
       		</c:if>
        </li>
        <li>
-       		<a href="">통계</a>		
+       		<a href="chart.do">통계</a>		
        </li>
     </ul>
 </div>

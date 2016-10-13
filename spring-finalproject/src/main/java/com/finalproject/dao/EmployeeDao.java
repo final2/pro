@@ -10,6 +10,7 @@ import com.finalproject.model.Criteria;
 import com.finalproject.model.Employee;
 import com.finalproject.model.Languages;
 import com.finalproject.model.Licenses;
+import com.finalproject.model.WorkTime;
 
 public interface EmployeeDao {
 
@@ -51,6 +52,11 @@ public interface EmployeeDao {
 	List<AccountBook> getAccountBooks(Criteria criteria);
 	// 급여 리스트 갯수 조회
 	int getTotalSalaryRows(Criteria criteria);
+	
+	// 근태리스트 조회
+	List<WorkTime> getTimetable(Criteria criteria);
+	// 근태 리스트 갯수 조회
+	int getTotalTimetablerows(Criteria criteria);
 	
 	// 로그인시 사원번호 확인
 	Employee loginByNo(int empNo);

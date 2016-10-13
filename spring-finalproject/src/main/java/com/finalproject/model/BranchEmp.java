@@ -13,7 +13,7 @@ public class BranchEmp {
 	private String name;
 	private Date retireDate;
 	private Branch branch;
-	private String images;
+	private String images = null;
 	private Date birth;
 	private String remarks;
 	

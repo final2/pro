@@ -14,7 +14,7 @@ public class Employee {
 	private String dept;
 	private String position;
 	private int salary;
-	private String photo;
+	private String photo = null;
 	private Date hireDate;
 	private String password;
 	private String workingStatus;

@@ -10,6 +10,7 @@ public class WorkTime {
 	private String late = null;
 	private String earlyleave = null;
 	private String overtime = null;
+	private Date serviceDate;
 	private Employee emp;
 	
 	public WorkTime() {}
@@ -60,6 +61,14 @@ public class WorkTime {
 
 	public void setOvertime(String overtime) {
 		this.overtime = overtime;
+	}
+	
+	public Date getServiceDate() {
+		return serviceDate;
+	}
+	
+	public void setServiceDate(Date serviceDate) {
+		this.serviceDate = serviceDate;
 	}
 
 	public Employee getEmp() {
