@@ -99,7 +99,7 @@
 	</select>
 	
 	<!-- 오늘 받은 메시지 불러오기 -->
-	<!-- <select id="getReceiveMessageList" parameterType="int"  resultType="Message">
+	<select id="getReceiveMessageList" parameterType="int"  resultType="Message">
 		select 
 			no, 
 			from_no 	as	"from", 
@@ -122,7 +122,7 @@
 			order by regdate desc
 		)
 		where rn &lt;= 5 
-	</select> -->
+	</select>
 	
 	<select id="getEmpByNo" parameterType="int" resultType="Employee">
 		select 
