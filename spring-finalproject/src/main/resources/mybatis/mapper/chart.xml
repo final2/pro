@@ -130,6 +130,7 @@
 						group by
 							Y.name)A, br_sales B
 					where B.regdate >= to_date('${value}0101', 'yyyymmdd') and B.regdate &lt; to_date('${value}0101', 'yyyymmdd')+365)))
+					where rn >= 1 and rn &lt;=10
 	</select>
 	<select id="getBuyTotal" parameterType="String" resultType="int">
 		select sum(price*qty) as Total
