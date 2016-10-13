@@ -4,6 +4,11 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
+<style>
+	.panel-body {
+		opacity: 0.8;
+	}
+</style>
 <title>Insert title here</title>
 <link rel="stylesheet" type="text/css" href="resources/bootstrap/css/bootstrap.css">
 <script type="text/javascript" src="resources/jquery/jquery.js"></script>
@@ -12,6 +17,14 @@
 <script src="//www.google.com/jsapi"></script>
 <script type="text/javascript">
 $(function() {
+	
+	
+	$(".panel-body:not(:has('#datatable'))").hover(function() {
+		$(this).css('background-color', '#EBFBFF');
+	}, function() {
+		$(this).css('background-color', '#ffffff');
+	});
+	
 	function addZeros(num, digit) { 
 		  var zero = '';
 		  num = num.toString();

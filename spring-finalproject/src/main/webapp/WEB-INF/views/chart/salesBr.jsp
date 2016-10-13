@@ -35,7 +35,7 @@
         }
 	
 </script>
-<div class="panel panel-primary panel-hover">
+<div class="panel panel-primary">
 	<div class="panel-body">
 		<div id = brpiechart></div>
 	</div>
