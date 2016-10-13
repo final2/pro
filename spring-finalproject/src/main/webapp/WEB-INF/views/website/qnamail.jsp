@@ -88,7 +88,7 @@ $(function() {
 			<!-- <label for="from" >받는 사람</label> -->
 			<input type="hidden" id="to" name="to" value="lovelyzenak@gmail.com" /><br />
 			<label for="to" >보내는 사람</label>
-			<input type="text" id="from" name="from"  value="이메일 aaa@bbb.com의 형식으로 적어주세요"/><br />  
+			<input type="text" id="from" name="from"  onfocus="this.value='';" value="이메일 aaa@bbb.com의 형식으로 적어주세요"/><br />  
 			<label for="subject">제목</label>
 			<input type="text" id="subject" name="subject" /><br />
 			<label for="style-textarea">내용</label>
