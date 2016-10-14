@@ -72,26 +72,47 @@
 	</insert>
 		
 	<!-- 사원번호로 기본급 및 근태 조회 -->
-	<select id="getEmpWorkTimeByNo" parameterType="int" resultType="WorkTime">
+	<select id="getEmpWorkTimeByNo" parameterType="Criteria" resultType="WorkTime">
 		select
-			T.attendance,
-			T.leaving,
-			T.late,
-			T.earlyleave,
-			T.overtime,
-			E.no				as "emp.no",
-			E.name 				as "emp.name",
-			E.department		as "emp.dept",
-			E.salary			as "emp.salary"
-		from timetable T, employee E
-		where T.employee_no = E.no
-		and E.no = #{no}
+			no,
+			attendance,
+			leaving,
+			late,
+			earlyleave,
+			overtime,
+			regdate			as regDate,
+			employee_no		as "emp.no",
+			emp_name 		as "emp.name",
+			emp_dept		as "emp.dept",
+			emp_salary		as "emp.salary"
+		from (
+			select
+				T.no,
+				T.attendance,
+				T.leaving,
+				T.late,
+				T.earlyleave,
+				T.overtime,
+				T.regdate,
+				T.employee_no,
+				E.name				as emp_name,
+				E.department		as emp_dept,
+				E.salary			as emp_salary
+			from
+				timetable T, employee E
+			where 
+				T.employee_no = E.no
+			and 
+				E.no = #{empNo}
+		)
+		where
+			attendance >= to_date(#{beginDate}, 'yyyy-MM-dd') and attendance &lt; to_date(#{endDate}, 'yyyy-MM-dd')
 	</select>
 		
 	<!-- 사원 급여 등록 -->
 	<insert id="insertSalary" parameterType="AccountBook">
 		insert into accountbook (no, paymentdate, salary, overtime, insure_health, insure_longhealth, insure_social, employee_insure, employee_no)
-		values (my_seq.nextval, #{paymentDate}, #{salary}, #{overtime}, #{insureHealth}, #{insureLonghealth}, #{insureSocial}, #{employeeInsure}, #{empNo})
+		values (my_seq.nextval, #{paymentDate}, #{salary}, #{overtime}, #{insureHealth}, #{insureLonghealth}, #{insureSocial}, #{employeeInsure}, #{emp.no})
 	</insert>
 	
 	<!-- 모든 사원 조회하기 -->
@@ -243,6 +264,14 @@
 		where
 			no = #{no}
 	</update>
+	
+	<update id="updateEmployeePwd" parameterType="Employee">
+		update employee
+		set
+			password 	= #{password}
+		where
+			no = #{no}
+	</update>
 	<!-- 학력 수정-->
 	<update id="updateCareer" parameterType="Career">
 		update career
@@ -287,7 +316,7 @@
 			dept				as "emp.dept"
 		from (
 			select     
-				row_number() over (order by A.no desc) rn,     
+				row_number() over (order by A.paymentdate desc) rn,     
 				A.no,     
 				A.paymentdate,     
 				A.salary,     
@@ -302,8 +331,6 @@
  				accountbook A, employee E     
 			where      
 				A.employee_no = E.no  
-			order by 
-				A.paymentdate desc
 		)
 		where
 			rn >= #{beginIndex} and rn &lt;= #{endIndex}
@@ -653,5 +680,12 @@
 		where E.branch_no = B.no
 		and E.no = #{no}
 	</select>
+	
+	<!-- 지점사원번호로 지점사원 근무상태수정 -->
+	<update id="updateBranchEmpByBrempNo" parameterType="BranchEmp">
+		update br_employee
+		set
+			remarks = #{
+	</update>
 	
 </mapper>

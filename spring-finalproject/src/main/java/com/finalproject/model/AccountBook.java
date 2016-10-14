@@ -1,7 +1,5 @@
 package com.finalproject.model;
 
-import java.util.Date;
-
 public class AccountBook {
 
 	private int no;
@@ -12,7 +10,7 @@ public class AccountBook {
 	private int insureLonghealth = 0;
 	private int insureSocial = 0;
 	private int employeeInsure = 0;
-	private Employee emp;
+	private Employee emp = new Employee();
 	
 	public AccountBook() {}
 

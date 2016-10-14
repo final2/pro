@@ -61,6 +61,8 @@ public interface EmployeeService {
 	
 	// 사원정보 수정
 	void updateEmployee(Employee emp);
+	// 사원번호로 비밀번호 수정
+	void updateEmployeePwd(Employee emp);
 	
 	
 	// 지점 등록
