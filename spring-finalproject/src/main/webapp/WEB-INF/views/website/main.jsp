@@ -93,11 +93,11 @@ $(function() {
 					if (pd.image.indexOf('http')==0){
 						
 						$ul.append("<div class='w3-quarter' style='text-align:center'><input type='hidden' value='"+pd.no
-							+"'/><img src='"+pd.image+"' style='width:45%; ' class='w3-circle w3-hover-opacity'/><p>"
+							+"'/><img src='"+pd.image+"' style='width:45%; ' class='img-rounded w3-hover-opacity'/><p>"
 							+comma(pd.price)+" 원</p><p>"+pd.name+"</p></div>");
 					} else {
 						$ul.append("<div class='w3-quarter' style='text-align:center'><input type='hidden' value='"+pd.no
-								+"'/><img src='/FinalProject/resources/image/"+pd.image+"' style='width:45%; ' class='w3-circle w3-hover-opacity'/><p>"
+								+"'/><img src='/FinalProject/resources/image/"+pd.image+"' style='width:45%; ' class='img-rounded w3-hover-opacity'/><p>"
 								+comma(pd.price)+" 원</p><p>"+pd.name+"</p></div>");						
 					}
 				} );
@@ -124,7 +124,11 @@ $(function() {
 				var pd = "";
 				pd +="<div class='w3-display-container' style='text-align:center;'>"
 				pd +="<input type='hidden' value='"+result1.no+"'>";
-				pd +="<img src='"+result1.image+"' style='width:25%; ' class='w3-circle w3-hover-opacity'/>";
+				if (result1.image.indexOf('http')==0){
+					pd +="<img src='"+result1.image+"' style='width:25%; ' />";
+				} else {
+					pd+="<img src='/FinalProject/resources/image/"+result1.image+"' style='width:25%; '/>";
+				}				
 				pd +="<p>"+comma(result1.price)+" 원</p>";
 				pd +="<p>"+result1.name+"</p>";
 				pd +="<p>"+result1.memo+"</p>";

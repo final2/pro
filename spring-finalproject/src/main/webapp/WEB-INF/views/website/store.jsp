@@ -68,7 +68,10 @@
 	
 	.active {
 	    background-color: #4CAF50;
-}
+	}
+	.choice {
+		background-color: well;
+	}
 
 	</style>
 	
@@ -151,7 +154,9 @@ $(function() {
 					endIndex=rebeginIndex+rows;
 					var map = makeMap();
 					for( beginIndex ; rebeginIndex < endIndex ; rebeginIndex++){
-						$("tbody").append("<tr><td>"+data[rebeginIndex].name+"</td><td>"+data[rebeginIndex].address+"</td><td>"+data[rebeginIndex].phone+"</td></tr>");
+						var list = "";
+							list += "<tr><td>"+data[rebeginIndex].name+"</td><td>"+data[rebeginIndex].address+"</td><td>"+data[rebeginIndex].phone+"</td></tr>";
+						$("tbody").append(list);
 						(function(k) {
 							
 							$.ajax({
@@ -161,6 +166,9 @@ $(function() {
 								success: function(geo) {
 									//var map = makeMap();
 									addMarker(map, data[k], geo.lat, geo.lng);
+						/* 		list+="<input class='hidden' value="+geo.lat+">";
+								list+="<input class='hidden' value="+geo.lng+">";
+								$("tbody").append(list); */
 								}
 							});	
 						})(rebeginIndex)
@@ -275,6 +283,59 @@ $(function() {
 	    return formatNum;
 	}
 	
+	// 테이블의 지점 선택시 지도에 위치 표시
+	$("tbody").on('click','tr',function(){
+	
+		$(this).addClass("choice");
+		var a=$(this).find("td:nth-child(2)").text();
+		var b=$(this).find("td:nth-child(1)").text();
+/* 		var lat = $(this).find("input:nth-child(1)").val();
+		var lan = $(this).find("input:nth-child(2)").val();
+		
+		
+		console.log("lat"+lat);
+		console.log("lan"+lan); */
+		
+		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+	    mapOption = {
+	        center: new daum.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+	        level: 3 // 지도의 확대 레벨
+	    };  
+
+		var map = new daum.maps.Map(mapContainer, mapOption); 
+
+		// 주소-좌표 변환 객체를 생성합니다
+		var geocoder = new daum.maps.services.Geocoder();
+
+		// 주소로 좌표를 검색합니다
+		geocoder.addr2coord(a, function(status, result) {
+
+		    // 정상적으로 검색이 완료됐으면 
+		     if (status === daum.maps.services.Status.OK) {
+
+		        var coords = new daum.maps.LatLng(result.addr[0].lat, result.addr[0].lng);
+
+		        // 결과값으로 받은 위치를 마커로 표시합니다
+		        var marker = new daum.maps.Marker({
+		            map: map,
+		            position: coords
+		        });
+
+		        // 인포윈도우로 장소에 대한 설명을 표시합니다
+		        var infowindow = new daum.maps.InfoWindow({
+		            content: '<div style="width:150px;text-align:center;padding:6px 0;">'+b+'</div>'
+		        });
+		        infowindow.open(map, marker);
+
+		        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+		        map.setCenter(coords);
+		    } 
+		});
+	
+	
+	});
+	
+	
 });
 </script>
 <title>지점 유형별 안내</title>
@@ -302,9 +363,9 @@ $(function() {
 		<div  class="w3-container w3-padding-0 w3-margin-0" style="height:100%;">
 			<!-- 판매점 리스트 -->
 			<div id="panelTab" class="w3-half" style="height:100%;overflow:auto;">
-				<table class="w3-table w3-striped w3-bordered w3-border" >
+				<table class="w3-table  w3-bordered w3-border table-hover" >
 					<thead>
-					<tr>
+					<tr class="well">
 					  <th class="w3-center">판매점명</th>
 					  <th class="w3-center">주소</th>
 					  <th class="w3-center">전화번호</th>
