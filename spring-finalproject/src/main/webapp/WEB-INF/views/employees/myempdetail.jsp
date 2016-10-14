@@ -42,21 +42,6 @@
 </style>
 <script type="text/javascript">
 $(function() {
-	/* // 모달창 오픈시 기능
-	$('#myModal').on('show.bs.modal', function (e) {
-		 
-	});
-	
-	// 수정 버튼 기능
-	$("form").submit(function() {
-		if(!$.trim($("#name").val())) {
-			$(".non").show();
-			$("#name").focus();
-			return false;
-		}
-		return true;
-	}); */
-	
 	
 	$("#passwordUpdateCheck").keyup(function() {
 		if($("#passwordUpdate").val() == $(this).val() && $("#passwordUpdate").val().trim() != '') {
@@ -76,6 +61,7 @@ $(function() {
 			$("#add").attr("disabled", "disabled");			
 		}
 	});
+	
 	
 })
 </script>
@@ -278,7 +264,7 @@ $(function() {
 								</div>
 								<div>
 									<label class="text-left">비밀번호 확인</label>
-									<input type="password" name="passwordCheck" id="passwordUpdateCheck" class="form-control" placeholder="비밀번호 확인"/>
+									<input type="password" id="passwordUpdateCheck" class="form-control" placeholder="비밀번호 확인"/>
 									<p id="message" style="color:red">* 비밀번호가 틀립니다.</p>
 								</div>
 							</div>

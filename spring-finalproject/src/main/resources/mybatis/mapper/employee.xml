@@ -145,20 +145,22 @@
 				remarks
 			from	
 				employee
+			<where>
+				<if test="opt != null and keyword != null">
+					<if test="opt == 'empName'">
+						name like '%' || #{keyword} || '%'
+					</if>
+					<if test="opt == 'department'">
+						department like '%' || #{keyword} || '%'
+					</if>
+					<if test="opt == 'position'">
+						position like '%' || #{keyword} || '%'
+					</if>
+				</if> 
+			</where>
 		)
 		where
 			rn >= #{beginIndex} and rn &lt;= #{endIndex}
-			<if test="opt != null and keyword != null">
-				<if test="opt == 'empName'">
-					and name like '%' || #{keyword} || '%'
-				</if>
-				<if test="opt == 'department'">
-					and dept like '%' || #{keyword} || '%'
-				</if>
-				<if test="opt == 'position'">
-					and position like '%' || #{keyword} || '%'
-				</if>
-			</if> 
 	</select>
 	
 	<!-- 모든 사원 조회(카운트) -->
@@ -326,25 +328,27 @@
 				A.insure_social,     
 				A.employee_insure,     
 				A.employee_no   as empNo,    
-				E.department   as dept,     E.name     as empName   
+				E.department   	as dept,     
+				E.name     		as empName   
  			from      
  				accountbook A, employee E     
-			where      
+			<where>
 				A.employee_no = E.no  
+				<if test="opt != null and keyword != null">
+					<if test="opt == 'name'">
+						and E.name like '%' || #{keyword} || '%'
+					</if>
+					<if test="opt == 'paymentDate'">
+						and A.paymentdate like '%' || #{keyword} || '%'
+					</if>
+					<if test="opt == 'empNo'">
+						and A.employee_no like '%' || #{keyword} || '%'
+					</if>
+				</if>
+			</where>     
 		)
 		where
 			rn >= #{beginIndex} and rn &lt;= #{endIndex}
-			<if test="opt != null and keyword != null">
-				<if test="opt == 'name'">
-					and name like '%' || #{keyword} || '%'
-				</if>
-				<if test="opt == 'paymentDate'">
-					and paymentDate = #{keyword}
-				</if>
-				<if test="opt == 'dept'">
-					and dept like '%' || #{keyword} || '%'
-				</if>
-			</if>
 	</select>
 	
 	
@@ -394,7 +398,8 @@
 			emp_dept		as "emp.dept"
 		from (
 			select
-				row_number() over (order by T.no desc) rn,
+				row_number() over (order by T.attendance desc) rn,
+				select
 				T.no,
 				T.attendance,
 				T.leaving,
@@ -407,25 +412,23 @@
 				E.department		as emp_dept
 			from
 				timetable T, employee E
-			where 
+			<where>
 				T.employee_no = E.no
+				<if test="opt != null and keyword != null">
+					<if test="opt == 'dept'">
+						and E.department = #{dept}
+					</if>
+					<if test="opt == 'name'">
+						and E.name = #{name}
+					</if>
+					<if test="opt == 'service_date">
+						and T.regdate = #{regDate}
+					</if>
+				</if>
+			</where> 
 		)
 		where
 			rn >= #{beginIndex} and rn &lt;= #{endIndex}
-			<if test="opt != null and keyword != null">
-				<if test="opt == 'dept'">
-					and T.emloyee_no = E.no
-					and E.department = #{dept}
-				</if>
-				<if test="opt == 'name'">
-					and T.employee_no = E.no
-					and E.name = #{name}
-				</if>
-				<if test="opt == 'service_date">
-					and T.employee_no = E.no
-					and T.regdate = #{regDate}
-				</if>
-			</if>
 	</select>
 	
 	<!-- 근태리스트 조회 -->
@@ -540,20 +543,23 @@
 				E.phone 	as manager_phone
 			from
 				branch B, employee E 
-			where 
+			<where>
 				B.employee_no = E.no
+				<if test="opt != null and keyword != null">
+					<if test="opt == 'branch'">
+						and B.name like '%' || #{keyword} || '%'
+					</if>
+					<if test="opt == 'address'">
+						and B.address like '%' || #{keyword} || '%'
+					</if>
+					<if test="opt == 'manager'">
+						and E.name like '%' || #{keyword} || '%'
+					</if>
+				</if>
+			</where>
 		)		
 		where
 			rn >= #{beginIndex} and rn &lt;= #{endIndex}
-			<if test="opt == 'branch'">
-				and name like '%' || #{keyword} || '%'
-			</if>
-			<if test="opt == 'address'">
-				and address like '%' || #{keyword} || '%'
-			</if>
-			<if test="opt == 'manager'">
-				and manager_name like '%' || #{keyword} || '%'
-			</if>
 	</select>
 	
 	<!-- 모든 지점 조회 (카운트) -->
@@ -655,7 +661,8 @@
 			E.images,
 			E.birth,
 			E.email,
-			E.address
+			E.address,
+			E.remarks
 		from br_employees E, branch B 
 		where E.branch_no = B.no
 		and B.no = #{no}
@@ -683,9 +690,11 @@
 	
 	<!-- 지점사원번호로 지점사원 근무상태수정 -->
 	<update id="updateBranchEmpByBrempNo" parameterType="BranchEmp">
-		update br_employee
+		update br_employees
 		set
-			remarks = #{
+			remarks = #{remarks}
+		where
+			no = #{no}
 	</update>
 	
 </mapper>

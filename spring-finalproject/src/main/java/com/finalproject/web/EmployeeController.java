@@ -37,6 +37,7 @@ import com.finalproject.model.Licenses;
 import com.finalproject.model.PageVo;
 import com.finalproject.model.RegisterEmp;
 import com.finalproject.model.WorkTime;
+import com.finalproject.model.WorkingStateBrEmp;
 import com.finalproject.service.EmployeeService;
 
 
@@ -671,11 +672,26 @@ public class EmployeeController {
 	}
 	
 	@RequestMapping(value="/updatebranchemp.do", method=RequestMethod.POST)
-	public String updateBranchEmp(List<BranchEmp> branchempList) throws Exception {
+	public String updateBranchEmp(@RequestParam(name="pno") int pageNo, @RequestParam(name="no") int brNo, WorkingStateBrEmp WorkingStateBrEmpList) {
 		
-		//empService.getBranchEmpByBrEmpNo(brEmpNo);
 		
-		return "redirect:/branchempdetail.do";
+		List<BranchEmp> branchEmpList = new ArrayList<>();
+		
+		if (WorkingStateBrEmpList.getWorkingState() != null) {
+			
+			for (int i=0; i<WorkingStateBrEmpList.getWorkingState().length; i++) {
+				BranchEmp brEmp = new BranchEmp();
+				brEmp.setNo(WorkingStateBrEmpList.getWorkingState()[i]);
+				brEmp.setRemarks("퇴사");
+				System.out.println("dd:"+brEmp.getNo());
+				branchEmpList.add(brEmp);
+				
+			}
+		}
+		
+		empService.updateBranchEmpByBrempNo(branchEmpList);
+		
+		return "redirect:/compbranchdetail.do?no="+brNo+"&pno="+pageNo;
 	}
 	
 	
@@ -737,7 +753,6 @@ public class EmployeeController {
 	@RequestMapping(value="/compsalary.do")
 	public String salaryList(Criteria criteria, @RequestParam(name="pno", required=false, defaultValue="1") int pageNo, Model model) {
 		
-		if (pageNo != 0) {
 			
 			if (pageNo < 1) {
 				return "redirect:/compsalary.do?pno=1";
@@ -763,7 +778,7 @@ public class EmployeeController {
 			
 			model.addAttribute("salaryList", accountBookList);
 			model.addAttribute("navi", pagination);
-		}
+		
 		
 		return "employees/salarylist";
 	}

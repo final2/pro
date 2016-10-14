@@ -44,7 +44,7 @@
 	.formBtn1 > a { width:50%; padding:10px 0;}
 	
 	.formBtn2 {width:50%; text-align:center; float:left;}
-	.formBtn2 > a { width:50%; padding:10px 0;}
+	.formBtn2 > a, .formBtn2 > input { width:50%; padding:10px 0;}
 	
 </style>
 <script type="text/javascript">
@@ -58,6 +58,10 @@ $(function() {
 		$(".btnBox1").hide();
 		$(".btnBox2").show();
 		$("input[name='workingState']").val().replace()
+	})
+	
+	$("#brEmpUpdate").on("click", function() {
+		$(".workingState")
 	})
 	
 });
@@ -208,80 +212,79 @@ $(function() {
 					</tbody>
 				</table>
 			</div>
-			<div id="brempUpdate">
-				<h3 class="text-center">지점사원 목록</h3>
-				<table class="table table-bordered">
-					<thead>
-					</thead>
-					<tbody>
-						<colgroup>
-							<col style="width:9%;">
-							<col style="width:19%;">
-							<col style="width:16%;">
-							<col style="width:22%;">
-							<col style="width:15%;">
-							<col style="width:19%;">
-						</colgroup>
-						<tr>
-							<th class="info">퇴사여부</th>
-							<th class="info">사원번호</th>
-							<th class="info">이름</th>
-							<th class="info">연락처</th>
-							<th class="info">직급</th>
-							<th class="info">비고</th>
-						</tr>
-						<c:forEach var="brEmp" items="${brEmpList }">
-							<c:url var="detailURL" value="branchempdetail.do">
-								<c:param name="no" value="${brEmp.no }"></c:param>
-								<c:param name="pno" value="${param.pno }"></c:param>
-							</c:url>
+			<!-- 지점사원 수정 -->
+			<form role="form" action="updatebranchemp.do?no=${branch.no }&pno=${param.pno }" method="post">
+				<div id="brempUpdate">
+					<h3 class="text-center">지점사원 목록</h3>
+					<table class="table table-bordered">
+						<thead>
+						</thead>
+						<tbody>
+							<colgroup>
+								<col style="width:9%;">
+								<col style="width:19%;">
+								<col style="width:16%;">
+								<col style="width:22%;">
+								<col style="width:15%;">
+								<col style="width:19%;">
+							</colgroup>
 							<tr>
-								<td><input type="checkbox" name="workingState" value="${brEmp.no }"/></td>
-								<td>${brEmp.no }</td>
-								<td><a href="${detailURL }" class="empBtn">${brEmp.name }</a></td>
-								<td>${brEmp.phone }</td>
-								<td>${brEmp.grade }</td>
-								<td>${brEmp.remarks }</td>
+								<th class="info">퇴사여부</th>
+								<th class="info">사원번호</th>
+								<th class="info">이름</th>
+								<th class="info">연락처</th>
+								<th class="info">직급</th>
+								<th class="info">비고</th>
 							</tr>
-						</c:forEach>
-					</tbody>
-				</table>
-			</div>
+							<c:forEach var="brEmp" items="${brEmpList }">
+								<c:url var="detailURL" value="branchempdetail.do">
+									<c:param name="no" value="${brEmp.no }"></c:param>
+									<c:param name="pno" value="${param.pno }"></c:param>
+								</c:url>
+								<tr>
+									<td><input type="checkbox" name="workingState" value="${brEmp.no }"/></td>
+									<td>${brEmp.no }</td>
+									<td><a href="${detailURL }" class="empBtn">${brEmp.name }</a></td>
+									<td>${brEmp.phone }</td>
+									<td>${brEmp.grade }</td>
+									<td>${brEmp.remarks }</td>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+				</div>
+				<!--  --><div class="formBtnBox btnBox2">
+				<c:choose>
+					<c:when test="${LoginUser.dept eq 'HR'}">
+						<div class="formBtn2">
+							<input type="submit" id="brEmpUpdate" class="btn btn-primary" value="퇴사완료"/>
+						</div>
+						<div class="formBtn2">
+							<a href="compbranchlist.do" class="btn btn-default">목록</a>
+						</div>
+					</c:when>
+					<c:otherwise>
+						<div class="formBtn">
+							<a href="compbranchlist.do" class="btn btn-default">목록</a>
+						</div>
+					</c:otherwise>
+				</c:choose>
+				</div> <!--  -->
+			</form>
 			<div class="formBtnBox btnBox1">
 			<c:choose>
 				<c:when test="${LoginUser.dept eq 'HR'}">
 					<div class="formBtn1">
-						<c:url var="updateURL" value="updatebranch.do">
+						<c:url var="changeURL" value="updatebranch.do">
 							<c:param name="no" value="${branch.no }"></c:param>
 							<c:param name="pno" value="${param.pno }"></c:param>
 						</c:url>
-						<a href="${updateURL }" class="btn btn-primary">지점 수정</a>
+						<a href="${changeURL }" class="btn btn-primary">지점 수정</a>
 					</div>
 					<div class="formBtn1">
 						<a href="#" id="brEmpUpdateBtn" class="btn btn-primary">지점사원 수정</a>
 					</div>
 					<div class="formBtn1">
-						<a href="compbranchlist.do" class="btn btn-default">목록</a>
-					</div>
-				</c:when>
-				<c:otherwise>
-					<div class="formBtn">
-						<a href="compbranchlist.do" class="btn btn-default">목록</a>
-					</div>
-				</c:otherwise>
-			</c:choose>
-			</div>
-			<div class="formBtnBox btnBox2">
-			<c:choose>
-				<c:when test="${LoginUser.dept eq 'HR'}">
-					<div class="formBtn2">
-						<%-- <c:url var="updateURL" value="updatebranch.do">
-							<c:param name="no" value="${branch.no }"></c:param>
-							<c:param name="pno" value="${param.pno }"></c:param>
-						</c:url> --%>
-						<a href="#" id="brEmpUpdate" class="btn btn-primary">지점사원 수정완료</a>
-					</div>
-					<div class="formBtn2">
 						<a href="compbranchlist.do" class="btn btn-default">목록</a>
 					</div>
 				</c:when>

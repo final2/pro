@@ -21,6 +21,7 @@ import com.finalproject.model.Languages;
 import com.finalproject.model.Licenses;
 import com.finalproject.model.RegisterEmp;
 import com.finalproject.model.WorkTime;
+import com.finalproject.model.WorkingStateBrEmp;
 
 
 @Service
@@ -242,6 +243,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 		}
 		return savedEmp;
 	}
-	
+
+	@Override
+	public void updateBranchEmpByBrempNo(List<BranchEmp> BrEmpList) {
+				
+		for (BranchEmp brEmp : BrEmpList) {
+			empDao.updateBranchEmpByBrempNo(brEmp);
+		}
+	}
 
 }

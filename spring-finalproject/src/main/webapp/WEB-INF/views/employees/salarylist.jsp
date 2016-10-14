@@ -43,7 +43,7 @@
 						<select name="opt" class="form-control">
 							<option value="name">이름</option>
 							<option value="paymentDate">월별</option>
-							<option value="dept">부서별</option>
+							<option value="empNo">사원번호</option>
 						</select>
 					</div>
 					<div class="col-sm-6 form-group">

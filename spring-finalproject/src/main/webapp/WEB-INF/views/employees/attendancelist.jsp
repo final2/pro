@@ -80,10 +80,10 @@
 				</tr>
 				<c:forEach var="workTime" items="${workTimeList }">
 					<tr>
-						<td><fmt:formatDate value="${workTime.serviceDate }" pattern="yyyy.MM.dd"/> </td>
+						<td><fmt:formatDate value="${workTime.attendance }" pattern="yyyy.MM.dd"/> </td>
 						<td>${workTime.emp.dept }</td>
 						<td>${workTime.emp.name }</td>
-						<td><fmt:formatDate value="${workTime.attendance }" pattern="hh:mm"/></td>
+						<td><fmt:formatDate value="${workTime.attendance }" pattern="HH:mm"/></td>
 						<td><fmt:formatDate value="${workTime.leaving }" pattern="HH:mm"/></td>
 						<td>${workTime.overtime }</td>
 						<td>${workTime.earlyleave }</td>

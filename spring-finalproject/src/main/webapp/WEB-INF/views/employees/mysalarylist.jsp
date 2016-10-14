@@ -108,32 +108,6 @@
 					</tr>
 				</c:forEach>
 			</table>
-			<ul class="pagination pageBox">
-			<c:if test="${param.pno gt 1 }">
-    			<li>
-      				<a href="compsalary.do?pno=${param.pno - 1 }" aria-label="Previous">
-        				<span aria-hidden="true">&laquo;</span>
-      				</a>
-    			</li>
-    		</c:if>
-    		<c:forEach var="num" begin="${navi.beginPage }" end="${navi.endPage }">
-    			<c:choose>
-    				<c:when test="${param.pno eq num }">
-    					<li class="active"><a href="compsalary.do?pno=${num }">${num }</a></li>
-    				</c:when>
-    				<c:otherwise>
-					    <li><a href="compsalary.do?pno=${num }">${num }</a></li>
-    				</c:otherwise>
-    			</c:choose>
-    		</c:forEach>
-    		<c:if test="${param.pno lt navi.totalPages}">
-    			<li>
-      				<a href="compsalary.do?pno=${param.pno + 1 }" aria-label="Next">
-        				<span aria-hidden="true">&raquo;</span>
-      				</a>
-    			</li>
-    		</c:if>
-			</ul>
 		</div>
 	</div>
 </div>

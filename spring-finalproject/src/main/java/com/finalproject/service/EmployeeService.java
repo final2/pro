@@ -13,6 +13,7 @@ import com.finalproject.model.Languages;
 import com.finalproject.model.Licenses;
 import com.finalproject.model.RegisterEmp;
 import com.finalproject.model.WorkTime;
+import com.finalproject.model.WorkingStateBrEmp;
 
 public interface EmployeeService {
 
@@ -93,5 +94,7 @@ public interface EmployeeService {
 	// 지점사원번호로 지점사원 조회
 	BranchEmp getBranchEmpByBrEmpNo(int brEmpNo);
 	
+	// 지점사원번호로 근무상태 수정
+	void updateBranchEmpByBrempNo(List<BranchEmp> BrEmpList);
 	
 }
