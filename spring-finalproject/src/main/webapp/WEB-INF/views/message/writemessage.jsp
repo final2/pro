@@ -54,7 +54,7 @@ $(function() {
 					<textarea rows="5" class="form-control" name="contents"></textarea>
 				</div>
 				<div class="form-group" style="text-align:right" >
-					<input type="submit" class="btn btn-default" value="저장" />
+					<input type="submit" class="btn btn-default" value="보내기" />
 					<button type="reset" class="btn btn-default" id="reset">취소</button>
 				</div>
 			</form>
