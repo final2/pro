@@ -26,6 +26,8 @@ public interface EmployeeDao {
 	void insertAddLanguages(Languages language);
 	// 사원 급여대장 등록
 	void insertSalary(AccountBook accountBook);
+	// 사원번호로 비밀번호 수정
+	void updateEmployeePwd(Employee emp);
 	
 	// 모든 사원 조회
 	List<Employee> getAllEmployees();
@@ -55,7 +57,7 @@ public interface EmployeeDao {
 	// 부서이름으로 해당 사원 조회
 	List<Employee> getEmployeeByDept(String dept);
 	// 사원번호로 급여와 근태조회
-	WorkTime getEmpWorkTimeByNo(int empNo);
+	List<WorkTime> getEmpWorkTimeByNo(Criteria criteria);
 	
 	// 근태리스트 조회
 	List<WorkTime> getTimetable(Criteria criteria);
@@ -100,4 +102,7 @@ public interface EmployeeDao {
 	List<BranchEmp> getBranchEmpByNo(int branchNo);
 	// 지점사원번호로 지점 사원 조회
 	BranchEmp getBranchEmpByBrEmpNo(int brEmpNo);
+	// 지점사원 번호로 근무상태 수정
+	void updateBranchEmpByBrempNo(List<BranchEmp> branchList);
+	
 }

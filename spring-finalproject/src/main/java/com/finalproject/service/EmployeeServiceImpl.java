@@ -112,6 +112,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 	
 	@Override
+	public void updateEmployeePwd(Employee emp) {
+		empDao.updateEmployeePwd(emp);
+	}
+	
+	@Override
 	public List<AccountBook> getAccountBooks(Criteria criteria) {
 		List<AccountBook> accountBookList = empDao.getAccountBooks(criteria);
 		return accountBookList;

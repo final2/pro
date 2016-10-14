@@ -40,99 +40,35 @@
 	
 </style>
 <script type="text/javascript">
-	/* function currency(obj)
-	{
-	 if (event.keyCode >= 48 && event.keyCode <= 57) {
-	  
-	 } else {
-	                // else 를 지웠을때는 한글이 자동으로 삭제 됩니다.
-	  event.returnValue = false
-	 }
-	}
-	function com(obj)
-	{
-	 obj.value = unComma(obj.value);
-	 obj.value = Comma(obj.value);
-	}
-	function Comma(input) {
-
-	  var inputString = new String;
-	  var outputString = new String;
-	  var counter = 0;
-	  var decimalPoint = 0;
-	  var end = 0;
-	  var modval = 0;
-
-	  inputString = input.toString();
-	  outputString = '';
-	  decimalPoint = inputString.indexOf('.', 1);
-
-	  if(decimalPoint == -1) {
-	     end = inputString.length - (inputString.charAt(0)=='0' ? 1:0);
-	     for (counter=1;counter <=inputString.length; counter++)
-	     {
-	        var modval =counter - Math.floor(counter/3)*3;
-	        outputString = (modval==0 && counter <end ? ',' : '') + inputString.charAt(inputString.length - counter) + outputString;
-	     }
-	  }
-	  else {
-	     end = decimalPoint - ( inputString.charAt(0)=='-' ? 1 :0);
-	     for (counter=1; counter <= decimalPoint ; counter++)
-	     {
-	        outputString = (counter==0  && counter <end ? ',' : '') +  inputString.charAt(decimalPoint - counter) + outputString;
-	     }
-	     for (counter=decimalPoint; counter < decimalPoint+3; counter++)
-	     {
-	        outputString += inputString.charAt(counter);
-	     }
-	 }
-	    return (outputString);
-	}
-	
-	function unComma(input) {
-	   var inputString = new String;
-	   var outputString = new String;
-	   var outputNumber = new Number;
-	   var counter = 0;
-	   if (input == '')
-	   {
-	 return 0
-	   }
-	   inputString=input;
-	   outputString='';
-	   for (counter=0;counter <inputString.length; counter++)
-	   {
-	      outputString += (inputString.charAt(counter) != ',' ?inputString.charAt(counter) : '');
-	   }
-	   outputNumber = parseFloat(outputString);
-	   return (outputNumber);
-	} */
-	
 $(function() {
-	$(".salaryForm").submit(function() {
-		var nomal = $("input[name='salary']").val.replace(/ /g, '');
-		var yeongeum = $("input[name='insureSocial']").val.replace(/ /g, '');
-		var geongang = $("input[name='insurehealth']").val.replace(/ /g, '');
-		var goyong = $("input[name='insureLonghealth']").val.replace(/ /g, '');
-		var sanjae = $("input[name='employeeInsure']").val.replace(/ /g, '');
-		var total = $("input[name='total']").val.replace(/ /g, '');
-		var overtimeTime = $("input[name='overtimeTime']").val.replace(/ /g, '');
-		var overtimePrice = $("input[name='overtimePrice']").val.replace(/ /g, '');
-		var overtime = $("input[name='overtime']").val.replace(/ /g, '');
-		var result = $("input[name='result']").val.replace(/ /g, '');
-		
-		yeongeum + geongang
-		
-		alert(nomal);
-		
-		
-		
-		return true;
-	});
 	
 	$("#empNameBtn").on("change", function() {
 		var empName = $(this).children("option:selected").val();
-		$(".salaryName").text(empName+ "님의 급여명세서");
+		
+		var Now = new Date(); 
+		var year = Now.getFullYear(); 
+		
+		var $salaryTitle = $(".salaryName");
+		var html = "";
+		html += empName+"님의 ";
+		html += "<select name='paymentDate' class='salaryDate'>";
+		html += "	<option value='"+year+".01'>"+year+".01</option>";
+		html += "	<option value='"+year+".02'>"+year+".02</option>";
+		html += "	<option value='"+year+".03'>"+year+".03</option>";
+		html += "	<option value='"+year+".04'>"+year+".04</option>";
+		html += "	<option value='"+year+".05'>"+year+".05</option>";
+		html += "	<option value='"+year+".06'>"+year+".06</option>";
+		html += "	<option value='"+year+".07'>"+year+".07</option>";
+		html += "	<option value='"+year+".08'>"+year+".08</option>";
+		html += "	<option value='"+year+".09'>"+year+".09</option>";
+		html += "	<option value='"+year+".10'>"+year+".10</option>";
+		html += "	<option value='"+year+".11'>"+year+".11</option>";
+		html += "	<option value='"+year+".12'>"+year+".12</option>";
+		html += "</select>";
+		html += " 급여 지급명세서";
+		
+		$salaryTitle.append(html);
+		
 		var empNo = $(this).children("option:selected").attr("id").replace("no-", "");
 		
 		$.ajax({
@@ -142,12 +78,36 @@ $(function() {
 			data:{empNo:empNo},
 			dataType:'json',
 			success:function(result) {
-				console.log(result.salary)
-
+				var a = Math.round(result.emp.salary);
+				var b = Math.round(result.emp.salary * 0.09);
+				var c = Math.round(result.emp.salary * 0.0533);
+				var d = Math.round(result.emp.salary * 0.0655);
+				var e = Math.round(result.emp.salary * 0.0045);
+				$("input[name=salary]").val(a);
+				$("input[name=insureSocial]").val(b);
+				$("input[name=insureHealth]").val(c);
+				$("input[name=insureLonghealth]").val(d);
+				$("input[name=employeeInsure]").val(e);
+				
+				var f = a-b+c+d+e;
+				$("input[name=total]").val(f);
+				
+				var g = result.overtime;
+				$("input[name=overtimeTime]").val(g);
+				
+				var h = a/30/8 * 1.5;
+				$("input[name=overtimePrice]").val(h);
+				
+				var i = h * g;
+				$("input[name=overtime]").val(i);
+				
+				var j = f + i;
+				$("input[name=result]").val(j);
 			}
-		}); 
+			
+		});
+				$(".salaryNo").val(empNo);
 		
-		$("input[name='salary']").val();
 		
 	});
 	
@@ -172,6 +132,13 @@ $(function() {
 
 			}
 		}); 
+	});
+	
+	$(".salaryForm").submit(function() {
+		
+		
+		
+		return true;
 	});
 });
 </script>
@@ -201,7 +168,7 @@ $(function() {
 					</div>
 				</div>
 			</div>
-			<form role="form" action="insertbranchemp.do" method="post" class="salaryForm">
+			<form role="form" action="insertsalary.do" method="post" class="salaryForm">
 				<table class="table table-bordered empBox" >
 					<colgroup>
 						<col style="width:15%;">
@@ -210,50 +177,55 @@ $(function() {
 					</colgroup>
 					<c:if test="${ !empty empList }">
 						<tr>
-							<th colspan="3" class="salaryName text-center"></th>
+							<th colspan="3" class="salaryName text-center">
+								<input type="hidden" name='paymentDate' readonly="readonly"/>
+								<input type="hidden" name='emp.no' class="salaryNo" readonly="readonly"/>
+							</th>
 						</tr>
 					</c:if>
 					<tr>
 						<th colspan="2"  class="info text-left">기본급</th>
-						<td><input type="text" name="salary"/></td>
+						<td>
+							<input type="text" name='salary' readonly="readonly"/>
+						</td>
 					</tr>
 					<tr>
 						<th rowspan="5" class="info">공제 내역</th>
 						<th>국민연금</th>
-						<td><input type="text" name="insureSocial"/></td>
+						<td><input type="text" name="insureSocial" readonly="readonly"/></td>
 					</tr>
 					<tr>
 						<th>건강보험</th>
-						<td><input type="text" name="insureHealth" onKeyPress="currency(this);" onKeyup="com(this);"/></td>
+						<td><input type="text" name="insureHealth" readonly="readonly"/></td>
 					</tr>
 					<tr>
 						<th>장기요양보험</th>
-						<td><input type="text" name="insureLonghealth" onKeyPress="currency(this);" onKeyup="com(this);"/></td>
+						<td><input type="text" name="insureLonghealth" readonly="readonly"/></td>
 					</tr>
 					<tr>
 						<th>고용/산재보험</th>
-						<td><input type="text" name="employeeInsure" onKeyPress="currency(this);" onKeyup="com(this);"/></td>
+						<td><input type="text" name="employeeInsure" readonly="readonly"/></td>
 					</tr>
 					<tr>
 						<th>합계</th>
-						<td><input type="hidden" name="total"/></td>
+						<td><input type="text" name="total" readonly="readonly"/></td>
 					</tr>
 					<tr>
 						<th rowspan="3" class="info">추가 수당</th>
 						<th>초과 근무 시간</th>
-						<td><input type="text" name="overtimeTime" onKeyPress="currency(this);" onKeyup="com(this);"/></td>
+						<td><input type="text" name="overtimeTime" readonly="readonly"/></td>
 					</tr>
 					<tr>
 						<th>금액</th>
-						<td><input type="text" name="overtimePrice" onKeyPress="currency(this);" onKeyup="com(this);"/></td>
+						<td><input type="text" name="overtimePrice" readonly="readonly"/></td>
 					</tr>
 					<tr>
 						<th>합계</th>
-						<td><input type="hidden" name="overtime"/></td>
+						<td><input type="text" name="overtime" readonly="readonly"/></td>
 					</tr>
 					<tr>
 						<th colspan="2"  class="info">총 지급 내역</th>
-						<td><input type="hidden" name="result"/></td>
+						<td><input type="text" name="result" readonly="readonly"/></td>
 					</tr>
 				</table>
 				<div class="formBtnBox">

@@ -671,7 +671,7 @@ public class EmployeeController {
 	}
 	
 	@RequestMapping(value="/updatebranchemp.do", method=RequestMethod.POST)
-	public String updateBranchEmp(BranchAddForm branchemp, @RequestParam(name="images") MultipartFile upfile) throws Exception {
+	public String updateBranchEmp(List<BranchEmp> branchempList) throws Exception {
 		
 		//empService.getBranchEmpByBrEmpNo(brEmpNo);
 		
@@ -794,7 +794,6 @@ public class EmployeeController {
 		
 		List<WorkTime> workTimeList = empService.getTimetable(criteria);
 		
-		System.out.println("근태: " + workTimeList);
 		
 		model.addAttribute("workTimeList", workTimeList);
 		//model.addAttribute("navi", pagination);
