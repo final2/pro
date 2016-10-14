@@ -29,21 +29,21 @@
 		      			src="/FinalProject/resources/image/empimg/${LoginUser.photo }" />
      			</div>
 	     		<div class="col-sm-6">
-		     			<div style="height:30px; font-size:10px" class="emp">소속 부서</div>
+		     			<div style="height:30px; font-size:10px; color:yellow;" class="emp">소속 부서</div>
 		     			<c:if test="${LoginUser.dept eq 'Master' }">
-			     			<div style="height:30px; font-size:15px" class="emp">Master</div>		     				
+			     			<div style="height:30px; font-size:15px; color:yellow;" class="emp">Master</div>		     				
 		     			</c:if>
 		     			<c:if test="${LoginUser.dept eq 'HR' }">
-			     			<div style="height:30px; font-size:15px" class="emp">인사과</div>		     				
+			     			<div style="height:30px; font-size:15px; color:yellow;" class="emp">인사과</div>		     				
 		     			</c:if>
 		     			<c:if test="${LoginUser.dept eq 'management' }">
-			     			<div style="height:30px; font-size:15px" class="emp">영업과</div>		     				
+			     			<div style="height:30px; font-size:15px; color:yellow;" class="emp">영업과</div>		     				
 		     			</c:if>
 		     			<c:if test="${LoginUser.dept eq 'PM' }">
-			     			<div style="height:30px; font-size:15px" class="emp">물류과</div>		     				
+			     			<div style="height:30px; font-size:15px; color:yellow;" class="emp">물류과</div>		     				
 		     			</c:if>
-	    	 			<div style="height:30px; font-size:10px; " class="emp">이름</div>
-	    	 			<div style="height:30px; font-size:15px" class="emp">${LoginUser.name }</div>	  
+	    	 			<div style="height:30px; font-size:10px; color:yellow;" class="emp">이름</div>
+	    	 			<div style="height:30px; font-size:15px; color:yellow;" class="emp">${LoginUser.name }</div>	  
      			</div>
      		</div>
     	</li>
