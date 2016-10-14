@@ -140,7 +140,7 @@ ul.pagination li a:hover:not(.active) {background-color: #ddd;}
 			</div>
 			<div class="pull-right">
 				<c:if test="${LoginUser.dept eq 'PM'}">
-					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" id="btn">거래처 등록</button>
+					<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#myModal" id="btn">거래처 등록</button>
 				</c:if>
 			</div>
 			

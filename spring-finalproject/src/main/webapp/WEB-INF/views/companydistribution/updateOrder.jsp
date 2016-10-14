@@ -77,8 +77,8 @@ th,td {text-align:center;}
 				</table>
 			</div>
 			<div class="pull-right">
-				<input type="submit" class="btn btn-primary" value="확인" />
-				<a href="hqOrder.do" class="btn btn-danger">취소</a>
+				<input type="submit" class="btn btn-warning" value="확인" />
+				<a href="hqOrder.do" class="btn btn-default">취소</a>
 			</div>
 			</form>
 		</div>

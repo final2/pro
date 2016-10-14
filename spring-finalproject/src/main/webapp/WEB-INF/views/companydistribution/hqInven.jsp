@@ -83,7 +83,7 @@ ul.pagination li a:hover:not(.active) {background-color: #ddd;}
 			</div>
 			<div class="pull-right">
 				<c:if test="${LoginUser.dept eq 'PM'}">
-					<a href="orderApp.do" class="btn btn-info">발주 신청</a>
+					<a href="orderApp.do" class="btn btn-warning">발주 신청</a>
 				</c:if>
 			</div>
 			

@@ -100,8 +100,8 @@ $(function(){
 					</table>
 			</div>
 				<div class="pull-right">
-					<input type="submit" id="order" class="btn btn-primary" value="신청" />
-					<a href="hqOrder.do" class="btn btn-danger">취소</a>
+					<input type="submit" id="order" class="btn btn-warning" value="신청" />
+					<a href="hqOrder.do" class="btn btn-default">취소</a>
 				</div>
 			</form>
 		</div>

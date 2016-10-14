@@ -96,9 +96,9 @@ th,td {text-align:center;}
 			</div>
 			<div class="pull-right">
 				<c:if test="${LoginUser.dept eq 'PM'}">
-					<button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal" id="btn" >수정</button>
+					<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#myModal" id="btn" >수정</button>
 				</c:if>
-				<a href="clientList.do" class="btn btn-primary">목록</a>
+				<a href="clientList.do" class="btn btn-default">목록</a>
 			</div>
 			
 			<div class="text-center"> 

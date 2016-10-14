@@ -91,7 +91,7 @@ th,td {text-align:center;}
 				<c:if test="${LoginUser.dept eq 'PM'}">
 					<c:choose>
 						<c:when test="${orders.confirm == 'N'}">
-							<a href="${updateOrderURL }" class="btn btn-primary">수정</a>
+							<a href="${updateOrderURL }" class="btn btn-warning">수정</a>
 						</c:when>
 					</c:choose>
 				</c:if>
