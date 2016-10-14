@@ -117,7 +117,7 @@ ul.pagination li a:hover:not(.active) {background-color: #ddd;}
 				</thead>
 				<tbody>
 					<c:forEach var="client" items="${clientList}">
-						<c:url var="detailURL" value="clientDetail.do">
+						<c:url var="detailURL" value="clientDetail.do?pn=1">
 							<c:param name="no" value="${client.no}" />
 						</c:url>
 						<tr>

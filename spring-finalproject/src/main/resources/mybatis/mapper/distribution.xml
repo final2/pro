@@ -322,4 +322,36 @@
 				hq_order_no = #{hqOrder.no}
 				and product_no = #{product.no}
 	</update>
+	
+	<!-- 제조사 별 상품 리스트 총 수-->
+	<select id="ClientSearchTotalNo" parameterType="CDPV" resultType="int" >
+		select count(*)
+		from product
+		where client_no = #{no}
+		<if test="keyword != null and keyword != 'null' ">
+	  		and name like '%' || #{keyword} || '%'
+	  	</if>
+	</select>
+	<!-- 제조사 별 상품 페이지 리스트 -->
+	<select id="ClientSearchPageList" parameterType="CDPV" resultType="Product">
+		select  rank,
+				no					as no,
+				name				as name,
+				maker				as maker,
+				price				as price,
+				memo				as memo,
+				limiteage			as limiteAge,
+				eventcode			as "event.no",
+				smallcategory_no	as "smallCat.no",
+				image				as image,
+				client_no			as clientNo
+		from (select row_number() OVER(order by no desc) as rank, 
+				no, name, maker, price, memo, limiteage, eventcode, smallcategory_no, image, client_no
+			  from product 
+			  where client_no = #{no}
+			  <if test="keyword != null and keyword != 'null' ">
+			  	and name like '%' || #{keyword} || '%'
+			  </if>)
+		where rank >= #{pageVo.beginIndex} and rank &lt;= #{pageVo.endIndex}
+	</select>
 </mapper>

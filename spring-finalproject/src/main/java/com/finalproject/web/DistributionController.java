@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.finalproject.model.Client;
 import com.finalproject.model.ClientDetail;
+import com.finalproject.model.ClientDetailPageVo;
 import com.finalproject.model.HqInventory;
 import com.finalproject.model.HqOrder;
 import com.finalproject.model.HqOrderDetail;
@@ -101,13 +102,31 @@ public class DistributionController {
 	
 	// 거래처 상세정보 페이지
 	@RequestMapping("/clientDetail.do")
-	public String clientDetail(@RequestParam(name="no") int no, Model model) {
-		Client clients = distributionService.getClientsByNo(no);
+	public String clientDetail(ClientDetailPageVo cdpv,@RequestParam(name="pn", required=false, defaultValue="1")int pn, Model model) {
+		Client clients = distributionService.getClientsByNo(cdpv.getNo());
 		
-		List<ClientDetail> details = distributionService.getClientDetailsByNo(no);
+		//List<ClientDetail> details = distributionService.getClientDetailsByNo(no);
+		int rows = 10;
+		int pages = 5;
+		int beginIndex = (pn - 1)* rows + 1;
+		int endIndex = pn*rows;
+		// 전체 공지사항 수 조회하기
+		int totalBoards = distributionService.ClientSearchTotalNo(cdpv);
+		
+		// 페이지 객체 생성하기
+		PageVo pageVo = new PageVo(rows, pages, pn, totalBoards);
+		pageVo.setBeginIndex(beginIndex);
+		pageVo.setEndIndex(endIndex);
+		
+		cdpv.setPageVo(pageVo);
+		
+		List<Product> products = distributionService.ClientSearchPageList(cdpv);
 		
 		model.addAttribute("clients", clients);
-		model.addAttribute("details", details);
+		model.addAttribute("pageVo", pageVo);
+		model.addAttribute("products", products);
+		//model.addAttribute("details", details);
+		
 		return "companydistribution/clientDetail";
 	}
 	
