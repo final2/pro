@@ -47,7 +47,7 @@
      			</div>
      		</div>
     	</li>
-    	<li class="list">
+    	<li class="list" style="margin-top: 5px">
     		<a>마이페이지 <span class="caret"></span></a>
     		<ul class="bar">
     			<li><a href="myprofile.do" >내정보</a></li>
