@@ -56,6 +56,27 @@ $(function() {
 		}
 		return true;
 	}); */
+	
+	
+	$("#passwordUpdateCheck").keyup(function() {
+		if($("#passwordUpdate").val() == $(this).val() && $("#passwordUpdate").val().trim() != '') {
+			$("#message").hide();
+			$("#add").removeAttr("disabled");
+		} else {
+			$("#message").show();
+			$("#add").attr("disabled", "disabled");			
+		}
+	});
+	$("#passwordUpdate").keyup(function() {
+		if($("#passwordUpdateCheck").val() == $(this).val() && $("#passwordUpdateCheck").val().trim() != '') {
+			$("#message").hide();
+			$("#add").removeAttr("disabled");
+		} else {
+			$("#message").show();
+			$("#add").attr("disabled", "disabled");			
+		}
+	});
+	
 })
 </script>
 </head>
@@ -253,15 +274,16 @@ $(function() {
 							<div class="modal-body">
 								<div>
 									<label class="text-left">새로운 비밀번호</label>
-									<input type="password" name="password" class="form-control"/>
+									<input type="password" name="password" id="passwordUpdate" class="form-control" placeholder="변경할 비밀번호를 입력하세요" />
 								</div>
 								<div>
 									<label class="text-left">비밀번호 확인</label>
-									<input type="password" name="password" id="name" class="form-control"/>
+									<input type="password" name="passwordCheck" id="passwordUpdateCheck" class="form-control" placeholder="비밀번호 확인"/>
+									<p id="message" style="color:red">* 비밀번호가 틀립니다.</p>
 								</div>
 							</div>
 							<div class="modal-footer">
-								<input type="submit" class="btn btn-primary" id="add" value="확인" />
+								<input type="submit" class="btn btn-primary" id="add" disabled="disabled" value="확인" />
 								<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
 							</div>
 						</form>
