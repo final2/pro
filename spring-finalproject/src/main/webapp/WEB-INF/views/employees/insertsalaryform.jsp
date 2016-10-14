@@ -49,6 +49,8 @@ $(function() {
 		var year = Now.getFullYear(); 
 		
 		var $salaryTitle = $(".salaryName");
+		$salaryTitle.empty();
+		
 		var html = "";
 		html += empName+"님의 ";
 		html += "<select name='paymentDate' class='salaryDate'>";
@@ -83,26 +85,33 @@ $(function() {
 				var c = Math.round(result.emp.salary * 0.0533);
 				var d = Math.round(result.emp.salary * 0.0655);
 				var e = Math.round(result.emp.salary * 0.0045);
-				$("input[name=salary]").val(a);
-				$("input[name=insureSocial]").val(b);
-				$("input[name=insureHealth]").val(c);
-				$("input[name=insureLonghealth]").val(d);
-				$("input[name=employeeInsure]").val(e);
+				$("input[name=salary]").val(Number(a).toLocaleString('en'));
+				$("input[name=insureSocial]").val(Number(b).toLocaleString('en'));
+				$("input[name=insureHealth]").val(Number(c).toLocaleString('en'));
+				$("input[name=insureLonghealth]").val(Number(d).toLocaleString('en'));
+				$("input[name=employeeInsure]").val(Number(e).toLocaleString('en'));
 				
 				var f = a-b+c+d+e;
-				$("input[name=total]").val(f);
+				$("input[name=total]").val(Number(f).toLocaleString('en'));
 				
 				var g = result.overtime;
 				$("input[name=overtimeTime]").val(g);
 				
-				var h = a/30/8 * 1.5;
-				$("input[name=overtimePrice]").val(h);
+				if (g > 0) {
+					var h = a/30/8 * 1.5;
+					$("input[name=overtimePrice]").val(Number(h).toLocaleString('en'));
 				
-				var i = h * g;
-				$("input[name=overtime]").val(i);
+				} else {
+					var h = 0;
+					$("input[name=overtimePrice]").val(h);
+				}
+					var i = h * g;
+					$("input[name=overtime]").val(Number(i).toLocaleString('en'));
+					
+					var j = f + i;
+					$("input[name=result]").val(Number(j).toLocaleString('en'));
+					
 				
-				var j = f + i;
-				$("input[name=result]").val(j);
 			}
 			
 		});
