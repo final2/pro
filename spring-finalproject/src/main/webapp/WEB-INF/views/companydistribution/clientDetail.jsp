@@ -95,7 +95,7 @@ th,td {text-align:center;}
 				</table>
 			</div>
 			<div class="pull-right">
-				<c:if test="${LoginUser.dept eq 'PM'}">
+				<c:if test="${LoginUser.dept eq 'PM' or LoginUser.dept eq 'Master'}">
 					<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#myModal" id="btn" >수정</button>
 				</c:if>
 				<a href="clientList.do" class="btn btn-default">목록</a>

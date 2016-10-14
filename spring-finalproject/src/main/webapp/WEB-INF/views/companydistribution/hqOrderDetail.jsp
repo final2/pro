@@ -76,7 +76,7 @@ th,td {text-align:center;}
 				</table>
 			</div>
 			<div class="pull-left">
-				<c:if test="${LoginUser.dept eq 'PM'}">
+				<c:if test="${LoginUser.dept eq 'PM' or LoginUser.dept eq 'Master'}">
 					<c:choose>
 						<c:when test="${orders.confirm == 'N'}">
 							<a href="orderConfirm.do?orderNo=${orders.no }" class="btn btn-default" >입고 확인</a>

@@ -82,7 +82,7 @@ ul.pagination li a:hover:not(.active) {background-color: #ddd;}
 			</table>
 			</div>
 			<div class="pull-right">
-				<c:if test="${LoginUser.dept eq 'PM'}">
+				<c:if test="${LoginUser.dept eq 'PM' or LoginUser.dept eq 'Master'}">
 					<a href="orderApp.do" class="btn btn-warning">발주 신청</a>
 				</c:if>
 			</div>

@@ -10,6 +10,7 @@
 <script type="text/javascript" src="resources/jquery/jquery.js"></script>
 <script type="text/javascript">
 $(function() {
+	
 	var ProductSearch = {};
 	
 	ProductSearch['maker'] = ${productSearch.maker};
@@ -64,6 +65,12 @@ $(function() {
 						$event.append("<option value="+event.no+" selected='selected'>임의 값</option>")						
 					} else {
 						$event.append("<option value="+event.no+">임의 값</option>")
+					}
+				} else if (event.type == "S") {
+					if(ps.eventCode == event.no) {
+						$event.append("<option value="+event.no+" selected='selected'>증정 상품 </option>")						
+					} else {
+						$event.append("<option value="+event.no+">증정 상품</option>")
 					}
 				} else {
 					if(ps.eventCode == event.no) {

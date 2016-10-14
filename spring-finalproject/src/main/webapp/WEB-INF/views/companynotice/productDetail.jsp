@@ -81,6 +81,9 @@ td{text-align:left; vertical-align:middle !important}
 						<c:if test="${product.event.no eq 3}">
 							<td>임의</td>
 						</c:if>
+						<c:if test="${product.event.no eq 4}">
+							<td>증정 상품  </td>
+						</c:if>
 						<c:if test="${product.event.no eq 9}">
 							<td>행사 품목 아님 </td>
 						</c:if>
