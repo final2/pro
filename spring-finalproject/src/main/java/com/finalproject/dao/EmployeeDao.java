@@ -52,11 +52,23 @@ public interface EmployeeDao {
 	List<AccountBook> getAccountBooks(Criteria criteria);
 	// 급여 리스트 갯수 조회
 	int getTotalSalaryRows(Criteria criteria);
+	// 부서이름으로 해당 사원 조회
+	List<Employee> getEmployeeByDept(String dept);
+	// 사원번호로 급여와 근태조회
+	WorkTime getEmpWorkTimeByNo(int empNo);
 	
 	// 근태리스트 조회
 	List<WorkTime> getTimetable(Criteria criteria);
+	// 사원번호로 근태리스트 조회
+	List<WorkTime> getTimetableByNo(Criteria criteria);
 	// 근태 리스트 갯수 조회
 	int getTotalTimetablerows(Criteria criteria);
+	// 출근시간 기록하기
+	void attendanceByNo(WorkTime workTime);
+	// 출근시간 가져오기
+	WorkTime getAttendanceByNo(int empNo);
+	// 퇴근시간 기록하기
+	void leavByNo(WorkTime workTime);
 	
 	// 로그인시 사원번호 확인
 	Employee loginByNo(int empNo);

@@ -75,10 +75,12 @@ public class ProductController {
 	//ProuctList 페이지 이동
 	@RequestMapping("/productList.do")
 	public String productList(@RequestParam(name="pn", required=false, defaultValue="1")int pn, ProductSearch productSearch,  Model model) {
-		if(pn < 1) {
-			return "redirect:/productList.do?pn=1";
-		}
-		int rows = 20;
+		
+		/*if(pn < 1) {
+			return "redirect:/productList.do?pn=1&maker="+productSearch.getMaker()+"&smallCat="+productSearch.getSmallCat()
+											+"&eventCode="+productSearch.getEventCode()+"&limiteAge=" + productSearch.getLimiteAge();
+		}*/
+		int rows = 15;
 		int pages = 10;
 		int beginIndex = (pn - 1)* rows + 1;
 		int endIndex = pn*rows;
@@ -93,9 +95,10 @@ public class ProductController {
 		productSearch.setBeginIndex(beginIndex);
 		productSearch.setEndIndex(endIndex);
 		
-		if(pn > pageVo.getTotalPages()) {			
-			return "redirect:/productList.do?pn=" + pageVo.getTotalPages();
-		}		
+		/*if(pn > pageVo.getTotalPages()) {			
+			return "redirect:/productList.do?pn=" + pageVo.getTotalPages()+"&maker="+productSearch.getMaker()+"&smallCat="+productSearch.getSmallCat()
+					+"&eventCode="+productSearch.getEventCode()+"&limiteAge=" + productSearch.getLimiteAge();
+		}*/		
 		
 		List<Product> getProductPageList = productService.getProductPageList(productSearch);
 		
@@ -155,7 +158,7 @@ public class ProductController {
 		
 		
 		if(!upfile.isEmpty()) {
-			Files.copy(upfile.getInputStream(), Paths.get("C:\\Users\\YoungRok\\git\\pro\\spring-finalproject\\src\\main\\webapp\\resources\\image", upfile.getOriginalFilename()));
+			Files.copy(upfile.getInputStream(), Paths.get(imageDirectory, upfile.getOriginalFilename()));
 		
 			product.setImage(upfile.getOriginalFilename());
 		} else {

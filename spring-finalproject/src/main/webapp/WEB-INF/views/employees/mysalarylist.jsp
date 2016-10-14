@@ -37,13 +37,11 @@
 	<div id="page-content-wrapper">
 		<div class="container">
 			<h1><a href="emplist.do">급여 리스트</a></h1>
-			<div class="row searchbox">
-				<form role="form" action="compsalary.do">
+			<!-- <div class="row searchbox">
+				<form role="form" action="mycompsalary.do">
 					<div class="col-sm-offset-4 col-sm-2 form-group">
 						<select name="opt" class="form-control">
-							<option value="name">이름</option>
 							<option value="paymentDate">월별</option>
-							<option value="dept">부서별</option>
 						</select>
 					</div>
 					<div class="col-sm-6 form-group">
@@ -56,7 +54,7 @@
 						</button>
 					</div>
 				</form>
-			</div>
+			</div> -->
 			<table class="table table-bordered empBox table-striped" >
 				<colgroup>
 					<col width="8%"/>

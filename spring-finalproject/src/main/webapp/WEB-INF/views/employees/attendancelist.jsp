@@ -12,10 +12,11 @@
 	.container {position:relative; top:70px; text-align:center;}
 	.container:after {clear:both; content:""; display:block;}
 
-	.container > h1 {text-align:left;}
+	.container > h1 {text-align:left; margin-bottom:20px;}
 	.container > h1 > a {text-decoration:none; color:inherit;}
 
-	.row label {height:34px; line-height:34px;}
+	.searchbox .form-group {margin-bottom:0 !important;}
+	.searchbox label {height:34px; line-height:34px;}
 	.empBox {width:100%; margin:15px auto 15px auto;}
 	.empBox:after {clear:both; content:""; display:block;}
 	
@@ -35,14 +36,14 @@
 	<%@ include file="/WEB-INF/views/sidebartemplate/sidebar.jsp" %>	
 	<div id="page-content-wrapper">
 		<div class="container">
-			<h1><a href="compbranchlist.do">지점 리스트</a></h1>
-			<div class="row">
-				<form role="form" action="compbranchlist.do">
+			<h1><a href="emplist.do">근태</a></h1>
+			<div class="row searchbox">
+				<form role="form" action="compsalary.do">
 					<div class="col-sm-offset-4 col-sm-2 form-group">
 						<select name="opt" class="form-control">
-							<option value="branch">지점명</option>
-							<option value="manager">담당자명</option>
-							<option value="address">지역명</option>
+							<option value="dept">부서별</option>
+							<option value="name">이름별</option>
+							<option value="regdate">기간별</option>
 						</select>
 					</div>
 					<div class="col-sm-6 form-group">
@@ -58,45 +59,42 @@
 			</div>
 			<table class="table table-bordered empBox table-striped" >
 				<colgroup>
-					<col style="width:14%;">
-					<col style="width:14%;">
-					<col style="width:20%;">
-					<col style="width:14%;">
-					<col style="width:20%;">
-					<col style="width:18%;">
+					<col width="13%"/>
+					<col width="12.5%"/>
+					<col width="12.5%"/>
+					<col width="12.5%"/>
+					<col width="12.5%"/>
+					<col width="13%"/>
+					<col width="12%"/>
+					<col width="12%"/>
 				</colgroup>
 				<tr>
-					<th class="info">지점번호</th>
-					<th class="info">지점명</th>
-					<th class="info">담당자</th>
-					<th class="info">담당자 연락처</th>
-					<th class="info">지점 연락처</th>
-					<th class="info">지역</th>
+					<th class="info">날짜</th>
+					<th class="info">부서명</th>
+					<th class="info">이름</th>
+					<th class="info">출근시간</th>
+					<th class="info">퇴근시간</th>
+					<th class="info">시간외근무</th>
+					<th class="info">조퇴</th>
+					<th class="info">지각</th>
 				</tr>
-				<c:forEach var="branch" items="${branchList }">
-					<c:url var="detailURL" value="compbranchdetail.do">
-						<c:param name="no" value="${branch.no }"></c:param>
-						<c:param name="pno" value="${param.pno }"></c:param>
-					</c:url>
+				<c:forEach var="workTime" items="${workTimeList }">
 					<tr>
-						<td>${branch.no }</td>
-						<td><a href="${detailURL }" class="empBtn">${branch.name }</a></td>
-						<td>${branch.emp.name }</td>
-						<td>${branch.emp.phone }</td>
-						<td>${branch.phone }</td>
-						<c:set var="address" value="${branch.address }"/>
-						<c:set var="add1" value="${fn:substringBefore(address, '구')}" />
-						<td>
-							${add1 }구
-						</td>
+						<td><fmt:formatDate value="${workTime.serviceDate }" pattern="yyyy.MM.dd"/> </td>
+						<td>${workTime.emp.dept }</td>
+						<td>${workTime.emp.name }</td>
+						<td><fmt:formatDate value="${workTime.attendance }" pattern="hh:mm"/></td>
+						<td><fmt:formatDate value="${workTime.leaving }" pattern="HH:mm"/></td>
+						<td>${workTime.overtime }</td>
+						<td>${workTime.earlyleave }</td>
+						<td>${workTime.late}</td>
 					</tr>
 				</c:forEach>
 			</table>
-			
 			<ul class="pagination pageBox">
 			<c:if test="${param.pno gt 1 }">
     			<li>
-      				<a href="compbranchlist.do?pno=${param.pno - 1 }" aria-label="Previous">
+      				<a href="compattendance.do?pno=${param.pno - 1 }" aria-label="Previous">
         				<span aria-hidden="true">&laquo;</span>
       				</a>
     			</li>
@@ -104,16 +102,16 @@
     		<c:forEach var="num" begin="${navi.beginPage }" end="${navi.endPage }">
     			<c:choose>
     				<c:when test="${param.pno eq num }">
-    					<li class="active"><a href="compbranchlist.do?pno=${num }">${num }</a></li>
+    					<li class="active"><a href="compattendance.do?pno=${num }">${num }</a></li>
     				</c:when>
     				<c:otherwise>
-					    <li><a href="compbranchlist.do?pno=${num }">${num }</a></li>
+					    <li><a href="compattendance.do?pno=${num }">${num }</a></li>
     				</c:otherwise>
     			</c:choose>
     		</c:forEach>
     		<c:if test="${param.pno lt navi.totalPages}">
     			<li>
-      				<a href="compbranchlist.do?pno=${param.pno + 1 }" aria-label="Next">
+      				<a href="compattendance.do?pno=${param.pno + 1 }" aria-label="Next">
         				<span aria-hidden="true">&raquo;</span>
       				</a>
     			</li>

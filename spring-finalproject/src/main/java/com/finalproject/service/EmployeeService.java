@@ -43,8 +43,16 @@ public interface EmployeeService {
 	
 	// 근태리스트 조회
 	List<WorkTime> getTimetable(Criteria criteria);
+	// 사원번호로 근태리스트 조회
+	List<WorkTime> getTimetableByNo(Criteria criteria);
 	// 근태 리스트 갯수 조회
 	int getTotalTimetablerows(Criteria criteria);
+	// 출근시간 기록하기
+	void attendanceByNo(WorkTime workTime);
+	// 출근시간 가져오기
+	WorkTime getAttendanceByNo(int empNo);
+	// 퇴근시간 기록하기
+	void leavByNo(WorkTime workTime);
 	
 	// 로그인 확인
 	Employee empLogin(int empNo, String password);

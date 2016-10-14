@@ -5,6 +5,7 @@
 
 <!-- Bootstrap Core JavaScript -->
 <link href="resources/bootstrap/css/simple-sidebar.css" rel="stylesheet">
+<script src="resources/bootstrap/js/bootstrap.min.js"></script>
 <style type="text/css">
 	#imgdiv {margin-top:10px; margin-bottom:20px;}
 	.emp {color: white}
@@ -29,6 +30,9 @@
      			</div>
 	     		<div class="col-sm-6">
 		     			<div style="height:30px; font-size:10px" class="emp">소속 부서</div>
+		     			<c:if test="${LoginUser.dept eq 'Master' }">
+			     			<div style="height:30px; font-size:15px" class="emp">Master</div>		     				
+		     			</c:if>
 		     			<c:if test="${LoginUser.dept eq 'HR' }">
 			     			<div style="height:30px; font-size:15px" class="emp">인사과</div>		     				
 		     			</c:if>
@@ -65,12 +69,12 @@
        				<a>물품 관리 <span class="caret"></span></a>
        				<ul class="in-bar">
        					<li><a href="productList.do?pn=1">물품 리스트</a></li>
-       					<c:if test="${LoginUser.dept eq 'PM' }">
+       					<c:if test="${LoginUser.dept eq 'PM'  or LoginUser.dept eq 'Master' }">
 	       					<li><a href="product.do">물품 등록</a></li>
        					</c:if>
        				</ul>	
        			</li>
-       			<c:if test="${LoginUser.dept eq 'PM' }">
+       			<c:if test="${LoginUser.dept eq 'PM' or LoginUser.dept eq 'Master' }">
 	       			<li><a href="hqOrder.do">출고 관리</a></li>
 	       			<li><a href="invenList.do">재고 관리</a></li>
 	       			<li><a href="clientList.do">거래처 관리 </a></li>
@@ -81,7 +85,7 @@
        		<a >인사 <span class="caret"></span></a>
        		<ul class="bar">
        			<li><a href="emplist.do?pno=1" >사원 조회</a></li>
-       			<c:if test="${LoginUser.dept eq 'HR' }">
+       			<c:if test="${LoginUser.dept eq 'HR' or LoginUser.dept eq 'Master' }">
        				<li><a href="insertemp.do" >사원 등록</a></li>
        			</c:if>
 	       			<c:url var="boardListURL" value="boardList.do">
@@ -93,7 +97,7 @@
        				<a>지점 관리<span class="caret"></span></a>
        				<ul class="in-bar">
        					<li><a href="compbranchlist.do?pno=1" class="">지점 조회</a></li>
-       					<c:if test="${LoginUser.dept eq 'HR' }">
+       					<c:if test="${LoginUser.dept eq 'HR' or LoginUser.dept eq 'Master' }">
 	       					<li><a href="insertbranch.do" class="">지점 등록</a></li>
        					</c:if>
        				</ul>
@@ -101,7 +105,7 @@
        		</ul>			
        </li>
        <li class="list">
-      		<c:if test="${LoginUser.dept eq 'HR' }">
+      		<c:if test="${LoginUser.dept eq 'HR' or LoginUser.dept eq 'Master' }">
 	       		<a>급여 <span class="caret"></span></a>
 	       		<ul class="bar">
 	       			<li><a href="compsalary.do?pno=1" >급여 대장</a></li>

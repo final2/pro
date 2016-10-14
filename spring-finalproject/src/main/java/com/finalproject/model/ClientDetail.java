@@ -5,7 +5,7 @@ public class ClientDetail {
 
 	private int no;
 	private int qty;
-	private int clientNo;
+	private Client client;
 	private Product product;
 	
 	public int getNo() {
@@ -20,11 +20,11 @@ public class ClientDetail {
 	public void setQty(int qty) {
 		this.qty = qty;
 	}
-	public int getClientNo() {
-		return clientNo;
+	public Client getClient() {
+		return client;
 	}
-	public void setClientNo(int clientNo) {
-		this.clientNo = clientNo;
+	public void setClient(Client client) {
+		this.client = client;
 	}
 	public Product getProduct() {
 		return product;

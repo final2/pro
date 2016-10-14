@@ -37,8 +37,8 @@
 			e.department	as "employee.dept"
 		from calendar c, employee e
 		where c.employee_no = e.no
-		and e.department = 'HR'
-		and e.position = '부장'
+		and e.department = 'Master'
+		and e.position = '사장'
 	</select>
 	
 	<delete id="removeCalendar" parameterType="int">

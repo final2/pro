@@ -11,6 +11,7 @@
 <link href="resources/bootstrap/css/simple-sidebar.css" rel="stylesheet">
 <script src="resources/bootstrap/js/bootstrap.min.js"></script>
 <style>
+h1{color:white;}
 th,td {text-align:center;}
 ul.pagination {
     display: inline-block;
@@ -48,10 +49,11 @@ ul.pagination li a:hover:not(.active) {background-color: #ddd;}
 	<%@ include file="/WEB-INF/views/sidebartemplate/sidebar.jsp" %>
 	<a href="#menu-toggle" class="btn btn-default btn-xs" id="menu-toggle">side bar</a>
 	<div id="page-content-wrapper">
-		
+		<%@ include file="../companynotice/backgroundVideo.jsp" %>
 		<div class="container" style="margin-top:10px">
 			<h1>재고 리스트</h1>
 			<hr>
+			<div class="well" style="opacity:0.8">
 			<table class="table table-bordered">
 				<colgroup>
 					<col width="20%">
@@ -78,9 +80,10 @@ ul.pagination li a:hover:not(.active) {background-color: #ddd;}
 					</c:forEach>	
 				</tbody>
 			</table>
+			</div>
 			<div class="pull-right">
 				<c:if test="${LoginUser.dept eq 'PM'}">
-					<a href="orderApp.do" class="btn btn-info">발주 신청</a>
+					<a href="orderApp.do" class="btn btn-warning">발주 신청</a>
 				</c:if>
 			</div>
 			

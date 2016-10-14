@@ -71,6 +71,23 @@
 		values (myempopt_seq.nextval, #{language}, #{grade}, #{empNo})
 	</insert>
 		
+	<!-- 사원번호로 기본급 및 근태 조회 -->
+	<select id="getEmpWorkTimeByNo" parameterType="int" resultType="WorkTime">
+		select
+			T.attendance,
+			T.leaving,
+			T.late,
+			T.earlyleave,
+			T.overtime,
+			E.no				as "emp.no",
+			E.name 				as "emp.name",
+			E.department		as "emp.dept",
+			E.salary			as "emp.salary"
+		from timetable T, employee E
+		where T.employee_no = E.no
+		and E.no = #{no}
+	</select>
+		
 	<!-- 사원 급여 등록 -->
 	<insert id="insertSalary" parameterType="AccountBook">
 		insert into accountbook (no, paymentdate, salary, overtime, insure_health, insure_longhealth, insure_social, employee_insure, employee_no)
@@ -311,23 +328,32 @@
 		<where>
 			<if test="opt != null and keyword != null">
 				<if test="opt == 'name'">
-					A.employee_no = E.no
+					and A.employee_no = E.no
 					and E.name like '%' || #{keyword} || '%'
 				</if>
 				<if test="opt == 'paymentDate'">
-					A.employee_no = E.no
+					and A.employee_no = E.no
 					and A.paymentdate = #{keyword}
 				</if>
 				<if test="opt == 'dept'">
-					A.employee_no = E.no
+					and A.employee_no = E.no
 					and E.department like '%' || #{keyword} || '%'
 				</if>
 			</if>
 		</where>
 	</select>
 	
+	<!-- 부서이름으로 해당사원 조회 -->
+	<select id="getEmployeeByDept" parameterType="string" resultType="Employee">
+		select
+			no, name, salary
+		from
+			employee
+		where department = #{dept}
+	</select>
+	
 	<!-- 근태리스트 조회 -->
-	<select id="getTimetablebefore" parameterType="Criteria" resultType="WorkTime">
+	<select id="getTimetable" parameterType="Criteria" resultType="WorkTime">
 		select
 			no,
 			attendance,
@@ -335,7 +361,7 @@
 			late,
 			earlyleave,
 			overtime,
-			service_date	as serviceDate,
+			regdate			as regDate,
 			employee_no		as "emp.no",
 			emp_name 		as "emp.name",
 			emp_dept		as "emp.dept"
@@ -348,7 +374,7 @@
 				T.late,
 				T.earlyleave,
 				T.overtime,
-				T.service_date,
+				T.regdate,
 				T.employee_no,
 				E.name				as emp_name,
 				E.department		as emp_dept
@@ -361,39 +387,55 @@
 			rn >= #{beginIndex} and rn &lt;= #{endIndex}
 			<if test="opt != null and keyword != null">
 				<if test="opt == 'dept'">
-					T.emloyee_no = E.no
+					and T.emloyee_no = E.no
 					and E.department = #{dept}
 				</if>
 				<if test="opt == 'name'">
-					T.employee_no = E.no
+					and T.employee_no = E.no
 					and E.name = #{name}
 				</if>
 				<if test="opt == 'service_date">
-					T.employee_no = E.no
-					and T.service_date = #{serviceDate}
+					and T.employee_no = E.no
+					and T.regdate = #{regDate}
 				</if>
 			</if>
 	</select>
 	
 	<!-- 근태리스트 조회 -->
-	<select id="getTimetable" resultType="WorkTime">
+	<select id="getTimetableByNo" parameterType="Criteria" resultType="WorkTime">
 		select
+			no,
+			attendance,
+			leaving,
+			late,
+			earlyleave,
+			overtime,
+			regdate			as regDate,
+			employee_no		as "emp.no",
+			emp_name 		as "emp.name",
+			emp_dept		as "emp.dept"
+		from (
+			select
 				T.no,
 				T.attendance,
 				T.leaving,
 				T.late,
 				T.earlyleave,
 				T.overtime,
-				T.service_date		as serviceDate,
+				T.regdate,
 				T.employee_no,
-				E.name				as "emp.name",
-				E.department		as "emp.dept"
+				E.name				as emp_name,
+				E.department		as emp_dept
 			from
 				timetable T, employee E
 			where 
 				T.employee_no = E.no
+			and 
+				E.no = #{empNo}
+		)
+		where
+			attendance >= to_date(#{beginDate}, 'yyyy-MM-dd') and attendance &lt; to_date(#{endDate}, 'yyyy-MM-dd')
 	</select>
-	
 	<!-- 근태리스트 갯수 조회 -->
 	<select id="getTotalTimetablerows" parameterType="Criteria" resultType="int">
 		select count(*)
@@ -410,11 +452,38 @@
 				</if>
 				<if test="opt == 'service_date">
 					T.employee_no = E.no
-					and T.service_date = #{serviceDate}
+					and T.regdate = #{regDate}
 				</if>
 			</if>
 		</where>
 	</select>
+	<!-- 출근 시간 기록하기 -->
+	<insert id="attendanceByNo" parameterType="WorkTime">
+		insert into timetable (no, employee_no, attendance)
+		values (my_seq.nextval, #{emp.no}, sysdate)
+	</insert>
+	<!-- 출근 시간 가져오기 -->
+	<select id="getAttendanceByNo" parameterType="int" resultType="WorkTime">
+		select
+			no,  
+			attendance
+		from timetable
+		where employee_no = #{emp.no}
+		and to_char(attendance, 'yyyymmdd') = to_char(sysdate, 'yyyymmdd')
+	</select>
+	
+	<!-- 퇴근 시간 기록하기 -->
+	<update id="leavByNo" parameterType="WorkTime">
+		update timetable
+		set
+			leaving		= #{leaving},
+			late		= #{late},
+			earlyleave	= #{earlyleave},
+			overtime	= #{overtime},
+			regdate		= sysdate
+		where employee_no = #{emp.no}
+		and to_char(attendance, 'yyyymmdd') = to_char(sysdate, 'yyyymmdd')
+	</update>
 	
 	<!-- 지점 등록 -->
 	<insert id="insertBranch" parameterType="Branch">

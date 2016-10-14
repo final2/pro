@@ -46,5 +46,21 @@ public class ProductSearch {
 	public void setEndIndex(int endIndex) {
 		this.endIndex = endIndex;
 	}
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("ProductSearch [maker=");
+		builder.append(maker);
+		builder.append(", smallCat=");
+		builder.append(smallCat);
+		builder.append(", eventCode=");
+		builder.append(eventCode);
+		builder.append(", limiteAge=");
+		builder.append(limiteAge);
+		builder.append("]");
+		return builder.toString();
+	}
+	
+	
 	
 }

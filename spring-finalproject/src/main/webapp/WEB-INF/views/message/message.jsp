@@ -12,9 +12,8 @@
 </script>
 </head>
 <body>
-	<button type="button" class="btn btn-default" data-toggle="modal" data-target="#messenger" >
-		쪽지함
-	</button>
+	<div class="pannel panel-primary" data-toggle="modal" data-target="#messenger" >
+		쪽지함</div>
 	
 	<!-- modal창 -->
 	<div class="modal fade" id="messenger" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >

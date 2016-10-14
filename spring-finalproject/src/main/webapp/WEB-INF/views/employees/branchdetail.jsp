@@ -9,8 +9,6 @@
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" href="/FinalProject/resources/bootstrap/css/bootstrap.css">
 <script type="text/javascript" src="/FinalProject/resources/jquery/jquery.js"></script>
-<link href="/FinalProject/resources/bootstrap/css/simple-sidebar.css" rel="stylesheet">
-<script src="/FinalProject/resources/bootstrap/js/bootstrap.min.js"></script>
 <style type="text/css">
 	.container {position:relative; top:50px;}
 	.container:after {clear:both; content:""; display:block;}

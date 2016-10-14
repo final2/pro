@@ -6,6 +6,9 @@ public class Criteria {
 	private String keyword;
 	private int beginIndex;
 	private int endIndex;
+	private int empNo;
+	private String beginDate;
+	private String endDate;
 	
 	public Criteria() {}
 
@@ -40,5 +43,31 @@ public class Criteria {
 	public void setEndIndex(int endIndex) {
 		this.endIndex = endIndex;
 	}
+
+	public int getEmpNo() {
+		return empNo;
+	}
+
+	public void setEmpNo(int empNo) {
+		this.empNo = empNo;
+	}
+
+	public String getBeginDate() {
+		return beginDate;
+	}
+
+	public void setBeginDate(String beginDate) {
+		this.beginDate = beginDate;
+	}
+
+	public String getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(String endDate) {
+		this.endDate = endDate;
+	}
+	
+	
 	
 }

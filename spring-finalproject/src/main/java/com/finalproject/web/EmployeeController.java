@@ -2,6 +2,7 @@ package com.finalproject.web;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -9,15 +10,20 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.finalproject.dao.EmployeeDao;
 import com.finalproject.model.AccountBook;
 import com.finalproject.model.Branch;
 import com.finalproject.model.BranchAddForm;
@@ -41,7 +47,10 @@ import com.finalproject.service.EmployeeService;
 public class EmployeeController {
 
 	@Autowired private EmployeeService empService;
+	@Autowired private EmployeeDao empDao;
 
+	@Value("${emp.image.file.path}")
+	String imageDirectory;
 	
 	@ExceptionHandler(RuntimeException.class)
 	public String runtimeExceptionHandler(RuntimeException ex) {
@@ -90,7 +99,7 @@ public class EmployeeController {
 	}
 	
 	@RequestMapping(value="/mycompsalary.do")
-public String salaryList(HttpSession session, Criteria criteria, @RequestParam(name="pno", required=false, defaultValue="1") int pageNo, Model model) {
+	public String salaryList(HttpSession session, Criteria criteria, @RequestParam(name="pno", required=false, defaultValue="1") int pageNo, Model model) {
 		
 		Employee emp = (Employee)session.getAttribute("LoginUser");
 		
@@ -144,74 +153,159 @@ public String salaryList(HttpSession session, Criteria criteria, @RequestParam(n
 		return "employees/mysalarylist";
 	}
 	
-	@RequestMapping(value="/mycompattendance.do", method=RequestMethod.GET)
-	public String myAttendanceListForm(Criteria criteria, @RequestParam(name="pno", required=false, defaultValue="1") int pageNo, Model model) {
+	@RequestMapping(value="/mycompattendance.do")
+	public String myAttendanceListForm(Criteria criteria, Model model, HttpSession session) {
 		
-		if (pageNo < 1) {
-			return "redirect:/mycompattendance.do?pno=1";
-		}
+		Employee emp = (Employee)session.getAttribute("LoginUser");
 		
-		int rows = 10;
-		int pages = 5;
-		int beginIndex = (pageNo - 1) * rows + 1;
-		int endIndex = pageNo * rows;
-		
-		int totalRows = empService.getTotalSalaryRows(criteria);
-		
-		PageVo pagination = new PageVo(rows, pages, pageNo, totalRows);
-		
-		if(pageNo > pagination.getTotalPages()) {
-			return "redirect:/mycompattendance.do?pno=" + pagination.getTotalPages();
-		}
-		
-		criteria.setBeginIndex(beginIndex);
-		criteria.setEndIndex(endIndex);
+		SimpleDateFormat DateFormat = new SimpleDateFormat ("yyyy-MM-dd");
+		Date now = new Date();
+		String today = DateFormat.format (now);
 		
 		
-		List<WorkTime> workTimeList = empService.getTimetable(criteria);
+		String year = today.substring(0, 4);
+		String month = today.substring(5, 7);
+		String day = today.substring(8);
+		int dd = Integer.parseInt(month)+1;
+		String nextMonth = String.valueOf(dd);
+		String beginDate = year + "-" + month + "-" + "01";
+		String endDate = year + "-" + nextMonth + "-" + "01";
+		
+		criteria.setBeginDate(beginDate);
+		criteria.setEndDate(endDate);
+		criteria.setEmpNo(emp.getNo());
+		
+		
+		List<WorkTime> workTimeList = empService.getTimetableByNo(criteria);
 		
 		model.addAttribute("workTimeList", workTimeList);
-		model.addAttribute("navi", pagination);
 		
 		return "employees/myattendancelist";
 	}
 	
-	@RequestMapping(value="/mycompattendance.do", method=RequestMethod.POST)
-	public String myAttendanceList (HttpSession session, Criteria criteria, 
-			@RequestParam(name="pno", required=false, defaultValue="1") int pageNo, 
-			@RequestParam("attendance") Date attendance, @RequestParam("leaving") Date leaving, Model model ) {
+	@RequestMapping(value="/mytimetable.do")
+	public String myTimetableForm(Criteria criteria, Model model, HttpSession session,
+			@RequestParam(name="month") String selectMonth) {
 		
 		Employee emp = (Employee)session.getAttribute("LoginUser");
 		
-		if (pageNo < 1) {
-			return "redirect:/compsalary.do?pno=1";
-		}
-		
-		int rows = 10;
-		int pages = 5;
-		int beginIndex = (pageNo - 1) * rows + 1;
-		int endIndex = pageNo * rows;
-		
-		int totalRows = empService.getTotalSalaryRows(criteria);
-		
-		PageVo pagination = new PageVo(rows, pages, pageNo, totalRows);
-		
-		if(pageNo > pagination.getTotalPages()) {
-			return "redirect:/compsalary.do?pno=" + pagination.getTotalPages();
-		}
-		
-		criteria.setBeginIndex(beginIndex);
-		criteria.setEndIndex(endIndex);
+		SimpleDateFormat DateFormat = new SimpleDateFormat ("yyyy-MM-dd");
+		Date now = new Date();
+		String today = DateFormat.format (now);
 		
 		
-		WorkTime workTime = new WorkTime();
-		System.out.println(attendance);
+		String year = today.substring(0, 4);
+		int nm = Integer.parseInt(selectMonth) + 1;
+		String nextMonth = String.valueOf(nm);
+		String beginDate = year + "-" + selectMonth + "-" + "01";
+		System.out.println("지정달:" + beginDate);
+		String endDate = year + "-" + nextMonth + "-" + "01";
+
+		criteria.setBeginDate(beginDate);
+		criteria.setEndDate(endDate);
+		criteria.setEmpNo(emp.getNo());
 		
-		//model.addAttribute("empDetail", empDetail);
-		model.addAttribute("navi", pagination);
+		
+		List<WorkTime> workTimeList = empService.getTimetableByNo(criteria);
+		
+		model.addAttribute("workTimeList", workTimeList);
 		
 		return "employees/myattendancelist";
+	}
+	
+	@RequestMapping(value="/myattendance.do")
+	public String myAttendance(Criteria criteria, Model model, HttpSession session, 
+			@RequestParam("work") String work) throws Exception{
 		
+		Employee emp = (Employee)session.getAttribute("LoginUser");
+		
+		if (work.equals("attendance")) {
+			WorkTime workTime = new WorkTime();
+			Employee employee = new Employee();
+			
+			employee.setNo(emp.getNo());
+			workTime.setEmp(employee);
+			
+			empService.attendanceByNo(workTime);
+		}
+		
+		if (work.equals("leav")) {
+			WorkTime workTime = new WorkTime();
+			Employee employee = new Employee();
+
+			WorkTime wk = empService.getAttendanceByNo(emp.getNo());
+
+			SimpleDateFormat timeFormat = new SimpleDateFormat("HHmm");
+			Date leav = new Date();
+			String attTime = timeFormat.format(wk.getAttendance());
+			String leavTime = timeFormat.format(leav);
+			
+			
+			int athh = Integer.parseInt(attTime.substring(0, 2));
+			int atmm = Integer.parseInt(attTime.substring(2, 4));
+			
+			int lthh = Integer.parseInt(leavTime.substring(0, 2));
+			int ltmm = Integer.parseInt(leavTime.substring(2, 4));
+			
+			int attTimeNum = Integer.parseInt(attTime);
+			int leavTimeNum = Integer.parseInt(leavTime);
+					
+			if (attTimeNum >= 900) {
+				workTime.setLate("1");
+				int workt = (lthh - athh) * 60 + ltmm - atmm;
+				if (workt >= 540) {
+					int overtime = workt - 540;
+					workTime.setOvertime(overtime);
+					workTime.setEarlyleave("0");
+				} else {
+					workTime.setEarlyleave("1");
+					workTime.setOvertime(0);
+				}	
+
+			} else {
+				workTime.setLate("0");
+				int workt = (lthh - athh) * 60 + ltmm + 60 - atmm;
+				if (workt >= 540) {
+					int overtime = workt - 540;
+					workTime.setOvertime(overtime);
+					workTime.setEarlyleave("0");
+				} else {
+					workTime.setEarlyleave("1");
+					workTime.setOvertime(0);
+				}
+
+			}
+			
+			employee.setNo(emp.getNo());
+			workTime.setEmp(employee);
+			workTime.setLeaving(leav);
+			
+			empService.leavByNo(workTime);
+			
+		}
+		
+		SimpleDateFormat DateFormat = new SimpleDateFormat ("yyyy-MM-dd");
+		Date now = new Date();
+		String today = DateFormat.format (now);
+		
+		
+		String year = today.substring(0, 4);
+		String month = today.substring(5, 7);
+		String day = today.substring(8, 10);
+		int dd = Integer.parseInt(month)+1;
+		String nextMonth = String.valueOf(dd);
+		String beginDate = year + month + "01";
+		String endDate = year + nextMonth + "01";
+		
+		criteria.setBeginDate(beginDate);
+		criteria.setEndDate(endDate);
+		criteria.setEmpNo(emp.getNo());
+		
+		List<WorkTime> workTimeList = empService.getTimetableByNo(criteria);
+		
+		model.addAttribute("workTimeList", workTimeList);
+		
+		return "employees/myattendancelist";
 	}
 	
 	// 사원등록 페이지 연결
@@ -257,7 +351,8 @@ public String salaryList(HttpSession session, Criteria criteria, @RequestParam(n
 		
 		if (!upfile.isEmpty()) {
 			
-			Files.copy(upfile.getInputStream(), Paths.get("C:\\Users\\yun\\git\\pro\\spring-finalproject\\src\\main\\webapp\\resources\\image\\empimg", upfile.getOriginalFilename()));
+			/*Files.copy(upfile.getInputStream(), Paths.get("C:\\Users\\yun\\git\\pro\\spring-finalproject\\src\\main\\webapp\\resources\\image\\empimg", upfile.getOriginalFilename()));*/
+			Files.copy(upfile.getInputStream(), Paths.get(imageDirectory, upfile.getOriginalFilename()));
 			
 			emp.setPhoto(upfile.getOriginalFilename());
 		
@@ -545,22 +640,6 @@ public String salaryList(HttpSession session, Criteria criteria, @RequestParam(n
 		
 	}
 	
-	/*@RequestMapping(value="/updatebranchemp.do", method=RequestMethod.GET)
-	public String updateBranchEmpForm(@RequestParam(name="no") int brEmpNo, Model model) {
-		
-		BranchEmp branchemp = empService.getBranchEmpByBrEmpNo(brEmpNo);
-		model.addAttribute("brEmp", branchemp);
-		
-		return "employees/updatebranchempform";
-	}
-	
-	@RequestMapping(value="/updatebranchemp.do", method=RequestMethod.POST)
-	public String updateBranchEmp(BranchAddForm branchemp, @RequestParam(name="images") MultipartFile upfile) throws Exception {
-		
-		//empService.getBranchEmpByBrEmpNo(brEmpNo);
-		
-		return "redirect:/branchempdetail.do";
-	}*/
 	
 	@RequestMapping(value="/updatebranchemp.do", method=RequestMethod.GET)
 	public String updateBranchEmpForm(@RequestParam(name="no") int branchNo, Model model) {
@@ -579,6 +658,38 @@ public String salaryList(HttpSession session, Criteria criteria, @RequestParam(n
 		//empService.getBranchEmpByBrEmpNo(brEmpNo);
 		
 		return "redirect:/branchempdetail.do";
+	}
+	
+	
+	@RequestMapping(value="/getemployeebydept.do", method=RequestMethod.GET)
+	public @ResponseBody List<Employee> getEmployeeByDept(@RequestParam(name="dept") String dept) {
+		return empDao.getEmployeeByDept(dept);
+	}
+	
+	@RequestMapping(value="/getsalarybyno.do", method=RequestMethod.GET)
+	public @ResponseBody WorkTime insertSalaryForm(@RequestParam(name="empNo") int empNo, Criteria criteria) {
+		
+		SimpleDateFormat DateFormat = new SimpleDateFormat ("yyyy-MM-dd");
+		Date now = new Date();
+		String today = DateFormat.format (now);
+		
+		String year = today.substring(0, 4);
+		String month = today.substring(5, 7);
+		String day = today.substring(8);
+		int dd = Integer.parseInt(month)+1;
+		String nextMonth = String.valueOf(dd);
+		String beginDate = year + "-" + month + "-" + "01";
+		String endDate = year + "-" + nextMonth + "-" + "01";
+		
+		criteria.setBeginDate(beginDate);
+		criteria.setEndDate(endDate);
+		criteria.setEmpNo(empNo);
+		
+		List<WorkTime> workTimeList = empService.getTimetableByNo(criteria);
+		
+		WorkTime empWork = empDao.getEmpWorkTimeByNo(empNo);
+		System.out.println(empWork);
+		return empWork;
 	}
 	
 	@RequestMapping(value="/insertsalary.do", method=RequestMethod.GET)
@@ -631,7 +742,7 @@ public String salaryList(HttpSession session, Criteria criteria, @RequestParam(n
 	
 	@RequestMapping(value="/compattendance.do")
 	public String attendanceListForm(Criteria criteria, @RequestParam(name="pno", required=false, defaultValue="1") int pageNo, Model model) {
-		/*
+		
 		if (pageNo < 1) {
 			return "redirect:/compattendance.do?pno=1";
 		}
@@ -651,7 +762,7 @@ public String salaryList(HttpSession session, Criteria criteria, @RequestParam(n
 		
 		criteria.setBeginIndex(beginIndex);
 		criteria.setEndIndex(endIndex);
-		*/
+		
 		
 		List<WorkTime> workTimeList = empService.getTimetable(criteria);
 		

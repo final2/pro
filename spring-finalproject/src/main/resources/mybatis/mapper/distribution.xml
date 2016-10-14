@@ -104,14 +104,14 @@
 			productName		as "product.name"
 		from
 			(select row_number() OVER(order by qty asc) as rank,
-				i.qty			as qty, 
-				i.product_no	as productNo,
-				c.name			as clientName,
-				p.name 			as productName
+				I.qty			as qty, 
+				I.product_no	as productNo,
+				C.name			as clientName,
+				P.name 			as productName
 			from
-				hq_inventory i, client c, product p
+				hq_inventory I, client C, product P
 			where
-				i.client_no = c.no and i.product_no = p.no 
+				I.client_no = C.no and I.product_no = P.no 
 			order by 
 				rank)
 		where
@@ -165,18 +165,20 @@
 	<!-- 거래처 번호로 상품 조회 -->
 	<select id="getClientDetailsByNo" parameterType="int" resultType="ClDetail">
 		select
-			c.qty			as qty,
-			p.name			as "product.name",
-			p.client_no		as clientNo,
-			p.price			as "product.price",
-			p.no			as "product.no"
+			D.qty			as qty,
+			C.no			as "client.no",
+			C.name			as "client.name",
+			P.name			as "product.name",
+			P.price			as "product.price",
+			P.no			as "product.no"
 		from
-			client_detail c, product p
+			client_detail D, product P, client C
 		where
-			c.product_no = p.no
-			and c.client_no = #{value}
+			D.client_no = C.no
+			and D.product_no = P.no
+			and D.client_no = #{value}
 		order by 
-			p.name asc
+			P.name asc
 	</select>
 	
 	<!-- 거래처 수정 -->
@@ -208,6 +210,25 @@
 		where rank >= #{beginIndex} and rank &lt;= #{endIndex}
 	</select>
 	
+	<!-- 제품명으로 조회 -->
+	<select id="getProductByName" parameterType="string" resultType="ClDetail" >
+		select
+			D.qty			as qty,
+			C.no			as "client.no",
+			C.name			as "client.name",
+			P.name			as "product.name",
+			P.price			as "product.price",
+			P.no			as "product.no"
+		from
+			client_detail D, product P, client C
+		where
+			D.client_no = C.no
+			and D.product_no = P.no
+			and P.name like '%' || #{keyword}||'%'
+		order by 
+			P.name asc
+	</select>
+	
 <!-- 발주 ======================================================================================================= -->
 	<!-- 발주 신청시 발주 번호 생성 -->
 	<select id="getOrderNo" resultType="int">
@@ -220,15 +241,15 @@
 	<!-- 발주 신청 리스트 조회 -->
 	<select id="getHqOrders" resultType="HqOrder">
 		select
-			h.no			as no,
-			h.isconfirm		as confirm,
-			h.regdate		as regdate,
-			h.client_no		as "client.no",
-			c.name			as "client.name"
+			H.no			as no,
+			H.isconfirm		as confirm,
+			H.regdate		as regdate,
+			H.client_no		as "client.no",
+			C.name			as "client.name"
 		from
-			hq_order h, client c
+			hq_order H, client C
 		where
-			c.no = h.client_no
+			C.no = H.client_no
 		order by
 			regdate desc
 	</select>
@@ -252,35 +273,35 @@
 	<!-- 번호로 발주 정보 조회 -->
 	<select id="getOrderByNo" parameterType="int" resultType="HqOrder">
 		select
-			h.no		as no,
-			h.isconfirm	as confirm,
-			h.regdate	as regdate,
-			h.client_no	as "client.no",
-			c.name		as "client.name"
+			H.no		as no,
+			H.isconfirm	as confirm,
+			H.regdate	as regdate,
+			H.client_no	as "client.no",
+			C.name		as "client.name"
 		from
-			hq_order h, client c
+			hq_order H, client C
 		where 
-			h.client_no = c.no
-			and h.no = #{value}
+			H.client_no = C.no
+			and H.no = #{value}
 	</select>
 	
 	<!-- 발주번호로 상품정보 조회 -->
 	<select id="getOrderDetailByNo" parameterType="int" resultType="HOD">
 		select
-			d.no			as no,
-			d.regdate		as "hqOrder.regdate",
-			d.qty			as qty,
-			d.hq_order_no	as "hqOrder.no",
-			d.product_no	as "product.no",
-			p.name			as "product.name",
-			d.price			as "product.price"
+			D.no			as no,
+			D.regdate		as "hqOrder.regdate",
+			D.qty			as qty,
+			D.hq_order_no	as "hqOrder.no",
+			D.product_no	as "product.no",
+			P.name			as "product.name",
+			D.price			as "product.price"
 		from
-			hq_order_detail d, hq_order h, product p, client c
+			hq_order_detail D, hq_order H, product P, client C
 		where
-			d.hq_order_no = h.no 
-			and d.product_no = p.no
-			and c.no = h.client_no
-			and d.hq_order_no = #{value}
+			D.hq_order_no = H.no 
+			and D.product_no = P.no
+			and C.no = H.client_no
+			and D.hq_order_no = #{value}
 	</select>
 	
 	<!-- 입고 확인 여부 변경 -->
@@ -301,4 +322,36 @@
 				hq_order_no = #{hqOrder.no}
 				and product_no = #{product.no}
 	</update>
+	
+	<!-- 제조사 별 상품 리스트 총 수-->
+	<select id="ClientSearchTotalNo" parameterType="CDPV" resultType="int" >
+		select count(*)
+		from product
+		where client_no = #{no}
+		<if test="keyword != null and keyword != 'null' ">
+	  		and name like '%' || #{keyword} || '%'
+	  	</if>
+	</select>
+	<!-- 제조사 별 상품 페이지 리스트 -->
+	<select id="ClientSearchPageList" parameterType="CDPV" resultType="Product">
+		select  rank,
+				no					as no,
+				name				as name,
+				maker				as maker,
+				price				as price,
+				memo				as memo,
+				limiteage			as limiteAge,
+				eventcode			as "event.no",
+				smallcategory_no	as "smallCat.no",
+				image				as image,
+				client_no			as clientNo
+		from (select row_number() OVER(order by no desc) as rank, 
+				no, name, maker, price, memo, limiteage, eventcode, smallcategory_no, image, client_no
+			  from product 
+			  where client_no = #{no}
+			  <if test="keyword != null and keyword != 'null' ">
+			  	and name like '%' || #{keyword} || '%'
+			  </if>)
+		where rank >= #{pageVo.beginIndex} and rank &lt;= #{pageVo.endIndex}
+	</select>
 </mapper>

@@ -8,15 +8,13 @@
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" href="/FinalProject/resources/bootstrap/css/bootstrap.css">
 <script type="text/javascript" src="/FinalProject/resources/jquery/jquery.js"></script>
-<link href="/FinalProject/resources/bootstrap/css/simple-sidebar.css" rel="stylesheet">
-<script src="/FinalProject/resources/bootstrap/js/bootstrap.min.js"></script>
 <style>
 	.container {position:relative; top:80px;}
 	.container:after {clear:both; content:""; display:block;}
 	
 	.headerBox {width:100%;}
-	.headerBox > h1 {width:70%; float:left;}
-	.headerBox .row {width:30%; float:right; margin-top:30px;}
+	.headerBox > h1 {width:55%; float:left;}
+	.headerBox .row {width:45%; float:right; margin-top:30px;}
 	.headerBox .row select:focus {outline:none;}
 
 	.empBox {width:100%; margin:15px auto 15px auto;}
@@ -42,7 +40,7 @@
 	
 </style>
 <script type="text/javascript">
-	function currency(obj)
+	/* function currency(obj)
 	{
 	 if (event.keyCode >= 48 && event.keyCode <= 57) {
 	  
@@ -108,7 +106,7 @@
 	   }
 	   outputNumber = parseFloat(outputString);
 	   return (outputNumber);
-	}
+	} */
 	
 $(function() {
 	$(".salaryForm").submit(function() {
@@ -132,7 +130,49 @@ $(function() {
 		return true;
 	});
 	
+	$("#empNameBtn").on("change", function() {
+		var empName = $(this).children("option:selected").val();
+		$(".salaryName").text(empName+ "님의 급여명세서");
+		var empNo = $(this).children("option:selected").attr("id").replace("no-", "");
+		
+		$.ajax({
+			type:'GET',
+			url:'getsalarybyno.do',
+			contentType:'application/json',
+			data:{empNo:empNo},
+			dataType:'json',
+			success:function(result) {
+				console.log(result.salary)
+
+			}
+		}); 
+		
+		$("input[name='salary']").val();
+		
+	});
 	
+	
+	$("#deptBtn").on("change", function () {
+		var dept = $("#deptBtn").val();
+
+		
+		$.ajax({
+			type:'GET',
+			url:'getemployeebydept.do',
+			contentType:'application/json',
+			data:{dept:dept},
+			dataType:'json',
+			success:function(result) {
+				var $select = $('#empNameBtn');
+				$select.empty();
+					$select.append("<option>사원 선택</option>");
+				$.each(result, function(index, emp) {
+					$select.append("<option id='no-"+emp.no+"'>"+ emp.no + " " + emp.name +"</option>");
+				});
+
+			}
+		}); 
+	});
 });
 </script>
 </head>
@@ -146,18 +186,17 @@ $(function() {
 				<div class="row">
 					<div class="col-sm-6 form-group">
 						<label>부서명</label>
-						<select  class="form-control" name="opt">
+						<select  class="form-control" id="deptBtn">
+							<option>선택</option>
 						<c:forEach var="emp" items="${empList }">
-							<option value="dept">${emp.dept }</option>
+							<option name="dept" value="${emp.dept }">${emp.dept }</option>
 						</c:forEach>
 						</select>
 					</div>
-					<div class="col-sm-6 form-group">
+					<div class="col-sm-6 form-group empNameBox">
 						<label>사원명</label>
-						<select class="form-control" name="opt">
-						<c:forEach var="emp" items="${empList }">
-							<option value="empName">${emp.name }</option>
-						</c:forEach>
+						<select class="form-control" id="empNameBtn">
+							<option selected="selected">부서명을 선택해주세요</option>
 						</select>
 					</div>
 				</div>
@@ -171,28 +210,28 @@ $(function() {
 					</colgroup>
 					<c:if test="${ !empty empList }">
 						<tr>
-							<th colspan="3" class="salaryName"> 님 2016년 09월 명세서</th>
+							<th colspan="3" class="salaryName text-center"></th>
 						</tr>
 					</c:if>
 					<tr>
-						<th colspan="2"  class="info">기본급</th>
-						<td><input type="text" name="salary"  onKeyPress="currency(this);" onKeyup="com(this);"/></td>
+						<th colspan="2"  class="info text-left">기본급</th>
+						<td><input type="text" name="salary"/></td>
 					</tr>
 					<tr>
 						<th rowspan="5" class="info">공제 내역</th>
 						<th>국민연금</th>
-						<td><input type="text" name="insureSocial" onKeyPress="currency(this);" onKeyup="com(this);"/></td>
+						<td><input type="text" name="insureSocial"/></td>
 					</tr>
 					<tr>
 						<th>건강보험</th>
 						<td><input type="text" name="insureHealth" onKeyPress="currency(this);" onKeyup="com(this);"/></td>
 					</tr>
 					<tr>
-						<th>고용보험</th>
+						<th>장기요양보험</th>
 						<td><input type="text" name="insureLonghealth" onKeyPress="currency(this);" onKeyup="com(this);"/></td>
 					</tr>
 					<tr>
-						<th>산재보험</th>
+						<th>고용/산재보험</th>
 						<td><input type="text" name="employeeInsure" onKeyPress="currency(this);" onKeyup="com(this);"/></td>
 					</tr>
 					<tr>

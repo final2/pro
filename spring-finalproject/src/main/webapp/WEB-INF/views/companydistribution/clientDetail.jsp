@@ -26,9 +26,19 @@ $(function() {
 		}
 		return true;
 	});
+	
+	$("#search-btn").click(function() {
+		var keyword = $("input:text[name='keyword']").val().trim();
+		if(keyword == '') {
+			keyword = 'null';
+		} 
+		
+	});
 });
 </script>
 <style>
+h1{color:white;}
+.price{background-color: #EBFBFF}
 .non{color: red;}
 th,td {text-align:center;}
 </style>
@@ -38,50 +48,88 @@ th,td {text-align:center;}
 	<%@ include file="/WEB-INF/views/sidebartemplate/sidebar.jsp" %>
 	<a href="#menu-toggle" class="btn btn-default btn-xs" id="menu-toggle">side bar</a>
 	<div id="page-context-wrapper">
-		
+		<%@ include file="../companynotice/backgroundVideo.jsp" %>
 		<div class="container" style="margin-top:10px">	
 			<h1>거래처 상세정보</h1>
 			<hr>
-			
-			<table class="table table-bordered">
-					<thead>
-						<tr>
-							<th colspan="2">거래처번호</th>
-							<td colspan="2">${clients.no }</td>
-						</tr>
-						<tr>
-							<th>거래처 명</th>
-								<td>${clients.name }</td>
-							<th>거래 여부</th>
-							<c:choose>
-								<c:when test="${clients.isAdmit == 'Y'}">
-									<td>거래중</td>
-								</c:when>
-								<c:otherwise>
-									<td>거래 중지</td>
-								</c:otherwise>
-							</c:choose>
-						</tr>
-						<tr>
-							<th colspan="2">제품명</th>
-							<th colspan="2">수량</th>
-						</tr>
-					</thead>
-					<tbody>
-						<c:forEach var="ds" items="${details}">
+			<div class="well" style="opacity:0.8">
+			<div style="text-align:right">
+			<form role="form" action="clientDetail.do?pn=1" method="POST">
+				<div class="form-group col-sm-9">
+					<input type="hidden" name="no" value="${param.no }">
+					<input type="text" class="form-control" name="keyword" placeholder="상품명을 입력하세요.">
+			    </div>
+			    <div class="form-group col-sm-3">
+			      <input type="submit" id="search-btn" class="btn btn-info form-control" value="검색" />
+			    </div>
+			</form>
+			</div>
+				<table class="table table-bordered">
+						<colgroup>
+						<col width="20%">
+						<col width="15%">
+						<col width="25%">
+						<col width="20%">
+						<col width="20%">
+						</colgroup>
+						<thead>
 							<tr>
-								<td colspan="2">${ds.product.name }</td>
-								<td colspan="2"><fmt:formatNumber value="${ds.qty }" type="number" /></td>
+								<th>거래처번호</th>
+								<th>거래처 명</th>		
+								<th>제품명</th>
+								<th>거래처 가격</th>
+								<th class="price">소비자 가격</th>
 							</tr>
-						</c:forEach>
-					</tbody>
-			</table>
+						</thead>
+						<tbody id="tbody">
+							<c:forEach var="product" items="${products}">
+								<tr>
+									<td>${product.clientNo }</td>
+									<td>${product.maker }</td>
+									<td>${product.name }</td>
+									<td><fmt:formatNumber value="${product.price * 0.7}" type="number" /></td>
+									<td class="price"><fmt:formatNumber value="${product.price}" type="number" /></td>
+								</tr>
+							</c:forEach>
+						</tbody>
+				</table>
+			</div>
 			<div class="pull-right">
 				<c:if test="${LoginUser.dept eq 'PM'}">
-					<button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal" id="btn" >수정</button>
+					<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#myModal" id="btn" >수정</button>
 				</c:if>
-				<a href="clientList.do" class="btn btn-primary">확인</a>
+				<a href="clientList.do" class="btn btn-default">목록</a>
 			</div>
+			
+			<div class="text-center"> 
+				<ul class="pagination">
+				<c:if test="${pageVo.pageNo gt 1 }">
+					<li>
+						<a href="clientDetail.do?no=${param.no }&pn=${pageVo.pageNo - 1 }" aria-label="Previous">
+							<span aria-hidden="true">&laquo;</span>
+						</a>
+					</li>
+				</c:if>
+				<c:forEach var="num" begin="${pageVo.beginPage }" end="${pageVo.endPage }">
+					<c:choose>
+						<c:when test="${pageVo.pageNo eq num }">
+							<li><a class="active" href="clientDetail.do?no=${param.no }&pn=${num }">${num }</a></li>
+						</c:when>
+						<c:otherwise>				
+							<li><a href="clientDetail.do?no=${param.no }&pn=${num }">${num }</a></li>
+						</c:otherwise>
+					</c:choose>
+				</c:forEach>
+				<c:if test="${pageVo.pageNo lt pageVo.totalPages }" >
+					<li>
+						<a href="clientDetail.do?no=${param.no }&pn=${pageVo.pageNo + 1 }" aria-label="Next">
+							<span aria-hidden="true">&raquo;</span>
+						</a>
+					</li>
+				</c:if>
+				</ul>
+			</div>
+			
 			
 			<!-- 수정 모달 창 -->
 			<div class="modal fade" id="myModal" tabindex="-1" role="dialog">

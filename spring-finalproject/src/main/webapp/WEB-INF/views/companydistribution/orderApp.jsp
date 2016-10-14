@@ -11,8 +11,9 @@
 <link href="resources/bootstrap/css/simple-sidebar.css" rel="stylesheet">
 <script src="resources/bootstrap/js/bootstrap.min.js"></script>
 <style>
+h1{color:white;}
 th,td {text-align:center;}
-.price{background-color: #C6FCE7}
+.price{background-color: #EBFBFF}
 </style>
 <script type="text/javascript">
 $(function(){
@@ -40,7 +41,7 @@ $(function(){
 						   	  +"<td>"+comma(pro.product.price)+"<input type='hidden' name='price' class='form-control' value='"+pro.product.price +"'/></td>"
 							  +"<td class='price'>"+comma(price)+"</td>"
 						   	  +"<td>"+pro.qty+"</td>"
-						   	  +"<td><input type='number' name='qty' id='qty' class='form-control' value = '0'/></td>"
+						   	  +"<td><input type='number' name='qty' id='qty' class='form-control' value = '0' style='text-align: right'/></td>"
 							  +"</tr>")
 				}); 
 			}
@@ -59,46 +60,48 @@ $(function(){
 	<%@ include file="/WEB-INF/views/sidebartemplate/sidebar.jsp" %>
 	<a href="#menu-toggle" class="btn btn-default btn-xs" id="menu-toggle">side bar</a>
 	<div id="page-content-wrapper">
-		
+		<%@ include file="../companynotice/backgroundVideo.jsp" %>
 		<div class="container" style="margin-top:10px">
 			<h1>발주 신청서</h1>
 			<hr>
 			
 			<form action="orderApp.do" method="post" role="form">
-				<table class="table table-bordered">
-					<thead>
-						<tr>
-							<th colspan="3" style="width: 50%">거래처명</th>
-							<td colspan="3" style="width: 50%">
-								<select id="client" name="clientNo" class="form-control">
-									<option selected>거래처를 선택하세요.</option>
-									<c:forEach var="clients" items="${clientList}">
-										<c:choose>
-											<c:when test="${clients.isAdmit eq 'Y'}">
-												<option value="${clients.no}">${clients.name }</option>
-											</c:when>
-										</c:choose>
-									</c:forEach>
-								</select>
-							</td>
-						</tr>
-					</thead>
-					<tbody id="order-table">
-						<tr>
-							<th style="width:20%">제품번호</th>
-							<th style="width:20%">제품 명</th>
-							<th style="width:15%">소비자가격</th>						
-							<th style="width:15%" class='price'>공장도가격</th>
-							<th style="width:15%">수량</th>
-							<th style="width:15%">주문수량</th>
-						</tr>
-						<!-- 입력 -->
-						
-					</tbody>
-				</table>
+			<div class="well" style="opacity:0.8">
+					<table class="table table-bordered">
+						<thead>
+							<tr>
+								<th colspan="3" style="width: 50%">거래처명</th>
+								<td colspan="3" style="width: 50%">
+									<select id="client" name="clientNo" class="form-control">
+										<option selected>거래처를 선택하세요.</option>
+										<c:forEach var="clients" items="${clientList}">
+											<c:choose>
+												<c:when test="${clients.isAdmit eq 'Y'}">
+													<option value="${clients.no}">${clients.name }</option>
+												</c:when>
+											</c:choose>
+										</c:forEach>
+									</select>
+								</td>
+							</tr>
+						</thead>
+						<tbody id="order-table">
+							<tr>
+								<th style="width:20%">제품번호</th>
+								<th style="width:20%">제품 명</th>
+								<th style="width:15%">소비자가격</th>						
+								<th style="width:15%" class='price'>공장도가격</th>
+								<th style="width:15%">수량</th>
+								<th style="width:15%">주문수량</th>
+							</tr>
+							<!-- 입력 -->
+							
+						</tbody>
+					</table>
+			</div>
 				<div class="pull-right">
-					<input type="submit" id="order" class="btn btn-primary" value="신청" />
-					<a href="hqOrder.do" class="btn btn-danger">취소</a>
+					<input type="submit" id="order" class="btn btn-warning" value="신청" />
+					<a href="hqOrder.do" class="btn btn-default">취소</a>
 				</div>
 			</form>
 		</div>

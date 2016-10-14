@@ -7,10 +7,10 @@ public class WorkTime {
 	private int no;
 	private Date attendance;
 	private Date leaving;
-	private String late = null;
-	private String earlyleave = null;
-	private String overtime = null;
-	private Date serviceDate;
+	private String late = "0";
+	private String earlyleave = "0";
+	private int overtime = 0;
+	private Date regDate;
 	private Employee emp;
 	
 	public WorkTime() {}
@@ -55,20 +55,20 @@ public class WorkTime {
 		this.earlyleave = earlyleave;
 	}
 
-	public String getOvertime() {
+	public int getOvertime() {
 		return overtime;
 	}
 
-	public void setOvertime(String overtime) {
+	public void setOvertime(int overtime) {
 		this.overtime = overtime;
 	}
 	
-	public Date getServiceDate() {
-		return serviceDate;
+	public Date getRegDate() {
+		return regDate;
 	}
 	
-	public void setServiceDate(Date serviceDate) {
-		this.serviceDate = serviceDate;
+	public void setRegDate(Date regDate) {
+		this.regDate = regDate;
 	}
 
 	public Employee getEmp() {

@@ -90,6 +90,7 @@ ul.pagination li a:hover:not(.active) {background-color: #ddd;}
         cursor: default;
         opacity: 0.6;
  }
+ h1{color:white;}
 </style>
 <title>Big Store</title>
 </head>
@@ -98,46 +99,48 @@ ul.pagination li a:hover:not(.active) {background-color: #ddd;}
 	<%@ include file="/WEB-INF/views/sidebartemplate/sidebar.jsp" %>
 	<a href="#menu-toggle" class="btn btn-default btn-xs" id="menu-toggle">side bar</a>
 	<div id="page-context-wrapper">
-		
+		<%@ include file="../companynotice/backgroundVideo.jsp" %>
 		<div class="container" style="margin-top:10px">
 			<h1>거래처 리스트</h1>
 			<hr>
-			<table class="table table-bordered" >
-				<colgroup>
-					<col width="25%">
-					<col width="60%">
-					<col width="15%">
-				</colgroup>
-				<thead>
-					<tr>
-						<th>거래처 번호</th>
-						<th>거래처 명</th>
-						<th>거래 여부</th>
-					</tr>
-				</thead>
-				<tbody>
-					<c:forEach var="client" items="${clientList}">
-						<c:url var="detailURL" value="clientDetail.do">
-							<c:param name="no" value="${client.no}" />
-						</c:url>
+			<div class="well" style="opacity:0.8">
+				<table class="table table-bordered" >
+					<colgroup>
+						<col width="25%">
+						<col width="60%">
+						<col width="15%">
+					</colgroup>
+					<thead>
 						<tr>
-							<td>${client.no}</td>
-							<td><a href="${detailURL}">${client.name}</a></td>
-							<c:choose>
-								<c:when test="${client.isAdmit == 'Y'}">
-									<td>거래중</td>
-								</c:when>
-								<c:otherwise>
-									<td>거래 중지</td>
-								</c:otherwise>
-							</c:choose>
+							<th>거래처 번호</th>
+							<th>거래처 명</th>
+							<th>거래 여부</th>
 						</tr>
-					</c:forEach>
-				</tbody>
-			</table>
+					</thead>
+					<tbody>
+						<c:forEach var="client" items="${clientList}">
+							<c:url var="detailURL" value="clientDetail.do?pn=1">
+								<c:param name="no" value="${client.no}" />
+							</c:url>
+							<tr>
+								<td>${client.no}</td>
+								<td><a href="${detailURL}">${client.name}</a></td>
+								<c:choose>
+									<c:when test="${client.isAdmit == 'Y'}">
+										<td>거래중</td>
+									</c:when>
+									<c:otherwise>
+										<td>거래 중지</td>
+									</c:otherwise>
+								</c:choose>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+			</div>
 			<div class="pull-right">
 				<c:if test="${LoginUser.dept eq 'PM'}">
-					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" id="btn">거래처 등록</button>
+					<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#myModal" id="btn">거래처 등록</button>
 				</c:if>
 			</div>
 			

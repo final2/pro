@@ -9,8 +9,6 @@
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" href="/FinalProject/resources/bootstrap/css/bootstrap.css">
 <script type="text/javascript" src="/FinalProject/resources/jquery/jquery.js"></script>
-<link href="/FinalProject/resources/bootstrap/css/simple-sidebar.css" rel="stylesheet">
-<script src="/FinalProject/resources/bootstrap/js/bootstrap.min.js"></script>
 <style>
 	#page-content-wrapper:after {clear:both; content:""; display:block;}
 	.container {position:relative; top:20px; margin-bottom:20px;}
@@ -40,17 +38,17 @@
 	
 	.branchList {width:100%;}
 	
+	
 </style>
 <script type="text/javascript">
 $(function() {
-	// 모달창 오픈시 기능
-	/* $('#myModal').on('show.bs.modal', function (e) {
-		  /* $("#name").val('${clients.name}')
-		  $(".modal-body p").hide(); */
-	/* }); */
+	/* // 모달창 오픈시 기능
+	$('#myModal').on('show.bs.modal', function (e) {
+		 
+	});
 	
 	// 수정 버튼 기능
-	/* $("form").submit(function() {
+	$("form").submit(function() {
 		if(!$.trim($("#name").val())) {
 			$(".non").show();
 			$("#name").focus();
@@ -198,7 +196,7 @@ $(function() {
 						</c:choose>
 							</tbody>
 						</table>
-					</div>
+					</div> 
 					<div class="col-sm-6">
 						<table class="table table-bordered">
 							<thead>
@@ -235,19 +233,16 @@ $(function() {
 				</div>
 				<div class="formBtnBox">
 					<div class="formBtn">
-						<button type="button" class="btn btn-default" data-toggle="modal" data-target="#messenger">비밀번호 수정</button>
+						<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newpwdBtn" id="btn">비밀번호 수정</button>
 					</div>
 					<div class="formBtn">
 						<a href="notice.do" class="btn btn-default">메인으로</a>
 					</div>
 				</div>
 			</div>
-			<div class="modal fade" id="messenger" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
-			</div>
-			<!-- <div class="modal fade" id="myModal" role="dialog">
+			<div class="modal fade" id="newpwdBtn" tabindex="-1" role="dialog">
 				<div class="modal-dialog">
-				
-					Modal content
+					<!-- Modal content-->
 					<div class="modal-content">
 						<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -257,11 +252,11 @@ $(function() {
 						<form action="changepassword.do" method="post" role="form">
 							<div class="modal-body">
 								<div>
-									<label>새로운 비밀번호</label>
+									<label class="text-left">새로운 비밀번호</label>
 									<input type="password" name="password" class="form-control"/>
 								</div>
 								<div>
-									<label>비밀번호 확인</label>
+									<label class="text-left">비밀번호 확인</label>
 									<input type="password" name="password" id="name" class="form-control"/>
 								</div>
 							</div>
@@ -271,9 +266,8 @@ $(function() {
 							</div>
 						</form>
 					</div>
-					
 				</div>
-			</div> -->
+			</div><!-- 모달 end -->
 		</div>
 	</div>
 </div>

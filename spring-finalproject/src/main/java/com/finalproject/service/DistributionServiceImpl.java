@@ -9,10 +9,12 @@ import org.springframework.transaction.annotation.Transactional;
 import com.finalproject.dao.DistributionDao;
 import com.finalproject.model.Client;
 import com.finalproject.model.ClientDetail;
+import com.finalproject.model.ClientDetailPageVo;
 import com.finalproject.model.HqInventory;
 import com.finalproject.model.HqOrder;
 import com.finalproject.model.HqOrderDetail;
 import com.finalproject.model.PageVo;
+import com.finalproject.model.Product;
 
 @Service
 @Transactional
@@ -116,6 +118,22 @@ public class DistributionServiceImpl implements DistributionService{
 	@Override
 	public void updateClient(Client client) {
 		distributionDao.updateClient(client);
+	}
+	
+	// 제품명으로 조회
+	@Override
+	public List<ClientDetail> getProductByName(String name) {
+		return distributionDao.getProductByName(name);
+	}
+	
+	@Override
+	public List<Product> ClientSearchPageList(ClientDetailPageVo cdpv) {
+		return distributionDao.ClientSearchPageList(cdpv);
+	}
+	
+	@Override
+	public int ClientSearchTotalNo(ClientDetailPageVo cdpv) {
+		return distributionDao.ClientSearchTotalNo(cdpv);
 	}
 	
 /* 발주 ========================================================================================================== */

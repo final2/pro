@@ -4,10 +4,12 @@ import java.util.List;
 
 import com.finalproject.model.Client;
 import com.finalproject.model.ClientDetail;
+import com.finalproject.model.ClientDetailPageVo;
 import com.finalproject.model.HqInventory;
 import com.finalproject.model.HqOrder;
 import com.finalproject.model.HqOrderDetail;
 import com.finalproject.model.PageVo;
+import com.finalproject.model.Product;
 
 public interface DistributionDao {
 
@@ -60,6 +62,14 @@ public interface DistributionDao {
 	
 	// 거래처 수정
 	void updateClient(Client client);
+	
+	// 제품명으로 조회
+	List<ClientDetail> getProductByName(String name);
+	
+	//제조사 별 상품 리스트 총 수
+	int ClientSearchTotalNo(ClientDetailPageVo cdpv);
+	//제조사 별 상품 페이지 리스트
+	List<Product> ClientSearchPageList(ClientDetailPageVo cdpv);
 
 /* 발주 ========================================================================================================== */
 	// 발주 조회

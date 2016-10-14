@@ -129,6 +129,28 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 	
 	@Override
+	public List<WorkTime> getTimetableByNo(Criteria criteria) {
+		List<WorkTime> workTimeList = empDao.getTimetableByNo(criteria);
+		return workTimeList;
+	}
+	
+	@Override
+	public void attendanceByNo(WorkTime workTime) {
+		empDao.attendanceByNo(workTime);
+	}
+	
+	@Override
+	public void leavByNo(WorkTime workTime) {
+		empDao.leavByNo(workTime);
+	}
+	
+	@Override
+	public WorkTime getAttendanceByNo(int empNo) {
+		WorkTime workTime = empDao.getAttendanceByNo(empNo);
+		return workTime;
+	}
+	
+	@Override
 	public int getTotalTimetablerows(Criteria criteria) {
 		return empDao.getTotalTimetablerows(criteria);
 	}
