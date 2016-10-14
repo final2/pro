@@ -21,7 +21,7 @@ $(function() {
 			data:obj,
 			dataType:"json",
 			success:function(result){
-				alert("성공적으로 보냈습니다.")
+				alert("성공적으로 보냈습니다.");
 				$("#send").trigger("click");
 			}
 		});

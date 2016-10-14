@@ -41,6 +41,18 @@ $('#bodyreceive').on("click", "tr[id^=messageNo]", function() {
 	$('#bodyreceive').hide();
 	var messageno = $(this).attr("id").replace("messageNo-","");
 	var $detail = $("#detail-form");
+	
+	/* 읽음여부 N 표시 ajax Post 요청 */
+	$.ajax({
+		type:"POST",
+		url:"/FinalProject/json/recieveYN/",
+		data:{messageNo:messageno},
+		dataType:"int",
+		success:function(result){
+			
+		}		
+	})
+	
 	$detail.empty();
 	$.ajax({
 		type:"GET",

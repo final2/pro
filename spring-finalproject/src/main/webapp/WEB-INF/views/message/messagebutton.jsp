@@ -35,14 +35,26 @@ var loginUserNo = ${LoginUser.no};
 						url:"/FinalProject/json/empbyno/"+rm.from,
 						dataType:"json",
 						success:function(emp){
-							$tbody.append(
-								"<tr id='messageNo-"+rm.no+"'>"+
-								"<td class='text-center' style='vertical-align:middle'><span class='glyphicon glyphicon-envelope'></span></td>" +
-								"<td class='text-center' style='vertical-align:middle' id='no-"+rm.from+"'><h4>"+emp.name+"</h4></td>"+
-								"<td class='text-center' style='vertical-align:middle'><p>"+rm.contents+".</p></td>"+
-								"<td class='text-center' style='vertical-align:middle'><p>"+rm.regdate+"</p></td>"+
-								"</tr>"
-							);
+							if(rm.receiving == 'Y'){
+								$tbody.append(
+									"<tr id='messageNo-"+rm.no+"'>"+
+									"<td class='text-center' style='vertical-align:middle'><span class='glyphicon glyphicon-ok'></span></td>" +
+									"<td class='text-center' style='vertical-align:middle' id='no-"+rm.from+"'><h4>"+emp.name+"</h4></td>"+
+									"<td class='text-center' style='vertical-align:middle'><p>"+rm.contents+".</p></td>"+
+									"<td class='text-center' style='vertical-align:middle'><p>"+rm.regdate+"</p></td>"+
+									"</tr>"
+								);
+							}else{
+								$tbody.append(
+									"<tr id='messageNo-"+rm.no+"'>"+
+									"<td class='text-center' style='vertical-align:middle'><span class='glyphicon glyphicon-envelope'></span></td>" +
+									"<td class='text-center' style='vertical-align:middle' id='no-"+rm.from+"'><h4>"+emp.name+"</h4></td>"+
+									"<td class='text-center' style='vertical-align:middle'><p>"+rm.contents+".</p></td>"+
+									"<td class='text-center' style='vertical-align:middle'><p>"+rm.regdate+"</p></td>"+
+									"</tr>"
+								);
+							}
+							
 						}
 					});
 				});
@@ -133,14 +145,25 @@ var loginUserNo = ${LoginUser.no};
 						url:"/FinalProject/json/empbyno/"+sm.to,
 						dataType:"json",
 						success:function(emp){
-							$tbody.append(
-								"<tr id='messageNo-"+sm.no+"'>"+
-								"<td class='text-center' style='vertical-align:middle'><span class='glyphicon glyphicon-envelope'></span></td>" +
-								"<td class='text-center' style='vertical-align:middle' id='no-"+sm.to+"'><h4>"+emp.name+"</h4></td>"+
-								"<td class='text-center' style='vertical-align:middle'><p>"+sm.contents+".</p></td>"+
-								"<td class='text-center' style='vertical-align:middle'><p>"+sm.regdate+"</p></td>"+
-								"</tr>"
-							);
+							if(sm.receiving == 'Y'){
+								$tbody.append(
+									"<tr id='messageNo-"+sm.no+"'>"+
+									"<td class='text-center' style='vertical-align:middle'><span class='glyphicon glyphicon-ok'></span></td>" +
+									"<td class='text-center' style='vertical-align:middle' id='no-"+sm.to+"'><h4>"+emp.name+"</h4></td>"+
+									"<td class='text-center' style='vertical-align:middle'><p>"+sm.contents+".</p></td>"+
+									"<td class='text-center' style='vertical-align:middle'><p>"+sm.regdate+"</p></td>"+
+									"</tr>"
+								);
+							}else{
+								$tbody.append(
+									"<tr id='messageNo-"+sm.no+"'>"+
+									"<td class='text-center' style='vertical-align:middle'><span class='glyphicon glyphicon-envelope'></span></td>" +
+									"<td class='text-center' style='vertical-align:middle' id='no-"+sm.to+"'><h4>"+emp.name+"</h4></td>"+
+									"<td class='text-center' style='vertical-align:middle'><p>"+sm.contents+".</p></td>"+
+									"<td class='text-center' style='vertical-align:middle'><p>"+sm.regdate+"</p></td>"+
+									"</tr>"
+								);
+							};
 						}
 					});
 				});
