@@ -331,17 +331,22 @@ public class EmployeeController {
 			throw new RuntimeException("로그인이 필요한 서비스입니다.");
 		}
 		
-		if (!emp.getDept().equals("HR") || !emp.getDept().equals("Master")) {
-			
-			throw new RuntimeException("사원등록은 인사관리 부서만 접근 가능합니다.");
-		} 
 		
 		int empNo = empService.empSeqCheck();
 		model.addAttribute("empNo", empNo);
 		List<Branch> branchNames = empService.getAllBranch();
 		model.addAttribute("branchNames", branchNames);
 		
-		return "employees/insertempform";
+		if (emp.getDept().equals("HR") || emp.getDept().equals("Master")) {
+			
+			return "employees/insertempform";
+			
+		} else {
+			
+			throw new RuntimeException("사원등록은 인사관리 부서만 접근 가능합니다.");
+		}
+		
+		//return "employees/insertempform";
 		
 	}
 	
