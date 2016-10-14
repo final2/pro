@@ -37,6 +37,7 @@
       	<typeAlias type="com.finalproject.model.WebBoard" alias="Wboard" />
       	<typeAlias type="com.finalproject.model.SalesBrPr" alias="SBP" />
       	<typeAlias type="com.finalproject.model.WorkTime" alias="WorkTime" />
+      	<typeAlias type="com.finalproject.model.LSalesBrPr" alias="LSBP" />
 	</typeAliases>
 
 	<mappers> 

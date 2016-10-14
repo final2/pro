@@ -64,7 +64,7 @@ th,td {text-align:center;}
 								<input type="hidden" name="productName" class="form-control" value="${details.product.name }" />
 							</td>
 							<td style="width:25%">
-								<input type="number" name="qty" class="form-control" value="${details.qty }" />
+								<input type="number" name="qty" class="form-control" value="${details.qty }" style="text-align: right" />
 							</td>
 							<td style="width:25%"><fmt:formatNumber value="${details.product.price }" pattern="#,###"/> 
 								<input type="hidden" name="price" class="form-control" value="${details.product.price }" />

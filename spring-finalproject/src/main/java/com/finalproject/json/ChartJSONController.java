@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.finalproject.dao.ChartDao;
+import com.finalproject.model.LSalesBrPr;
 import com.finalproject.model.SalesBrPr;
 
 @RestController
@@ -71,7 +72,22 @@ public class ChartJSONController {
 
 		return chartDao.getSalesBr(year);
 	}
-	
+	@RequestMapping(value="/getsalesBrDetail/", method=RequestMethod.GET)
+	public List<LSalesBrPr> getSalesBrDetail(){
+		Calendar oCalendar = Calendar.getInstance( );
+		int no = oCalendar.get(Calendar.YEAR);
+		String year = Integer.toString(no);
+
+		return chartDao.getSalesBrDetail(year);
+	}
+	@RequestMapping(value="/getsalesPrDetail/", method=RequestMethod.GET)
+	public List<LSalesBrPr> getSalesPrDetail(){
+		Calendar oCalendar = Calendar.getInstance( );
+		int no = oCalendar.get(Calendar.YEAR);
+		String year = Integer.toString(no);
+
+		return chartDao.getSalesPrDetail(year);
+	}
 	@RequestMapping(value="/getsalesPr/", method=RequestMethod.GET)
 	public List<SalesBrPr> getSalesPr(){
 

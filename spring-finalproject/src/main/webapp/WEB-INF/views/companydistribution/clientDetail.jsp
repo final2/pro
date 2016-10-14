@@ -29,6 +29,7 @@ $(function() {
 });
 </script>
 <style>
+.price{background-color: #EBFBFF}
 .non{color: red;}
 th,td {text-align:center;}
 </style>
@@ -46,32 +47,42 @@ th,td {text-align:center;}
 			<table class="table table-bordered">
 					<thead>
 						<tr>
-							<th colspan="2">거래처번호</th>
-							<td colspan="2">${clients.no }</td>
+							<th colspan="2">거래 여부</th>
+							<th>
+								<c:choose>
+									<c:when test="${clients.isAdmit == 'Y'}">거래중</c:when>
+									<c:otherwise>거래 중지</c:otherwise>
+								</c:choose>
+							</th>
+							<th colspan="3">
+								<div class="pull-right">
+									<form role="form" action="clientDetail.do">
+											<div class="form-group col-sm-9">
+												<input type="text" class="form-control" name="keyword" placeholder="제품명을 입력하세요.">
+										    </div>
+										    <div class="form-group col-sm-3">
+										      <button type="submit" class="btn btn-info form-control">찾기</button>
+										    </div>
+									</form>
+								</div>
+							</th>
 						</tr>
 						<tr>
-							<th>거래처 명</th>
-								<td>${clients.name }</td>
-							<th>거래 여부</th>
-							<c:choose>
-								<c:when test="${clients.isAdmit == 'Y'}">
-									<td>거래중</td>
-								</c:when>
-								<c:otherwise>
-									<td>거래 중지</td>
-								</c:otherwise>
-							</c:choose>
-						</tr>
-						<tr>
-							<th colspan="2">제품명</th>
-							<th colspan="2">수량</th>
+							<th style="width: 20%">거래처번호</th>
+							<th style="width: 20%">거래처 명</th>		
+							<th style="width: 20%">제품명</th>
+							<th style="width: 20%">공장도가격</th>
+							<th style="width: 20%" class="price">소비자가격</th>
 						</tr>
 					</thead>
 					<tbody>
 						<c:forEach var="ds" items="${details}">
 							<tr>
-								<td colspan="2">${ds.product.name }</td>
-								<td colspan="2"><fmt:formatNumber value="${ds.qty }" type="number" /></td>
+								<td style="width: 20%">${ds.client.no }</td>
+								<td style="width: 20%">${ds.client.name }</td>
+								<td style="width: 20%">${ds.product.name }</td>
+								<td style="width: 20%"><fmt:formatNumber value="${ds.product.price * 0.7}" type="number" /></td>
+								<td style="width: 20%" class="price"><fmt:formatNumber value="${ds.product.price}" type="number" /></td>
 							</tr>
 						</c:forEach>
 					</tbody>

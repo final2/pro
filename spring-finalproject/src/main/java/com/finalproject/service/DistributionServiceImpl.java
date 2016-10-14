@@ -118,6 +118,12 @@ public class DistributionServiceImpl implements DistributionService{
 		distributionDao.updateClient(client);
 	}
 	
+	// 제품명으로 조회
+	@Override
+	public List<ClientDetail> getProductByName(String name) {
+		return distributionDao.getProductByName(name);
+	}
+	
 /* 발주 ========================================================================================================== */
 	// 발주 리스트 조회
 	@Override

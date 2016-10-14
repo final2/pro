@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.finalproject.dao.ChartDao;
+import com.finalproject.model.LSalesBrPr;
 import com.finalproject.model.SalesBrPr;
 
 @Service
@@ -68,6 +69,16 @@ public class ChartServiceImpl implements ChartService{
 	@Override
 	public List<SalesBrPr> getCategorySales(String year) {
 		return chartDao.getCategorySales(year);
+	}
+
+	@Override
+	public List<LSalesBrPr> getSalesBrDetail(String year) {
+		return chartDao.getSalesBrDetail(year);
+	}
+
+	@Override
+	public List<LSalesBrPr> getSalesPrDetail(String year) {
+		return chartDao.getSalesPrDetail(year);
 	}
 
 }

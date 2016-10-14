@@ -60,6 +60,9 @@ public interface DistributionDao {
 	
 	// 거래처 수정
 	void updateClient(Client client);
+	
+	// 제품명으로 조회
+	List<ClientDetail> getProductByName(String name);
 
 /* 발주 ========================================================================================================== */
 	// 발주 조회
