@@ -15,8 +15,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -96,6 +94,20 @@ public class EmployeeController {
 		
 		return "employees/myempdetail";
 		
+	}
+	
+	@RequestMapping(value="/changepassword.do", method=RequestMethod.POST)
+	public String myChangePwd(String password, HttpSession session) {
+		Employee emp = (Employee)session.getAttribute("LoginUser");
+		
+		Employee chahgeemp = new Employee();
+		chahgeemp.setNo(emp.getNo());
+		chahgeemp.setPassword(password);
+		
+		System.out.println(chahgeemp);
+		//empService.updateEmployeePwd(chahgeemp);
+		return null;
+		//return "redirect:/companylogin.do"; 
 	}
 	
 	@RequestMapping(value="/mycompsalary.do")
@@ -319,10 +331,10 @@ public class EmployeeController {
 			throw new RuntimeException("로그인이 필요한 서비스입니다.");
 		}
 		
-		if (!emp.getDept().equals("HR") ) {
+		if (!emp.getDept().equals("HR") || !emp.getDept().equals("Master")) {
 			
 			throw new RuntimeException("사원등록은 인사관리 부서만 접근 가능합니다.");
-		}
+		} 
 		
 		int empNo = empService.empSeqCheck();
 		model.addAttribute("empNo", empNo);
@@ -453,6 +465,7 @@ public class EmployeeController {
 		
 		return "employees/updateempform";
 	}
+	
 	
 	@RequestMapping(value="/empupdate.do", method=RequestMethod.POST)
 	public String empUpdate(EmployeeDetail empDetail) {
@@ -667,7 +680,7 @@ public class EmployeeController {
 	}
 	
 	@RequestMapping(value="/getsalarybyno.do", method=RequestMethod.GET)
-	public @ResponseBody WorkTime insertSalaryForm(@RequestParam(name="empNo") int empNo, Criteria criteria) {
+	public @ResponseBody AccountBook insertSalaryForm(@RequestParam(name="empNo") int empNo, Criteria criteria) {
 		
 		SimpleDateFormat DateFormat = new SimpleDateFormat ("yyyy-MM-dd");
 		Date now = new Date();
@@ -685,11 +698,20 @@ public class EmployeeController {
 		criteria.setEndDate(endDate);
 		criteria.setEmpNo(empNo);
 		
-		List<WorkTime> workTimeList = empService.getTimetableByNo(criteria);
+		List<WorkTime> workTimeList = empDao.getEmpWorkTimeByNo(criteria);
 		
-		WorkTime empWork = empDao.getEmpWorkTimeByNo(empNo);
-		System.out.println(empWork);
-		return empWork;
+		AccountBook accountBook = new AccountBook();
+		for (WorkTime wt : workTimeList) {
+			Employee emp = new Employee();
+			int overtime = wt.getOvertime();
+			overtime ++;
+			emp.setNo(wt.getEmp().getNo());
+			emp.setSalary(wt.getEmp().getSalary());
+			accountBook.setOvertime(overtime-1);
+			accountBook.setEmp(emp);
+		}
+		
+		return accountBook;
 	}
 	
 	@RequestMapping(value="/insertsalary.do", method=RequestMethod.GET)
@@ -702,7 +724,8 @@ public class EmployeeController {
 	
 	@RequestMapping(value="/insertsalary.do", method=RequestMethod.POST)
 	public String insertSalary(AccountBook accountBook) {
-		//empService.
+		System.out.println(accountBook.getEmp().getNo());
+		empService.insertSalary(accountBook);
 		return "redirect:/compsalary.do";
 	}
 	
