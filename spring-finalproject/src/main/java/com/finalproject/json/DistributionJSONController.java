@@ -28,7 +28,7 @@ public class DistributionJSONController {
 	
 	// 거래처 번호로 물품 조회
 	@RequestMapping(value="/pro/{no}", method=RequestMethod.GET)
-	public List<HqInventory> getProductByNo(@PathVariable("no")int no) {
+	public @ResponseBody List<HqInventory> getProductByNo(@PathVariable("no")int no) {
 		return disService.getInvenByNo(no);
 	}
 		
