@@ -10,6 +10,7 @@
       	<typeAlias type="com.finalproject.model.BranchEmp" alias="BranchEmp"/>
       	<typeAlias type="com.finalproject.model.BranchOrder" alias="BrOrder"/>
 		<typeAlias type="com.finalproject.model.Calendar" alias="Calendar"/>				
+		<typeAlias type="com.finalproject.model.ClientDetailPageVo" alias="CDPV"/>				
       	<typeAlias type="com.finalproject.model.Career" alias="Career"/>   	
       	<typeAlias type="com.finalproject.model.Client" alias="Client"/>
       	<typeAlias type="com.finalproject.model.ClientDetail" alias="ClDetail"/>

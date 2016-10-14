@@ -155,7 +155,7 @@ public class ProductController {
 		
 		
 		if(!upfile.isEmpty()) {
-			Files.copy(upfile.getInputStream(), Paths.get("C:\\Users\\YoungRok\\git\\pro\\spring-finalproject\\src\\main\\webapp\\resources\\image", upfile.getOriginalFilename()));
+			Files.copy(upfile.getInputStream(), Paths.get(imageDirectory, upfile.getOriginalFilename()));
 		
 			product.setImage(upfile.getOriginalFilename());
 		} else {
