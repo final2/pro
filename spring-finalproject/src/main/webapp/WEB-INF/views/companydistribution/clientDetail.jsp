@@ -32,40 +32,12 @@ $(function() {
 		if(keyword == '') {
 			keyword = 'null';
 		} 
-		/* var no = ${clients.no}
 		
-		var cdpv = {};
-		cdpv['no'] = no;
-		cdpv['keyword'] = keyword;
-		
-		var jsonData = JSON.stringify(cdpv);
-		$.ajax({
-			type:'POST',
-			url:'json/clientDetail/search/' + 1,
-			contentType:'application/json',
-			data:jsonData,
-			dataType:'json',
-			success:function(result) {
-				var $tbody = $("#tbody");
-				
-				$tbody.empty();
-				$.each(result, function(index, product) {
-					
-					$tbody.append("<tr>"
-								+"   <td>"+product.clientNo+"</td>"		
-								+"   <td>"+product.maker+"</td>"		
-								+"   <td>"+product.name+"</td>"		
-								+"   <td>"+(product.price * 0.7)+"</td>"		
-								+"   <td>"+product.price+"</td>"		
-								+"</tr>")
-					
-				});
-			}
-		}); */
 	});
 });
 </script>
 <style>
+h1{color:white;}
 .price{background-color: #EBFBFF}
 .non{color: red;}
 th,td {text-align:center;}
@@ -76,7 +48,7 @@ th,td {text-align:center;}
 	<%@ include file="/WEB-INF/views/sidebartemplate/sidebar.jsp" %>
 	<a href="#menu-toggle" class="btn btn-default btn-xs" id="menu-toggle">side bar</a>
 	<div id="page-context-wrapper">
-		
+		<%@ include file="../companynotice/backgroundVideo.jsp" %>
 		<div class="container" style="margin-top:10px">	
 			<h1>거래처 상세정보</h1>
 			<hr>
@@ -88,7 +60,7 @@ th,td {text-align:center;}
 					<input type="text" class="form-control" name="keyword" placeholder="상품명을 입력하세요.">
 			    </div>
 			    <div class="form-group col-sm-3">
-			      <input type="submit" id="search-btn" class="btn btn-info form-control" />
+			      <input type="submit" id="search-btn" class="btn btn-info form-control" value="검색" />
 			    </div>
 			</form>
 			</div>
@@ -133,7 +105,7 @@ th,td {text-align:center;}
 				<ul class="pagination">
 				<c:if test="${pageVo.pageNo gt 1 }">
 					<li>
-						<a href="clientDetail.do?pn=${pageVo.pageNo - 1 }" aria-label="Previous">
+						<a href="clientDetail.do?no=${param.no }&pn=${pageVo.pageNo - 1 }" aria-label="Previous">
 							<span aria-hidden="true">&laquo;</span>
 						</a>
 					</li>
@@ -141,16 +113,16 @@ th,td {text-align:center;}
 				<c:forEach var="num" begin="${pageVo.beginPage }" end="${pageVo.endPage }">
 					<c:choose>
 						<c:when test="${pageVo.pageNo eq num }">
-							<li><a class="active" href="clientDetail.do?pn=${num }">${num }</a></li>
+							<li><a class="active" href="clientDetail.do?no=${param.no }&pn=${num }">${num }</a></li>
 						</c:when>
 						<c:otherwise>				
-							<li><a href="clientDetail.do?pn=${num }">${num }</a></li>
+							<li><a href="clientDetail.do?no=${param.no }&pn=${num }">${num }</a></li>
 						</c:otherwise>
 					</c:choose>
 				</c:forEach>
 				<c:if test="${pageVo.pageNo lt pageVo.totalPages }" >
 					<li>
-						<a href="clientDetail.do?pn=${pageVo.pageNo + 1 }" aria-label="Next">
+						<a href="clientDetail.do?no=${param.no }&pn=${pageVo.pageNo + 1 }" aria-label="Next">
 							<span aria-hidden="true">&raquo;</span>
 						</a>
 					</li>
@@ -172,7 +144,7 @@ th,td {text-align:center;}
 						
 						<form action="updateClient.do" method="post" role="form">
 							<div class="modal-body">
-								<div>
+								<div>++
 									<label>거래처 번호</label>
 									<input type="text" name="no" class="form-control" readonly="readonly" value="${clients.no}">
 								</div>

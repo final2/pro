@@ -31,7 +31,6 @@ $(function() {
 			var $smallCat = $("#smallCat");
 			var $event = $("#event");
 			var ps = data.productSearch;
-			console.log(data);
 			$.each(data.clients, function(index, client) {
 				if(ps.maker == client.no) {
 					$maker.append("<option value="+client.no+" selected='selected'>"+client.name+"</option>");				
@@ -87,6 +86,7 @@ $(function() {
 	});
 	$("button#reset").click(function(event) {
 		event.preventDefault();
+		$("form.select select").find(":first-child").siblings().removeAttr('selected')
 		$("select").find(":first-child").attr("selected", "selected");
 		$("#searchform").submit();
 		return false;
@@ -100,7 +100,6 @@ $(function() {
 	});
 	
 	$("ul.pagination a[aria-label]").on("click", function() {
-		console.log($(this));
 		var currentPno = $(":input[name='pn']").val();
 		
 		if ($(this).attr("aria-label") == "Previous") {
@@ -159,7 +158,7 @@ ul.pagination li a:hover:not(.active) {background-color: #ddd;}
 			<h1>상품 리스트</h1>
 			<div class="panel panel-default well" style="opacity:0.8">
 				<div class="panel panel-heading" style="height:10%">
-						<form role="form" id="searchform" action="productList.do" method="get">
+						<form class="select" role="form" id="searchform" action="productList.do" method="get">
 							<div class="row">
 								<div class="col-sm-3">
 									<label>제조사</label>

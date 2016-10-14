@@ -12,6 +12,7 @@
 <script src="resources/bootstrap/js/bootstrap.min.js"></script>
 
 <style>
+h1{color:white;}
 th,td {text-align:center;}
 </style>
 </head>
@@ -20,58 +21,60 @@ th,td {text-align:center;}
 <%@ include file="/WEB-INF/views/sidebartemplate/sidebar.jsp" %>
 <a href="#menu-toggle" class="btn btn-default btn-xs" id="menu-toggle">side bar</a>
 	<div id="page-context-wrapper">
-	
+	<%@ include file="../companynotice/backgroundVideo.jsp" %>
 		<div class="container" style="margin-top:10px">
 			<h1>발주내용 상세 정보</h1>
 			<hr>
 			
-			<table class="table table-bordered" >
-				<thead>
-					<tr>
-						<th>발주번호</th>
-						<td colspan="2" id="order-no-td">${orders.no }</td>
-						<th>발주신청일자</th>
-						<td><fmt:formatDate value="${orders.regdate }" pattern="yyyy-MM-dd"/> </td>
-					</tr>
-					<tr>
-						<th>거래처명</th>
-						<td colspan="2">${orders.client.name}</td>
-						<th>입고확인 여부</th>
-						<c:choose>
-							<c:when test="${orders.confirm == 'Y'}">
-								<td id="yn">입고 완료</td>
-							</c:when>
-							<c:otherwise>
-								<td id="yn">입고 대기</td>
-							</c:otherwise>
-						</c:choose>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<th>제품번호</th>
-						<th>제품명</th>
-						<th>수량(EA)</th>
-						<th>공장도가격</th>
-						<th>금액</th>
-					</tr>
-					<c:set var="sum" value="0" />
-					<c:forEach var="details" items="${details }">
+			<div class="well" style="opacity:0.8">
+				<table class="table table-bordered" >
+					<thead>
 						<tr>
-							<td>${details.product.no }</td>
-							<td>${details.product.name }</td>
-							<td><fmt:formatNumber value="${details.qty }" pattern="#,###"/></td>
-							<td><fmt:formatNumber value="${details.product.price }" pattern="#,###"/></td>
-							<td><fmt:formatNumber value="${details.qty * details.product.price }" pattern="#,###"/></td>
+							<th>발주번호</th>
+							<td colspan="2" id="order-no-td">${orders.no }</td>
+							<th>발주신청일자</th>
+							<td><fmt:formatDate value="${orders.regdate }" pattern="yyyy-MM-dd"/> </td>
 						</tr>
-						<c:set var="sum" value="${sum + details.qty * details.product.price}" />
-					</c:forEach>
 						<tr>
-							<th colspan="2">합계</th>
-							<td colspan="3"><fmt:formatNumber value="${sum }" pattern="#,###"/> </td>
+							<th>거래처명</th>
+							<td colspan="2">${orders.client.name}</td>
+							<th>입고확인 여부</th>
+							<c:choose>
+								<c:when test="${orders.confirm == 'Y'}">
+									<td id="yn">입고 완료</td>
+								</c:when>
+								<c:otherwise>
+									<td id="yn">입고 대기</td>
+								</c:otherwise>
+							</c:choose>
 						</tr>
-				</tbody>
-			</table>
+					</thead>
+					<tbody>
+						<tr>
+							<th>제품번호</th>
+							<th>제품명</th>
+							<th>수량(EA)</th>
+							<th>공장도가격</th>
+							<th>금액</th>
+						</tr>
+						<c:set var="sum" value="0" />
+						<c:forEach var="details" items="${details }">
+							<tr>
+								<td>${details.product.no }</td>
+								<td>${details.product.name }</td>
+								<td><fmt:formatNumber value="${details.qty }" pattern="#,###"/></td>
+								<td><fmt:formatNumber value="${details.product.price }" pattern="#,###"/></td>
+								<td><fmt:formatNumber value="${details.qty * details.product.price }" pattern="#,###"/></td>
+							</tr>
+							<c:set var="sum" value="${sum + details.qty * details.product.price}" />
+						</c:forEach>
+							<tr>
+								<th colspan="2">합계</th>
+								<td colspan="3"><fmt:formatNumber value="${sum }" pattern="#,###"/> </td>
+							</tr>
+					</tbody>
+				</table>
+			</div>
 			<div class="pull-left">
 				<c:if test="${LoginUser.dept eq 'PM'}">
 					<c:choose>
