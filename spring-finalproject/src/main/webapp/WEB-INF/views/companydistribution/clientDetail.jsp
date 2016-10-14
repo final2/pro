@@ -144,7 +144,7 @@ th,td {text-align:center;}
 						
 						<form action="updateClient.do" method="post" role="form">
 							<div class="modal-body">
-								<div>++
+								<div>
 									<label>거래처 번호</label>
 									<input type="text" name="no" class="form-control" readonly="readonly" value="${clients.no}">
 								</div>
