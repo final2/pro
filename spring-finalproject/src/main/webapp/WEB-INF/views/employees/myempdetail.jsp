@@ -254,36 +254,36 @@ $(function() {
 						</div>
 					</div>
 				</div>
-				<div class="modal fade" id="newpwdBtn" tabindex="-1" role="dialog">
-					<div class="modal-dialog">
-						<!-- Modal content-->
-						<div class="modal-content">
-							<div class="modal-header">
-								<button type="button" class="close" data-dismiss="modal">&times;</button>
-								<h4 class="modal-title">비밀번호 수정</h4>
-							</div>
-							
-							<form  role="form" action="changepassword.do" method="post" class="changepassword">
-								<div class="modal-body">
-									<div>
-										<label class="text-left">새로운 비밀번호</label>
-										<input type="password" name="password" id="passwordUpdate" class="form-control" placeholder="변경할 비밀번호를 입력하세요" />
-									</div>
-									<div>
-										<label class="text-left">비밀번호 확인</label>
-										<input type="password" id="passwordUpdateCheck" class="form-control" placeholder="비밀번호 확인"/>
-										<p id="message" style="color:red">* 비밀번호가 틀립니다.</p>
-									</div>
-								</div>
-								<div class="modal-footer">
-									<input type="submit" class="btn btn-primary" id="add" disabled="disabled" value="확인" />
-									<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
-								</div>
-							</form>
-						</div>
-					</div>
-				</div><!-- 모달 end -->
 			</div>
+			<div class="modal fade" id="newpwdBtn" tabindex="-1" role="dialog">
+				<div class="modal-dialog">
+					<!-- Modal content-->
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+							<h4 class="modal-title">비밀번호 수정</h4>
+						</div>
+						
+						<form  role="form" action="changepassword.do" method="post" class="changepassword">
+							<div class="modal-body">
+								<div>
+									<label class="text-left">새로운 비밀번호</label>
+									<input type="password" name="password" id="passwordUpdate" class="form-control" placeholder="변경할 비밀번호를 입력하세요" />
+								</div>
+								<div>
+									<label class="text-left">비밀번호 확인</label>
+									<input type="password" id="passwordUpdateCheck" class="form-control" placeholder="비밀번호 확인"/>
+									<p id="message" style="color:red">* 비밀번호가 틀립니다.</p>
+								</div>
+							</div>
+							<div class="modal-footer">
+								<input type="submit" class="btn btn-primary" id="add" disabled="disabled" value="확인" />
+								<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div><!-- 모달 end -->
 		</div>
 	</div>
 </div>
