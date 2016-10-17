@@ -109,7 +109,7 @@
 					<thead>
 						<h3>학력</h3>
 					</thead>
-					<tbody>
+					<%-- <tbody>
 						<colgroup>
 							<col style="width:22%;">
 							<col style="width:22%;">
@@ -145,6 +145,40 @@
 							<td>${career.major }</td>
 							<td></td>
 							<td></td>
+							<td></td>
+						</tr>
+						</c:forEach>
+					</c:when>
+				</c:choose>
+					</tbody> --%>
+					<tbody>
+						<colgroup>
+							<col style="width:30%;">
+							<col style="width:30%;">
+							<col style="width:20%;">
+							<col style="width:20%;">
+						</colgroup>
+						<tr>
+							<th class="info">기간</th>
+							<th class="info">학교명</th>
+							<th class="info">전공</th>
+							<th class="info">기타</th>
+						</tr>
+				<c:choose>
+					<c:when test="${ empty  empDetail.careerList }">
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+					</c:when>
+					<c:when test="${ !empty  empDetail.careerList }">
+						<c:forEach var="career" items="${empDetail.careerList }">
+						<tr>
+							<td>${career.term }</td>
+							<td>${career.school }</td>
+							<td>${career.major }</td>
 							<td></td>
 						</tr>
 						</c:forEach>
