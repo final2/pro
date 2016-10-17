@@ -109,11 +109,11 @@ $(function() {
 		//일정 옮기기
 		eventDrop: function(event, delta, revertFunc) {
 			if(loginUserNo != event.className) {
-				alert("It is not your writed the Plan");
+				alert("수정할 수 없는 일정입니다.");
 	            revertFunc();
 			} 
 			alert(event.title + " was dropped on " + event.start.format() + " ~ " + event.end.format());
-			if (!confirm("Are you sure about this change?")) {
+			if (!confirm("정말로 바꾸시겠습니까?")) {
 	            revertFunc();
 	        }	
 		
@@ -137,12 +137,12 @@ $(function() {
 		//일정 변경
 		eventResize: function( event, delta, revertFunc, jsEvent, ui, view ) {
 				if (loginUserNo != event.className) {				
-				alert("It is not your writed the Plan");
+				alert("수정할 수 없는 일정입니다.");
 				revertFunc();
 			}
 			alert(event.title + " end is now " + event.end.format());
 
-	        if (!confirm("is this okay?")) {
+	        if (!confirm("지금 일정으로 바꾸시겠습니까?")) {
 	            revertFunc();
 	        }
 	        var eventDatas = {};
