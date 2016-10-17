@@ -54,7 +54,7 @@
 	
 	<!-- 사원등록 시 학력 정보 등록 -->
 	<insert id="insertAddCareer" parameterType="Career">
-		insert into career (no, school, major, employee_no)
+		insert into career (no, term, school, major, employee_no)
 		values (myempopt_seq.nextval, #{term}, #{school}, #{major}, #{empNo} )
 	</insert>
 	
