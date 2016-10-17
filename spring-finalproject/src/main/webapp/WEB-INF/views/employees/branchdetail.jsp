@@ -26,7 +26,7 @@
 	.ptBox {width:70%; text-align:center;}
 	.ptImg {width:100%; height:299px; overflow:hidden; position:relative;}
 	.ptImg:after {clear:both; content:""; display:block; }
-	.ptImg > #thumnail { height:100% !important; position:absolute; left:50%; margin-left:-62.5%; vertical-align:middle; text-align:center; border:1px solid #ddd;}
+	.ptImg > #thumnail { width:100% !important; height:100%; vertical-align:middle; text-align:center; border:1px solid #ddd;}
 	.photoBtn {width:99%;}
 	.photoBtn label { width:100%; vertical-align: middle; cursor: pointer; text-align:center;}
 	/* 파일 필드 숨기기 */
@@ -97,7 +97,14 @@ $(function() {
 						<th class="info">지점명</th>
 						<td colspan="5">${branch.name }</td>
 						<td rowspan="7" class="ptBox">
-							<div class="ptImg"><img id="thumnail" src="/FinalProject/resources/image/branchimg/${branch.img }" align="middle"/></div>
+							<c:choose>
+								<c:when test="${branch.img eq null}">
+									<div class="ptImg"><img id="thumnail" src="/FinalProject/resources/image/no-image2.png" /></div>
+								</c:when>
+								<c:otherwise>
+									<div class="ptImg"><img id="thumnail" src="/FinalProject/resources/image/branchimg/${branch.img }" align="middle"/></div>
+								</c:otherwise>
+							</c:choose>
 						</td>
 					</tr>
 					<tr>

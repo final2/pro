@@ -30,7 +30,7 @@
 	.ptBox { margin:0; padding:0 !important;}
 	.ptBox .ptImg {height:100%; overflow:hidden;  text-align:center;}
 	.ptBox .ptImg:after {clear:both; content:""; display:block; }
-	.ptBox > .ptImg > #thumnail { width:auto; margin:0 auto;height:100% !important; vertical-align:middle; text-align:center;}
+	.ptBox > .ptImg > #thumnail { width:100% !important; margin:0 auto;height:100% !important; vertical-align:middle; text-align:center;}
 	
 	.formBtnBox {clear:both; margin:0 auto; margin-top:30px;}
 	.formBtnBox {clear:both; content:""; display:block;}
@@ -71,7 +71,14 @@
 						<tr>
 							<th rowspan="6" class="ptBox">
 								<div class="ptImg">
-									<img id="thumnail" src="/FinalProject/resources/image/empimg/${empDetail.emp.photo }" />
+								<c:choose>
+									<c:when test="${empDetail.emp.photo eq null}">
+										<img id="thumnail" src="/FinalProject/resources/image/no-image.png" />
+									</c:when>
+									<c:otherwise>
+										<img id="thumnail" src="/FinalProject/resources/image/empimg/${empDetail.emp.photo }" />
+									</c:otherwise>
+								</c:choose>
 								</div>
 							</th>
 							<th class="info">사원번호</th>
