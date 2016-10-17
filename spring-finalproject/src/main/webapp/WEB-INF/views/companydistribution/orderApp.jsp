@@ -8,8 +8,7 @@
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" href="resources/bootstrap/css/bootstrap.css">
 <script type="text/javascript" src="resources/jquery/jquery.js"></script>
-<link href="resources/bootstrap/css/simple-sidebar.css" rel="stylesheet">
-<script src="resources/bootstrap/js/bootstrap.min.js"></script>
+<link href="resources/bootstrap/css/simple-sidebar.css" rel="stylesheet"></script>
 <style>
 h1{color:white;}
 th,td {text-align:center;}
