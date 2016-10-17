@@ -8,7 +8,7 @@
 <script type="text/javascript" src="/FinalProject/resources/jquery/jquery.js"></script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <style>
-	.container {position:relative; top:60px;}
+	.container {position:relative; top:30px;}
 	.container:after {clear:both; content:""; display:block;}
 
 	.empBox {width:75%; margin:15px auto 15px auto;}
@@ -282,9 +282,10 @@ function sample6_execDaumPostcode() {
 	</div>
 	
 	<div id="page-content-wrapper">
+		<%@ include file="../companynotice/backgroundVideo.jsp" %>
 		<div class="container ">
 			<h1>사원 등록</h1>
-			<div class="well">
+			<div class="well" style="opacity:0.8">
 				<form role="form" action="insertemp.do" method="post" class="empBox row" enctype="multipart/form-data">
 					<div class="row">
 						<div class="col-md-5 empct">

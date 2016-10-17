@@ -398,7 +398,6 @@
 		from (
 			select
 				row_number() over (order by T.attendance desc) rn,
-				select
 				T.no,
 				T.attendance,
 				T.leaving,

@@ -9,13 +9,14 @@
 <link rel="stylesheet" type="text/css" href="/FinalProject/resources/bootstrap/css/bootstrap.css">
 <script type="text/javascript" src="/FinalProject/resources/jquery/jquery.js"></script>
 <style>
-	.container {position:relative; top:80px;}
+	.container {position:relative; top:30px;}
 	.container:after {clear:both; content:""; display:block;}
 	
 	.headerBox {width:100%;}
 	.headerBox > h1 {width:55%; float:left;}
-	.headerBox .row {width:45%; float:right; margin-top:30px;}
+	.headerBox .row {width:45%; float:right; }
 	.headerBox .row select:focus {outline:none;}
+
 
 	.empBox {width:100%; margin:15px auto 15px auto;}
 	.empBox:after {clear:both; content:""; display:block;}
@@ -34,7 +35,8 @@
 	
 	.pageBox {width: 232px; position:absolute; left:50%; top:50%; margin-left:-116px; margin-top:550px;}
 	
-	.formBtnBox {clear:both; margin-top:80px;}
+	.formBtnBox {clear:both; margin-top:60px;}
+	.formBtnBox:after {clear:both; content:""; display:block;}
 	.formBtn {width:50%; float:left; text-align:center;}
 	.formBtn > input { width:50%; padding:10px 0;}
 	
@@ -162,96 +164,99 @@ $(function() {
 	</div>
 	
 	<div id="page-content-wrapper">
+		<%@ include file="../companynotice/backgroundVideo.jsp" %>
 		<div class="container">
-			<div class="headerBox">
-				<h1>급여 등록</h1>
-				<div class="row">
-					<div class="col-sm-6 form-group">
-						<label>부서명</label>
-						<select  class="form-control" id="deptBtn">
-							<option>선택</option>
-						<c:forEach var="emp" items="${empList }">
-							<option name="dept" value="${emp.dept }">${emp.dept }</option>
-						</c:forEach>
-						</select>
-					</div>
-					<div class="col-sm-6 form-group empNameBox">
-						<label>사원명</label>
-						<select class="form-control" id="empNameBtn">
-							<option selected="selected">부서명을 선택해주세요</option>
-						</select>
+			<h1>급여 등록</h1>
+			<div class="well" style="opacity:0.8">
+				<div class="headerBox">
+					<div class="row">
+						<div class="col-sm-6 form-group">
+							<label>부서명</label>
+							<select  class="form-control" id="deptBtn">
+								<option>선택</option>
+							<c:forEach var="emp" items="${empList }">
+								<option name="dept" value="${emp.dept }">${emp.dept }</option>
+							</c:forEach>
+							</select>
+						</div>
+						<div class="col-sm-6 form-group empNameBox">
+							<label>사원명</label>
+							<select class="form-control" id="empNameBtn">
+								<option selected="selected">부서명을 선택해주세요</option>
+							</select>
+						</div>
 					</div>
 				</div>
-			</div>
-			<form role="form" action="insertsalary.do" method="post" class="salaryForm">
-				<table class="table table-bordered empBox" >
-					<colgroup>
-						<col style="width:15%;">
-						<col style="width:55%;">
-						<col style="width:30%;">
-					</colgroup>
-					<c:if test="${ !empty empList }">
+				<form role="form" action="insertsalary.do" method="post" class="salaryForm">
+					<table class="table table-bordered empBox" >
+						<colgroup>
+							<col style="width:15%;">
+							<col style="width:55%;">
+							<col style="width:30%;">
+						</colgroup>
+						<c:if test="${ !empty empList }">
+							<tr>
+								<th colspan="3" class="salaryName text-center">
+									<input type="hidden" name='paymentDate' readonly="readonly"/>
+									<input type="hidden" name='emp.no' class="salaryNo" readonly="readonly"/>
+								</th>
+							</tr>
+						</c:if>
 						<tr>
-							<th colspan="3" class="salaryName text-center">
-								<input type="hidden" name='paymentDate' readonly="readonly"/>
-								<input type="hidden" name='emp.no' class="salaryNo" readonly="readonly"/>
-							</th>
+							<th colspan="2"  class="info text-left">기본급</th>
+							<td>
+								<input type="text" name='salary' readonly="readonly"/>
+							</td>
 						</tr>
-					</c:if>
-					<tr>
-						<th colspan="2"  class="info text-left">기본급</th>
-						<td>
-							<input type="text" name='salary' readonly="readonly"/>
-						</td>
-					</tr>
-					<tr>
-						<th rowspan="5" class="info">공제 내역</th>
-						<th>국민연금</th>
-						<td><input type="text" name="insureSocial" readonly="readonly"/></td>
-					</tr>
-					<tr>
-						<th>건강보험</th>
-						<td><input type="text" name="insureHealth" readonly="readonly"/></td>
-					</tr>
-					<tr>
-						<th>장기요양보험</th>
-						<td><input type="text" name="insureLonghealth" readonly="readonly"/></td>
-					</tr>
-					<tr>
-						<th>고용/산재보험</th>
-						<td><input type="text" name="employeeInsure" readonly="readonly"/></td>
-					</tr>
-					<tr>
-						<th>합계</th>
-						<td><input type="text" name="total" readonly="readonly"/></td>
-					</tr>
-					<tr>
-						<th rowspan="3" class="info">추가 수당</th>
-						<th>초과 근무 시간</th>
-						<td><input type="text" name="overtimeTime" readonly="readonly"/></td>
-					</tr>
-					<tr>
-						<th>금액</th>
-						<td><input type="text" name="overtimePrice" readonly="readonly"/></td>
-					</tr>
-					<tr>
-						<th>합계</th>
-						<td><input type="text" name="overtime" readonly="readonly"/></td>
-					</tr>
-					<tr>
-						<th colspan="2"  class="info">총 지급 내역</th>
-						<td><input type="text" name="result" readonly="readonly"/></td>
-					</tr>
-				</table>
-				<div class="formBtnBox">
-					<div class="formBtn">
-						<input type="submit" class="btn btn-primary" value="등록"/>
+						<tr>
+							<th rowspan="5" class="info">공제 내역</th>
+							<th>국민연금</th>
+							<td><input type="text" name="insureSocial" readonly="readonly"/></td>
+						</tr>
+						<tr>
+							<th>건강보험</th>
+							<td><input type="text" name="insureHealth" readonly="readonly"/></td>
+						</tr>
+						<tr>
+							<th>장기요양보험</th>
+							<td><input type="text" name="insureLonghealth" readonly="readonly"/></td>
+						</tr>
+						<tr>
+							<th>고용/산재보험</th>
+							<td><input type="text" name="employeeInsure" readonly="readonly"/></td>
+						</tr>
+						<tr>
+							<th>합계</th>
+							<td><input type="text" name="total" readonly="readonly"/></td>
+						</tr>
+						<tr>
+							<th rowspan="3" class="info">추가 수당</th>
+							<th>초과 근무 시간</th>
+							<td><input type="text" name="overtimeTime" readonly="readonly"/></td>
+						</tr>
+						<tr>
+							<th>금액</th>
+							<td><input type="text" name="overtimePrice" readonly="readonly"/></td>
+						</tr>
+						<tr>
+							<th>합계</th>
+							<td><input type="text" name="overtime" readonly="readonly"/></td>
+						</tr>
+						<tr>
+							<th colspan="2"  class="info">총 지급 내역</th>
+							<td><input type="text" name="result" readonly="readonly"/></td>
+						</tr>
+					</table>
+					<div class="formBtnBox">
+						<div class="formBtn">
+							<input type="submit" class="btn btn-primary" value="등록"/>
+						</div>
+						<div class="formBtn">
+							<input type="reset" class="btn btn-default" value="취소"/>
+						</div>
 					</div>
-					<div class="formBtn">
-						<input type="reset" class="btn btn-default" value="취소"/>
-					</div>
-				</div>
-			</form>
+				</form>
+			</div>
 		</div>
 	</div>
 </div>

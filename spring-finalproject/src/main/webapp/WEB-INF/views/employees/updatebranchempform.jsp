@@ -36,6 +36,7 @@
 	.photoBtn input[type="file"] { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip:rect(0,0,0,0); border: 0;}
 
 	.formBtnBox {clear:both; margin-top:60px;}
+	.formBtnBox:after {}
 	.formBtn {width:50%; float:left; text-align:center;}
 	.formBtn > input { width:50%; padding:10px 0;}
 	
@@ -80,74 +81,77 @@ $(function() {
 	</div>
 	
 	<div id="page-content-wrapper">
+		<%@ include file="../companynotice/backgroundVideo.jsp" %>
 		<div class="container">
 			<h1>지점사원 수정</h1>
-			<form role="form" action="insertbranchemp.do" method="post">
-				<table class="table table-bordered empBox table-striped" >
-					<colgroup>
-						<col style="width:14%;">
-						<col style="width:18%;">
-						<col style="width:18%;">
-						<col style="width:14%;">
-						<col style="width:18%;">
-						<col style="width:18%;">
-					</colgroup>
-					<tr>
-						<th class="info">비밀번호</th>
-						<td colspan="4"><input type="password" name="password" value="${brEmp.password }" /></td>
-						<td rowspan="4">
-							<div class="ptImg">
-								<img id="thumnail" src="/FinalProject/resources/image/brempimg/${brEmp.images }" />
-							</div>
-							<div class="photoBtn btn btn-primary" >
-								<label for="ptFile">이미지 등록</label> 
-		  						<input type="file" id="ptFile" class="upload-hidden" name="images" accept="image/gif, image/jpeg, image/png"> 
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<th class="info">이름</th>
-						<td colspan="4"><input type="text" name="name" value="${brEmp.name }" /></td>
-					</tr>
-					<tr>
-						<th class="info">연락처</th>
-						<td colspan="4"><input type="text" name="phone" value="${brEmp.phone }" /></td>
-					</tr>
-					<tr>
-						<th class="info">주소</th>
-						<td colspan="4"><input type="text" name="address" value="${brEmp.address }" /></td>
-					</tr>
-					<tr>
-						<th class="info">이메일</th>
-						<td colspan="2"><input type="text" name="email" value="${brEmp.email }" /></td>
-						<th class="info">생년월일</th>
-						<td colspan="2"><input type="date" name="birth" value="${brEmp.birth }" /></td>
-					</tr>
-					<tr>
-						<th class="info">직책</th>
-						<td colspan="2"><input type="text" name="grade" value="${brEmp.grade }" /></td>
-						<th class="info">근무지점</th>
-						<td colspan="2">
-							<select name="branchNo">
-								<c:forEach var="branch" items="${branchList }">
-									<option value="${branch.no }">${branch.name }</option>
-								</c:forEach>
-							</select>
-						</td>
-					</tr>
-				</table>
-				<div class="formBtnBox">
-					<div class="formBtn">
-						<c:url>
-						
-						<input type="submit" class="btn btn-primary" value="완료"/>
-						</c:url>
+			<div class="well" style="opacity:0.8">
+				<form role="form" action="insertbranchemp.do" method="post">
+					<table class="table table-bordered empBox table-striped" >
+						<colgroup>
+							<col style="width:14%;">
+							<col style="width:18%;">
+							<col style="width:18%;">
+							<col style="width:14%;">
+							<col style="width:18%;">
+							<col style="width:18%;">
+						</colgroup>
+						<tr>
+							<th class="info">비밀번호</th>
+							<td colspan="4"><input type="password" name="password" value="${brEmp.password }" /></td>
+							<td rowspan="4">
+								<div class="ptImg">
+									<img id="thumnail" src="/FinalProject/resources/image/brempimg/${brEmp.images }" />
+								</div>
+								<div class="photoBtn btn btn-primary" >
+									<label for="ptFile">이미지 등록</label> 
+			  						<input type="file" id="ptFile" class="upload-hidden" name="images" accept="image/gif, image/jpeg, image/png"> 
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<th class="info">이름</th>
+							<td colspan="4"><input type="text" name="name" value="${brEmp.name }" /></td>
+						</tr>
+						<tr>
+							<th class="info">연락처</th>
+							<td colspan="4"><input type="text" name="phone" value="${brEmp.phone }" /></td>
+						</tr>
+						<tr>
+							<th class="info">주소</th>
+							<td colspan="4"><input type="text" name="address" value="${brEmp.address }" /></td>
+						</tr>
+						<tr>
+							<th class="info">이메일</th>
+							<td colspan="2"><input type="text" name="email" value="${brEmp.email }" /></td>
+							<th class="info">생년월일</th>
+							<td colspan="2"><input type="date" name="birth" value="${brEmp.birth }" /></td>
+						</tr>
+						<tr>
+							<th class="info">직책</th>
+							<td colspan="2"><input type="text" name="grade" value="${brEmp.grade }" /></td>
+							<th class="info">근무지점</th>
+							<td colspan="2">
+								<select name="branchNo">
+									<c:forEach var="branch" items="${branchList }">
+										<option value="${branch.no }">${branch.name }</option>
+									</c:forEach>
+								</select>
+							</td>
+						</tr>
+					</table>
+					<div class="formBtnBox">
+						<div class="formBtn">
+							<c:url>
+							
+							<input type="submit" class="btn btn-primary" value="완료"/>
+							</c:url>
+						</div>
+						<div class="formBtn">
+							<input type="reset" class="btn btn-default" value="취소"/>
+						</div>
 					</div>
-					<div class="formBtn">
-						<input type="reset" class="btn btn-default" value="취소"/>
-					</div>
-				</div>
-			</form>
+				</form>
+			</div>
 		</div>
 	</div>
 </div>

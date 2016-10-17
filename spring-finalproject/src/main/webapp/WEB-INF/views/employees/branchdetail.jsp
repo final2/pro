@@ -10,7 +10,7 @@
 <link rel="stylesheet" type="text/css" href="/FinalProject/resources/bootstrap/css/bootstrap.css">
 <script type="text/javascript" src="/FinalProject/resources/jquery/jquery.js"></script>
 <style type="text/css">
-	.container {position:relative; top:50px;}
+	.container {position:relative; top:30px;}
 	.container:after {clear:both; content:""; display:block;}
 
 	.empBox {width:100%; margin:15px auto 15px auto;}
@@ -37,6 +37,7 @@
 	#brempTable td, #brempUpdate td {text-align:center;}
 	
 	.formBtnBox {clear:both; margin:0 auto; margin-top:40px;}
+	.formBtnBox:after {clear:both; content:""; display:block;}
 	.formBtn {width:50%; margin:0 auto; text-align:center;}
 	.formBtn > a { width:50%; padding:10px 0;}
 	
@@ -78,127 +79,179 @@ $(function() {
 	</div>
 	
 	<div id="page-content-wrapper">
+		<%@ include file="../companynotice/backgroundVideo.jsp" %>
 		<div class="container">
 			<h1>지점 상세</h1>
-			<table class="table table-bordered brachBox">
-				<colgroup>
-					<col style="width:15%">
-					<col style="width:8%">
-					<col style="width:15%">
-					<col style="width:8%">
-					<col style="width:15%">
-					<col style="width:8%">
-					<col style="width:31%">
-				</colgroup>
-				<tr>
-					<th class="info">지점명</th>
-					<td colspan="5">${branch.name }</td>
-					<td rowspan="7" class="ptBox">
-						<div class="ptImg"><img id="thumnail" src="/FinalProject/resources/image/branchimg/${branch.img }" align="middle"/></div>
-					</td>
-				</tr>
-				<tr>
-					<th class="info">담당자</th>
-					<td colspan="5">${branch.emp.name }</td>
-				</tr>
-				<tr>
-					<th class="info">전화번호</th>
-					<td colspan="5">${branch.phone }</td>
-				</tr>
-				<c:set var="address" value="${branch.address }"/>
-				<tr>
-					<th class="info">주소</th>
-					<c:set var="add1" value="${fn:substringBefore(address,'구')}"/>
-					<td colspan="5">${add1 }구</td>
-				</tr>
-				<tr>
-					<th class="info">상세주소</th>
-					<c:set var="add2" value="${fn:substringAfter(address,'구 ')}"/>
-					<td colspan="5">${add2 }</td>
-				</tr>
-				<tr>
-					<th class="info">ATM</th>
-					<c:set var="check1" value="${branch.atm }"/>
-					<c:choose>
-					    <c:when test="${check1 eq 'Y'}">
-					        <td class="ckBox"><span class="glyphicon glyphicon-ok"></span></td>
-					    </c:when>						
-					    <c:otherwise>
-					    	<td class="ckBox"></td>
-					    </c:otherwise>
-					</c:choose>
-					<th class="info">직접조리식품</th>
-					<c:set var="check2" value="${branch.freshFood }"/>
-					<c:choose>
-					    <c:when test="${check2 eq 'Y'}">
-					        <td class="ckBox"><span class="glyphicon glyphicon-ok"></span></td>
-					    </c:when>						
-					    <c:otherwise>
-					    	<td class="ckBox"></td>
-					    </c:otherwise>
-					</c:choose>
-					<th class="info">로또</th>
-					<c:set var="check3" value="${branch.lotto }"/>
-					<c:choose>
-					    <c:when test="${check3 eq 'Y'}">
-					        <td class="ckBox"><span class="glyphicon glyphicon-ok"></span></td>
-					    </c:when>						
-					    <c:otherwise>
-					    	<td class="ckBox"></td>
-					    </c:otherwise>
-					</c:choose>
-				</tr>
-				<tr>
-					<th class="info">택배서비스</th>
-					<c:set var="check4" value="${branch.parcelService }"/>
-					<c:choose>
-					    <c:when test="${check4 eq 'Y'}">
-					        <td class="ckBox"><span class="glyphicon glyphicon-ok"></span></td>
-					    </c:when>						
-					    <c:otherwise>
-					    	<td class="ckBox"></td>
-					    </c:otherwise>
-					</c:choose>
-					<th class="info">생활편의</th>
-					<c:set var="check5" value="${branch.lifeService }"/>
-					<c:choose>
-					    <c:when test="${check5 eq 'Y'}">
-					        <td class="ckBox"><span class="glyphicon glyphicon-ok"></span></td>
-					    </c:when>						
-					    <c:otherwise>
-					    	<td class="ckBox"></td>
-					    </c:otherwise>
-					</c:choose>
-					<th class="info">&nbsp;</th>
-					<td class="ckBox">&nbsp;</td>
-				</tr>
-			</table>
-			<div id="brempTable">
-				<h3 class="text-center">지점사원 목록</h3>
-				<table class="table table-bordered">
-					<tbody>
-						<colgroup>
-							<col style="width:22%;">
-							<col style="width:18%;">
-							<col style="width:25%;">
-							<col style="width:15%;">
-							<col style="width:20%;">
-						</colgroup>
-						<tr>
-							<th class="info">사원번호</th>
-							<th class="info">이름</th>
-							<th class="info">연락처</th>
-							<th class="info">직급</th>
-							<th class="info">비고</th>
-						</tr>
+			<div class="well" style="opacity:0.8">
+				<table class="table table-bordered brachBox">
+					<colgroup>
+						<col style="width:15%">
+						<col style="width:8%">
+						<col style="width:15%">
+						<col style="width:8%">
+						<col style="width:15%">
+						<col style="width:8%">
+						<col style="width:31%">
+					</colgroup>
+					<tr>
+						<th class="info">지점명</th>
+						<td colspan="5">${branch.name }</td>
+						<td rowspan="7" class="ptBox">
+							<div class="ptImg"><img id="thumnail" src="/FinalProject/resources/image/branchimg/${branch.img }" align="middle"/></div>
+						</td>
+					</tr>
+					<tr>
+						<th class="info">담당자</th>
+						<td colspan="5">${branch.emp.name }</td>
+					</tr>
+					<tr>
+						<th class="info">전화번호</th>
+						<td colspan="5">${branch.phone }</td>
+					</tr>
+					<c:set var="address" value="${branch.address }"/>
+					<tr>
+						<th class="info">주소</th>
+						<c:set var="add1" value="${fn:substringBefore(address,'구')}"/>
+						<td colspan="5">${add1 }구</td>
+					</tr>
+					<tr>
+						<th class="info">상세주소</th>
+						<c:set var="add2" value="${fn:substringAfter(address,'구 ')}"/>
+						<td colspan="5">${add2 }</td>
+					</tr>
+					<tr>
+						<th class="info">ATM</th>
+						<c:set var="check1" value="${branch.atm }"/>
 						<c:choose>
-							<c:when test="${!empty brEmpList}">
+						    <c:when test="${check1 eq 'Y'}">
+						        <td class="ckBox"><span class="glyphicon glyphicon-ok"></span></td>
+						    </c:when>						
+						    <c:otherwise>
+						    	<td class="ckBox"></td>
+						    </c:otherwise>
+						</c:choose>
+						<th class="info">직접조리식품</th>
+						<c:set var="check2" value="${branch.freshFood }"/>
+						<c:choose>
+						    <c:when test="${check2 eq 'Y'}">
+						        <td class="ckBox"><span class="glyphicon glyphicon-ok"></span></td>
+						    </c:when>						
+						    <c:otherwise>
+						    	<td class="ckBox"></td>
+						    </c:otherwise>
+						</c:choose>
+						<th class="info">로또</th>
+						<c:set var="check3" value="${branch.lotto }"/>
+						<c:choose>
+						    <c:when test="${check3 eq 'Y'}">
+						        <td class="ckBox"><span class="glyphicon glyphicon-ok"></span></td>
+						    </c:when>						
+						    <c:otherwise>
+						    	<td class="ckBox"></td>
+						    </c:otherwise>
+						</c:choose>
+					</tr>
+					<tr>
+						<th class="info">택배서비스</th>
+						<c:set var="check4" value="${branch.parcelService }"/>
+						<c:choose>
+						    <c:when test="${check4 eq 'Y'}">
+						        <td class="ckBox"><span class="glyphicon glyphicon-ok"></span></td>
+						    </c:when>						
+						    <c:otherwise>
+						    	<td class="ckBox"></td>
+						    </c:otherwise>
+						</c:choose>
+						<th class="info">생활편의</th>
+						<c:set var="check5" value="${branch.lifeService }"/>
+						<c:choose>
+						    <c:when test="${check5 eq 'Y'}">
+						        <td class="ckBox"><span class="glyphicon glyphicon-ok"></span></td>
+						    </c:when>						
+						    <c:otherwise>
+						    	<td class="ckBox"></td>
+						    </c:otherwise>
+						</c:choose>
+						<th class="info">&nbsp;</th>
+						<td class="ckBox">&nbsp;</td>
+					</tr>
+				</table>
+				<div id="brempTable">
+					<h3 class="text-center">지점사원 목록</h3>
+					<table class="table table-bordered">
+						<tbody>
+							<colgroup>
+								<col style="width:22%;">
+								<col style="width:18%;">
+								<col style="width:25%;">
+								<col style="width:15%;">
+								<col style="width:20%;">
+							</colgroup>
+							<tr>
+								<th class="info">사원번호</th>
+								<th class="info">이름</th>
+								<th class="info">연락처</th>
+								<th class="info">직급</th>
+								<th class="info">비고</th>
+							</tr>
+							<c:choose>
+								<c:when test="${!empty brEmpList}">
+									<c:forEach var="brEmp" items="${brEmpList }">
+										<c:url var="detailURL" value="branchempdetail.do">
+											<c:param name="no" value="${brEmp.no }"></c:param>
+											<c:param name="pno" value="${param.pno }"></c:param>
+										</c:url>
+										<tr>
+											<td>${brEmp.no }</td>
+											<td><a href="${detailURL }" class="empBtn">${brEmp.name }</a></td>
+											<td>${brEmp.phone }</td>
+											<td>${brEmp.grade }</td>
+											<td>${brEmp.remarks }</td>
+										</tr>
+									</c:forEach>
+								</c:when>
+								<c:otherwise>
+									<tr>
+										<td colspan="5" class="text-center">
+											<p>지점 사원이 없습니다.</p>
+										</td>
+									</tr>
+								</c:otherwise>
+							</c:choose>
+						</tbody>
+					</table>
+				</div>
+				<!-- 지점사원 수정 -->
+				<form role="form" action="updatebranchemp.do?no=${branch.no }&pno=${param.pno }" method="post">
+					<div id="brempUpdate">
+						<h3 class="text-center">지점사원 목록</h3>
+						<table class="table table-bordered">
+							<thead>
+							</thead>
+							<tbody>
+								<colgroup>
+									<col style="width:9%;">
+									<col style="width:19%;">
+									<col style="width:16%;">
+									<col style="width:22%;">
+									<col style="width:15%;">
+									<col style="width:19%;">
+								</colgroup>
+								<tr>
+									<th class="info">퇴사여부</th>
+									<th class="info">사원번호</th>
+									<th class="info">이름</th>
+									<th class="info">연락처</th>
+									<th class="info">직급</th>
+									<th class="info">비고</th>
+								</tr>
 								<c:forEach var="brEmp" items="${brEmpList }">
 									<c:url var="detailURL" value="branchempdetail.do">
 										<c:param name="no" value="${brEmp.no }"></c:param>
 										<c:param name="pno" value="${param.pno }"></c:param>
 									</c:url>
 									<tr>
+										<td><input type="checkbox" name="workingState" value="${brEmp.no }"/></td>
 										<td>${brEmp.no }</td>
 										<td><a href="${detailURL }" class="empBtn">${brEmp.name }</a></td>
 										<td>${brEmp.phone }</td>
@@ -206,66 +259,41 @@ $(function() {
 										<td>${brEmp.remarks }</td>
 									</tr>
 								</c:forEach>
-							</c:when>
-							<c:otherwise>
-								<tr>
-									<td colspan="5" class="text-center">
-										<p>지점 사원이 없습니다.</p>
-									</td>
-								</tr>
-							</c:otherwise>
-						</c:choose>
-					</tbody>
-				</table>
-			</div>
-			<!-- 지점사원 수정 -->
-			<form role="form" action="updatebranchemp.do?no=${branch.no }&pno=${param.pno }" method="post">
-				<div id="brempUpdate">
-					<h3 class="text-center">지점사원 목록</h3>
-					<table class="table table-bordered">
-						<thead>
-						</thead>
-						<tbody>
-							<colgroup>
-								<col style="width:9%;">
-								<col style="width:19%;">
-								<col style="width:16%;">
-								<col style="width:22%;">
-								<col style="width:15%;">
-								<col style="width:19%;">
-							</colgroup>
-							<tr>
-								<th class="info">퇴사여부</th>
-								<th class="info">사원번호</th>
-								<th class="info">이름</th>
-								<th class="info">연락처</th>
-								<th class="info">직급</th>
-								<th class="info">비고</th>
-							</tr>
-							<c:forEach var="brEmp" items="${brEmpList }">
-								<c:url var="detailURL" value="branchempdetail.do">
-									<c:param name="no" value="${brEmp.no }"></c:param>
-									<c:param name="pno" value="${param.pno }"></c:param>
-								</c:url>
-								<tr>
-									<td><input type="checkbox" name="workingState" value="${brEmp.no }"/></td>
-									<td>${brEmp.no }</td>
-									<td><a href="${detailURL }" class="empBtn">${brEmp.name }</a></td>
-									<td>${brEmp.phone }</td>
-									<td>${brEmp.grade }</td>
-									<td>${brEmp.remarks }</td>
-								</tr>
-							</c:forEach>
-						</tbody>
-					</table>
-				</div>
-				<!--  --><div class="formBtnBox btnBox2">
+							</tbody>
+						</table>
+					</div>
+					<!--  --><div class="formBtnBox btnBox2">
+					<c:choose>
+						<c:when test="${LoginUser.dept eq 'HR'}">
+							<div class="formBtn2">
+								<input type="submit" id="brEmpUpdate" class="btn btn-primary" value="퇴사완료"/>
+							</div>
+							<div class="formBtn2">
+								<a href="compbranchlist.do" class="btn btn-default">목록</a>
+							</div>
+						</c:when>
+						<c:otherwise>
+							<div class="formBtn">
+								<a href="compbranchlist.do" class="btn btn-default">목록</a>
+							</div>
+						</c:otherwise>
+					</c:choose>
+					</div> <!--  -->
+				</form>
+				<div class="formBtnBox btnBox1">
 				<c:choose>
 					<c:when test="${LoginUser.dept eq 'HR'}">
-						<div class="formBtn2">
-							<input type="submit" id="brEmpUpdate" class="btn btn-primary" value="퇴사완료"/>
+						<div class="formBtn1">
+							<c:url var="changeURL" value="updatebranch.do">
+								<c:param name="no" value="${branch.no }"></c:param>
+								<c:param name="pno" value="${param.pno }"></c:param>
+							</c:url>
+							<a href="${changeURL }" class="btn btn-primary">지점 수정</a>
 						</div>
-						<div class="formBtn2">
+						<div class="formBtn1">
+							<a href="#" id="brEmpUpdateBtn" class="btn btn-primary">지점사원 수정</a>
+						</div>
+						<div class="formBtn1">
 							<a href="compbranchlist.do" class="btn btn-default">목록</a>
 						</div>
 					</c:when>
@@ -275,31 +303,7 @@ $(function() {
 						</div>
 					</c:otherwise>
 				</c:choose>
-				</div> <!--  -->
-			</form>
-			<div class="formBtnBox btnBox1">
-			<c:choose>
-				<c:when test="${LoginUser.dept eq 'HR'}">
-					<div class="formBtn1">
-						<c:url var="changeURL" value="updatebranch.do">
-							<c:param name="no" value="${branch.no }"></c:param>
-							<c:param name="pno" value="${param.pno }"></c:param>
-						</c:url>
-						<a href="${changeURL }" class="btn btn-primary">지점 수정</a>
-					</div>
-					<div class="formBtn1">
-						<a href="#" id="brEmpUpdateBtn" class="btn btn-primary">지점사원 수정</a>
-					</div>
-					<div class="formBtn1">
-						<a href="compbranchlist.do" class="btn btn-default">목록</a>
-					</div>
-				</c:when>
-				<c:otherwise>
-					<div class="formBtn">
-						<a href="compbranchlist.do" class="btn btn-default">목록</a>
-					</div>
-				</c:otherwise>
-			</c:choose>
+				</div>
 			</div>
 		</div>
 	</div>
