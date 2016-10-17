@@ -43,7 +43,7 @@
 	
 	<!-- 현재 사원번호 확인하기 -->
 	<select id="empSeqCheck" resultType="int">
-		select my_seq.nextval from dual
+		select myemp_seq.nextval from dual
 	</select>
 	
 	<!-- 사원등록 -->
@@ -55,8 +55,7 @@
 	<!-- 사원등록 시 학력 정보 등록 -->
 	<insert id="insertAddCareer" parameterType="Career">
 		insert into career (no, school, major, employee_no)
-		<!-- values (myempopt_seq.nextval, #{school}, #{major}, #{empNo}) -->
-		values (myempopt_seq.nextval, #{school}, #{major}, #{empNo} )
+		values (myempopt_seq.nextval, #{term}, #{school}, #{major}, #{empNo} )
 	</insert>
 	
 	<!-- 사원등록 시 자격증 정보 등록 -->
@@ -112,7 +111,7 @@
 	<!-- 사원 급여 등록 -->
 	<insert id="insertSalary" parameterType="AccountBook">
 		insert into accountbook (no, paymentdate, salary, overtime, insure_health, insure_longhealth, insure_social, employee_insure, employee_no)
-		values (my_seq.nextval, #{paymentDate}, #{salary}, #{overtime}, #{insureHealth}, #{insureLonghealth}, #{insureSocial}, #{employeeInsure}, #{emp.no})
+		values (myemp_seq.nextval, #{paymentDate}, #{salary}, #{overtime}, #{insureHealth}, #{insureLonghealth}, #{insureSocial}, #{employeeInsure}, #{emp.no})
 	</insert>
 	
 	<!-- 모든 사원 조회하기 -->
@@ -215,6 +214,7 @@
 	<select id="getCareerListByNo" parameterType="int" resultType="Career">
 		select
 			no,
+			term,
 			school,
 			major,
 			employee_no		as empNo,
@@ -519,7 +519,7 @@
 	<!-- 지점 등록 -->
 	<insert id="insertBranch" parameterType="Branch">
 		insert into branch (no, name, phone, address, atm, freshfood, lotto, parcelservice, lifeservice, image, employee_no )
-		values(my_seq.nextval, #{name}, #{phone}, #{address}, #{atm}, #{freshFood}, #{lotto}, #{parcelService}, #{lifeService}, #{img}, #{emp.no})
+		values(mybranch_seq.nextval, #{name}, #{phone}, #{address}, #{atm}, #{freshFood}, #{lotto}, #{parcelService}, #{lifeService}, #{img}, #{emp.no})
 	</insert>
 	
 	<!-- 모든 지점 조회 -->
