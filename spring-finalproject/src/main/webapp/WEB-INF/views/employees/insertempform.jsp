@@ -120,7 +120,7 @@ $(function() {
 		html += 		"<div class='col-sm-4'>";
 		html += 			"<div class='row'>";
 		html += 				"<label class='col-sm-4'>기간</label>";
-		html += 				"<input type='text' name='schools' class='col-sm-8' placeholder='yyyy.mm-yyyy.mm' maxlength='15'/>";
+		html += 				"<input type='text' name='terms' class='col-sm-8' placeholder='yyyy.mm-yyyy.mm' maxlength='15'/>";
 		html += 			"</div>";
 		html += 		"</div>";
 		html += 		"<div class='col-sm-4'>";
@@ -371,7 +371,7 @@ function sample6_execDaumPostcode() {
 									<div class="col-sm-4">
 										<div class="row">
 											<label class="col-sm-4">기간</label>
-											<input type="text" name="schools" class="col-sm-8" placeholder="yyyy.mm-yyyy.mm" maxlength="15"/>
+											<input type="text" name="terms" class="col-sm-8" placeholder="yyyy.mm-yyyy.mm" maxlength="15"/>
 										</div>
 									</div>
 									<div class="col-sm-4">

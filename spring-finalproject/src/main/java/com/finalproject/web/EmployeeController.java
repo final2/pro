@@ -360,16 +360,21 @@ public class EmployeeController {
 		List<Branch> branchNames = empService.getAllBranch();
 		model.addAttribute("branchNames", branchNames);
 		
-		if (emp.getDept().equals("HR") || emp.getDept().equals("Master")) {
+		if (!emp.getDept().equals("HR") ) {
 			
-			return "employees/insertempform";
-			
-		} else {
-			
+
 			throw new RuntimeException("사원등록은 인사관리 부서만 접근 가능합니다.");
+			
 		}
 		
-		//return "employees/insertempform";
+		if ( !emp.getDept().equals("Master")) {
+			
+
+			throw new RuntimeException("사원등록은 인사관리 부서만 접근 가능합니다.");
+			
+		} 
+		
+		return "employees/insertempform";
 		
 	}
 	
