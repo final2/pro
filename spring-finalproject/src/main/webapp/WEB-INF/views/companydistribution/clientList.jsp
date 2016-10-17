@@ -9,7 +9,8 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" href="resources/bootstrap/css/bootstrap.css">
-<link href="resources/bootstrap/css/simple-sidebar.css" rel="stylesheet"></script>
+<link href="resources/bootstrap/css/simple-sidebar.css" rel="stylesheet">
+<script type="text/javascript" src="resources/jquery/jquery.js"></script>
 <script type="text/javascript">
 $(function() {
 	// 모달창 오픈시 기본동작들
