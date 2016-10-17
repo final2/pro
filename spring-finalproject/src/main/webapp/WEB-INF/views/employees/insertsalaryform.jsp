@@ -46,7 +46,7 @@ $(function() {
 	
 	$("#empNameBtn").on("change", function() {
 		var empName = $(this).children("option:selected").val();
-		
+		var empNo = $(this).children("option:selected").attr("id").replace("no-", "");
 		var Now = new Date(); 
 		var year = Now.getFullYear(); 
 		
@@ -54,7 +54,7 @@ $(function() {
 		$salaryTitle.empty();
 		
 		var html = "";
-		html += empName+"님의 ";
+		html += "<input name='emp.no' value='"+empNo+"' type='hidden'/> "+empName+"님의 ";
 		html += "<select name='paymentDate' class='salaryDate'>";
 		html += "	<option value='"+year+".01'>"+year+".01</option>";
 		html += "	<option value='"+year+".02'>"+year+".02</option>";
@@ -73,8 +73,8 @@ $(function() {
 		
 		$salaryTitle.append(html);
 		
-		var empNo = $(this).children("option:selected").attr("id").replace("no-", "");
-		
+
+		$("input[name='emp.no']").val(empNo);
 		$.ajax({
 			type:'GET',
 			url:'getsalarybyno.do',
@@ -87,7 +87,7 @@ $(function() {
 				var c = Math.round(result.emp.salary * 0.0533);
 				var d = Math.round(result.emp.salary * 0.0655);
 				var e = Math.round(result.emp.salary * 0.0045);
-				$("input[name=salary]").val(Number(a).toLocaleString('en'));
+				$("input[name=salary]").val(Number(a).toLocaleString('ko'));
 				$("input[name=insureSocial]").val(Number(b).toLocaleString('en'));
 				$("input[name=insureHealth]").val(Number(c).toLocaleString('en'));
 				$("input[name=insureLonghealth]").val(Number(d).toLocaleString('en'));
@@ -119,7 +119,7 @@ $(function() {
 			}
 			
 		});
-				$(".salaryNo").val(empNo);
+				/* $(".salaryNo").val(empNo); */
 		
 		
 	});
@@ -148,10 +148,7 @@ $(function() {
 	});
 	
 	$(".salaryForm").submit(function() {
-		
-		
-		
-		return true;
+	
 	});
 });
 </script>
@@ -199,7 +196,6 @@ $(function() {
 						<c:if test="${ !empty empList }">
 							<tr>
 								<th colspan="3" class="salaryName text-center">
-									<input type="hidden" name='paymentDate' readonly="readonly"/>
 									<input type="hidden" name='emp.no' class="salaryNo" readonly="readonly"/>
 								</th>
 							</tr>
@@ -234,7 +230,7 @@ $(function() {
 						<tr>
 							<th rowspan="3" class="info">추가 수당</th>
 							<th>초과 근무 시간</th>
-							<td><input type="text" name="overtimeTime" readonly="readonly"/> 분</td>
+							<td><input type="text" name="overtimeTime" readonly="readonly"/></td>
 						</tr>
 						<tr>
 							<th>금액</th>

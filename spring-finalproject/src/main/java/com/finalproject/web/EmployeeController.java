@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.finalproject.dao.EmployeeDao;
 import com.finalproject.model.AccountBook;
+import com.finalproject.model.AddAccountBookForm;
 import com.finalproject.model.Branch;
 import com.finalproject.model.BranchAddForm;
 import com.finalproject.model.BranchEmp;
@@ -777,9 +778,31 @@ public class EmployeeController {
 	}
 	
 	@RequestMapping(value="/insertsalary.do", method=RequestMethod.POST)
-	public String insertSalary(AccountBook accountBook) {
-		System.out.println(accountBook.getEmp().getNo());
-		empService.insertSalary(accountBook);
+	public String insertSalary(AddAccountBookForm accountBookForm) {
+		int no = accountBookForm.getEmp().getNo();
+		String paymentDate = accountBookForm.getPaymentDate();
+		int salary = Integer.parseInt(accountBookForm.getSalary().replace(",", ""));
+		int overtime = Integer.parseInt(accountBookForm.getOvertime().replace(",", ""));
+		int insureHealth = Integer.parseInt(accountBookForm.getInsureHealth().replace(",", ""));
+		int insureLonghealth = Integer.parseInt(accountBookForm.getInsureLonghealth().replace(",", ""));
+		int insureSocial = Integer.parseInt(accountBookForm.getInsureSocial().replace(",", ""));
+		int employeeInsure = Integer.parseInt(accountBookForm.getEmployeeInsure().replace(",", ""));
+		System.out.println("사원:"+no);
+		System.out.println("입력달:"+paymentDate);
+		AccountBook account = new AccountBook();
+		Employee emp = new Employee();
+		emp.setNo(no);
+		account.setEmp(emp);
+		account.setPaymentDate(paymentDate);
+		account.setSalary(salary);
+		account.setOvertime(overtime);
+		account.setInsureHealth(insureHealth);
+		account.setInsureLonghealth(insureLonghealth);
+		account.setInsureSocial(insureSocial);
+		account.setEmployeeInsure(employeeInsure);
+		
+		empService.insertSalary(account);
+		
 		return "redirect:/compsalary.do";
 	}
 	
