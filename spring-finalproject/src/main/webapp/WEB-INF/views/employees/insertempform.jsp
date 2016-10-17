@@ -357,7 +357,7 @@ function sample6_execDaumPostcode() {
 					<div class="empct row">
 						<div class="empAddct">
 							<label class="empaddL">주소</label>
-							<input class="empaddI" id="sample6_address" name="address1" placeholder="주소" type="text" name="address"/>
+							<input class="empaddI" id="sample6_address" placeholder="주소" type="text" name="address"/>
 							<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기" class="btn btn-info">
 						</div>
 					</div> <!-- row3 end -->
