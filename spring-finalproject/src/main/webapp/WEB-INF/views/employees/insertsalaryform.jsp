@@ -93,27 +93,29 @@ $(function() {
 				$("input[name=insureLonghealth]").val(Number(d).toLocaleString('en'));
 				$("input[name=employeeInsure]").val(Number(e).toLocaleString('en'));
 				
-				var f = a-b+c+d+e;
+				var f = b+c+d+e;
 				$("input[name=total]").val(Number(f).toLocaleString('en'));
 				
-				var g = result.overtime;
+				var g = Math.round(result.overtime/60);
 				$("input[name=overtimeTime]").val(g);
 				
 				if (g > 0) {
-					var h = a/30/8 * 1.5;
+					var h = (a/30)/8 * 1.5;
 					$("input[name=overtimePrice]").val(Number(h).toLocaleString('en'));
-				
+					
+					
 				} else {
 					var h = 0;
 					$("input[name=overtimePrice]").val(h);
+					
 				}
-					var i = h * g;
-					$("input[name=overtime]").val(Number(i).toLocaleString('en'));
-					
-					var j = f + i;
-					$("input[name=result]").val(Number(j).toLocaleString('en'));
-					
+
+				var i = h * g;
+				$("input[name=overtime]").val(Number(i).toLocaleString('en'));
 				
+				var j = a + i - f;
+				$("input[name=result]").val(Number(j).toLocaleString('en'));
+
 			}
 			
 		});
@@ -232,7 +234,7 @@ $(function() {
 						<tr>
 							<th rowspan="3" class="info">추가 수당</th>
 							<th>초과 근무 시간</th>
-							<td><input type="text" name="overtimeTime" readonly="readonly"/></td>
+							<td><input type="text" name="overtimeTime" readonly="readonly"/> 분</td>
 						</tr>
 						<tr>
 							<th>금액</th>
