@@ -256,7 +256,7 @@ $(function() {
 							<h4 class="modal-title">비밀번호 수정</h4>
 						</div>
 						
-						<form action="changepassword.do" method="post" role="form">
+						<form  role="form" action="changepassword.do" method="post" class="changepassword">
 							<div class="modal-body">
 								<div>
 									<label class="text-left">새로운 비밀번호</label>

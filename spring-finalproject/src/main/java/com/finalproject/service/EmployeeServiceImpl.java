@@ -1,13 +1,10 @@
 package com.finalproject.service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
-import org.springframework.web.multipart.MultipartRequest;
 
 import com.finalproject.dao.EmployeeDao;
 import com.finalproject.model.AccountBook;
@@ -19,9 +16,7 @@ import com.finalproject.model.Employee;
 import com.finalproject.model.EmployeeDetail;
 import com.finalproject.model.Languages;
 import com.finalproject.model.Licenses;
-import com.finalproject.model.RegisterEmp;
 import com.finalproject.model.WorkTime;
-import com.finalproject.model.WorkingStateBrEmp;
 
 
 @Service

@@ -53,8 +53,16 @@ public class EmployeeController {
 	
 	@ExceptionHandler(RuntimeException.class)
 	public String runtimeExceptionHandler(RuntimeException ex) {
+		
+		String errorMSG = ex.getMessage();
 		ex.printStackTrace();
+		
+		if(errorMSG.equals("아이디 혹은 비밀번호가 올바르지 않습니다.")) {
+			return "employees/error/loginerror";
+		}
+		
 		return "employees/error/error";
+		
 	}
 	
 	
@@ -98,17 +106,17 @@ public class EmployeeController {
 	}
 	
 	@RequestMapping(value="/changepassword.do", method=RequestMethod.POST)
-	public String myChangePwd(String password, HttpSession session) {
+	public String myChangePwd(RegisterEmp employee, HttpSession session) {
 		Employee emp = (Employee)session.getAttribute("LoginUser");
+		
+		String secretPassword = DigestUtils.md5DigestAsHex(employee.getPassword().getBytes());
 		
 		Employee chahgeemp = new Employee();
 		chahgeemp.setNo(emp.getNo());
-		chahgeemp.setPassword(password);
+		chahgeemp.setPassword(secretPassword);
 		
-		System.out.println(chahgeemp);
-		//empService.updateEmployeePwd(chahgeemp);
-		return null;
-		//return "redirect:/companylogin.do"; 
+		empService.updateEmployeePwd(chahgeemp);
+		return "redirect:/companylogin.do"; 
 	}
 	
 	@RequestMapping(value="/mycompsalary.do")
@@ -169,33 +177,38 @@ public class EmployeeController {
 	@RequestMapping(value="/mycompattendance.do")
 	public String myAttendanceListForm(Criteria criteria, Model model, HttpSession session) {
 		
+		
 		Employee emp = (Employee)session.getAttribute("LoginUser");
 		
-		SimpleDateFormat DateFormat = new SimpleDateFormat ("yyyy-MM-dd");
-		Date now = new Date();
-		String today = DateFormat.format (now);
-		
-		
-		String year = today.substring(0, 4);
-		String month = today.substring(5, 7);
-		String day = today.substring(8);
-		int dd = Integer.parseInt(month)+1;
-		String nextMonth = String.valueOf(dd);
-		String beginDate = year + "-" + month + "-" + "01";
-		String endDate = year + "-" + nextMonth + "-" + "01";
-		
-		criteria.setBeginDate(beginDate);
-		criteria.setEndDate(endDate);
-		criteria.setEmpNo(emp.getNo());
-		
-		
-		List<WorkTime> workTimeList = empService.getTimetableByNo(criteria);
-		
-		model.addAttribute("workTimeList", workTimeList);
-		
-		return "employees/myattendancelist";
+			SimpleDateFormat DateFormat = new SimpleDateFormat ("yyyy-MM-dd");
+			Date now = new Date();
+			String today = DateFormat.format (now);
+			
+			
+			String year = today.substring(0, 4);
+			String month = today.substring(5, 7);
+			String day = today.substring(8);
+			int dd = Integer.parseInt(month)+1;
+			String nextMonth = String.valueOf(dd);
+			String beginDate = year + "-" + month + "-" + "01";
+			String endDate = year + "-" + nextMonth + "-" + "01";
+			
+			criteria.setBeginDate(beginDate);
+			criteria.setEndDate(endDate);
+			criteria.setEmpNo(emp.getNo());
+			
+			
+			List<WorkTime> workTimeList = empService.getTimetableByNo(criteria);
+			WorkTime wk = empService.getAttendanceByNo(emp.getNo());
+			
+			model.addAttribute("workTimeList", workTimeList);
+			model.addAttribute("successAtt", wk);
+			
+			return "employees/myattendancelist";
+
 	}
 	
+	// 월별 출퇴근 기록 보기
 	@RequestMapping(value="/mytimetable.do")
 	public String myTimetableForm(Criteria criteria, Model model, HttpSession session,
 			@RequestParam(name="month") String selectMonth) {
@@ -211,8 +224,13 @@ public class EmployeeController {
 		int nm = Integer.parseInt(selectMonth) + 1;
 		String nextMonth = String.valueOf(nm);
 		String beginDate = year + "-" + selectMonth + "-" + "01";
-		System.out.println("지정달:" + beginDate);
 		String endDate = year + "-" + nextMonth + "-" + "01";
+		
+		if (selectMonth.equals("12")) {
+			int nYear = Integer.parseInt(year) + 1;
+			String newYear = String.valueOf(nYear);
+			endDate = newYear + "-" + "01" + "-" + "01";
+		} 
 
 		criteria.setBeginDate(beginDate);
 		criteria.setEndDate(endDate);
@@ -220,12 +238,16 @@ public class EmployeeController {
 		
 		
 		List<WorkTime> workTimeList = empService.getTimetableByNo(criteria);
+		WorkTime wk = empService.getAttendanceByNo(emp.getNo());
 		
 		model.addAttribute("workTimeList", workTimeList);
+		model.addAttribute("successAtt", wk);
 		
 		return "employees/myattendancelist";
 	}
 	
+	
+	// 출퇴근
 	@RequestMapping(value="/myattendance.do")
 	public String myAttendance(Criteria criteria, Model model, HttpSession session, 
 			@RequestParam("work") String work) throws Exception{
@@ -318,7 +340,7 @@ public class EmployeeController {
 		
 		model.addAttribute("workTimeList", workTimeList);
 		
-		return "employees/myattendancelist";
+		return "redirect:/mycompattendance.do";
 	}
 	
 	// 사원등록 페이지 연결
@@ -753,11 +775,6 @@ public class EmployeeController {
 	@RequestMapping(value="/compsalary.do")
 	public String salaryList(Criteria criteria, @RequestParam(name="pno", required=false, defaultValue="1") int pageNo, Model model) {
 		
-			
-			if (pageNo < 1) {
-				return "redirect:/compsalary.do?pno=1";
-			}
-			
 			int rows = 10;
 			int pages = 5;
 			int beginIndex = (pageNo - 1) * rows + 1;
@@ -766,10 +783,6 @@ public class EmployeeController {
 			int totalRows = empService.getTotalSalaryRows(criteria);
 			
 			PageVo pagination = new PageVo(rows, pages, pageNo, totalRows);
-			
-			if(pageNo > pagination.getTotalPages()) {
-				return "redirect:/compsalary.do?pno=" + pagination.getTotalPages();
-			}
 			
 			criteria.setBeginIndex(beginIndex);
 			criteria.setEndIndex(endIndex);

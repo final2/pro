@@ -50,8 +50,9 @@ public interface EmployeeService {
 	int getTotalTimetablerows(Criteria criteria);
 	// 출근시간 기록하기
 	void attendanceByNo(WorkTime workTime);
-	// 출근시간 가져오기
+	// 출퇴근 체크하기
 	WorkTime getAttendanceByNo(int empNo);
+	
 	// 퇴근시간 기록하기
 	void leavByNo(WorkTime workTime);
 	

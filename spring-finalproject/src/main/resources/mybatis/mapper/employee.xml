@@ -496,7 +496,8 @@
 	<select id="getAttendanceByNo" parameterType="int" resultType="WorkTime">
 		select
 			no,  
-			attendance
+			attendance,
+			leaving
 		from timetable
 		where employee_no = #{emp.no}
 		and to_char(attendance, 'yyyymmdd') = to_char(sysdate, 'yyyymmdd')

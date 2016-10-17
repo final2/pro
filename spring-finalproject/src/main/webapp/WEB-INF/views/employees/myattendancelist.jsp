@@ -15,6 +15,7 @@
 	.container > h1 {text-align:left; margin-bottom:20px;}
 	.container > h1 > a {text-decoration:none; color:inherit;}
 
+	.selectBox {margin-top:15px;}
 	.searchbox .form-group {margin-bottom:0 !important;}
 	.searchbox label {height:34px; line-height:34px;}
 	.empBox {width:100%; margin:15px auto 15px auto;}
@@ -28,11 +29,12 @@
 	td > .empBtn {width:100%; height:100%; display:block; background:#f5fbff; vertical-align:middle; line-height:50px; text-decoration:none; color:inherit;}
 	
 	.pageBox {margin-top:90px;}
+	#attBtn2 {pointer-events: none;cursor: default;}
+	.moonBtn {color: #fff; background-color: #5bc0de !important; border-color: #46b8da;}
 	
 </style>
 <script type="text/javascript">
 $(function() {
-	
 	
 })
 </script>
@@ -46,28 +48,148 @@ $(function() {
 			<div class="row">
 				<div class="col-sm-offset-8 col-sm-4">
 					<div class="col-sm-6 form-group">
-						<a href="myattendance.do?work=attendance"  id="attBtn" class="btn btn-success form-control" >출근</a>
+						<c:choose>
+							<c:when test="${successAtt.attendance eq null}">
+								<a href="myattendance.do?work=attendance"  id="attBtn1" class="btn btn-success form-control" >출근</a>
+							</c:when>
+							<c:otherwise>
+								<a href="myattendance.do?work=attendance"  id="attBtn2" class="btn btn-warning form-control" >출근 완료</a>
+							</c:otherwise>
+						</c:choose>
 					</div>
 					<div class="col-sm-6 form-group"  id="leavBtn">
-						<a href="myattendance.do?work=leav" class="btn btn-danger form-control" >퇴근</a>
+						<c:choose>
+							<c:when test="${successAtt.leaving eq null}">
+								<a href="myattendance.do?work=leav" id="attBtn1" class="btn btn-danger form-control" >퇴근</a>
+							</c:when>
+							<c:otherwise>
+								<a href="myattendance.do?work=leav" id="attBtn2" class="btn btn-warning form-control" >퇴근 완료</a>
+							</c:otherwise>
+						</c:choose>
 					</div>
 				</div>
 			</div>
-			<div class="row selectBox">
-				<div class="form-group">
-					<div class="row">
-						<a href="mytimetable.do?month=1">1월</a>
-						<a href="mytimetable.do?month=2">2월</a>
-						<a href="mytimetable.do?month=3">3월</a>
-						<a href="mytimetable.do?month=4">4월</a>
-						<a href="mytimetable.do?month=5">5월</a>
-						<a href="mytimetable.do?month=6">6월</a>
-						<a href="mytimetable.do?month=7">7월</a>
-						<a href="mytimetable.do?month=8">8월</a>
-						<a href="mytimetable.do?month=9">9월</a>
-						<a href="mytimetable.do?month=10">10월</a>
-						<a href="mytimetable.do?month=11">11월</a>
-						<a href="mytimetable.do?month=12">12월</a>
+			<div class="selectBox">
+				<div class="row">					
+					<div class="col-sm-1 form-group">
+						<c:choose>
+							<c:when test="${ param.month == '1' }">
+								<a href="mytimetable.do?month=1" class="btn btn-info form-control">1월</a>
+							</c:when>
+							<c:otherwise>
+								<a href="mytimetable.do?month=1" class="btn btn-primary form-control">1월</a>
+							</c:otherwise>
+						</c:choose>
+					</div>
+					<div class="col-sm-1 form-group">
+						<c:choose>
+							<c:when test="${ param.month == '2' }">
+								<a href="mytimetable.do?month=2" class="btn btn-info form-control">2월</a>
+							</c:when>
+							<c:otherwise>
+								<a href="mytimetable.do?month=2" class="btn btn-primary form-control">2월</a>
+							</c:otherwise>
+						</c:choose>
+					</div>
+					<div class="col-sm-1 form-group">
+						<c:choose>
+							<c:when test="${ param.month == '3' }">
+								<a href="mytimetable.do?month=3" class="btn btn-info form-control">3월</a>
+							</c:when>
+							<c:otherwise>
+								<a href="mytimetable.do?month=3" class="btn btn-primary form-control">3월</a>
+							</c:otherwise>
+						</c:choose>
+					</div>
+					<div class="col-sm-1 form-group">
+						<c:choose>
+							<c:when test="${ param.month == '4' }">
+								<a href="mytimetable.do?month=4" class="btn btn-info form-control">4월</a>
+							</c:when>
+							<c:otherwise>
+								<a href="mytimetable.do?month=4" class="btn btn-primary form-control">4월</a>
+							</c:otherwise>
+						</c:choose>
+					</div>
+					<div class="col-sm-1 form-group">
+						<c:choose>
+							<c:when test="${ param.month == '5' }">
+								<a href="mytimetable.do?month=5" class="btn btn-info form-control">5월</a>
+							</c:when>
+							<c:otherwise>
+								<a href="mytimetable.do?month=5" class="btn btn-primary form-control">5월</a>
+							</c:otherwise>
+						</c:choose>
+					</div>
+					<div class="col-sm-1 form-group">
+						<c:choose>
+							<c:when test="${ param.month == '6' }">
+								<a href="mytimetable.do?month=6" class="btn btn-info form-control">6월</a>
+							</c:when>
+							<c:otherwise>
+								<a href="mytimetable.do?month=6" class="btn btn-primary form-control">6월</a>
+							</c:otherwise>
+						</c:choose>
+					</div>
+					<div class="col-sm-1 form-group">
+						<c:choose>
+							<c:when test="${ param.month == '7' }">
+								<a href="mytimetable.do?month=7" class="btn btn-info form-control">7월</a>
+							</c:when>
+							<c:otherwise>
+								<a href="mytimetable.do?month=7" class="btn btn-primary form-control">7월</a>
+							</c:otherwise>
+						</c:choose>
+					</div>
+					<div class="col-sm-1 form-group">
+						<c:choose>
+							<c:when test="${ param.month == '8' }">
+								<a href="mytimetable.do?month=8" class="btn btn-info form-control">8월</a>
+							</c:when>
+							<c:otherwise>
+								<a href="mytimetable.do?month=8" class="btn btn-primary form-control">8월</a>
+							</c:otherwise>
+						</c:choose>
+					</div>
+					<div class="col-sm-1 form-group">
+						<c:choose>
+							<c:when test="${ param.month == '9' }">
+								<a href="mytimetable.do?month=9" class="btn btn-info form-control">9월</a>
+							</c:when>
+							<c:otherwise>
+								<a href="mytimetable.do?month=9" class="btn btn-primary form-control">9월</a>
+							</c:otherwise>
+						</c:choose>
+					</div>
+					<div class="col-sm-1 form-group">
+						<c:choose>
+							<c:when test="${ param.month == '10' }">
+								<a href="mytimetable.do?month=10" class="btn btn-info form-control">10월</a>
+							</c:when>
+							<c:otherwise>
+								<a href="mytimetable.do?month=10" class="btn btn-primary form-control">10월</a>
+							</c:otherwise>
+						</c:choose>
+					</div>
+					<div class="col-sm-1 form-group">
+						<c:choose>
+							<c:when test="${ param.month == '11' }">
+								<a href="mytimetable.do?month=11" class="btn btn-info form-control">11월</a>
+							</c:when>
+							<c:otherwise>
+								<a href="mytimetable.do?month=11" class="btn btn-primary form-control">11월</a>
+							</c:otherwise>
+						</c:choose>
+					</div>
+					<div class="col-sm-1 form-group">
+						<c:choose>
+							<c:when test="${ param.month == '12' }">
+								<a href="mytimetable.do?month=12" class="btn btn-info form-control">12월</a>
+							</c:when>
+							<c:otherwise>
+								<a href="mytimetable.do?month=12" class="btn btn-primary form-control">12월</a>
+							</c:otherwise>
+						</c:choose>
 					</div>
 				</div>
 			</div>
@@ -108,32 +230,6 @@ $(function() {
 					</tr>
 				</c:forEach>
 			</table>
-			<ul class="pagination pageBox">
-			<c:if test="${param.pno gt 1 }">
-    			<li>
-      				<a href="compattendance.do?pno=${param.pno - 1 }" aria-label="Previous">
-        				<span aria-hidden="true">&laquo;</span>
-      				</a>
-    			</li>
-    		</c:if>
-    		<c:forEach var="num" begin="${navi.beginPage }" end="${navi.endPage }">
-    			<c:choose>
-    				<c:when test="${param.pno eq num }">
-    					<li class="active"><a href="compattendance.do?pno=${num }">${num }</a></li>
-    				</c:when>
-    				<c:otherwise>
-					    <li><a href="compattendance.do?pno=${num }">${num }</a></li>
-    				</c:otherwise>
-    			</c:choose>
-    		</c:forEach>
-    		<c:if test="${param.pno lt navi.totalPages}">
-    			<li>
-      				<a href="compattendance.do?pno=${param.pno + 1 }" aria-label="Next">
-        				<span aria-hidden="true">&raquo;</span>
-      				</a>
-    			</li>
-    		</c:if>
-			</ul>
 		</div>
 	</div>
 </div>

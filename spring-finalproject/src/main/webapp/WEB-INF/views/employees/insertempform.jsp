@@ -120,7 +120,7 @@ $(function() {
 		html += 		"<div class='col-sm-4'>";
 		html += 			"<div class='row'>";
 		html += 				"<label class='col-sm-4'>기간</label>";
-		html += 				"<input type='text' name='terms' class='col-sm-8'/>";
+		html += 				"<input type='text' name='schools' class='col-sm-8' placeholder='yyyy.mm-yyyy.mm' maxlength='15'/>";
 		html += 			"</div>";
 		html += 		"</div>";
 		html += 		"<div class='col-sm-4'>";
@@ -289,7 +289,7 @@ function sample6_execDaumPostcode() {
 							</div> --%>
 							<div class="row">
 								<label class="col-sm-4">비밀번호</label>
-								<input  class="col-sm-8" type="password" name="password"/>
+								<input  class="col-sm-8" type="password" name="password" minlength="6" maxlength="12" placeholder="6~12자 사이로 입력해주세요."/>
 							</div>
 							<div class="row">
 								<label class="col-sm-4">이름</label>
@@ -335,7 +335,7 @@ function sample6_execDaumPostcode() {
 						<div class="col-md-5 col-sm-offset-2 empct">
 							<div class="row">
 								<label class="col-sm-4">급여</label>
-								<input  class="col-sm-8" type="text" name="salary"/>
+								<input  class="col-sm-8 text-right" type="number" name="salary"/>
 							</div>
 							<div class="row empctLast">
 								<label class="col-sm-4">직책</label>
@@ -366,7 +366,7 @@ function sample6_execDaumPostcode() {
 									<div class="col-sm-4">
 										<div class="row">
 											<label class="col-sm-4">기간</label>
-											<input type="text" name="schools" class="col-sm-8"/>
+											<input type="text" name="schools" class="col-sm-8" placeholder="yyyy.mm-yyyy.mm" maxlength="15"/>
 										</div>
 									</div>
 									<div class="col-sm-4">
@@ -408,7 +408,7 @@ function sample6_execDaumPostcode() {
 									</div>
 									<div class="col-sm-5">
 										<div class="row">
-											<label class="col-sm-4">기간명</label>
+											<label class="col-sm-4">기관명</label>
 											<input type="text" name="licenseOffices" class="col-sm-8"/>
 										</div>
 									</div>
