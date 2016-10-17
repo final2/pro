@@ -92,9 +92,19 @@ $(function() {
 					</p>
 					<p>
 					BigStore~
+					</p><p>
+					맨날 맨날 가고 싶은 곳~ 
+					</p><br><p style="font-weight: bolder;">
+					엄마를 위한 간편 도시락,
+					</p><br><p style="font-weight: bolder;">
+					아빠를 위한 다양한 알콜~
+					</p><br><p style="font-weight: bolder;">
+					아이를 위한 각 종 주점부리
 					</p>
+					<br>
 					<p>
 					엄마랑 손잡고 아빠랑 손잡고 친구 손잡고 
+					</p><p>
 					너도 나도 열심히 오세요^^
 					
 					</p>
