@@ -217,8 +217,7 @@
 			term,
 			school,
 			major,
-			employee_no		as empNo,
-			term
+			employee_no		as empNo
 		from career
 		where employee_no = #{empNo}
 		order by term desc
