@@ -51,8 +51,8 @@
     		<a>마이페이지 <span class="caret"></span></a>
     		<ul class="bar">
     			<li><a href="myprofile.do" >내정보</a></li>
-    			<li><a href="mycompsalary.do?pno=1" >급여 대장</a></li>
     			<li><a href="mycompattendance.do" >근태 관리</a></li>
+    			<li><a href="mycompsalary.do?pno=1" >급여 대장</a></li>
     		</ul>
     	</li>
     	<li>
@@ -62,6 +62,39 @@
      		</div>
     	</li>
        <hr />
+       <li class="list">
+      		<c:if test="${LoginUser.dept eq 'HR' or LoginUser.dept eq 'Master' }">
+	       		<a>급여 <span class="caret"></span></a>
+	       		<ul class="bar">
+	       			<li><a href="compsalary.do?pno=1" >급여 대장</a></li>
+	       			<li><a href="insertsalary.do" >급여 지급</a></li>
+	       			<li><a href="compattendance.do?pno=1" >근태 관리</a></li>
+	       		</ul>		
+      		</c:if>
+       </li>
+       <li class="list">
+       		<a >인사 <span class="caret"></span></a>
+       		<ul class="bar">
+       			<c:if test="${LoginUser.dept eq 'HR' or LoginUser.dept eq 'Master' }">
+       				<li><a href="insertemp.do" >사원 등록</a></li>
+       			</c:if>
+       			<li><a href="emplist.do?pno=1" >사원 조회</a></li>
+	       			<c:url var="boardListURL" value="boardList.do">
+						<c:param name="pn" value="1" />
+					</c:url>
+       			<li>
+       				<a>지점 관리<span class="caret"></span></a>
+       				<ul class="in-bar">
+       					<c:if test="${LoginUser.dept eq 'HR' or LoginUser.dept eq 'Master' }">
+	       					<li><a href="insertbranch.do" class="">지점 등록</a></li>
+       					</c:if>
+       					<li><a href="compbranchlist.do?pno=1" class="">지점 조회</a></li>
+       				</ul>
+       			</li>
+       			<li><a href="${boardListURL }" >공지 사항</a></li>
+       			<li><a href="calendar.do" >회사 일정</a></li>
+       		</ul>			
+       </li>
        <li class="list">
        		<a>물류 <span class="caret"></span></a>
        		<ul class="bar">
@@ -80,39 +113,6 @@
 	       			<li><a href="clientList.do">거래처 관리 </a></li>
        			</c:if>
        		</ul>   		
-       </li>
-       <li class="list">
-       		<a >인사 <span class="caret"></span></a>
-       		<ul class="bar">
-       			<li><a href="emplist.do?pno=1" >사원 조회</a></li>
-       			<c:if test="${LoginUser.dept eq 'HR' or LoginUser.dept eq 'Master' }">
-       				<li><a href="insertemp.do" >사원 등록</a></li>
-       			</c:if>
-	       			<c:url var="boardListURL" value="boardList.do">
-						<c:param name="pn" value="1" />
-					</c:url>
-       			<li><a href="${boardListURL }" >공지 사항</a></li>
-       			<li><a href="calendar.do" >회사 일정</a></li>
-       			<li>
-       				<a>지점 관리<span class="caret"></span></a>
-       				<ul class="in-bar">
-       					<li><a href="compbranchlist.do?pno=1" class="">지점 조회</a></li>
-       					<c:if test="${LoginUser.dept eq 'HR' or LoginUser.dept eq 'Master' }">
-	       					<li><a href="insertbranch.do" class="">지점 등록</a></li>
-       					</c:if>
-       				</ul>
-       			</li>
-       		</ul>			
-       </li>
-       <li class="list">
-      		<c:if test="${LoginUser.dept eq 'HR' or LoginUser.dept eq 'Master' }">
-	       		<a>급여 <span class="caret"></span></a>
-	       		<ul class="bar">
-	       			<li><a href="compsalary.do?pno=1" >급여 대장</a></li>
-	       			<li><a href="insertsalary.do" >급여 지급</a></li>
-	       			<li><a href="compattendance.do?pno=1" >근태 관리</a></li>
-	       		</ul>		
-      		</c:if>
        </li>
        <li>
        		<a href="chart.do">통계</a>		
@@ -155,4 +155,4 @@ $(function() {
 
 });
 </script>
-
+
