@@ -13,6 +13,7 @@ import com.finalproject.model.Languages;
 import com.finalproject.model.Licenses;
 import com.finalproject.model.RegisterEmp;
 import com.finalproject.model.WorkTime;
+import com.finalproject.model.WorkingStateBrEmp;
 
 public interface EmployeeService {
 
@@ -49,8 +50,9 @@ public interface EmployeeService {
 	int getTotalTimetablerows(Criteria criteria);
 	// 출근시간 기록하기
 	void attendanceByNo(WorkTime workTime);
-	// 출근시간 가져오기
+	// 출퇴근 체크하기
 	WorkTime getAttendanceByNo(int empNo);
+	
 	// 퇴근시간 기록하기
 	void leavByNo(WorkTime workTime);
 	
@@ -93,5 +95,7 @@ public interface EmployeeService {
 	// 지점사원번호로 지점사원 조회
 	BranchEmp getBranchEmpByBrEmpNo(int brEmpNo);
 	
+	// 지점사원번호로 근무상태 수정
+	void updateBranchEmpByBrempNo(List<BranchEmp> BrEmpList);
 	
 }

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -8,7 +9,7 @@
 <link rel="stylesheet" type="text/css" href="/FinalProject/resources/bootstrap/css/bootstrap.css">
 <script type="text/javascript" src="/FinalProject/resources/jquery/jquery.js"></script>
 <style>
-	.container {position:relative; top:150px;}
+	.container {position:relative; top:30px;}
 	.container:after {clear:both; content:""; display:block;}
 
 	.empBox {width:100%; margin:15px auto 15px auto;}
@@ -16,10 +17,8 @@
 	
 	table { table-layout:fixed; word-break:break-all;}
 	tr {clear:both;}
-	th, td {height:50px; padding:0 !important;}
+	th, td {height:50px; padding:0 8px !important; line-height:50px !important;}
 	th {text-align:center; vertical-align:middle !important;}
-	td > input, td > select {width:100%; height:100%;border:none; padding:0 8px !important;}
-	td > input:focus, td > select:focus {outline:none;}
 	
 	td > .empBtn {width:100%; height:100%; display:block; background:#f5fbff; vertical-align:middle; line-height:50px; text-decoration:none; color:inherit;}
 	
@@ -28,7 +27,7 @@
 	.ptBox {width:70%; text-align:center;}
 	.ptImg {width:100%;  overflow:hidden;  text-align:center;}
 	.ptImg:after {clear:both; content:""; display:block; }
-	.ptImg > #thumnail { width:100% !important; margin:0 auto; vertical-align:middle; text-align:center; border:1px solid #ddd;}
+	.ptImg > #thumnail { height:100% !important; margin:0 auto; margin-left:-30px; vertical-align:middle; text-align:center; border:1px solid #ddd;}
 	.photoBtn {width:100%;}
 	.photoBtn:after {clear:both; content:""; display:block; }
 	.photoBtn label { width:100%; vertical-align: middle; cursor: pointer; text-align:center;}
@@ -36,9 +35,9 @@
 	.photoBtn input[type="file"] { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip:rect(0,0,0,0); border: 0;}
 
 	.formBtnBox {clear:both; margin-top:60px;}
-	.formBtnBox:after {}
+	.formBtnBox:after {clear:both; content:""; display:block;}
 	.formBtn {width:50%; float:left; text-align:center;}
-	.formBtn > input { width:50%; padding:10px 0;}
+	.formBtn > a { width:50%; padding:10px 0;}
 	
 </style>
 <script type="text/javascript">
@@ -83,74 +82,63 @@ $(function() {
 	<div id="page-content-wrapper">
 		<%@ include file="../companynotice/backgroundVideo.jsp" %>
 		<div class="container">
-			<h1>지점사원 수정</h1>
+			<h1>지점 사원 상세</h1>
 			<div class="well" style="opacity:0.8">
-				<form role="form" action="insertbranchemp.do" method="post">
-					<table class="table table-bordered empBox table-striped" >
-						<colgroup>
-							<col style="width:14%;">
-							<col style="width:18%;">
-							<col style="width:18%;">
-							<col style="width:14%;">
-							<col style="width:18%;">
-							<col style="width:18%;">
-						</colgroup>
-						<tr>
-							<th class="info">비밀번호</th>
-							<td colspan="4"><input type="password" name="password" value="${brEmp.password }" /></td>
-							<td rowspan="4">
-								<div class="ptImg">
-									<img id="thumnail" src="/FinalProject/resources/image/brempimg/${brEmp.images }" />
-								</div>
-								<div class="photoBtn btn btn-primary" >
-									<label for="ptFile">이미지 등록</label> 
-			  						<input type="file" id="ptFile" class="upload-hidden" name="images" accept="image/gif, image/jpeg, image/png"> 
-								</div>
-							</td>
-						</tr>
-						<tr>
-							<th class="info">이름</th>
-							<td colspan="4"><input type="text" name="name" value="${brEmp.name }" /></td>
-						</tr>
-						<tr>
-							<th class="info">연락처</th>
-							<td colspan="4"><input type="text" name="phone" value="${brEmp.phone }" /></td>
-						</tr>
-						<tr>
-							<th class="info">주소</th>
-							<td colspan="4"><input type="text" name="address" value="${brEmp.address }" /></td>
-						</tr>
-						<tr>
-							<th class="info">이메일</th>
-							<td colspan="2"><input type="text" name="email" value="${brEmp.email }" /></td>
-							<th class="info">생년월일</th>
-							<td colspan="2"><input type="date" name="birth" value="${brEmp.birth }" /></td>
-						</tr>
-						<tr>
-							<th class="info">직책</th>
-							<td colspan="2"><input type="text" name="grade" value="${brEmp.grade }" /></td>
-							<th class="info">근무지점</th>
-							<td colspan="2">
-								<select name="branchNo">
-									<c:forEach var="branch" items="${branchList }">
-										<option value="${branch.no }">${branch.name }</option>
-									</c:forEach>
-								</select>
-							</td>
-						</tr>
-					</table>
-					<div class="formBtnBox">
-						<div class="formBtn">
-							<c:url>
-							
-							<input type="submit" class="btn btn-primary" value="완료"/>
-							</c:url>
-						</div>
-						<div class="formBtn">
-							<input type="reset" class="btn btn-default" value="취소"/>
-						</div>
+				<table class="table table-bordered empBox" >
+					<colgroup>
+						<col style="width:14%;">
+						<col style="width:18%;">
+						<col style="width:18%;">
+						<col style="width:14%;">
+						<col style="width:18%;">
+						<col style="width:18%;">
+					</colgroup>
+					<tr>
+						<th class="info">사원번호</th>
+						<td colspan="4">${brEmp.no }</td>
+						<td rowspan="4">
+							<div class="ptImg">
+								<img id="thumnail" src="/FinalProject/resources/image/brempimg/${brEmp.images }" />
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<th class="info">이름</th>
+						<td colspan="4">${brEmp.name }</td>
+					</tr>
+					<tr>
+						<th class="info">연락처</th>
+						<td colspan="4">${brEmp.phone }</td>
+					</tr>
+					<tr>
+						<th class="info">주소</th>
+						<td colspan="4">${brEmp.address }</td>
+					</tr>
+					<tr>
+						<th class="info">이메일</th>
+						<td colspan="2">${brEmp.email }</td>
+						<th class="info">생년월일</th>
+						<td colspan="2"><fmt:formatDate value="${brEmp.birth }" pattern="yyyy-MM-dd"/></td>
+					</tr>
+					<tr>
+						<th class="info">직책</th>
+						<td colspan="2">${brEmp.grade }</td>
+						<th class="info">근무지점</th>
+						<td colspan="2">${brEmp.branch.name }</td>
+					</tr>
+				</table>
+				<div class="formBtnBox">
+					<div class="formBtn">
+						<c:url var="updateURL" value="updatebranchemp.do">
+							<c:param name="no" value="${brEmp.no }"></c:param>
+							<c:param name="pno" value="${param.pno }"></c:param>
+						</c:url>
+						<a href="${updateURL }" class="btn btn-primary">수정</a>
 					</div>
-				</form>
+					<div class="formBtn">
+						<a href="compbranchdetail.do" class="btn btn-default">목록으로</a>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

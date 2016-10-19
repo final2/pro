@@ -8,7 +8,7 @@
 <script type="text/javascript" src="/FinalProject/resources/jquery/jquery.js"></script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <style>
-	.container {position:relative; top:60px;}
+	.container {position:relative; top:30px;}
 	.container:after {clear:both; content:""; display:block;}
 
 	.empBox {width:75%; margin:15px auto 15px auto;}
@@ -120,7 +120,7 @@ $(function() {
 		html += 		"<div class='col-sm-4'>";
 		html += 			"<div class='row'>";
 		html += 				"<label class='col-sm-4'>기간</label>";
-		html += 				"<input type='text' name='terms' class='col-sm-8'/>";
+		html += 				"<input type='text' name='terms' class='col-sm-8' placeholder='yyyy.mm-yyyy.mm' maxlength='15'/>";
 		html += 			"</div>";
 		html += 		"</div>";
 		html += 		"<div class='col-sm-4'>";
@@ -275,11 +275,17 @@ function sample6_execDaumPostcode() {
 <body>
 <div id="wrapper">
 <%@ include file="/WEB-INF/views/sidebartemplate/sidebar.jsp" %>
-<a href="#menu-toggle" class="btn btn-default btn-xs" id="menu-toggle">side bar</a>	
+	<a href="#menu-toggle" class="btn btn-default btn-xs" id="menu-toggle">side bar</a>
+	<!-- 메신저 modal창 -->
+	<div class="modal fade" id="messenger" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+		<%@ include file="../message/messagebutton.jsp" %>
+	</div>
+	
 	<div id="page-content-wrapper">
+		<%@ include file="../companynotice/backgroundVideo.jsp" %>
 		<div class="container ">
 			<h1>사원 등록</h1>
-			<div class="well">
+			<div class="well" style="opacity:0.8">
 				<form role="form" action="insertemp.do" method="post" class="empBox row" enctype="multipart/form-data">
 					<div class="row">
 						<div class="col-md-5 empct">
@@ -289,7 +295,7 @@ function sample6_execDaumPostcode() {
 							</div> --%>
 							<div class="row">
 								<label class="col-sm-4">비밀번호</label>
-								<input  class="col-sm-8" type="password" name="password"/>
+								<input  class="col-sm-8" type="password" name="password" minlength="6" maxlength="12" placeholder="6~12자 사이로 입력해주세요."/>
 							</div>
 							<div class="row">
 								<label class="col-sm-4">이름</label>
@@ -335,7 +341,7 @@ function sample6_execDaumPostcode() {
 						<div class="col-md-5 col-sm-offset-2 empct">
 							<div class="row">
 								<label class="col-sm-4">급여</label>
-								<input  class="col-sm-8" type="text" name="salary"/>
+								<input  class="col-sm-8 text-right" type="number" name="salary"/>
 							</div>
 							<div class="row empctLast">
 								<label class="col-sm-4">직책</label>
@@ -352,7 +358,7 @@ function sample6_execDaumPostcode() {
 					<div class="empct row">
 						<div class="empAddct">
 							<label class="empaddL">주소</label>
-							<input class="empaddI" id="sample6_address" name="address1" placeholder="주소" type="text" name="address"/>
+							<input class="empaddI" id="sample6_address" placeholder="주소" type="text" name="address"/>
 							<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기" class="btn btn-info">
 						</div>
 					</div> <!-- row3 end -->
@@ -366,7 +372,7 @@ function sample6_execDaumPostcode() {
 									<div class="col-sm-4">
 										<div class="row">
 											<label class="col-sm-4">기간</label>
-											<input type="text" name="schools" class="col-sm-8"/>
+											<input type="text" name="terms" class="col-sm-8" placeholder="yyyy.mm-yyyy.mm" maxlength="15"/>
 										</div>
 									</div>
 									<div class="col-sm-4">
@@ -408,7 +414,7 @@ function sample6_execDaumPostcode() {
 									</div>
 									<div class="col-sm-5">
 										<div class="row">
-											<label class="col-sm-4">기간명</label>
+											<label class="col-sm-4">기관명</label>
 											<input type="text" name="licenseOffices" class="col-sm-8"/>
 										</div>
 									</div>

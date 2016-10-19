@@ -107,6 +107,11 @@ public class MessageJSONController {
 		messageDao.addMessage(message);
 		return message;
 	}
+	@RequestMapping(value="/recieveYN/", method=RequestMethod.POST)
+	public @ResponseBody int updateMessage(int messageNo){
+		messageDao.updateMessage(messageNo);
+		return messageNo;
+	}
 	@RequestMapping(value="/searchEmp/opt/{opt}/keyword/{keyword}")
 	public List<Employee> SearchEmp(Employee emp, @PathVariable("opt") String opt, @PathVariable("keyword") String keyword){
 		Map<String, Object> map = new HashMap<>();

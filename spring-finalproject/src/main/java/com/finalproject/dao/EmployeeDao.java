@@ -103,6 +103,6 @@ public interface EmployeeDao {
 	// 지점사원번호로 지점 사원 조회
 	BranchEmp getBranchEmpByBrEmpNo(int brEmpNo);
 	// 지점사원 번호로 근무상태 수정
-	void updateBranchEmpByBrempNo(List<BranchEmp> branchList);
+	void updateBranchEmpByBrempNo(BranchEmp branchEmp);
 	
 }

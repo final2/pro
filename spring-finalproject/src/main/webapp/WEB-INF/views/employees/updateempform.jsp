@@ -8,7 +8,7 @@
 <link rel="stylesheet" type="text/css" href="/FinalProject/resources/bootstrap/css/bootstrap.css">
 <script type="text/javascript" src="/FinalProject/resources/jquery/jquery.js"></script>
 <style>
-	.container {position:relative; top:60px;}
+	.container {position:relative; top:30px;}
 	.container:after {clear:both; content:""; display:block;}
 
 	.empBox {width:75%; margin:15px auto 15px auto;}
@@ -56,6 +56,7 @@
 	.careerMinus, .licenseMinus, .languagesMinus {padding:2px; border:1px solid #888; background:#ddd; text-align:center; box-sizing: border-box; cursor:pointer;}
 	
 	.formBtnBox {clear:both; margin-top:60px;}
+	.formBtnBox {clear:both; content:""; display:block;}
 	.formBtn {width:50%; float:left; text-align:center;}
 	.formBtn > input { width:50%; padding:10px 0;}
 	
@@ -324,10 +325,17 @@ $(function() {
 <body>
 <div id="wrapper">
 <%@ include file="/WEB-INF/views/sidebartemplate/sidebar.jsp" %>	
+	<a href="#menu-toggle" class="btn btn-default btn-xs" id="menu-toggle">side bar</a>
+	<!-- 메신저 modal창 -->
+	<div class="modal fade" id="messenger" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+		<%@ include file="../message/messagebutton.jsp" %>
+	</div>
+	
 	<div id="page-content-wrapper">
+		<%@ include file="../companynotice/backgroundVideo.jsp" %>
 		<div class="container ">
 			<h1>사원 정보 수정</h1>
-			<div class="well">
+			<div class="well" style="opacity:0.8">
 				<form role="form" action="insertemp.do" method="post" class="empBox row" enctype="multipart/form-data">
 					<div class="row">
 						<div class="col-md-5 empct">

@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.finalproject.dao.EmployeeDao;
 import com.finalproject.model.AccountBook;
+import com.finalproject.model.AddAccountBookForm;
 import com.finalproject.model.Branch;
 import com.finalproject.model.BranchAddForm;
 import com.finalproject.model.BranchEmp;
@@ -37,6 +38,7 @@ import com.finalproject.model.Licenses;
 import com.finalproject.model.PageVo;
 import com.finalproject.model.RegisterEmp;
 import com.finalproject.model.WorkTime;
+import com.finalproject.model.WorkingStateBrEmp;
 import com.finalproject.service.EmployeeService;
 
 
@@ -52,8 +54,16 @@ public class EmployeeController {
 	
 	@ExceptionHandler(RuntimeException.class)
 	public String runtimeExceptionHandler(RuntimeException ex) {
+		
+		String errorMSG = ex.getMessage();
 		ex.printStackTrace();
+		
+		if(errorMSG.equals("아이디 혹은 비밀번호가 올바르지 않습니다.")) {
+			return "employees/error/loginerror";
+		}
+		
 		return "employees/error/error";
+		
 	}
 	
 	
@@ -97,17 +107,17 @@ public class EmployeeController {
 	}
 	
 	@RequestMapping(value="/changepassword.do", method=RequestMethod.POST)
-	public String myChangePwd(String password, HttpSession session) {
+	public String myChangePwd(RegisterEmp employee, HttpSession session) {
 		Employee emp = (Employee)session.getAttribute("LoginUser");
+		
+		String secretPassword = DigestUtils.md5DigestAsHex(employee.getPassword().getBytes());
 		
 		Employee chahgeemp = new Employee();
 		chahgeemp.setNo(emp.getNo());
-		chahgeemp.setPassword(password);
+		chahgeemp.setPassword(secretPassword);
 		
-		System.out.println(chahgeemp);
-		//empService.updateEmployeePwd(chahgeemp);
-		return null;
-		//return "redirect:/companylogin.do"; 
+		empService.updateEmployeePwd(chahgeemp);
+		return "redirect:/companylogin.do"; 
 	}
 	
 	@RequestMapping(value="/mycompsalary.do")
@@ -168,33 +178,38 @@ public class EmployeeController {
 	@RequestMapping(value="/mycompattendance.do")
 	public String myAttendanceListForm(Criteria criteria, Model model, HttpSession session) {
 		
+		
 		Employee emp = (Employee)session.getAttribute("LoginUser");
 		
-		SimpleDateFormat DateFormat = new SimpleDateFormat ("yyyy-MM-dd");
-		Date now = new Date();
-		String today = DateFormat.format (now);
-		
-		
-		String year = today.substring(0, 4);
-		String month = today.substring(5, 7);
-		String day = today.substring(8);
-		int dd = Integer.parseInt(month)+1;
-		String nextMonth = String.valueOf(dd);
-		String beginDate = year + "-" + month + "-" + "01";
-		String endDate = year + "-" + nextMonth + "-" + "01";
-		
-		criteria.setBeginDate(beginDate);
-		criteria.setEndDate(endDate);
-		criteria.setEmpNo(emp.getNo());
-		
-		
-		List<WorkTime> workTimeList = empService.getTimetableByNo(criteria);
-		
-		model.addAttribute("workTimeList", workTimeList);
-		
-		return "employees/myattendancelist";
+			SimpleDateFormat DateFormat = new SimpleDateFormat ("yyyy-MM-dd");
+			Date now = new Date();
+			String today = DateFormat.format (now);
+			
+			
+			String year = today.substring(0, 4);
+			String month = today.substring(5, 7);
+			String day = today.substring(8);
+			int dd = Integer.parseInt(month)+1;
+			String nextMonth = String.valueOf(dd);
+			String beginDate = year + "-" + month + "-" + "01";
+			String endDate = year + "-" + nextMonth + "-" + "01";
+			
+			criteria.setBeginDate(beginDate);
+			criteria.setEndDate(endDate);
+			criteria.setEmpNo(emp.getNo());
+			
+			
+			List<WorkTime> workTimeList = empService.getTimetableByNo(criteria);
+			WorkTime wk = empService.getAttendanceByNo(emp.getNo());
+			
+			model.addAttribute("workTimeList", workTimeList);
+			model.addAttribute("successAtt", wk);
+			
+			return "employees/myattendancelist";
+
 	}
 	
+	// 월별 출퇴근 기록 보기
 	@RequestMapping(value="/mytimetable.do")
 	public String myTimetableForm(Criteria criteria, Model model, HttpSession session,
 			@RequestParam(name="month") String selectMonth) {
@@ -210,8 +225,13 @@ public class EmployeeController {
 		int nm = Integer.parseInt(selectMonth) + 1;
 		String nextMonth = String.valueOf(nm);
 		String beginDate = year + "-" + selectMonth + "-" + "01";
-		System.out.println("지정달:" + beginDate);
 		String endDate = year + "-" + nextMonth + "-" + "01";
+		
+		if (selectMonth.equals("12")) {
+			int nYear = Integer.parseInt(year) + 1;
+			String newYear = String.valueOf(nYear);
+			endDate = newYear + "-" + "01" + "-" + "01";
+		} 
 
 		criteria.setBeginDate(beginDate);
 		criteria.setEndDate(endDate);
@@ -219,12 +239,16 @@ public class EmployeeController {
 		
 		
 		List<WorkTime> workTimeList = empService.getTimetableByNo(criteria);
+		WorkTime wk = empService.getAttendanceByNo(emp.getNo());
 		
 		model.addAttribute("workTimeList", workTimeList);
+		model.addAttribute("successAtt", wk);
 		
 		return "employees/myattendancelist";
 	}
 	
+	
+	// 출퇴근
 	@RequestMapping(value="/myattendance.do")
 	public String myAttendance(Criteria criteria, Model model, HttpSession session, 
 			@RequestParam("work") String work) throws Exception{
@@ -317,7 +341,7 @@ public class EmployeeController {
 		
 		model.addAttribute("workTimeList", workTimeList);
 		
-		return "employees/myattendancelist";
+		return "redirect:/mycompattendance.do";
 	}
 	
 	// 사원등록 페이지 연결
@@ -337,16 +361,27 @@ public class EmployeeController {
 		List<Branch> branchNames = empService.getAllBranch();
 		model.addAttribute("branchNames", branchNames);
 		
-		if (emp.getDept().equals("HR") || emp.getDept().equals("Master")) {
-			
-			return "employees/insertempform";
-			
-		} else {
-			
+		if (!(emp.getDept().equals("HR") || emp.getDept().equals("Master"))) {
 			throw new RuntimeException("사원등록은 인사관리 부서만 접근 가능합니다.");
 		}
 		
-		//return "employees/insertempform";
+		/*
+		if (!emp.getDept().equals("HR") ) {
+			
+
+			throw new RuntimeException("사원등록은 인사관리 부서만 접근 가능합니다.");
+			
+		}
+		
+		if ( !emp.getDept().equals("Master")) {
+			
+
+			throw new RuntimeException("사원등록은 인사관리 부서만 접근 가능합니다.");
+			
+		} 
+		*/
+		
+		return "employees/insertempform";
 		
 	}
 	
@@ -671,11 +706,26 @@ public class EmployeeController {
 	}
 	
 	@RequestMapping(value="/updatebranchemp.do", method=RequestMethod.POST)
-	public String updateBranchEmp(List<BranchEmp> branchempList) throws Exception {
+	public String updateBranchEmp(@RequestParam(name="pno") int pageNo, @RequestParam(name="no") int brNo, WorkingStateBrEmp WorkingStateBrEmpList) {
 		
-		//empService.getBranchEmpByBrEmpNo(brEmpNo);
 		
-		return "redirect:/branchempdetail.do";
+		List<BranchEmp> branchEmpList = new ArrayList<>();
+		
+		if (WorkingStateBrEmpList.getWorkingState() != null) {
+			
+			for (int i=0; i<WorkingStateBrEmpList.getWorkingState().length; i++) {
+				BranchEmp brEmp = new BranchEmp();
+				brEmp.setNo(WorkingStateBrEmpList.getWorkingState()[i]);
+				brEmp.setRemarks("퇴사");
+				System.out.println("dd:"+brEmp.getNo());
+				branchEmpList.add(brEmp);
+				
+			}
+		}
+		
+		empService.updateBranchEmpByBrempNo(branchEmpList);
+		
+		return "redirect:/compbranchdetail.do?no="+brNo+"&pno="+pageNo;
 	}
 	
 	
@@ -728,21 +778,37 @@ public class EmployeeController {
 	}
 	
 	@RequestMapping(value="/insertsalary.do", method=RequestMethod.POST)
-	public String insertSalary(AccountBook accountBook) {
-		System.out.println(accountBook.getEmp().getNo());
-		empService.insertSalary(accountBook);
+	public String insertSalary(AddAccountBookForm accountBookForm) {
+		int no = accountBookForm.getEmp().getNo();
+		String paymentDate = accountBookForm.getPaymentDate();
+		int salary = Integer.parseInt(accountBookForm.getSalary().replace(",", ""));
+		int overtime = Integer.parseInt(accountBookForm.getOvertime().replace(",", ""));
+		int insureHealth = Integer.parseInt(accountBookForm.getInsureHealth().replace(",", ""));
+		int insureLonghealth = Integer.parseInt(accountBookForm.getInsureLonghealth().replace(",", ""));
+		int insureSocial = Integer.parseInt(accountBookForm.getInsureSocial().replace(",", ""));
+		int employeeInsure = Integer.parseInt(accountBookForm.getEmployeeInsure().replace(",", ""));
+		System.out.println("사원:"+no);
+		System.out.println("입력달:"+paymentDate);
+		AccountBook account = new AccountBook();
+		Employee emp = new Employee();
+		emp.setNo(no);
+		account.setEmp(emp);
+		account.setPaymentDate(paymentDate);
+		account.setSalary(salary);
+		account.setOvertime(overtime);
+		account.setInsureHealth(insureHealth);
+		account.setInsureLonghealth(insureLonghealth);
+		account.setInsureSocial(insureSocial);
+		account.setEmployeeInsure(employeeInsure);
+		
+		empService.insertSalary(account);
+		
 		return "redirect:/compsalary.do";
 	}
 	
 	@RequestMapping(value="/compsalary.do")
 	public String salaryList(Criteria criteria, @RequestParam(name="pno", required=false, defaultValue="1") int pageNo, Model model) {
 		
-		if (pageNo != 0) {
-			
-			if (pageNo < 1) {
-				return "redirect:/compsalary.do?pno=1";
-			}
-			
 			int rows = 10;
 			int pages = 5;
 			int beginIndex = (pageNo - 1) * rows + 1;
@@ -752,10 +818,6 @@ public class EmployeeController {
 			
 			PageVo pagination = new PageVo(rows, pages, pageNo, totalRows);
 			
-			if(pageNo > pagination.getTotalPages()) {
-				return "redirect:/compsalary.do?pno=" + pagination.getTotalPages();
-			}
-			
 			criteria.setBeginIndex(beginIndex);
 			criteria.setEndIndex(endIndex);
 			
@@ -763,7 +825,7 @@ public class EmployeeController {
 			
 			model.addAttribute("salaryList", accountBookList);
 			model.addAttribute("navi", pagination);
-		}
+		
 		
 		return "employees/salarylist";
 	}

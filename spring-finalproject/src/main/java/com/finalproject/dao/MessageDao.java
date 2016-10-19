@@ -17,4 +17,5 @@ public interface MessageDao {
 	int getTotalReceive(int no);
 	List<Employee> searchEmployee(Map<String, Object> map);
 	int getTotalSend(int no);
+	void updateMessage(int messageNo);
 }

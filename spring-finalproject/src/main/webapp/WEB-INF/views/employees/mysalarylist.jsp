@@ -9,7 +9,7 @@
 <link rel="stylesheet" type="text/css" href="/FinalProject/resources/bootstrap/css/bootstrap.css">
 <script type="text/javascript" src="/FinalProject/resources/jquery/jquery.js"></script>
 <style>
-	.container {position:relative; top:70px; text-align:center;}
+	.container {position:relative; top:30px; text-align:center;}
 	.container:after {clear:both; content:""; display:block;}
 
 	.container > h1 {text-align:left; margin-bottom:20px;}
@@ -34,7 +34,14 @@
 <body>
 <div id="wrapper">
 	<%@ include file="/WEB-INF/views/sidebartemplate/sidebar.jsp" %>	
+	<a href="#menu-toggle" class="btn btn-default btn-xs" id="menu-toggle">side bar</a>
+	<!-- 메신저 modal창 -->
+	<div class="modal fade" id="messenger" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+		<%@ include file="../message/messagebutton.jsp" %>
+	</div>
+	
 	<div id="page-content-wrapper">
+		<%@ include file="../companynotice/backgroundVideo.jsp" %>
 		<div class="container">
 			<h1><a href="emplist.do">급여 리스트</a></h1>
 			<!-- <div class="row searchbox">
@@ -55,85 +62,61 @@
 					</div>
 				</form>
 			</div> -->
-			<table class="table table-bordered empBox table-striped" >
-				<colgroup>
-					<col width="8%"/>
-					<col width="8%"/>
-					<col width="10%"/>
-					<col width="8%"/>
-					<col width="8%"/>
-					<col width="8%"/>
-					<col width="8%"/>
-					<col width="8%"/>
-					<col width="8%"/>
-					<col width="8%"/>
-					<col width="8%"/>
-					<col width="10%"/>
-				</colgroup>
-				<tr>
-					<th class="info">귀속연월</th>
-					<th class="info">사원번호</th>
-					<th class="info">이름</th>
-					<th class="info">기본급</th>
-					<th class="info">시간외수당</th>
-					<th class="info">건강보험</th>
-					<th class="info">장기요양</th>
-					<th class="info">국민연금</th>
-					<th class="info">고용/산재</th>
-					<th class="info">지급총액</th>
-					<th class="info">공제총액</th>
-					<th class="info">실지급액</th>
-				</tr>
-				<c:forEach var="accountBook" items="${salaryList }">
+			<div class="well" style="opacity:0.8">
+				<table class="table table-bordered empBox table-striped" >
+					<colgroup>
+						<col width="8%"/>
+						<col width="8%"/>
+						<col width="10%"/>
+						<col width="8%"/>
+						<col width="8%"/>
+						<col width="8%"/>
+						<col width="8%"/>
+						<col width="8%"/>
+						<col width="8%"/>
+						<col width="8%"/>
+						<col width="8%"/>
+						<col width="10%"/>
+					</colgroup>
 					<tr>
-						<td>${accountBook.paymentDate }</td>
-						<td>${accountBook.emp.no }</td>
-						<td>${accountBook.emp.name }</td>
-						<c:set var="salary" value="${accountBook.salary }"/>
-						<td><fmt:formatNumber type="number" value="${salary }"/></td>
-						<td><fmt:formatNumber type="number" value="${accountBook.overtime }"/></td>
-						<c:set var="insureHealth" value="${accountBook.insureHealth }"/>
-						<c:set var="insureLonghealth" value="${accountBook.insureLonghealth }"/>
-						<c:set var="insureSocial" value="${accountBook.insureSocial }"/>
-						<c:set var="employeeInsure" value="${accountBook.employeeInsure }"/>
-						<td><fmt:formatNumber type="number" value="${insureHealth }"/></td>
-						<td><fmt:formatNumber type="number" value="${insureLonghealth }"/></td>
-						<td><fmt:formatNumber type="number" value="${insureSocial }"/></td>
-						<td><fmt:formatNumber type="number" value="${employeeInsure }"/></td>
-						<c:set var="sum" value="${salary + accountBook.overtime}"/>
-						<td><fmt:formatNumber type="number" value="${sum}"/></td>
-						<c:set var="minus" value="${insureHealth + insureLonghealth + insureSocial + employeeInsure}"/> 
-						<td><fmt:formatNumber type="number" value="${minus}"/></td>
-						<td><fmt:formatNumber type="number" value="${sum - minus}"/></td>
+						<th class="info">귀속연월</th>
+						<th class="info">사원번호</th>
+						<th class="info">이름</th>
+						<th class="info">기본급</th>
+						<th class="info">시간외수당</th>
+						<th class="info">건강보험</th>
+						<th class="info">장기요양</th>
+						<th class="info">국민연금</th>
+						<th class="info">고용/산재</th>
+						<th class="info">지급총액</th>
+						<th class="info">공제총액</th>
+						<th class="info">실지급액</th>
 					</tr>
-				</c:forEach>
-			</table>
-			<ul class="pagination pageBox">
-			<c:if test="${param.pno gt 1 }">
-    			<li>
-      				<a href="compsalary.do?pno=${param.pno - 1 }" aria-label="Previous">
-        				<span aria-hidden="true">&laquo;</span>
-      				</a>
-    			</li>
-    		</c:if>
-    		<c:forEach var="num" begin="${navi.beginPage }" end="${navi.endPage }">
-    			<c:choose>
-    				<c:when test="${param.pno eq num }">
-    					<li class="active"><a href="compsalary.do?pno=${num }">${num }</a></li>
-    				</c:when>
-    				<c:otherwise>
-					    <li><a href="compsalary.do?pno=${num }">${num }</a></li>
-    				</c:otherwise>
-    			</c:choose>
-    		</c:forEach>
-    		<c:if test="${param.pno lt navi.totalPages}">
-    			<li>
-      				<a href="compsalary.do?pno=${param.pno + 1 }" aria-label="Next">
-        				<span aria-hidden="true">&raquo;</span>
-      				</a>
-    			</li>
-    		</c:if>
-			</ul>
+					<c:forEach var="accountBook" items="${salaryList }">
+						<tr>
+							<td>${accountBook.paymentDate }</td>
+							<td>${accountBook.emp.no }</td>
+							<td>${accountBook.emp.name }</td>
+							<c:set var="salary" value="${accountBook.salary }"/>
+							<td><fmt:formatNumber type="number" value="${salary }"/></td>
+							<td><fmt:formatNumber type="number" value="${accountBook.overtime }"/></td>
+							<c:set var="insureHealth" value="${accountBook.insureHealth }"/>
+							<c:set var="insureLonghealth" value="${accountBook.insureLonghealth }"/>
+							<c:set var="insureSocial" value="${accountBook.insureSocial }"/>
+							<c:set var="employeeInsure" value="${accountBook.employeeInsure }"/>
+							<td><fmt:formatNumber type="number" value="${insureHealth }"/></td>
+							<td><fmt:formatNumber type="number" value="${insureLonghealth }"/></td>
+							<td><fmt:formatNumber type="number" value="${insureSocial }"/></td>
+							<td><fmt:formatNumber type="number" value="${employeeInsure }"/></td>
+							<c:set var="sum" value="${salary + accountBook.overtime}"/>
+							<td><fmt:formatNumber type="number" value="${sum}"/></td>
+							<c:set var="minus" value="${insureHealth + insureLonghealth + insureSocial + employeeInsure}"/> 
+							<td><fmt:formatNumber type="number" value="${minus}"/></td>
+							<td><fmt:formatNumber type="number" value="${sum - minus}"/></td>
+						</tr>
+					</c:forEach>
+				</table>		
+			</div>
 		</div>
 	</div>
 </div>

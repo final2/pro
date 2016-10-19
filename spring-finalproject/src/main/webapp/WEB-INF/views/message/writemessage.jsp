@@ -21,8 +21,10 @@ $(function() {
 			data:obj,
 			dataType:"json",
 			success:function(result){
-				alert("성공적으로 보냈습니다.")
+				alert("성공적으로 보냈습니다.");
 				$("#send").trigger("click");
+				$("[name='toname']").val("");
+				$("[name='contents']").val("");
 			}
 		});
 		
@@ -47,14 +49,15 @@ $(function() {
 				<div class="form-group" id="receiveemp">
 					<label>받는사람</label>
 					<button class="btn btn-default" type="reset" id="selectemp" style="margin-left: 385px;">사원찾기</button>
-					<input type="text" class="form-control" name="to" />
+					<input type="text" class="hidden" name="to" />
+					<input type="text" class="form-control" name="toname" />
 				</div>
 				<div class="form-group">
 					<label>내용</label>
 					<textarea rows="5" class="form-control" name="contents"></textarea>
 				</div>
 				<div class="form-group" style="text-align:right" >
-					<input type="submit" class="btn btn-default" value="저장" />
+					<input type="submit" class="btn btn-default" value="보내기" />
 					<button type="reset" class="btn btn-default" id="reset">취소</button>
 				</div>
 			</form>

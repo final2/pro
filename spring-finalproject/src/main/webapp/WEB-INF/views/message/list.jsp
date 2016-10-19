@@ -42,8 +42,9 @@ $(function(){
 				$('#bodywritemessage').show();
 				
 				var eno = $(this).attr("id").replace("no-","");
-				var ename = $(this).parents("tr").find("td:eq(1)").text();
+				var ename = $(this).parents("tr").find("td:eq(2)").text();
 				$("[name='to']").val(eno);
+				$("[name='toname']").val(ename);
 			})
 		}
 	});

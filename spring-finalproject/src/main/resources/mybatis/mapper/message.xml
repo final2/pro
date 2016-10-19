@@ -117,6 +117,11 @@
 		insert into messenger (no, from_no, to_no, contents, receiving, regdate)
 		values (my_seq.nextval, #{from}, #{to}, #{contents}, 'n', sysdate)
 	</insert>
+	<update id="updateMessage" parameterType="int">
+		update messenger 
+		set receiving='Y'
+		where no = #{value}
+	</update>
 	<select id="searchEmployee" parameterType="map" resultType="Employee">
 		select 
 			no, 

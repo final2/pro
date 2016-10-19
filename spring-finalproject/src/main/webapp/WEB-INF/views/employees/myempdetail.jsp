@@ -30,7 +30,7 @@
 	.ptBox { margin:0; padding:0 !important;}
 	.ptBox .ptImg {height:100%; overflow:hidden;  text-align:center;}
 	.ptBox .ptImg:after {clear:both; content:""; display:block; }
-	.ptBox > .ptImg > #thumnail { width:auto; margin:0 auto;height:100% !important; vertical-align:middle; text-align:center;}
+	.ptBox > .ptImg > #thumnail { width:100% !important; margin:0 auto;height:100% !important; vertical-align:middle; text-align:center;}
 	
 	.formBtnBox {clear:both; margin:0 auto; margin-top:40px;}
 	.formBtn {width:50%; text-align:center; float:left;}
@@ -42,21 +42,6 @@
 </style>
 <script type="text/javascript">
 $(function() {
-	/* // 모달창 오픈시 기능
-	$('#myModal').on('show.bs.modal', function (e) {
-		 
-	});
-	
-	// 수정 버튼 기능
-	$("form").submit(function() {
-		if(!$.trim($("#name").val())) {
-			$(".non").show();
-			$("#name").focus();
-			return false;
-		}
-		return true;
-	}); */
-	
 	
 	$("#passwordUpdateCheck").keyup(function() {
 		if($("#passwordUpdate").val() == $(this).val() && $("#passwordUpdate").val().trim() != '') {
@@ -77,6 +62,7 @@ $(function() {
 		}
 	});
 	
+	
 })
 </script>
 </head>
@@ -84,180 +70,195 @@ $(function() {
 <div id="wrapper">
 	<%@ include file="/WEB-INF/views/sidebartemplate/sidebar.jsp" %>
 	<a href="#menu-toggle" class="btn btn-default btn-xs" id="menu-toggle">side bar</a>
+	<!-- 메신저 modal창 -->
+	<div class="modal fade" id="messenger" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+		<%@ include file="../message/messagebutton.jsp" %>
+	</div>
+	
 	<div id="page-content-wrapper">	
+		<%@ include file="../companynotice/backgroundVideo.jsp" %>
 		<div class="container">
 			<h1>내정보</h1>
-			<div class="empBox">
-				<table class="table table-bordered" >
-					<colgroup>
-						<col style="width:22%;">
-						<col style="width:15%;">
-						<col style="width:20%;">
-						<col style="width:15%;">
-						<col style="width:18%;">
-						<col style="width:10%;">
-					</colgroup>
-					<tr>
-						<th rowspan="6" class="ptBox">
-							<div class="ptImg">
-								<img id="thumnail" src="/FinalProject/resources/image/empimg/${empDetail.emp.photo }" />
-							</div>
-						</th>
-						<th class="info">사원번호</th>
-						<td>${empDetail.emp.no }</td>
-						<th class="info">근무부서</th>
-						<td>${empDetail.emp.dept }</td>
-						<th class="info">근무형태</th>
-					</tr>
-					<tr>
-						<th class="info">성명</th>
-						<td>${empDetail.emp.name }</td>
-						<th class="info">직책</th>
-						<td>${empDetail.emp.position }</td>
-						<td rowspan="2">${empDetail.emp.workingStatus }</td>
-					</tr>
-					<tr>
-						<th class="info">생년월일</th>
-						<td><fmt:formatDate value="${empDetail.emp.birth }" pattern="yyyy-MM-dd"/></td>
-						<th class="info">Email</th>
-						<td>${empDetail.emp.email }</td>
-					</tr>
-					<tr>
-						<th class="info">입사일자</th>
-						<td><fmt:formatDate value="${empDetail.emp.hireDate }" pattern="yyyy-MM-dd "/></td>
-						<th class="info">연락처</th>
-						<td colspan="2">${empDetail.emp.phone }</td>
-					</tr>
-					<tr>
-						<th class="info">주소</th>
-						<td colspan="4">${empDetail.emp.address }</td>
-					</tr>
-					<tr>
-						<th class="info">비고</th>
-						<td colspan="4">${empDetail.emp.remarks }</td>
-					</tr>
-				</table>
-				<table class="table table-bordered" >
-					<thead>
-						<h3>학력</h3>
-					</thead>
-					<tbody>
+			<div class="well" style="opacity:0.8">
+				<div class="empBox">
+					<table class="table table-bordered" >
 						<colgroup>
 							<col style="width:22%;">
-							<col style="width:22%;">
-							<col style="width:14%;">
-							<col style="width:14%;">
-							<col style="width:14%;">
-							<col style="width:14%;">
+							<col style="width:15%;">
+							<col style="width:20%;">
+							<col style="width:15%;">
+							<col style="width:18%;">
+							<col style="width:10%;">
 						</colgroup>
 						<tr>
-							<th class="info">기간</th>
-							<th class="info">학교명</th>
-							<th class="info">전공</th>
-							<th class="info">이수구분</th>
-							<th class="info">소재지</th>
-							<th class="info">기타</th>
+							<th rowspan="6" class="ptBox">
+								<div class="ptImg">
+									<c:choose>
+										<c:when test="${empDetail.emp.photo eq null}">
+											<img id="thumnail" src="/FinalProject/resources/image/no-image.png" />
+										</c:when>
+										<c:otherwise>
+											<img id="thumnail" src="/FinalProject/resources/image/empimg/${empDetail.emp.photo }" />
+										</c:otherwise>
+									</c:choose>
+								</div>
+							</th>
+							<th class="info">사원번호</th>
+							<td>${empDetail.emp.no }</td>
+							<th class="info">근무부서</th>
+							<td>${empDetail.emp.dept }</td>
+							<th class="info">근무형태</th>
 						</tr>
-				<c:choose>
-					<c:when test="${ empty  empDetail.careerList }">
 						<tr>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>	
+							<th class="info">성명</th>
+							<td>${empDetail.emp.name }</td>
+							<th class="info">직책</th>
+							<td>${empDetail.emp.position }</td>
+							<td rowspan="2">${empDetail.emp.workingStatus }</td>
 						</tr>
-					</c:when>
-					<c:when test="${ !empty  empDetail.careerList }">
-						<c:forEach var="career" items="${empDetail.careerList }">
 						<tr>
-							<td>${career.term }</td>
-							<td>${career.school }</td>
-							<td>${career.major }</td>
-							<td></td>
-							<td></td>
-							<td></td>
+							<th class="info">생년월일</th>
+							<td><fmt:formatDate value="${empDetail.emp.birth }" pattern="yyyy-MM-dd"/></td>
+							<th class="info">Email</th>
+							<td>${empDetail.emp.email }</td>
 						</tr>
-						</c:forEach>
-					</c:when>
-				</c:choose>
-					</tbody>
-				</table>
-				<div class="row">
-					<div class="col-sm-6">
-						<table class="table table-bordered">
-							<thead>
-								<h3>어학능력</h3>
-							</thead>
-							<tbody>
-								<colgroup>
-									<col style="width:60%;">
-									<col style="width:40%;">
-								</colgroup>
-								<tr>
-									<th class="info">외국어명</th>
-									<th class="info">점수</th>
-								</tr>
-						<c:choose>
-							<c:when test="${ empty  empDetail.languageList }">
-								<tr>
-									<td></td>
-									<td></td>	
-								</tr>
-							</c:when>
-							<c:when test="${ !empty  empDetail.languageList }">
-								<c:forEach var="language" items="${empDetail.languageList }">
-								<tr>
-									<td>${language.language }</td>
-									<td>${language.grade }</td>
-								</tr>
-								</c:forEach>
-							</c:when>
-						</c:choose>
-							</tbody>
-						</table>
-					</div> 
-					<div class="col-sm-6">
-						<table class="table table-bordered">
-							<thead>
-								<h3>자격증</h3>
-							</thead>
-							<tbody>
-								<colgroup>
-									<col style="width:60%;">
-									<col style="width:40%;">
-								</colgroup>
-								<tr>
-									<th class="info">종류/등급</th>
-									<th class="info">기관명</th>
-								</tr>
-						<c:choose>
-							<c:when test="${ empty  empDetail.licenseList }">
-								<tr>
-									<td></td>
-									<td></td>
-								</tr>	
-							</c:when>
-							<c:when test="${ !empty  empDetail.licenseList }">
-							<c:forEach var="license" items="${empDetail.licenseList }">
-								<tr>
-									<td>${license.license }</td>
-									<td>${license.licenseOffice }</td>
-								</tr>
+						<tr>
+							<th class="info">입사일자</th>
+							<td><fmt:formatDate value="${empDetail.emp.hireDate }" pattern="yyyy-MM-dd "/></td>
+							<th class="info">연락처</th>
+							<td colspan="2">${empDetail.emp.phone }</td>
+						</tr>
+						<tr>
+							<th class="info">주소</th>
+							<td colspan="4">${empDetail.emp.address }</td>
+						</tr>
+						<tr>
+							<th class="info">비고</th>
+							<td colspan="4">${empDetail.emp.remarks }</td>
+						</tr>
+					</table>
+					<table class="table table-bordered" >
+						<thead>
+							<h3>학력</h3>
+						</thead>
+						<tbody>
+							<colgroup>
+								<col style="width:22%;">
+								<col style="width:22%;">
+								<col style="width:14%;">
+								<col style="width:14%;">
+								<col style="width:14%;">
+								<col style="width:14%;">
+							</colgroup>
+							<tr>
+								<th class="info">기간</th>
+								<th class="info">학교명</th>
+								<th class="info">전공</th>
+								<th class="info">이수구분</th>
+								<th class="info">소재지</th>
+								<th class="info">기타</th>
+							</tr>
+					<c:choose>
+						<c:when test="${ empty  empDetail.careerList }">
+							<tr>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>	
+							</tr>
+						</c:when>
+						<c:when test="${ !empty  empDetail.careerList }">
+							<c:forEach var="career" items="${empDetail.careerList }">
+							<tr>
+								<td>${career.term }</td>
+								<td>${career.school }</td>
+								<td>${career.major }</td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
 							</c:forEach>
-							</c:when>
-						</c:choose>
-							</tbody>
-						</table>
+						</c:when>
+					</c:choose>
+						</tbody>
+					</table>
+					<div class="row">
+						<div class="col-sm-6">
+							<table class="table table-bordered">
+								<thead>
+									<h3>어학능력</h3>
+								</thead>
+								<tbody>
+									<colgroup>
+										<col style="width:60%;">
+										<col style="width:40%;">
+									</colgroup>
+									<tr>
+										<th class="info">외국어명</th>
+										<th class="info">점수</th>
+									</tr>
+							<c:choose>
+								<c:when test="${ empty  empDetail.languageList }">
+									<tr>
+										<td></td>
+										<td></td>	
+									</tr>
+								</c:when>
+								<c:when test="${ !empty  empDetail.languageList }">
+									<c:forEach var="language" items="${empDetail.languageList }">
+									<tr>
+										<td>${language.language }</td>
+										<td>${language.grade }</td>
+									</tr>
+									</c:forEach>
+								</c:when>
+							</c:choose>
+								</tbody>
+							</table>
+						</div> 
+						<div class="col-sm-6">
+							<table class="table table-bordered">
+								<thead>
+									<h3>자격증</h3>
+								</thead>
+								<tbody>
+									<colgroup>
+										<col style="width:60%;">
+										<col style="width:40%;">
+									</colgroup>
+									<tr>
+										<th class="info">종류/등급</th>
+										<th class="info">기관명</th>
+									</tr>
+							<c:choose>
+								<c:when test="${ empty  empDetail.licenseList }">
+									<tr>
+										<td></td>
+										<td></td>
+									</tr>	
+								</c:when>
+								<c:when test="${ !empty  empDetail.licenseList }">
+								<c:forEach var="license" items="${empDetail.licenseList }">
+									<tr>
+										<td>${license.license }</td>
+										<td>${license.licenseOffice }</td>
+									</tr>
+								</c:forEach>
+								</c:when>
+							</c:choose>
+								</tbody>
+							</table>
+						</div>
 					</div>
-				</div>
-				<div class="formBtnBox">
-					<div class="formBtn">
-						<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newpwdBtn" id="btn">비밀번호 수정</button>
-					</div>
-					<div class="formBtn">
-						<a href="notice.do" class="btn btn-default">메인으로</a>
+					<div class="formBtnBox">
+						<div class="formBtn">
+							<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newpwdBtn" id="btn">비밀번호 수정</button>
+						</div>
+						<div class="formBtn">
+							<a href="notice.do" class="btn btn-default">메인으로</a>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -270,7 +271,7 @@ $(function() {
 							<h4 class="modal-title">비밀번호 수정</h4>
 						</div>
 						
-						<form action="changepassword.do" method="post" role="form">
+						<form  role="form" action="changepassword.do" method="post" class="changepassword">
 							<div class="modal-body">
 								<div>
 									<label class="text-left">새로운 비밀번호</label>
@@ -278,7 +279,7 @@ $(function() {
 								</div>
 								<div>
 									<label class="text-left">비밀번호 확인</label>
-									<input type="password" name="passwordCheck" id="passwordUpdateCheck" class="form-control" placeholder="비밀번호 확인"/>
+									<input type="password" id="passwordUpdateCheck" class="form-control" placeholder="비밀번호 확인"/>
 									<p id="message" style="color:red">* 비밀번호가 틀립니다.</p>
 								</div>
 							</div>
